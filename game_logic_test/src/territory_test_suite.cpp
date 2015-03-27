@@ -14,22 +14,34 @@ class Territory : public Test
 
 protected:
 
-    territory s;
+    territory t;
 
 };
 
 TEST_THAT(Territory,
      WHAT(GetBlocks),
      WHEN(ImmediatelyAfterDefaultConstruction),
-     THEN(ReturnsASingleBlockAtTheWorldOrigin))
+     THEN(ReturnsAnEmptyCollectionOfBlocks))
 {
-    auto const blocks = s.get_blocks();
+    auto const blocks = t.get_blocks();
+
+    EXPECT_TRUE(blocks.empty());
+}
+
+TEST_THAT(Territory,
+     WHAT(AddBlock),
+     WHEN(GivenABlockThatIsNotAlreadyPartOfTheTerritory),
+     THEN(AddsTheBlockToTheTerritory))
+{
+    auto const b = block{0, 1, 2};
+
+    t.add_block(b);
+
+    auto const blocks = t.get_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
 
-    EXPECT_THAT(blocks[0].x, Eq(0));
-    EXPECT_THAT(blocks[0].y, Eq(0));
-    EXPECT_THAT(blocks[0].z, Eq(0));
+    EXPECT_THAT(blocks[0], Eq(block{0, 1, 2}));
 }
 
 } } }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/value_ref.hpp"
 #include <vector>
 
 namespace snake_overflow { namespace game_logic
@@ -11,10 +12,10 @@ class territory
 {
 
 public:
-
-    territory();
-
+    
     std::vector<block> get_blocks() const;
+
+    void add_block(util::value_ref<block> b);
 
 private:
 

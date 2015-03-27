@@ -21,6 +21,9 @@
     <Filter Include="export\include\snake_overflow\game_logic">
       <UniqueIdentifier>{b4140318-e060-40e4-8456-5365e18ebd22}</UniqueIdentifier>
     </Filter>
+    <Filter Include="export\include\util">
+      <UniqueIdentifier>{53baa009-4d7c-4463-ab20-ff95001e6a5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\value_ref.hpp">
+      <Filter>export\include\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
