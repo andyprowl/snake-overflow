@@ -1,22 +1,23 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/game_logic/block.hpp"
-#include <tuple>
 
 namespace snake_overflow { namespace game_logic
 {
 
-block::block(int x, int y, int z)
-    : x{x}
-    , y{y}
-    , z{z}
+block::block(util::value_ref<math::point3d> origin)
+    : origin{origin}
 {
+}
+
+math::point3d block::get_origin() const
+{
+    return this->origin;
 }
 
 bool operator == (util::value_ref<block> lhs, util::value_ref<block> rhs)
 {
-    return (std::make_tuple(lhs.x, lhs.y, lhs.z) ==
-            std::make_tuple(rhs.x, rhs.y, rhs.z));
+    return (lhs.get_origin() == rhs.get_origin());
 }
 
 bool operator != (util::value_ref<block> lhs, util::value_ref<block> rhs)

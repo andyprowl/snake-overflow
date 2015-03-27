@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/value_ref.hpp"
+#include <iterator>
 
 namespace util
 {

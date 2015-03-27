@@ -33,7 +33,7 @@ TEST_THAT(Territory,
      WHEN(GivenABlockThatIsNotAlreadyPartOfTheTerritory),
      THEN(AddsTheBlockToTheTerritory))
 {
-    auto const b = block{0, 1, 2};
+    auto const b = block{{0, 1, 2}};
 
     t.add_block(b);
 
@@ -41,7 +41,7 @@ TEST_THAT(Territory,
 
     ASSERT_THAT(blocks.size(), Eq(1u));
 
-    EXPECT_THAT(blocks[0], Eq(block{0, 1, 2}));
+    EXPECT_THAT(blocks[0], Eq(b));
 }
 
 TEST_THAT(Territory,
@@ -49,7 +49,7 @@ TEST_THAT(Territory,
      WHEN(GivenABlockThatIsAlreadyPartOfTheTerritory),
      THEN(DoesNotAddThatBlockAgain))
 {
-    auto const b = block{0, 1, 2};
+    auto const b = block{{0, 1, 2}};
 
     t.add_block(b);
 
