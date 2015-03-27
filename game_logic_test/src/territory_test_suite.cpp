@@ -1,6 +1,7 @@
 #include "stdafx.hpp"
 
 #include "game_logic/territory.hpp"
+#include "game_logic/block.hpp"
 
 namespace snake_overflow { namespace game_logic { namespace testing
 {
@@ -15,5 +16,13 @@ protected:
     territory s;
 
 };
+
+TEST_THAT(Territory,
+     WHAT(GetBlocks),
+     WHEN(ImmediatelyAfterDefaultConstruction),
+     THEN(ReturnsAnEmptyCollection))
+{
+    EXPECT_TRUE(s.get_blocks().empty());
+}
 
 } } }

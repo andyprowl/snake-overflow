@@ -54,7 +54,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\game_logic\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -72,7 +72,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\game_logic\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

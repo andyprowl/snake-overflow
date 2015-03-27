@@ -23,12 +23,18 @@
     <ClCompile Include="..\src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\territory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\game_logic\territory.hpp">
+    <ClInclude Include="..\export\include\game_logic\block.hpp">
+      <Filter>export\include\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\game_logic\territory.hpp">
       <Filter>export\include\game_logic</Filter>
     </ClInclude>
   </ItemGroup>
