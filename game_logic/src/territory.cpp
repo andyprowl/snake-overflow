@@ -6,9 +6,14 @@
 namespace snake_overflow { namespace game_logic
 {
 
+territory::territory()
+{
+    this->blocks.push_back({0, 0, 0});
+}
+
 std::vector<block> territory::get_blocks() const
 {
-    return {};
+    return this->blocks;
 }
 
 } }

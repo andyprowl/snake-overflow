@@ -12,7 +12,13 @@ class territory
 
 public:
 
+    territory();
+
     std::vector<block> get_blocks() const;
+
+private:
+
+    std::vector<block> blocks;
 
 };
 

@@ -29,6 +29,9 @@
     <ClCompile Include="..\src\territory.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\block.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
