@@ -1,7 +1,6 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/game_logic/territory.hpp"
-#include "snake_overflow/game_logic/block.hpp"
 #include "util/contains.hpp"
 
 namespace snake_overflow { namespace game_logic

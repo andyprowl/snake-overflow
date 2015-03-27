@@ -1,5 +1,7 @@
 #pragma once
 
+#include "snake_overflow/game_logic/block.hpp"
+#include "util/noexcept.hpp"
 #include "util/value_ref.hpp"
 #include <vector>
 

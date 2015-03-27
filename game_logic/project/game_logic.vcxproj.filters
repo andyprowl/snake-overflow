@@ -44,6 +44,15 @@
     <ClCompile Include="..\src\point3d.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\snake.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\position.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\sequence.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -69,6 +78,21 @@
     </ClInclude>
     <ClInclude Include="..\export\include\math\sequence.hpp">
       <Filter>export\include\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\surface.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\position.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\noexcept.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\direction.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
