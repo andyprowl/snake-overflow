@@ -15,7 +15,10 @@
     <Filter Include="export\include">
       <UniqueIdentifier>{e0195803-a15b-44a4-be71-976b5c6caea4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="export\include\game_logic">
+    <Filter Include="export\include\snake_overflow">
+      <UniqueIdentifier>{1b4f480e-8466-47c0-b608-83bb6051eaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include\snake_overflow\game_logic">
       <UniqueIdentifier>{b4140318-e060-40e4-8456-5365e18ebd22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -31,11 +34,11 @@
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\game_logic\block.hpp">
-      <Filter>export\include\game_logic</Filter>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\game_logic\territory.hpp">
-      <Filter>export\include\game_logic</Filter>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

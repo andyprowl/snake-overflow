@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
-#include "game_logic/territory.hpp"
-#include "game_logic/block.hpp"
+#include "snake_overflow/game_logic/territory.hpp"
+#include "snake_overflow/game_logic/block.hpp"
 
 namespace snake_overflow { namespace game_logic { namespace testing
 {

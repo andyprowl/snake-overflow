@@ -84,8 +84,8 @@
     <ClCompile Include="..\src\territory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\export\include\game_logic\block.hpp" />
-    <ClInclude Include="..\export\include\game_logic\territory.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
