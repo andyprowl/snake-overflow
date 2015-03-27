@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\export\include\math\point3d.hpp" />
+    <ClInclude Include="..\export\include\math\sequence.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\cube_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp" />

@@ -67,5 +67,8 @@
     <ClInclude Include="..\export\include\math\point3d.hpp">
       <Filter>export\include\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\math\sequence.hpp">
+      <Filter>export\include\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -56,6 +56,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4512</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -77,6 +78,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4512</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
