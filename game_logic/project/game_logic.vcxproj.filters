@@ -28,5 +28,8 @@
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\game_logic\territory.hpp">
+      <Filter>export\include\game_logic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

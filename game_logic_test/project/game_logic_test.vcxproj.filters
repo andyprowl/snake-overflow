@@ -9,6 +9,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="include\testing">
+      <UniqueIdentifier>{24478e30-fe7c-44a8-a0e9-17eed68c91d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -17,10 +20,16 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\territory_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\testing\test_naming.hpp">
+      <Filter>include\testing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

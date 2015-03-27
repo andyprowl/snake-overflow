@@ -49,12 +49,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -64,7 +64,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -72,7 +72,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -84,6 +84,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp" />
+    <ClInclude Include="..\include\testing\test_naming.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
@@ -91,6 +92,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\territory_test_suite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\game_logic\project\game_logic.vcxproj">
