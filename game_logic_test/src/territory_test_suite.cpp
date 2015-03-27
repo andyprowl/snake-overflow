@@ -44,4 +44,20 @@ TEST_THAT(Territory,
     EXPECT_THAT(blocks[0], Eq(block{0, 1, 2}));
 }
 
+TEST_THAT(Territory,
+     WHAT(AddBlock),
+     WHEN(GivenABlockThatIsAlreadyPartOfTheTerritory),
+     THEN(DoesNotAddThatBlockAgain))
+{
+    auto const b = block{0, 1, 2};
+
+    t.add_block(b);
+
+    t.add_block(b);
+
+    auto const blocks = t.get_blocks();
+
+    ASSERT_THAT(blocks.size(), Eq(1u));
+}
+
 } } }

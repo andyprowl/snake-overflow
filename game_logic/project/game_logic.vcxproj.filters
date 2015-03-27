@@ -49,5 +49,8 @@
     <ClInclude Include="..\export\include\util\value_ref.hpp">
       <Filter>export\include\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\util\contains.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

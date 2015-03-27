@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp" />
+    <ClInclude Include="..\export\include\util\contains.hpp" />
     <ClInclude Include="..\export\include\util\value_ref.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
