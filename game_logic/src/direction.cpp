@@ -88,13 +88,13 @@ point3d get_direction_vector(util::value_ref<direction> dir)
     }
 }
 
-direction get_opposite_direction(direction const d)
+direction get_opposite_direction(util::value_ref<direction> const dir)
 {
-    auto opposite_way = (d.way == orientation::negative)
+    auto opposite_way = (dir.way == orientation::negative)
                       ? orientation::positive
                       : orientation::negative;
 
-    return {d.axis, opposite_way};
+    return {dir.axis, opposite_way};
 }
 
 } }

@@ -2,6 +2,7 @@
 
 #include "snake_overflow/game_logic/direction.hpp"
 #include "snake_overflow/game_logic/position.hpp"
+#include "snake_overflow/game_logic/movement_profile.hpp"
 #include "snake_overflow/game_logic/snake.hpp"
 #include "snake_overflow/game_logic/territory.hpp"
 #include "util/repeat.hpp"
@@ -53,6 +54,28 @@ void snake::advance()
 void snake::grow(int const size)
 {
     this->growth += size;
+}
+
+void snake::turn_left()
+{
+    auto const dir = get_direction();
+    
+    auto const s = this->current_dynamics.pos.block_surface;
+
+    auto const new_dir = get_left_turn_profile({s, dir}).movement_direction;
+
+    this->current_dynamics.dir = new_dir;
+}
+
+void snake::turn_right()
+{
+    auto const dir = get_direction();
+    
+    auto const s = this->current_dynamics.pos.block_surface;
+
+    auto const new_dir = get_right_turn_profile({s, dir}).movement_direction;
+
+    this->current_dynamics.dir = new_dir;
 }
 
 } }

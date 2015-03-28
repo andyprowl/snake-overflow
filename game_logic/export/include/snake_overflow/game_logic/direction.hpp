@@ -56,7 +56,7 @@ bool operator != (util::value_ref<direction> lhs,
 
 point3d get_direction_vector(util::value_ref<direction> dir);
 
-direction get_opposite_direction(direction d);
+direction get_opposite_direction(util::value_ref<direction> dir);
 
 } }
 

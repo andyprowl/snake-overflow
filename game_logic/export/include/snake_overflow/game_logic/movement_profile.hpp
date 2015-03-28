@@ -32,6 +32,10 @@ movement_profile get_continuation_profile(util::value_ref<movement_profile> p);
 
 movement_profile get_opposite_profile(util::value_ref<movement_profile> p);
 
+movement_profile get_left_turn_profile(util::value_ref<movement_profile> p);
+
+movement_profile get_right_turn_profile(util::value_ref<movement_profile> p);
+
 } }
 
 namespace std

@@ -31,6 +31,10 @@ public:
 
     void grow(int size);
 
+    void turn_left();
+
+    void turn_right();
+
 private:
 
     territory& habitat;

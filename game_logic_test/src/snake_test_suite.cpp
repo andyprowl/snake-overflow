@@ -23,7 +23,7 @@ protected:
     {
         cube_builder builder{this->habitat};
 
-        builder.add_cube({0, 0, 0}, 5);
+        builder.add_cube({0, 0, 0}, this->territory_side_length);
 
         this->s = std::make_unique<snake>(habitat, 
                                           initial_dynamics, 
@@ -31,6 +31,8 @@ protected:
     }
 
 protected:
+
+    int territory_side_length = 5;
 
     territory habitat;
 
@@ -119,6 +121,252 @@ TEST_THAT(Snake,
     EXPECT_THAT(body[2], Eq(position{{0, 0, 4}, surface::front}));
     EXPECT_THAT(body[3], Eq(position{{0, 0, 4}, surface::top}));
     EXPECT_THAT(body[4], Eq(position{{0, 1, 4}, surface::top}));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheFrontSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
+{
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheFrontSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheBackSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
+{
+    util::repeat(8, [this] { this->s->advance(); });
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheBackSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    util::repeat(8, [this] { this->s->advance(); });
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheLeftSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
+{
+    this->s->turn_left();
+    util::repeat(3, [this] { this->s->advance(); });
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheLeftSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
+{
+    this->s->turn_left();
+    util::repeat(3, [this] { this->s->advance(); });
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheRightSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    this->s->turn_right();
+    util::repeat(7, [this] { this->s->advance(); });
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheRightSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    this->s->turn_right();
+    util::repeat(7, [this] { this->s->advance(); });
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheTopSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    util::repeat(4, [this] { this->s->advance(); });
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheTopSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    util::repeat(4, [this] { this->s->advance(); });
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenWalkingOnTheBottomSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    this->s->turn_right();
+    this->s->advance();
+    this->s->turn_right();
+    util::repeat(3, [this] { this->s->advance(); });
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_left();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenWalkingOnTheBottomSurface),
+     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
+{
+    this->s->turn_right();
+    this->s->advance();
+    this->s->turn_right();
+    util::repeat(3, [this] { this->s->advance(); });
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+
+    this->s->turn_right();
+    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
 }
 
 } } }
