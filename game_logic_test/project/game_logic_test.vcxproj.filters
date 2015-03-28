@@ -12,6 +12,12 @@
     <Filter Include="include\testing">
       <UniqueIdentifier>{24478e30-fe7c-44a8-a0e9-17eed68c91d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\snake_overflow">
+      <UniqueIdentifier>{6296b629-15b0-49ec-9a2b-e53540cf11fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\snake_overflow\game_logic">
+      <UniqueIdentifier>{7b841fb6-0464-42dd-9963-8d82f5e0be97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -39,6 +45,18 @@
     </ClInclude>
     <ClInclude Include="..\include\testing\test_naming.hpp">
       <Filter>include\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\direction_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\point3d_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\position_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\surface_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

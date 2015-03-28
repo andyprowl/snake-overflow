@@ -20,7 +20,7 @@ public:
     snake(territory& habitat, 
           util::value_ref<position> start_position, 
           int initial_length,
-          direction initial_direction);
+          util::value_ref<math::point3d> initial_direction);
 
     std::vector<position> get_body() const;
 

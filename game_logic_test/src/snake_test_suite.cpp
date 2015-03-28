@@ -31,7 +31,9 @@ protected:
 
     int initial_length = 3;
 
-    snake s{habitat, start_position, initial_length, direction::up};
+    math::point3d initial_direction = math::point3d::z_unit();
+
+    snake s{habitat, start_position, initial_length, initial_direction};
 
 };
 

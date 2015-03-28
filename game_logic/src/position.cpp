@@ -12,4 +12,17 @@ position::position(util::value_ref<math::point3d> block_origin,
 {
 }
 
+bool operator == (util::value_ref<position> lhs, 
+                  util::value_ref<position> rhs)
+{
+    return ((lhs.block_origin == rhs.block_origin) &&
+            (lhs.block_surface == rhs.block_surface));
+}
+
+bool operator != (util::value_ref<position> lhs, 
+                  util::value_ref<position> rhs)
+{
+    return !(lhs == rhs);
+}
+
 } }

@@ -15,10 +15,18 @@ public:
     position(util::value_ref<math::point3d> block_origin,
              surface block_surface);
 
+public:
+
     math::point3d block_origin;
 
     surface block_surface;
 
 };
+
+bool operator == (util::value_ref<position> lhs, 
+                  util::value_ref<position> rhs);
+
+bool operator != (util::value_ref<position> lhs, 
+                  util::value_ref<position> rhs);
 
 } }

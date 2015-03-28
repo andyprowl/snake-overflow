@@ -10,7 +10,7 @@ namespace snake_overflow { namespace game_logic
 snake::snake(territory& habitat,
              util::value_ref<position> start_position, 
              int const initial_length,
-             direction const initial_direction)
+             util::value_ref<math::point3d> initial_direction)
     : habitat{habitat}
 {
     for (auto const i : math::sequence(0, initial_length))
