@@ -66,4 +66,15 @@ point3d operator - (util::value_ref<point3d> lhs,
     return {lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
 }
 
+point3d operator * (util::value_ref<point3d> p, int const factor)
+{
+    return {p.x * factor, p.y * factor, p.z * factor};
+}
+
+point3d operator * (int const factor, util::value_ref<point3d> p)
+{
+
+    return p * factor;
+}
+
 } }

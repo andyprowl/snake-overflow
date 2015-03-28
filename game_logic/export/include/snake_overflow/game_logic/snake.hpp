@@ -1,14 +1,15 @@
 #pragma once
 
+#include "snake_overflow/game_logic/dynamics.hpp"
 #include "snake_overflow/game_logic/position.hpp"
 #include "util/value_ref.hpp"
+#include <deque>
 #include <vector>
 
 namespace snake_overflow { namespace game_logic
 {
 
 struct direction;
-struct dynamics;
 struct position;
 
 class territory;
@@ -24,11 +25,21 @@ public:
 
     std::vector<position> get_body() const;
 
+    direction get_direction() const;
+
+    void advance();
+
+    void grow(int size);
+
 private:
 
     territory& habitat;
 
-    std::vector<position> body;
+    std::deque<position> body;
+
+    dynamics current_dynamics;
+
+    int growth;
 
 };
 

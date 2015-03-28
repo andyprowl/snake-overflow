@@ -112,5 +112,8 @@
     <ClInclude Include="..\export\include\snake_overflow\game_logic\movement_profile.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\util\repeat.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

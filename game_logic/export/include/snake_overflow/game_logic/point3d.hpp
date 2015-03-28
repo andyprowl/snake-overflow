@@ -44,4 +44,8 @@ point3d operator + (util::value_ref<point3d> lhs,
 point3d operator - (util::value_ref<point3d> lhs, 
                     util::value_ref<point3d> rhs);
 
+point3d operator * (util::value_ref<point3d> p, int factor);
+
+point3d operator * (int factor, util::value_ref<point3d> p);
+
 } }

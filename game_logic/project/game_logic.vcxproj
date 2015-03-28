@@ -109,6 +109,7 @@
     <ClInclude Include="..\export\include\util\contains.hpp" />
     <ClInclude Include="..\export\include\util\hashing.hpp" />
     <ClInclude Include="..\export\include\util\noexcept.hpp" />
+    <ClInclude Include="..\export\include\util\repeat.hpp" />
     <ClInclude Include="..\export\include\util\sequence.hpp" />
     <ClInclude Include="..\export\include\util\value_ref.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
