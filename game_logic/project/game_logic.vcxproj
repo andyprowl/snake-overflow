@@ -83,6 +83,7 @@
     <ClCompile Include="..\src\cube_builder.cpp" />
     <ClCompile Include="..\src\direction.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
+    <ClCompile Include="..\src\movement_profile.cpp" />
     <ClCompile Include="..\src\point3d.cpp" />
     <ClCompile Include="..\src\position.cpp" />
     <ClCompile Include="..\src\sequence.cpp" />
@@ -91,6 +92,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\surface.cpp" />
     <ClCompile Include="..\src\territory.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,12 +100,14 @@
     <ClInclude Include="..\export\include\snake_overflow\game_logic\cube_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\direction.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\movement_profile.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\point3d.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\position.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\surface.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp" />
     <ClInclude Include="..\export\include\util\contains.hpp" />
+    <ClInclude Include="..\export\include\util\hashing.hpp" />
     <ClInclude Include="..\export\include\util\noexcept.hpp" />
     <ClInclude Include="..\export\include\util\sequence.hpp" />
     <ClInclude Include="..\export\include\util\value_ref.hpp" />

@@ -29,9 +29,6 @@
     <ClCompile Include="..\src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\territory.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\block.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -54,6 +51,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\dynamics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\territory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\surface.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\movement_profile.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,6 +104,12 @@
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\hashing.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\movement_profile.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>

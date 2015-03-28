@@ -13,4 +13,6 @@ enum class surface
     bottom
 };
 
+surface get_opposite_surface(surface s);
+
 } }

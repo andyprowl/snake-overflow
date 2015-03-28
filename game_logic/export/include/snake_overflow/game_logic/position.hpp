@@ -12,8 +12,7 @@ struct position
 
 public:
 
-    position(util::value_ref<point3d> block_origin,
-             surface block_surface);
+    position(util::value_ref<point3d> block_origin, surface block_surface);
 
 public:
 

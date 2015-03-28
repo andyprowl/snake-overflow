@@ -13,6 +13,36 @@ direction::direction(cartesian_axis axis, orientation way)
 {
 }
 
+direction direction::positive_x()
+{
+    return {cartesian_axis::x, orientation::positive};
+}
+
+direction direction::negative_x()
+{
+    return {cartesian_axis::x, orientation::negative};
+}
+
+direction direction::positive_y()
+{
+    return {cartesian_axis::y, orientation::positive};
+}
+
+direction direction::negative_y()
+{
+    return {cartesian_axis::y, orientation::negative};
+}
+
+direction direction::positive_z()
+{
+    return {cartesian_axis::z, orientation::positive};
+}
+
+direction direction::negative_z()
+{
+    return {cartesian_axis::z, orientation::negative};
+}
+
 bool operator == (util::value_ref<direction> lhs, 
                   util::value_ref<direction> rhs)
 {
@@ -56,6 +86,15 @@ point3d get_direction_vector(util::value_ref<direction> dir)
             return {0, 0, 0};
         }
     }
+}
+
+direction get_opposite_direction(direction const d)
+{
+    auto opposite_way = (d.way == orientation::negative)
+                      ? orientation::positive
+                      : orientation::negative;
+
+    return {d.axis, opposite_way};
 }
 
 } }
