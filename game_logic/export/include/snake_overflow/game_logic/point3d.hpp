@@ -2,7 +2,7 @@
 
 #include "util/value_ref.hpp"
 
-namespace math
+namespace snake_overflow { namespace game_logic
 {
 
 struct point3d
@@ -44,4 +44,4 @@ point3d operator + (util::value_ref<point3d> lhs,
 point3d operator - (util::value_ref<point3d> lhs, 
                     util::value_ref<point3d> rhs);
 
-}
+} }

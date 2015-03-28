@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math/point3d.hpp"
+#include "snake_overflow/game_logic/point3d.hpp"
 #include "util/value_ref.hpp"
 
 namespace snake_overflow { namespace game_logic
@@ -11,13 +11,13 @@ struct block
 
 public:
 
-    block(util::value_ref<math::point3d> origin);
+    block(util::value_ref<point3d> origin);
 
-    math::point3d get_origin() const;
+    point3d get_origin() const;
 
 private:
 
-    math::point3d origin;
+    point3d origin;
 
 };
 

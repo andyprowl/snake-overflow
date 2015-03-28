@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\include\snake_overflow\game_logic\direction_format.hpp" />
+    <ClInclude Include="..\include\snake_overflow\game_logic\dynamics_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\game_logic\point3d_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\game_logic\position_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\game_logic\surface_format.hpp" />

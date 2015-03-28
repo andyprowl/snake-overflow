@@ -58,5 +58,8 @@
     <ClInclude Include="..\include\snake_overflow\game_logic\surface_format.hpp">
       <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\dynamics_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

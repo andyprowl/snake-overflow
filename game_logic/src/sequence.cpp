@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "math/sequence.hpp"
+#include "util/sequence.hpp"
 #include <algorithm>
 
-namespace math { namespace detail
+namespace util { namespace detail
 {
 
 sequence_iterator::sequence_iterator(int const n, int const upper) 
@@ -23,7 +23,7 @@ sequence_iterator& sequence_iterator::operator ++ ()
     return *this; 
 }
 
-bool sequence_iterator::operator != (util::value_ref<sequence_iterator> rhs) const 
+bool sequence_iterator::operator != (value_ref<sequence_iterator> rhs) const 
 { 
     return (this->n != rhs.n);
 }
@@ -44,7 +44,7 @@ sequence_iterator sequence::end() const
 
 } }
 
-namespace math
+namespace util
 {
 
 detail::sequence sequence(int const from, int const to)

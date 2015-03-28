@@ -3,7 +3,7 @@
 #include "snake_overflow/game_logic/cube_builder.hpp"
 #include "snake_overflow/game_logic/territory.hpp"
 #include "snake_overflow/game_logic/block.hpp"
-#include "math/point3d.hpp"
+#include "snake_overflow/game_logic/point3d.hpp"
 
 namespace snake_overflow { namespace game_logic { namespace testing
 {

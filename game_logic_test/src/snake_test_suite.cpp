@@ -31,9 +31,11 @@ protected:
 
     int initial_length = 3;
 
-    math::point3d initial_direction = math::point3d::z_unit();
+    dynamics initial_dynamics = {start_position, 
+                                 direction{cartesian_axis::z, 
+                                           orientation::positive}};
 
-    snake s{habitat, start_position, initial_length, initial_direction};
+    snake s{habitat, initial_dynamics, initial_length};
 
 };
 

@@ -24,9 +24,6 @@
     <Filter Include="export\include\util">
       <UniqueIdentifier>{53baa009-4d7c-4463-ab20-ff95001e6a5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="export\include\math">
-      <UniqueIdentifier>{ca7e3e52-8ecc-4fcc-9f40-86d86930cb86}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -53,6 +50,12 @@
     <ClCompile Include="..\src\sequence.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\direction.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dynamics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -73,12 +76,6 @@
     <ClInclude Include="..\export\include\snake_overflow\game_logic\cube_builder.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\math\point3d.hpp">
-      <Filter>export\include\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\math\sequence.hpp">
-      <Filter>export\include\math</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
@@ -89,9 +86,18 @@
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\util\noexcept.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\sequence.hpp">
+      <Filter>export\include\util</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\direction.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\point3d.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>

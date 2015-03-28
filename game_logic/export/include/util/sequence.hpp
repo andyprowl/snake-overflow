@@ -3,7 +3,7 @@
 #include "util/value_ref.hpp"
 #include <stdexcept>
 
-namespace math { namespace detail
+namespace util { namespace detail
 {
 
 struct sequence_iterator
@@ -17,7 +17,7 @@ public:
     
     sequence_iterator& operator ++ ();
 
-    bool operator != (util::value_ref<sequence_iterator> rhs) const;
+    bool operator != (value_ref<sequence_iterator> rhs) const;
 
 private:
     
@@ -48,7 +48,7 @@ private:
 
 } }
 
-namespace math
+namespace util
 {
 
 class bad_interval_exception : public virtual std::exception

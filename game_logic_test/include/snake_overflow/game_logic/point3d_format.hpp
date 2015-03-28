@@ -1,10 +1,10 @@
 #pragma once
 
-#include "math/point3d.hpp"
+#include "snake_overflow/game_logic/point3d.hpp"
 #include <cassert>
 #include <iostream>
 
-namespace math
+namespace snake_overflow { namespace game_logic
 {
 
 inline std::ostream& operator << (std::ostream& out, 
@@ -15,4 +15,4 @@ inline std::ostream& operator << (std::ostream& out,
     return out;
 }
 
-}
+} }

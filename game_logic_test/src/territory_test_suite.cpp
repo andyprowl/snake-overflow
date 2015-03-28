@@ -3,6 +3,7 @@
 #include "snake_overflow/game_logic/block.hpp"
 #include "snake_overflow/game_logic/cube_builder.hpp"
 #include "snake_overflow/game_logic/direction.hpp"
+#include "snake_overflow/game_logic/dynamics.hpp"
 #include "snake_overflow/game_logic/position.hpp"
 #include "snake_overflow/game_logic/territory.hpp"
 
@@ -24,13 +25,10 @@ protected:
         builder.add_cube({0, 0, 0}, side_length);
     }
 
-    void verify_step(util::value_ref<position> start,
-                     util::value_ref<math::point3d> dir,
-                     util::value_ref<position> expected_result)
+    void verify_step(util::value_ref<dynamics> d,
+                     util::value_ref<dynamics> expected_result)
     {
-        auto const pos = this->t.compute_step_target(start, dir);
-
-        EXPECT_THAT(pos, Eq(expected_result));
+        EXPECT_THAT(this->t.compute_step(d), Eq(expected_result));
     }
 
 protected:
@@ -87,16 +85,33 @@ TEST_THAT(Territory,
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
 {
     create_cube_with_vertex_on_origin(4);
-    auto const x = math::point3d::x_unit();
 
-    verify_step({{1, 0, 1}, surface::front}, x, {{2, 0, 1}, surface::front});
-    verify_step({{1, 0, 1}, surface::front}, -x, {{0, 0, 1}, surface::front});
-    verify_step({{1, 3, 1}, surface::back}, x, {{2, 3, 1}, surface::back});
-    verify_step({{1, 3, 1}, surface::back}, -x, {{0, 3, 1}, surface::back});
-    verify_step({{1, 1, 3}, surface::top}, x, {{2, 1, 3}, surface::top});
-    verify_step({{1, 1, 3}, surface::top}, -x, {{0, 1, 3}, surface::top});
-    verify_step({{1, 1, 0}, surface::bottom}, x, {{2, 1, 0}, surface::bottom});
-    verify_step({{1, 1, 0}, surface::bottom}, -x, {{0, 1, 0}, surface::bottom});
+    auto const px = direction{cartesian_axis::x, orientation::positive};
+    auto const nx = direction{cartesian_axis::x, orientation::negative};
+
+    verify_step({{{1, 0, 1}, surface::front}, px}, 
+                {{{2, 0, 1}, surface::front}, px});
+
+    verify_step({{{1, 0, 1}, surface::front}, nx}, 
+                {{{0, 0, 1}, surface::front}, nx});
+
+    verify_step({{{1, 3, 1}, surface::back}, px}, 
+                {{{2, 3, 1}, surface::back}, px});
+
+    verify_step({{{1, 3, 1}, surface::back}, nx}, 
+                {{{0, 3, 1}, surface::back}, nx});
+
+    verify_step({{{1, 1, 3}, surface::top}, px}, 
+                {{{2, 1, 3}, surface::top}, px});
+
+    verify_step({{{1, 1, 3}, surface::top}, nx}, 
+                {{{0, 1, 3}, surface::top}, nx});
+
+    verify_step({{{1, 1, 0}, surface::bottom}, px}, 
+                {{{2, 1, 0}, surface::bottom}, px});
+
+    verify_step({{{1, 1, 0}, surface::bottom}, nx}, 
+                {{{0, 1, 0}, surface::bottom}, nx});
 }
 
 TEST_THAT(Territory,
@@ -105,16 +120,33 @@ TEST_THAT(Territory,
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
 {
     create_cube_with_vertex_on_origin(4);
-    auto const y = math::point3d::y_unit();
 
-    verify_step({{0, 1, 1}, surface::left}, y, {{0, 2, 1}, surface::left});
-    verify_step({{0, 1, 1}, surface::left}, -y, {{0, 0, 1}, surface::left});
-    verify_step({{3, 1, 1}, surface::right}, y, {{3, 2, 1}, surface::right});
-    verify_step({{3, 1, 1}, surface::right}, -y, {{3, 0, 1}, surface::right});
-    verify_step({{1, 1, 3}, surface::top}, y, {{1, 2, 3}, surface::top});
-    verify_step({{1, 1, 3}, surface::top}, -y, {{1, 0, 3}, surface::top});
-    verify_step({{1, 1, 0}, surface::bottom}, y, {{1, 2, 0}, surface::bottom});
-    verify_step({{1, 1, 0}, surface::bottom}, -y, {{1, 0, 0}, surface::bottom});
+    auto const py = direction{cartesian_axis::y, orientation::positive};
+    auto const ny = direction{cartesian_axis::y, orientation::negative};
+
+    verify_step({{{0, 1, 1}, surface::left}, py}, 
+                {{{0, 2, 1}, surface::left}, py});
+
+    verify_step({{{0, 1, 1}, surface::left}, ny}, 
+                {{{0, 0, 1}, surface::left}, ny});
+
+    verify_step({{{3, 1, 1}, surface::right}, py}, 
+                {{{3, 2, 1}, surface::right}, py});
+
+    verify_step({{{3, 1, 1}, surface::right}, ny}, 
+                {{{3, 0, 1}, surface::right}, ny});
+
+    verify_step({{{1, 1, 3}, surface::top}, py}, 
+                {{{1, 2, 3}, surface::top}, py});
+
+    verify_step({{{1, 1, 3}, surface::top}, ny}, 
+                {{{1, 0, 3}, surface::top}, ny});
+
+    verify_step({{{1, 1, 0}, surface::bottom}, py}, 
+                {{{1, 2, 0}, surface::bottom}, py});
+
+    verify_step({{{1, 1, 0}, surface::bottom}, ny}, 
+                {{{1, 0, 0}, surface::bottom}, ny});
 }
 
 TEST_THAT(Territory,
@@ -123,16 +155,33 @@ TEST_THAT(Territory,
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
 {
     create_cube_with_vertex_on_origin(4);
-    auto const z = math::point3d::z_unit();
 
-    verify_step({{1, 0, 1}, surface::front}, z, {{1, 0, 2}, surface::front});
-    verify_step({{1, 0, 1}, surface::front}, -z, {{1, 0, 0}, surface::front});
-    verify_step({{1, 3, 1}, surface::back}, z, {{1, 3, 2}, surface::back});
-    verify_step({{1, 3, 1}, surface::back}, -z, {{1, 3, 0}, surface::back});
-    verify_step({{0, 1, 1}, surface::left}, z, {{0, 1, 2}, surface::left});
-    verify_step({{0, 1, 1}, surface::left}, -z, {{0, 1, 0}, surface::left});
-    verify_step({{3, 1, 1}, surface::right}, z, {{3, 1, 2}, surface::right});
-    verify_step({{3, 1, 1}, surface::right}, -z, {{3, 1, 0}, surface::right});
+    auto const pz = direction{cartesian_axis::z, orientation::positive};
+    auto const nz = direction{cartesian_axis::z, orientation::negative};
+
+    verify_step({{{1, 0, 1}, surface::front}, pz}, 
+                {{{1, 0, 2}, surface::front}, pz});
+    
+    verify_step({{{1, 0, 1}, surface::front}, nz}, 
+                {{{1, 0, 0}, surface::front}, nz});
+    
+    verify_step({{{1, 3, 1}, surface::back}, pz}, 
+                {{{1, 3, 2}, surface::back}, pz});
+    
+    verify_step({{{1, 3, 1}, surface::back}, nz}, 
+                {{{1, 3, 0}, surface::back}, nz});
+    
+    verify_step({{{0, 1, 1}, surface::left}, pz}, 
+                {{{0, 1, 2}, surface::left}, pz});
+    
+    verify_step({{{0, 1, 1}, surface::left}, nz}, 
+                {{{0, 1, 0}, surface::left}, nz});
+    
+    verify_step({{{3, 1, 1}, surface::right}, pz}, 
+                {{{3, 1, 2}, surface::right}, pz});
+    
+    verify_step({{{3, 1, 1}, surface::right}, nz}, 
+                {{{3, 1, 0}, surface::right}, nz});
 }
 
 } } }

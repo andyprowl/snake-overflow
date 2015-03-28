@@ -8,10 +8,9 @@
 namespace snake_overflow { namespace game_logic
 {
 
-enum class direction;
-
 struct block;
-struct position;
+struct direction;
+struct dynamics;
 
 class territory
 {
@@ -22,8 +21,7 @@ public:
 
     void add_block(util::value_ref<block> b);
 
-    position compute_step_target(util::value_ref<position> start,
-                                 util::value_ref<math::point3d> dir) const;
+    dynamics compute_step(util::value_ref<dynamics> d) const;
 
 private:
 

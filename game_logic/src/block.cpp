@@ -5,12 +5,12 @@
 namespace snake_overflow { namespace game_logic
 {
 
-block::block(util::value_ref<math::point3d> origin)
+block::block(util::value_ref<point3d> origin)
     : origin{origin}
 {
 }
 
-math::point3d block::get_origin() const
+point3d block::get_origin() const
 {
     return this->origin;
 }

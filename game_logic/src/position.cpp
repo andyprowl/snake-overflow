@@ -5,7 +5,7 @@
 namespace snake_overflow { namespace game_logic
 {
 
-position::position(util::value_ref<math::point3d> block_origin,
+position::position(util::value_ref<point3d> block_origin,
                    surface const block_surface)
     : block_origin{block_origin}
     , block_surface{block_surface}

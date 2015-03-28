@@ -17,7 +17,7 @@ TEST_THAT(Block,
      WHEN(Always),
      THEN(ReturnsTheOriginPassedAtConstruction))
 {
-    auto const origin = math::point3d{42, 1337, -1729};
+    auto const origin = point3d{42, 1337, -1729};
 
     auto const b = block{origin};
 

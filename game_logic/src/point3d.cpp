@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "math/point3d.hpp"
+#include "snake_overflow/game_logic/point3d.hpp"
 #include <tuple>
 
-namespace math
+namespace snake_overflow { namespace game_logic
 {
 
 point3d::point3d(int x, int y, int z)
@@ -66,4 +66,4 @@ point3d operator - (util::value_ref<point3d> lhs,
     return {lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z};
 }
 
-}
+} }
