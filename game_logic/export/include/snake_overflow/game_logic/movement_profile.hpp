@@ -1,7 +1,7 @@
 #pragma once
 
-#include "snake_overflow/game_logic/direction.hpp"
-#include "snake_overflow/game_logic/surface.hpp"
+#include "snake_overflow/game_logic/canonical_direction.hpp"
+#include "snake_overflow/game_logic/block_face.hpp"
 #include "util/value_ref.hpp"
 
 namespace snake_overflow { namespace game_logic
@@ -12,13 +12,13 @@ struct movement_profile
 
 public:
 
-    movement_profile(surface s, direction d);
+    movement_profile(block_face s, canonical_direction d);
 
 public:
     
-    surface block_surface;
+    block_face face;
 
-    direction movement_direction;
+    canonical_direction direction;
 
 };
 
@@ -50,11 +50,11 @@ public:
     std::size_t operator () (
         util::value_ref<snake_overflow::game_logic::movement_profile> p)
     {
-        auto const s = p.block_surface;
-        auto const dir = p.movement_direction;
+        auto const s = p.face;
+        auto const dir = p.direction;
 
         return (std::hash<std::size_t>{}(static_cast<std::size_t>(s)) ^
-                std::hash<snake_overflow::game_logic::direction>{}(dir));
+                std::hash<snake_overflow::game_logic::canonical_direction>{}(dir));
     }
 
 };

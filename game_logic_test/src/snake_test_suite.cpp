@@ -21,7 +21,7 @@ protected:
 
     virtual void SetUp() override
     {
-        cube_builder builder{this->habitat};
+        auto builder = cube_builder{this->habitat};
 
         builder.add_cube({0, 0, 0}, this->territory_side_length);
 
@@ -36,13 +36,18 @@ protected:
 
     territory habitat;
 
-    position start_position{{0, 0, 0}, surface::front};
+    point initial_location = {0, 0, 0};
+
+    block_face initial_face = block_face::front;
+
+    position initial_position{initial_location, initial_face};
+
+    canonical_direction initial_direction{canonical_axis::z, orientation::positive};
 
     int initial_length = 3;
 
-    dynamics initial_dynamics = {start_position, 
-                                 direction{cartesian_axis::z, 
-                                           orientation::positive}};
+    dynamics initial_dynamics = {initial_location, 
+                                {initial_face, initial_direction}};
 
     std::unique_ptr<snake> s;
 
@@ -67,13 +72,13 @@ TEST_THAT(Snake,
 
     ASSERT_THAT(body.size(), Eq(this->initial_length));    
 
-    EXPECT_THAT(body[0], Eq(this->start_position));
+    EXPECT_THAT(body[0], Eq(this->initial_position));
 
-    auto const dir = get_direction_vector(this->initial_dynamics.dir);    
+    auto const dir = get_dynamics_direction_vector(this->initial_dynamics);    
     for (auto const i : util::sequence(0, this->initial_length))
     {
-        auto expected_block = this->start_position.block_origin + i * dir;
-        EXPECT_THAT(body[i].block_origin, Eq(expected_block));
+        auto expected_block = this->initial_location + i * dir;
+        EXPECT_THAT(body[i].location, Eq(expected_block));
     }
 }
 
@@ -84,7 +89,7 @@ TEST_THAT(Snake,
 {
     auto const dir = this->s->get_direction();
 
-    EXPECT_THAT(dir, Eq(initial_dynamics.dir));
+    EXPECT_THAT(dir, Eq(this->initial_direction));
 }
 
 TEST_THAT(Snake,
@@ -98,9 +103,9 @@ TEST_THAT(Snake,
 
     ASSERT_THAT(body.size(), Eq(3u));
 
-    EXPECT_THAT(body[0], Eq(position{{0, 0, 4}, surface::front}));
-    EXPECT_THAT(body[1], Eq(position{{0, 0, 4}, surface::top}));
-    EXPECT_THAT(body[2], Eq(position{{0, 1, 4}, surface::top}));
+    EXPECT_THAT(body[0], Eq(position{{0, 0, 4}, block_face::front}));
+    EXPECT_THAT(body[1], Eq(position{{0, 0, 4}, block_face::top}));
+    EXPECT_THAT(body[2], Eq(position{{0, 1, 4}, block_face::top}));
 }
 
 TEST_THAT(Snake,
@@ -116,11 +121,11 @@ TEST_THAT(Snake,
 
     ASSERT_THAT(body.size(), Eq(5u));
 
-    EXPECT_THAT(body[0], Eq(position{{0, 0, 2}, surface::front}));
-    EXPECT_THAT(body[1], Eq(position{{0, 0, 3}, surface::front}));
-    EXPECT_THAT(body[2], Eq(position{{0, 0, 4}, surface::front}));
-    EXPECT_THAT(body[3], Eq(position{{0, 0, 4}, surface::top}));
-    EXPECT_THAT(body[4], Eq(position{{0, 1, 4}, surface::top}));
+    EXPECT_THAT(body[0], Eq(position{{0, 0, 2}, block_face::front}));
+    EXPECT_THAT(body[1], Eq(position{{0, 0, 3}, block_face::front}));
+    EXPECT_THAT(body[2], Eq(position{{0, 0, 4}, block_face::front}));
+    EXPECT_THAT(body[3], Eq(position{{0, 0, 4}, block_face::top}));
+    EXPECT_THAT(body[4], Eq(position{{0, 1, 4}, block_face::top}));
 }
 
 TEST_THAT(Snake,
@@ -129,16 +134,20 @@ TEST_THAT(Snake,
      THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
 {
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 }
 
 TEST_THAT(Snake,
@@ -147,16 +156,20 @@ TEST_THAT(Snake,
      THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
 {
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 }
 
 TEST_THAT(Snake,
@@ -167,16 +180,20 @@ TEST_THAT(Snake,
     util::repeat(8, [this] { this->s->advance(); });
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 }
 
 TEST_THAT(Snake,
@@ -187,16 +204,20 @@ TEST_THAT(Snake,
     util::repeat(8, [this] { this->s->advance(); });
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 }
 
 TEST_THAT(Snake,
@@ -208,16 +229,20 @@ TEST_THAT(Snake,
     util::repeat(3, [this] { this->s->advance(); });
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -229,16 +254,20 @@ TEST_THAT(Snake,
     util::repeat(3, [this] { this->s->advance(); });
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -250,16 +279,20 @@ TEST_THAT(Snake,
     util::repeat(7, [this] { this->s->advance(); });
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -271,16 +304,20 @@ TEST_THAT(Snake,
     util::repeat(7, [this] { this->s->advance(); });
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_z()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_z()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -291,16 +328,20 @@ TEST_THAT(Snake,
     util::repeat(4, [this] { this->s->advance(); });
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -311,16 +352,20 @@ TEST_THAT(Snake,
     util::repeat(4, [this] { this->s->advance(); });
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -334,16 +379,20 @@ TEST_THAT(Snake,
     util::repeat(3, [this] { this->s->advance(); });
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 TEST_THAT(Snake,
@@ -357,16 +406,20 @@ TEST_THAT(Snake,
     util::repeat(3, [this] { this->s->advance(); });
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::negative_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::negative_y()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_x()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_x()));
 
     this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), Eq(direction::positive_y()));
+    EXPECT_THAT(this->s->get_direction(), 
+                Eq(canonical_direction::positive_y()));
 }
 
 } } }

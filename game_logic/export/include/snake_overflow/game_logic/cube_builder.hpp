@@ -5,7 +5,7 @@
 namespace snake_overflow { namespace game_logic
 {
 
-struct point3d;
+struct point;
 
 class territory;
 
@@ -16,7 +16,7 @@ public:
 
     cube_builder(territory& build_site);
 
-    void add_cube(util::value_ref<point3d> origin, int side_length) const;
+    void add_cube(util::value_ref<point> origin, int side_length) const;
     
 private:
 

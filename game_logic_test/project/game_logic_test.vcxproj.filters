@@ -49,16 +49,16 @@
     <ClInclude Include="..\include\snake_overflow\game_logic\direction_format.hpp">
       <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\game_logic\point3d_format.hpp">
-      <Filter>include\snake_overflow\game_logic</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\snake_overflow\game_logic\position_format.hpp">
       <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\game_logic\surface_format.hpp">
+    <ClInclude Include="..\include\snake_overflow\game_logic\dynamics_format.hpp">
       <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\game_logic\dynamics_format.hpp">
+    <ClInclude Include="..\include\snake_overflow\game_logic\block_face_format.hpp">
+      <Filter>include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_logic\point_format.hpp">
       <Filter>include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>

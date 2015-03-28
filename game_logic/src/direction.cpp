@@ -1,83 +1,84 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/direction.hpp"
-#include "snake_overflow/game_logic/point3d.hpp"
+#include "snake_overflow/game_logic/canonical_direction.hpp"
+#include "snake_overflow/game_logic/point.hpp"
 #include <cassert>
 
 namespace snake_overflow { namespace game_logic
 {
 
-direction::direction(cartesian_axis axis, orientation way)
+canonical_direction::canonical_direction(canonical_axis const axis, 
+                                         orientation const way)
     : axis{axis}
     , way{way}
 {
 }
 
-direction direction::positive_x()
+canonical_direction canonical_direction::positive_x()
 {
-    return {cartesian_axis::x, orientation::positive};
+    return {canonical_axis::x, orientation::positive};
 }
 
-direction direction::negative_x()
+canonical_direction canonical_direction::negative_x()
 {
-    return {cartesian_axis::x, orientation::negative};
+    return {canonical_axis::x, orientation::negative};
 }
 
-direction direction::positive_y()
+canonical_direction canonical_direction::positive_y()
 {
-    return {cartesian_axis::y, orientation::positive};
+    return {canonical_axis::y, orientation::positive};
 }
 
-direction direction::negative_y()
+canonical_direction canonical_direction::negative_y()
 {
-    return {cartesian_axis::y, orientation::negative};
+    return {canonical_axis::y, orientation::negative};
 }
 
-direction direction::positive_z()
+canonical_direction canonical_direction::positive_z()
 {
-    return {cartesian_axis::z, orientation::positive};
+    return {canonical_axis::z, orientation::positive};
 }
 
-direction direction::negative_z()
+canonical_direction canonical_direction::negative_z()
 {
-    return {cartesian_axis::z, orientation::negative};
+    return {canonical_axis::z, orientation::negative};
 }
 
-bool operator == (util::value_ref<direction> lhs, 
-                  util::value_ref<direction> rhs)
+bool operator == (util::value_ref<canonical_direction> lhs, 
+                  util::value_ref<canonical_direction> rhs)
 {
     return ((lhs.axis == rhs.axis) && (lhs.way == rhs.way));
 }
 
-bool operator != (util::value_ref<direction> lhs, 
-                  util::value_ref<direction> rhs)
+bool operator != (util::value_ref<canonical_direction> lhs, 
+                  util::value_ref<canonical_direction> rhs)
 {
     return !(lhs == rhs);
 }
 
-point3d get_direction_vector(util::value_ref<direction> dir)
+point get_direction_vector(util::value_ref<canonical_direction> dir)
 {
     switch (dir.axis)
     {
-        case cartesian_axis::x: 
+        case canonical_axis::x: 
         {
             return (dir.way == orientation::positive) 
-                 ? point3d{1, 0, 0} 
-                 : point3d{-1, 0, 0};
+                 ? point{1, 0, 0} 
+                 : point{-1, 0, 0};
         }
 
-        case cartesian_axis::y: 
+        case canonical_axis::y: 
         {
             return (dir.way == orientation::positive) 
-                 ? point3d{0, 1, 0} 
-                 : point3d{0, -1, 0};
+                 ? point{0, 1, 0} 
+                 : point{0, -1, 0};
         }
 
-        case cartesian_axis::z:
+        case canonical_axis::z:
         {
             return (dir.way == orientation::positive) 
-                 ? point3d{0, 0, 1} 
-                 : point3d{0, 0, -1};
+                 ? point{0, 0, 1} 
+                 : point{0, 0, -1};
         }
 
         default:
@@ -88,7 +89,8 @@ point3d get_direction_vector(util::value_ref<direction> dir)
     }
 }
 
-direction get_opposite_direction(util::value_ref<direction> const dir)
+canonical_direction get_opposite_direction(
+    util::value_ref<canonical_direction> const dir)
 {
     auto opposite_way = (dir.way == orientation::negative)
                       ? orientation::positive

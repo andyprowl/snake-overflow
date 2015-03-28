@@ -1,6 +1,6 @@
 #pragma once
 
-#include "snake_overflow/game_logic/point3d.hpp"
+#include "snake_overflow/game_logic/point.hpp"
 #include <cassert>
 #include <iostream>
 
@@ -8,7 +8,7 @@ namespace snake_overflow { namespace game_logic
 {
 
 inline std::ostream& operator << (std::ostream& out, 
-                                  util::value_ref<point3d> p)
+                                  util::value_ref<point> p)
 {
     out << "(" << p.x << ", " << p.y << ", " << p.z << ")";
 

@@ -1,13 +1,14 @@
 #pragma once
 
-#include "snake_overflow/game_logic/direction.hpp"
+#include "snake_overflow/game_logic/canonical_direction.hpp"
 #include <cassert>
 #include <iostream>
 
 namespace snake_overflow { namespace game_logic
 {
 
-inline std::ostream& operator << (std::ostream& out, direction dir)
+inline std::ostream& operator << (std::ostream& out, 
+                                  util::value_ref<canonical_direction> dir)
 {
     switch (dir.way)
     {
@@ -18,9 +19,9 @@ inline std::ostream& operator << (std::ostream& out, direction dir)
 
     switch (dir.axis)
     {
-        case cartesian_axis::x: out << "x"; break;
-        case cartesian_axis::y: out << "y"; break;
-        case cartesian_axis::z: out << "z"; break;
+        case canonical_axis::x: out << "x"; break;
+        case canonical_axis::y: out << "y"; break;
+        case canonical_axis::z: out << "z"; break;
         default: assert(false); break;
     }
 

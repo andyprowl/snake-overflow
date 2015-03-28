@@ -1,7 +1,7 @@
 #pragma once
 
-#include "snake_overflow/game_logic/surface.hpp"
-#include "snake_overflow/game_logic/point3d.hpp"
+#include "snake_overflow/game_logic/block_face.hpp"
+#include "snake_overflow/game_logic/point.hpp"
 #include "util/value_ref.hpp"
 
 namespace snake_overflow { namespace game_logic
@@ -12,13 +12,13 @@ struct position
 
 public:
 
-    position(util::value_ref<point3d> block_origin, surface block_surface);
+    position(util::value_ref<point> location, block_face face);
 
 public:
 
-    point3d block_origin;
+    point location;
 
-    surface block_surface;
+    block_face face;
 
 };
 

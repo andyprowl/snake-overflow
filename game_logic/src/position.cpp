@@ -5,18 +5,18 @@
 namespace snake_overflow { namespace game_logic
 {
 
-position::position(util::value_ref<point3d> block_origin,
-                   surface const block_surface)
-    : block_origin{block_origin}
-    , block_surface{block_surface}
+position::position(util::value_ref<point> location,
+                   block_face const face)
+    : location{location}
+    , face{face}
 {
 }
 
 bool operator == (util::value_ref<position> lhs, 
                   util::value_ref<position> rhs)
 {
-    return ((lhs.block_origin == rhs.block_origin) &&
-            (lhs.block_surface == rhs.block_surface));
+    return ((lhs.location == rhs.location) &&
+            (lhs.face == rhs.face));
 }
 
 bool operator != (util::value_ref<position> lhs, 

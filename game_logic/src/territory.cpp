@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/direction.hpp"
+#include "snake_overflow/game_logic/canonical_direction.hpp"
 #include "snake_overflow/game_logic/dynamics.hpp"
 #include "snake_overflow/game_logic/movement_profile.hpp"
-#include "snake_overflow/game_logic/point3d.hpp"
+#include "snake_overflow/game_logic/point.hpp"
 #include "snake_overflow/game_logic/position.hpp"
 #include "snake_overflow/game_logic/territory.hpp"
 #include "util/contains.hpp"
@@ -31,18 +31,18 @@ dynamics territory::compute_step(util::value_ref<dynamics> d) const
 {
     auto turn_dynamics = compute_hypothetical_turn_to_adjacent_block(d);
 
-    if (contains_block(turn_dynamics.pos.block_origin))
+    if (contains_block(turn_dynamics.location))
     {
         return turn_dynamics;
     }
     
-    auto const inertial_target = position{d.pos.block_origin + 
-                                          get_direction_vector(d.dir), 
-                                          d.pos.block_surface};
+    auto const inertial_target = position{
+        d.location + get_direction_vector(d.profile.direction), 
+        d.profile.face};
 
-    if (contains_block(inertial_target.block_origin))
+    if (contains_block(inertial_target.location))
     {
-        return {inertial_target, d.dir};
+        return {inertial_target.location, d.profile};
     }
     else
     {
@@ -53,31 +53,27 @@ dynamics territory::compute_step(util::value_ref<dynamics> d) const
 dynamics territory::compute_hypothetical_turn_to_adjacent_block(
     util::value_ref<dynamics> d) const
 {
-    auto const fallback = get_continuation_profile({d.pos.block_surface, 
-                                                    d.dir});
+    auto const fallback = get_continuation_profile(d.profile);
 
     auto const opp_fallback = get_opposite_profile(fallback);
 
-    auto const block_origin = 
-        d.pos.block_origin +
-        get_direction_vector(opp_fallback.movement_direction) + 
-        get_direction_vector(d.dir);
+    auto const location = 
+        d.location +
+        get_direction_vector(opp_fallback.direction) + 
+        get_direction_vector(d.profile.direction);
 
-    return {{block_origin, opp_fallback.block_surface}, 
-            opp_fallback.movement_direction};
+    return {location, opp_fallback};
 }
 
 dynamics territory::compute_fallback_turn_on_same_block(
     util::value_ref<dynamics> d) const
 {
-    auto const fallback = get_continuation_profile({d.pos.block_surface, 
-                                                    d.dir});
+    auto const fallback = get_continuation_profile(d.profile);
 
-    return {{d.pos.block_origin, fallback.block_surface},
-            fallback.movement_direction};
+    return {d.location, fallback};
 }
 
-bool territory::contains_block(util::value_ref<point3d> p) const
+bool territory::contains_block(util::value_ref<point> p) const
 {
     auto const it = std::find_if(std::cbegin(this->blocks),
                                  std::cend(this->blocks),

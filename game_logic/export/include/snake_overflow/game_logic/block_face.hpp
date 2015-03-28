@@ -3,7 +3,7 @@
 namespace snake_overflow { namespace game_logic
 {
 
-enum class surface
+enum class block_face
 {
     front,
     back,
@@ -13,6 +13,6 @@ enum class surface
     bottom
 };
 
-surface get_opposite_surface(surface s);
+block_face get_opposite_block_face(block_face s);
 
 } }

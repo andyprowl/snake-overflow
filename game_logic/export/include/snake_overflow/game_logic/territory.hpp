@@ -9,9 +9,9 @@ namespace snake_overflow { namespace game_logic
 {
 
 struct block;
-struct direction;
+struct canonical_direction;
 struct dynamics;
-struct point3d;
+struct point;
 
 class territory
 {
@@ -32,7 +32,7 @@ private:
     dynamics compute_fallback_turn_on_same_block(
         util::value_ref<dynamics> d) const;
 
-    bool contains_block(util::value_ref<point3d> p) const;
+    bool contains_block(util::value_ref<point> p) const;
 
 private:
 

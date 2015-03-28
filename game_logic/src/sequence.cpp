@@ -28,7 +28,9 @@ bool sequence_iterator::operator != (value_ref<sequence_iterator> rhs) const
     return (this->n != rhs.n);
 }
 
-sequence::sequence(int from, int to) : from{from}, to{to}
+sequence::sequence(int const from, int const to) 
+    : from{from}
+    , to{to}
 { 
 }    
     

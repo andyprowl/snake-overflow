@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-int main(int argc, char **argv) 
+int main(int argc, char** const argv) 
 {
     ::testing::InitGoogleTest(&argc, argv);
     

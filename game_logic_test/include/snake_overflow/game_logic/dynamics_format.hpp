@@ -12,7 +12,11 @@ namespace snake_overflow { namespace game_logic
 inline std::ostream& operator << (std::ostream& out, 
                                   util::value_ref<dynamics> d)
 {
-    out << "[" << d.pos << ", " << d.dir << "]";
+    auto const pos = get_dynamics_position(d);
+
+    auto const dir = get_dynamics_direction(d);
+
+    out << "[" << pos << ", " << dir << "]";
 
     return out;
 }

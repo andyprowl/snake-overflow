@@ -35,9 +35,6 @@
     <ClCompile Include="..\src\cube_builder.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\point3d.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\snake.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -56,10 +53,13 @@
     <ClCompile Include="..\src\territory.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\surface.cpp">
+    <ClCompile Include="..\src\movement_profile.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\movement_profile.cpp">
+    <ClCompile Include="..\src\block_face.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\point.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -85,9 +85,6 @@
     <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\surface.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\position.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
@@ -96,12 +93,6 @@
     </ClInclude>
     <ClInclude Include="..\export\include\util\sequence.hpp">
       <Filter>export\include\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\direction.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\point3d.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp">
       <Filter>export\include\snake_overflow\game_logic</Filter>
@@ -114,6 +105,15 @@
     </ClInclude>
     <ClInclude Include="..\export\include\util\repeat.hpp">
       <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\block_face.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\point.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game_logic\canonical_direction.hpp">
+      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

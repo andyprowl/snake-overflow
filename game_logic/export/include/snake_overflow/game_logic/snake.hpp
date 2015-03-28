@@ -9,7 +9,7 @@
 namespace snake_overflow { namespace game_logic
 {
 
-struct direction;
+struct canonical_direction;
 struct position;
 
 class territory;
@@ -25,7 +25,7 @@ public:
 
     std::vector<position> get_body() const;
 
-    direction get_direction() const;
+    canonical_direction get_direction() const;
 
     void advance();
 
