@@ -25,7 +25,7 @@ void territory_renderer::render(util::value_ref<territory> t) const
 
 void territory_renderer::render_block(util::value_ref<block> b) const
 {
-    auto origin = b.get_origin();
+    auto const origin = b.get_origin();
 
     auto const block_cube = cinder::Vec3f{this->block_size, 
                                           this->block_size, 

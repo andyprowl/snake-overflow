@@ -57,18 +57,19 @@ cinder::Quatf snake_renderer::compute_snake_part_rotation(
 {
     auto const normal = get_face_normal_vector(d.profile.face);
     
-    auto normal_rotation = cinder::Quatf{cinder::Vec3f::zAxis(), normal};
+    auto const normal_rotation = cinder::Quatf{cinder::Vec3f::zAxis(), normal};
 
-    auto dv = get_dynamics_direction_vector(d);
+    auto const direction = get_dynamics_direction_vector(d);
 
     auto const direction_rotation = cinder::Quatf{
         normal_rotation * cinder::Vec3f::yAxis(), 
-        vec3f_from_point(dv)};
+        vec3f_from_point(direction)};
 
     return normal_rotation * direction_rotation;
 }
 
-cinder::Vec3f snake_renderer::get_face_normal_vector(block_face face) const
+cinder::Vec3f snake_renderer::get_face_normal_vector(
+    block_face const face) const
 {
     auto const n = get_face_normal(face);
 
