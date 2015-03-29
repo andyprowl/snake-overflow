@@ -11,7 +11,7 @@
 namespace snake_overflow
 {
 
-snake::snake(territory& habitat,
+snake::snake(territory const& habitat,
              util::value_ref<dynamics> initial_dynamics, 
              int const initial_length)
     : habitat{habitat}
@@ -82,9 +82,6 @@ void snake::turn_right()
 void snake::apply_movement_profile(util::value_ref<movement_profile> p)
 {
     this->current_dynamics.profile = p;
-
-    this->body.back().profile = p;
 }
-
 
 }

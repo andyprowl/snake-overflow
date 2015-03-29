@@ -17,7 +17,7 @@ class snake
 
 public:
 
-    snake(territory& habitat, 
+    snake(territory const& habitat, 
           util::value_ref<dynamics> initial_dynamics, 
           int initial_length);
 
@@ -43,7 +43,7 @@ private:
 
 private:
 
-    territory& habitat;
+    territory const& habitat;
 
     std::deque<dynamics> body;
 
