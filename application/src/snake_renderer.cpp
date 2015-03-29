@@ -27,20 +27,31 @@ void snake_renderer::render(util::value_ref<snake> s) const
 
     for (auto const i : util::sequence(0, length))
     {
-        auto const& d = trail[i];
+        auto const is_edge_winding = is_trail_winding_around_edge(trail, i);
 
-        render_snake_part(d, (i == length - 1));
+        render_snake_part(trail[i], (i == length - 1), is_edge_winding);
     }
 }
 
+bool snake_renderer::is_trail_winding_around_edge(
+    util::value_ref<std::vector<dynamics>> trail, 
+    int const i) const
+{
+    if (i == trail.size() - 1) return false;
+
+    return ((trail[i].action ==  maneuvre::move_forward) &&
+            (trail[i].profile.face == trail[i + 1].profile.face));
+}
+
 void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
-                                       bool const is_head) const
+                                       bool const is_head,
+                                       bool const is_edge_winding) const
 {    
     auto const rotation = compute_snake_part_rotation(d);
 
     auto const translation = compute_snake_part_translation(d);
 
-    draw_snake_part(rotation, translation, d, is_head);
+    draw_snake_part(rotation, translation, d, is_head, is_edge_winding);
 }
 
 cinder::Vec3f snake_renderer::compute_snake_part_translation(
@@ -85,13 +96,14 @@ void snake_renderer::draw_snake_part(
     util::value_ref<cinder::Quatf> rotation, 
     util::value_ref<cinder::Vec3f> translation,
     util::value_ref<dynamics> d,
-    bool const is_head) const
+    bool const is_head,
+    bool const is_edge_winding) const
 {
     cinder::gl::translate(translation);
 
     cinder::gl::rotate(rotation);
 
-    draw_snake_part_shape(d, is_head);
+    draw_snake_part_shape(d, is_head, is_edge_winding);
 
     cinder::gl::rotate(rotation.inverse());
 
@@ -99,7 +111,8 @@ void snake_renderer::draw_snake_part(
 }
 
 void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
-                                           bool const is_head) const
+                                           bool const is_head,
+                                           bool const is_edge_winding) const
 {
     cinder::gl::color(cinder::Color{1.f, 0.f, 0.f});
 
@@ -109,17 +122,18 @@ void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
     }
     else
     {
-        draw_inner_part(d);
+        draw_inner_part(d, is_edge_winding);
     }
 }
 
-void snake_renderer::draw_inner_part(util::value_ref<dynamics> d) const
+void snake_renderer::draw_inner_part(util::value_ref<dynamics> d,
+                                     bool const is_edge_winding) const
 {
     switch (d.action)
     {
         case maneuvre::move_forward:
         {
-            return draw_inner_part_on_forward_movement();
+            return draw_inner_part_on_forward_movement(is_edge_winding);
         }
 
         case maneuvre::turn_left:
@@ -139,9 +153,10 @@ void snake_renderer::draw_inner_part(util::value_ref<dynamics> d) const
     }
 }
 
-void snake_renderer::draw_inner_part_on_forward_movement() const
+void snake_renderer::draw_inner_part_on_forward_movement(
+    bool const is_edge_winding) const
 {
-    auto const sizes = get_snake_inner_part_sizes();
+    auto const sizes = get_snake_inner_part_sizes(is_edge_winding);
 
     return cinder::gl::drawCube(cinder::Vec3f::zero(), sizes);
 }
@@ -228,9 +243,17 @@ void snake_renderer::draw_head_right_triangle() const
     glVertex3f(0.f, 0.f, 0.f);
 }
 
-cinder::Vec3f snake_renderer::get_snake_inner_part_sizes() const
+cinder::Vec3f snake_renderer::get_snake_inner_part_sizes(
+    bool const is_edge_winding) const
 {
-    return {this->width, this->block_size, this->height};
+    if (is_edge_winding)
+    {
+        return {this->width, this->block_size + this->height, this->height};
+    }
+    else
+    {
+        return {this->width, this->block_size, this->height};
+    }
 }
 
 }

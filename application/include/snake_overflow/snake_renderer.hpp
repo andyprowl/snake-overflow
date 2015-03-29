@@ -23,7 +23,13 @@ public:
 
 private:
 
-    void render_snake_part(util::value_ref<dynamics> pos, bool is_head) const;
+    bool is_trail_winding_around_edge(
+        util::value_ref<std::vector<dynamics>> trail, 
+        int const i) const;
+
+    void render_snake_part(util::value_ref<dynamics> pos, 
+                           bool is_head,
+                           bool is_edge_winding) const;
 
     cinder::Quatf compute_snake_part_rotation(
         util::value_ref<dynamics> d) const;
@@ -36,13 +42,17 @@ private:
     void draw_snake_part(util::value_ref<cinder::Quatf> rotation, 
                          util::value_ref<cinder::Vec3f> translation,
                          util::value_ref<dynamics> d,
-                         bool is_head) const;
+                         bool is_head,
+                         bool is_edge_winding) const;
 
-    void draw_snake_part_shape(util::value_ref<dynamics> d, bool is_head) const;
+    void draw_snake_part_shape(util::value_ref<dynamics> d, 
+                               bool is_head,
+                               bool is_edge_winding) const;
 
-    void draw_inner_part(util::value_ref<dynamics> d) const;
+    void draw_inner_part(util::value_ref<dynamics> d,
+                         bool is_edge_winding) const;
 
-    void draw_inner_part_on_forward_movement() const;
+    void draw_inner_part_on_forward_movement(bool is_edge_winding) const;
 
     void draw_inner_part_on_left_turn() const;
 
@@ -60,7 +70,7 @@ private:
 
     void draw_head_right_triangle() const;
 
-    cinder::Vec3f get_snake_inner_part_sizes() const;
+    cinder::Vec3f get_snake_inner_part_sizes(bool is_edge_winding) const;
 
 private:
 
