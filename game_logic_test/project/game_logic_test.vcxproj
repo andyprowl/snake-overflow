@@ -57,6 +57,7 @@
       <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4512</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,6 +80,7 @@
       <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\gmock_1.7.0\gtest\include;..\..\gmock_1.7.0\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4512</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

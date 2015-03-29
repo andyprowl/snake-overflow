@@ -58,6 +58,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm150 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4100;4201;4244;4512</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\include;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
@@ -85,6 +86,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm150 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4100;4201;4244;4512</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -117,8 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\resources.hpp" />
-    <ClInclude Include="..\include\snake_overflow\application\point_conversion.hpp" />
-    <ClInclude Include="..\include\snake_overflow\application\territory_renderer.hpp" />
+    <ClInclude Include="..\include\snake_overflow\application.hpp" />
+    <ClInclude Include="..\include\snake_overflow\point_conversion.hpp" />
+    <ClInclude Include="..\include\snake_overflow\territory_renderer.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>

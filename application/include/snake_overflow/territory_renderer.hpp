@@ -9,17 +9,12 @@ struct block;
 
 class territory;
 
-}
-
-namespace snake_overflow { namespace application
-{
-
 class territory_renderer
 {
 
 public:
 
-    territory_renderer();
+    territory_renderer(float block_size);
 
     void render(territory& t) const;
 
@@ -33,4 +28,4 @@ private:
 
 };
 
-} }
+}
