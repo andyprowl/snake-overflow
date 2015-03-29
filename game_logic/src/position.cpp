@@ -1,8 +1,8 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/position.hpp"
+#include "snake_overflow/position.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 position::position(util::value_ref<point> location,
@@ -25,4 +25,4 @@ bool operator != (util::value_ref<position> lhs,
     return !(lhs == rhs);
 }
 
-} }
+}

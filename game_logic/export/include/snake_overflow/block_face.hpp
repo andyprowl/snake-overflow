@@ -1,6 +1,6 @@
 #pragma once
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 enum class block_face
@@ -15,4 +15,4 @@ enum class block_face
 
 block_face get_opposite_block_face(block_face s);
 
-} }
+}

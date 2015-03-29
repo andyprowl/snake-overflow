@@ -1,8 +1,8 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/block.hpp"
+#include "snake_overflow/block.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 block::block(util::value_ref<point> origin)
@@ -25,4 +25,4 @@ bool operator != (util::value_ref<block> lhs, util::value_ref<block> rhs)
     return !(lhs == rhs);
 }
 
-} }
+}

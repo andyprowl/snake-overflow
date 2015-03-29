@@ -47,14 +47,14 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NOMINMAX;_WIN32_WINNT=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm150 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4100;4201;4244;4512</DisableSpecificWarnings>
@@ -75,13 +75,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NOMINMAX;_WIN32_WINNT=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalOptions>-Zm150 %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4100;4201;4244;4512</DisableSpecificWarnings>
@@ -108,13 +108,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\application.cpp" />
+    <ClCompile Include="..\src\point_conversion.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\territory_renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\resources.hpp" />
+    <ClInclude Include="..\include\snake_overflow\application\point_conversion.hpp" />
+    <ClInclude Include="..\include\snake_overflow\application\territory_renderer.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>

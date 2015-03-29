@@ -2,7 +2,7 @@
 
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct point
@@ -48,4 +48,4 @@ point operator * (util::value_ref<point> p, int factor);
 
 point operator * (int factor, util::value_ref<point> p);
 
-} }
+}

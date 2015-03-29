@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/block_face.hpp"
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/block_face.hpp"
+#include "snake_overflow/point.hpp"
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct position
@@ -28,4 +28,4 @@ bool operator == (util::value_ref<position> lhs,
 bool operator != (util::value_ref<position> lhs, 
                   util::value_ref<position> rhs);
 
-} }
+}

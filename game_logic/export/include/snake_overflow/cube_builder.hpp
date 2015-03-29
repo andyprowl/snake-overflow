@@ -2,7 +2,7 @@
 
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct point;
@@ -24,4 +24,4 @@ private:
 
 };
 
-} }
+}

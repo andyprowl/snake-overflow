@@ -1,12 +1,12 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/block.hpp"
-#include "snake_overflow/game_logic/cube_builder.hpp"
-#include "snake_overflow/game_logic/territory.hpp"
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/block.hpp"
+#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/territory.hpp"
+#include "snake_overflow/point.hpp"
 #include "util/sequence.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 using util::sequence;
@@ -31,4 +31,4 @@ void cube_builder::add_cube(util::value_ref<point> origin,
     }
 }
 
-} }
+}

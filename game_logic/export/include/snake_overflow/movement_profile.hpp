@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/canonical_direction.hpp"
-#include "snake_overflow/game_logic/block_face.hpp"
+#include "snake_overflow/canonical_direction.hpp"
+#include "snake_overflow/block_face.hpp"
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct movement_profile
@@ -36,25 +36,25 @@ movement_profile get_left_turn_profile(util::value_ref<movement_profile> p);
 
 movement_profile get_right_turn_profile(util::value_ref<movement_profile> p);
 
-} }
+}
 
 namespace std
 {
 
 template<>
-struct hash<snake_overflow::game_logic::movement_profile>
+struct hash<snake_overflow::movement_profile>
 {
 
 public:
 
     std::size_t operator () (
-        util::value_ref<snake_overflow::game_logic::movement_profile> p)
+        util::value_ref<snake_overflow::movement_profile> p)
     {
         auto const s = p.face;
         auto const dir = p.direction;
 
         return (std::hash<std::size_t>{}(static_cast<std::size_t>(s)) ^
-                std::hash<snake_overflow::game_logic::canonical_direction>{}(dir));
+                std::hash<snake_overflow::canonical_direction>{}(dir));
     }
 
 };

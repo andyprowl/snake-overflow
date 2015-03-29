@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/block_face.hpp"
+#include "snake_overflow/block_face.hpp"
 #include <cassert>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 block_face get_opposite_block_face(block_face const s)
@@ -26,4 +26,4 @@ block_face get_opposite_block_face(block_face const s)
     }
 }
 
-} }
+}

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/canonical_direction.hpp"
+#include "snake_overflow/canonical_direction.hpp"
 #include <cassert>
 #include <iostream>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 inline std::ostream& operator << (std::ostream& out, 
@@ -28,4 +28,4 @@ inline std::ostream& operator << (std::ostream& out,
     return out;
 }
 
-} }
+}

@@ -13,12 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="include\snake_overflow">
+      <UniqueIdentifier>{fb757995-984c-49ca-ab04-dd0b59a9712e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\snake_overflow\application">
+      <UniqueIdentifier>{983982ab-c066-4cef-9ee1-8e5e6d8a9783}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\territory_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\point_conversion.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="..\include\resources.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\application\territory_renderer.hpp">
+      <Filter>include\snake_overflow\application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\application\point_conversion.hpp">
+      <Filter>include\snake_overflow\application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

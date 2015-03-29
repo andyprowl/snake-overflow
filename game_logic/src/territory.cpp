@@ -1,15 +1,15 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/canonical_direction.hpp"
-#include "snake_overflow/game_logic/dynamics.hpp"
-#include "snake_overflow/game_logic/movement_profile.hpp"
-#include "snake_overflow/game_logic/point.hpp"
-#include "snake_overflow/game_logic/position.hpp"
-#include "snake_overflow/game_logic/territory.hpp"
+#include "snake_overflow/canonical_direction.hpp"
+#include "snake_overflow/dynamics.hpp"
+#include "snake_overflow/movement_profile.hpp"
+#include "snake_overflow/point.hpp"
+#include "snake_overflow/position.hpp"
+#include "snake_overflow/territory.hpp"
 #include "util/contains.hpp"
 #include <algorithm>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 std::vector<block> territory::get_blocks() const
@@ -85,4 +85,4 @@ bool territory::contains_block(util::value_ref<point> p) const
     return (it != std::cend(this->blocks));
 }
 
-} }
+}

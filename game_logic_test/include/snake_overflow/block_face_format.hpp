@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/block_face.hpp"
+#include "snake_overflow/block_face.hpp"
 #include <cassert>
 #include <iostream>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 inline std::ostream& operator << (std::ostream& out, block_face const s)
@@ -23,4 +23,4 @@ inline std::ostream& operator << (std::ostream& out, block_face const s)
     return out;
 }
 
-} }
+}

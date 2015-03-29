@@ -3,7 +3,7 @@
 #include "util/value_ref.hpp"
 #include <functional>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct point;
@@ -58,18 +58,18 @@ point get_direction_vector(util::value_ref<canonical_direction> dir);
 
 canonical_direction get_opposite_direction(util::value_ref<canonical_direction> dir);
 
-} }
+}
 
 namespace std
 {
 
 template<>
-struct hash<snake_overflow::game_logic::canonical_direction>
+struct hash<snake_overflow::canonical_direction>
 {
 
 public:
 
-    std::size_t operator () (snake_overflow::game_logic::canonical_direction const d)
+    std::size_t operator () (snake_overflow::canonical_direction const d)
     {
         return (std::hash<std::size_t>{}(static_cast<std::size_t>(d.axis)) ^
                 std::hash<std::size_t>{}(static_cast<std::size_t>(d.way)));

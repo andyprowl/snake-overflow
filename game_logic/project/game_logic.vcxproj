@@ -96,16 +96,16 @@
     <ClCompile Include="..\src\territory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\cube_builder.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\canonical_direction.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\movement_profile.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\point.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\position.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\block_face.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\block.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\block_face.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\point.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\position.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\territory.hpp" />
     <ClInclude Include="..\export\include\util\contains.hpp" />
     <ClInclude Include="..\export\include\util\hashing.hpp" />
     <ClInclude Include="..\export\include\util\noexcept.hpp" />

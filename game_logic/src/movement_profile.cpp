@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/movement_profile.hpp"
+#include "snake_overflow/movement_profile.hpp"
 #include <unordered_map>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 auto const continuation_map = 
@@ -168,4 +168,4 @@ movement_profile get_right_turn_profile(util::value_ref<movement_profile> p)
     return {p.face, left_rotation_map.at(profile)};
 }
 
-} }
+}

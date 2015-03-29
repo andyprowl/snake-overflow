@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/point.hpp"
 #include <tuple>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 point::point(int const x, int const y, int const z)
@@ -77,4 +77,4 @@ point operator * (int const factor, util::value_ref<point> p)
     return p * factor;
 }
 
-} }
+}

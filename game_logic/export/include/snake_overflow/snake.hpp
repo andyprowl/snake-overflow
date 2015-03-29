@@ -1,12 +1,12 @@
 #pragma once
 
-#include "snake_overflow/game_logic/dynamics.hpp"
-#include "snake_overflow/game_logic/position.hpp"
+#include "snake_overflow/dynamics.hpp"
+#include "snake_overflow/position.hpp"
 #include "util/value_ref.hpp"
 #include <deque>
 #include <vector>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct canonical_direction;
@@ -47,4 +47,4 @@ private:
 
 };
 
-} }
+}

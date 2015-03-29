@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/point.hpp"
-#include "snake_overflow/game_logic/movement_profile.hpp"
+#include "snake_overflow/point.hpp"
+#include "snake_overflow/movement_profile.hpp"
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct position;
@@ -35,4 +35,4 @@ canonical_direction get_dynamics_direction(util::value_ref<dynamics> d);
 
 point get_dynamics_direction_vector(util::value_ref<dynamics> d);
 
-} }
+}

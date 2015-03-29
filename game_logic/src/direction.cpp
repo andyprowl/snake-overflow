@@ -1,10 +1,10 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/canonical_direction.hpp"
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/canonical_direction.hpp"
+#include "snake_overflow/point.hpp"
 #include <cassert>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 canonical_direction::canonical_direction(canonical_axis const axis, 
@@ -99,4 +99,4 @@ canonical_direction get_opposite_direction(
     return {dir.axis, opposite_way};
 }
 
-} }
+}

@@ -1,14 +1,14 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/canonical_direction.hpp"
-#include "snake_overflow/game_logic/position.hpp"
-#include "snake_overflow/game_logic/movement_profile.hpp"
-#include "snake_overflow/game_logic/snake.hpp"
-#include "snake_overflow/game_logic/territory.hpp"
+#include "snake_overflow/canonical_direction.hpp"
+#include "snake_overflow/position.hpp"
+#include "snake_overflow/movement_profile.hpp"
+#include "snake_overflow/snake.hpp"
+#include "snake_overflow/territory.hpp"
 #include "util/repeat.hpp"
 #include "util/sequence.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 snake::snake(territory& habitat,
@@ -78,4 +78,4 @@ void snake::turn_right()
     this->current_dynamics.profile = new_profile;
 }
 
-} }
+}

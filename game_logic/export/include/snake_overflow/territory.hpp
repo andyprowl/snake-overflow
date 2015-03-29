@@ -1,11 +1,11 @@
 #pragma once
 
-#include "snake_overflow/game_logic/block.hpp"
+#include "snake_overflow/block.hpp"
 #include "util/noexcept.hpp"
 #include "util/value_ref.hpp"
 #include <vector>
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 struct block;
@@ -40,4 +40,4 @@ private:
 
 };
 
-} }
+}

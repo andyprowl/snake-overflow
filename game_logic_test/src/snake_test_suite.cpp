@@ -1,14 +1,14 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/cube_builder.hpp"
-#include "snake_overflow/game_logic/position.hpp"
-#include "snake_overflow/game_logic/snake.hpp"
-#include "snake_overflow/game_logic/territory.hpp"
+#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/position.hpp"
+#include "snake_overflow/snake.hpp"
+#include "snake_overflow/territory.hpp"
 #include "util/repeat.hpp"
 #include "util/sequence.hpp"
 #include <memory>
 
-namespace snake_overflow { namespace game_logic { namespace testing
+namespace snake_overflow { namespace testing
 {
 
 using ::testing::Eq;
@@ -422,4 +422,4 @@ TEST_THAT(Snake,
                 Eq(canonical_direction::positive_y()));
 }
 
-} } }
+} }

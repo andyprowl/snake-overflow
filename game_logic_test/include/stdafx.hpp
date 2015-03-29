@@ -1,10 +1,10 @@
 #pragma once
 
-#include "snake_overflow/game_logic/direction_format.hpp"
-#include "snake_overflow/game_logic/dynamics_format.hpp"
-#include "snake_overflow/game_logic/point_format.hpp"
-#include "snake_overflow/game_logic/position_format.hpp"
-#include "snake_overflow/game_logic/block_face_format.hpp"
+#include "snake_overflow/direction_format.hpp"
+#include "snake_overflow/dynamics_format.hpp"
+#include "snake_overflow/point_format.hpp"
+#include "snake_overflow/position_format.hpp"
+#include "snake_overflow/block_face_format.hpp"
 #include "testing/test_naming.hpp"
 
 #include "gtest/gtest.h"

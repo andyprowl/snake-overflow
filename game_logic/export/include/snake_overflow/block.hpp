@@ -1,9 +1,9 @@
 #pragma once
 
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/point.hpp"
 #include "util/value_ref.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
     
 struct block
@@ -25,4 +25,4 @@ bool operator == (util::value_ref<block> lhs, util::value_ref<block> rhs);
 
 bool operator != (util::value_ref<block> lhs, util::value_ref<block> rhs);
 
-} }
+}

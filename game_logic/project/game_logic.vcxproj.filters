@@ -18,9 +18,6 @@
     <Filter Include="export\include\snake_overflow">
       <UniqueIdentifier>{1b4f480e-8466-47c0-b608-83bb6051eaa4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="export\include\snake_overflow\game_logic">
-      <UniqueIdentifier>{b4140318-e060-40e4-8456-5365e18ebd22}</UniqueIdentifier>
-    </Filter>
     <Filter Include="export\include\util">
       <UniqueIdentifier>{53baa009-4d7c-4463-ab20-ff95001e6a5f}</UniqueIdentifier>
     </Filter>
@@ -67,26 +64,11 @@
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\block.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\territory.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\util\value_ref.hpp">
       <Filter>export\include\util</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\util\contains.hpp">
       <Filter>export\include\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\cube_builder.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\snake.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\position.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\util\noexcept.hpp">
       <Filter>export\include\util</Filter>
@@ -94,26 +76,41 @@
     <ClInclude Include="..\export\include\util\sequence.hpp">
       <Filter>export\include\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\dynamics.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\util\hashing.hpp">
       <Filter>export\include\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\movement_profile.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\util\repeat.hpp">
       <Filter>export\include\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\block_face.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
+    <ClInclude Include="..\export\include\snake_overflow\block.hpp">
+      <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\point.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
+    <ClInclude Include="..\export\include\snake_overflow\block_face.hpp">
+      <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\game_logic\canonical_direction.hpp">
-      <Filter>export\include\snake_overflow\game_logic</Filter>
+    <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\point.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\position.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\snake.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\territory.hpp">
+      <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,9 +1,9 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/dynamics.hpp"
-#include "snake_overflow/game_logic/position.hpp"
+#include "snake_overflow/dynamics.hpp"
+#include "snake_overflow/position.hpp"
 
-namespace snake_overflow { namespace game_logic
+namespace snake_overflow
 {
 
 dynamics::dynamics(util::value_ref<point> location,
@@ -40,4 +40,4 @@ point get_dynamics_direction_vector(util::value_ref<dynamics> d)
     return get_direction_vector(dir);
 }
 
-} }
+}

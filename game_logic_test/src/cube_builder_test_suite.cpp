@@ -1,11 +1,11 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/cube_builder.hpp"
-#include "snake_overflow/game_logic/territory.hpp"
-#include "snake_overflow/game_logic/block.hpp"
-#include "snake_overflow/game_logic/point.hpp"
+#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/territory.hpp"
+#include "snake_overflow/block.hpp"
+#include "snake_overflow/point.hpp"
 
-namespace snake_overflow { namespace game_logic { namespace testing
+namespace snake_overflow { namespace testing
 {
 
 using ::testing::Eq;
@@ -34,4 +34,4 @@ TEST_THAT(CubeBuilder,
     ASSERT_THAT(blocks.size(), Eq(27u));
 }
 
-} } }
+} }

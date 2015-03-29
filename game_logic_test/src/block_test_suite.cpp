@@ -1,8 +1,8 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/game_logic/block.hpp"
+#include "snake_overflow/block.hpp"
 
-namespace snake_overflow { namespace game_logic { namespace testing
+namespace snake_overflow { namespace testing
 {
 
 using ::testing::Eq;
@@ -70,4 +70,4 @@ TEST_THAT(Block,
     auto const b2 = block{{42, 0, 1729}};
 }
 
-} } }
+} }
