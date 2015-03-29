@@ -67,7 +67,7 @@ void snake::turn_left()
 
     auto const new_profile = get_left_turn_profile(current_profile);
 
-    this->current_dynamics.profile = new_profile;
+    apply_movement_profile(new_profile);
 }
 
 void snake::turn_right()
@@ -76,7 +76,15 @@ void snake::turn_right()
 
     auto const new_profile = get_right_turn_profile(current_profile);
 
-    this->current_dynamics.profile = new_profile;
+    apply_movement_profile(new_profile);
 }
+
+void snake::apply_movement_profile(util::value_ref<movement_profile> p)
+{
+    this->current_dynamics.profile = p;
+
+    this->body.back().profile = p;
+}
+
 
 }

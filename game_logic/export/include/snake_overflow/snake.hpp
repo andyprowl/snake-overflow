@@ -39,6 +39,10 @@ public:
 
 private:
 
+    void apply_movement_profile(util::value_ref<movement_profile> p);
+
+private:
+
     territory& habitat;
 
     std::deque<dynamics> body;
