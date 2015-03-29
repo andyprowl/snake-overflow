@@ -21,6 +21,10 @@ enum class orientation
     negative
 };
 
+class bad_direction_vector_exception : public virtual std::exception
+{
+};
+
 struct canonical_direction
 {
 
@@ -56,7 +60,10 @@ bool operator != (util::value_ref<canonical_direction> lhs,
 
 point get_direction_vector(util::value_ref<canonical_direction> dir);
 
-canonical_direction get_opposite_direction(util::value_ref<canonical_direction> dir);
+canonical_direction get_direction_from_vector(util::value_ref<point> v);
+
+canonical_direction get_opposite_direction(
+    util::value_ref<canonical_direction> dir);
 
 }
 

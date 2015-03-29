@@ -16,7 +16,7 @@ public:
 
     territory_renderer(float block_size);
 
-    void render(territory& t) const;
+    void render(util::value_ref<territory> t) const;
 
 private:
 

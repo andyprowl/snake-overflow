@@ -3,6 +3,8 @@
 namespace snake_overflow
 {
 
+struct point;
+
 enum class block_face
 {
     front,
@@ -13,6 +15,8 @@ enum class block_face
     bottom
 };
 
-block_face get_opposite_block_face(block_face s);
+block_face get_opposite_face(block_face s);
+
+point get_face_normal(block_face s);
 
 }

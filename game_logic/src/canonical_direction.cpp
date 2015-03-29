@@ -62,23 +62,20 @@ point get_direction_vector(util::value_ref<canonical_direction> dir)
     {
         case canonical_axis::x: 
         {
-            return (dir.way == orientation::positive) 
-                 ? point{1, 0, 0} 
-                 : point{-1, 0, 0};
+            return (dir.way == orientation::positive) ? point{1, 0, 0} 
+                                                      : point{-1, 0, 0};
         }
 
         case canonical_axis::y: 
         {
-            return (dir.way == orientation::positive) 
-                 ? point{0, 1, 0} 
-                 : point{0, -1, 0};
+            return (dir.way == orientation::positive) ? point{0, 1, 0} 
+                                                      : point{0, -1, 0};
         }
 
         case canonical_axis::z:
         {
-            return (dir.way == orientation::positive) 
-                 ? point{0, 0, 1} 
-                 : point{0, 0, -1};
+            return (dir.way == orientation::positive) ? point{0, 0, 1} 
+                                                      : point{0, 0, -1};
         }
 
         default:
@@ -86,6 +83,30 @@ point get_direction_vector(util::value_ref<canonical_direction> dir)
             assert(false); 
             return {0, 0, 0};
         }
+    }
+}
+
+canonical_direction get_direction_from_vector(util::value_ref<point> v)
+{
+    if (!is_unit(v))
+    {
+        throw bad_direction_vector_exception{};
+    }
+
+    if ((v.y == 0) && (v.z == 0))
+    {
+        return (v.x > 0) ? canonical_direction::positive_x()
+                         : canonical_direction::negative_x();
+    }
+    else if ((v.x == 0) && (v.z == 0))
+    {
+        return (v.y > 0) ? canonical_direction::positive_y()
+                         : canonical_direction::negative_y();
+    }
+    else
+    {
+        return (v.z > 0) ? canonical_direction::positive_z()
+                         : canonical_direction::negative_z();
     }
 }
 

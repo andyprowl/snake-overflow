@@ -18,16 +18,14 @@ snake::snake(territory& habitat,
     , current_dynamics{initial_dynamics}
     , growth{0}
 {
-    auto const initial_position = get_dynamics_position(initial_dynamics);
-
-    this->body.push_back(initial_position);
+    this->body.push_back(initial_dynamics);
 
     grow(initial_length - 1);
 
     util::repeat(initial_length - 1, [this] { advance(); });
 }
 
-std::vector<position> snake::get_body() const
+std::vector<dynamics> snake::get_trail() const
 {
     return {std::cbegin(this->body), std::cend(this->body)};
 }
@@ -37,13 +35,16 @@ canonical_direction snake::get_direction() const
     return get_dynamics_direction(this->current_dynamics);
 }
 
+int snake::get_length() const
+{
+    return static_cast<int>(this->body.size());
+}
+
 void snake::advance()
 {
     this->current_dynamics = this->habitat.compute_step(this->current_dynamics);
 
-    auto const current_position = get_dynamics_position(this->current_dynamics);
-
-    this->body.push_back(current_position);
+    this->body.push_back(current_dynamics);
 
     if (this->growth > 0)
     {

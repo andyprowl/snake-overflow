@@ -2,6 +2,8 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/snake.hpp"
+#include "util/repeat.hpp"
 
 namespace snake_overflow
 {
@@ -13,6 +15,8 @@ void application::setup()
     builder.add_cube({0, 0, 0}, 10);
 
     this->camera.setPerspective(60.0f, getWindowAspectRatio(), 5.0f, 3000.0f);
+
+    create_snake();
 
     setup_parameters();
 }
@@ -28,11 +32,13 @@ void application::update()
 {
     auto const eye = cinder::Vec3f{0.0f, 0.0f, this->camera_distance};
     auto const center = cinder::Vec3f::zero();
-    auto const up = cinder::Vec3f::zAxis();
+    auto const up = cinder::Vec3f::yAxis();
 
     this->camera.lookAt(eye, center, up);
     cinder::gl::setMatrices(this->camera);
     cinder::gl::rotate(this->camera_rotation);
+
+    cinder::gl::rotate({cinder::Vec3f::zAxis(), cinder::Vec3f::yAxis()});
 }
 
 void application::draw()
@@ -43,7 +49,25 @@ void application::draw()
 
     this->parameters->draw();
 
-    this->renderer.render(this->habitat);
+    this->habitat_renderer.render(this->habitat);
+    this->hero_renderer.render(*this->hero);
+}
+
+void application::create_snake()
+{
+    auto const initial_state = dynamics{{0, 0, 0}, 
+                                        {block_face::front, 
+                                        canonical_direction::positive_z()}};
+
+    this->hero = std::make_unique<snake>(this->habitat, initial_state, 14);
+
+    this->hero->turn_right();
+    
+    util::repeat(3, [this] { this->hero->advance(); });
+    
+    this->hero->turn_right();
+
+    util::repeat(6, [this] { this->hero->advance(); });
 }
 
 void application::setup_parameters()

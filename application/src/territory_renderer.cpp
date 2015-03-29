@@ -13,7 +13,7 @@ territory_renderer::territory_renderer(float const block_size)
 {
 }
 
-void territory_renderer::render(territory& t) const
+void territory_renderer::render(util::value_ref<territory> t) const
 {
     auto const blocks = t.get_blocks();
 
@@ -31,9 +31,11 @@ void territory_renderer::render_block(util::value_ref<block> b) const
                                           this->block_size, 
                                           this->block_size};
 
-    auto const block_origin = vector_from_point(origin) * block_size;
+    auto const block_origin = vec3f_from_point(origin) * block_size;
 
-    cinder::gl::color(cinder::Color{1.0, 1.0, 1.0});
+    cinder::gl::color(cinder::Color{std::fabs(block_origin.x) / 100.f, 
+                                    std::fabs(block_origin.y) / 100.f, 
+                                    std::fabs(block_origin.z) / 100.f});
 
     cinder::gl::drawCube(block_origin, block_cube);
 }

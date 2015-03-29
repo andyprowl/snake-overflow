@@ -42,7 +42,8 @@ protected:
 
     position initial_position{initial_location, initial_face};
 
-    canonical_direction initial_direction{canonical_axis::z, orientation::positive};
+    canonical_direction initial_direction{canonical_axis::z, 
+                                          orientation::positive};
 
     int initial_length = 3;
 
@@ -54,31 +55,31 @@ protected:
 };
 
 TEST_THAT(Snake,
-     WHAT(GetBody),
+     WHAT(GetTrail),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASequenceOfPositionsOfTheLengthPassedAtConstruction))
+     THEN(ReturnsASequenceOfDynamicsOfTheLengthPassedAtConstruction))
 {
-    auto const body = this->s->get_body();
+    auto const trail = this->s->get_trail();
 
-    EXPECT_THAT(body.size(), Eq(this->initial_length));
+    EXPECT_THAT(trail.size(), Eq(this->initial_length));
 }
 
 TEST_THAT(Snake,
-     WHAT(GetBody),
+     WHAT(GetTrail),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASetOfConsecutivePositionsStartingFromTheInitialOne))
+     THEN(ReturnsASetOfConsecutiveDynamicsStartingFromTheInitialOne))
 {
-    auto const body = this->s->get_body();
+    auto const trail = this->s->get_trail();
 
-    ASSERT_THAT(body.size(), Eq(this->initial_length));    
+    ASSERT_THAT(trail.size(), Eq(this->initial_length));    
 
-    EXPECT_THAT(body[0], Eq(this->initial_position));
+    EXPECT_THAT(trail[0], Eq(this->initial_dynamics));
 
     auto const dir = get_dynamics_direction_vector(this->initial_dynamics);    
     for (auto const i : util::sequence(0, this->initial_length))
     {
         auto expected_block = this->initial_location + i * dir;
-        EXPECT_THAT(body[i].location, Eq(expected_block));
+        EXPECT_THAT(trail[i].location, Eq(expected_block));
     }
 }
 
@@ -99,13 +100,18 @@ TEST_THAT(Snake,
 {
     util::repeat(4, [this] { this->s->advance(); });
 
-    auto const body = this->s->get_body();
+    auto const trail = this->s->get_trail();
 
-    ASSERT_THAT(body.size(), Eq(3u));
+    ASSERT_THAT(trail.size(), Eq(3u));
 
-    EXPECT_THAT(body[0], Eq(position{{0, 0, 4}, block_face::front}));
-    EXPECT_THAT(body[1], Eq(position{{0, 0, 4}, block_face::top}));
-    EXPECT_THAT(body[2], Eq(position{{0, 1, 4}, block_face::top}));
+    EXPECT_THAT(get_dynamics_position(trail[0]), 
+                Eq(position{{0, 0, 4}, block_face::front}));
+
+    EXPECT_THAT(get_dynamics_position(trail[1]), 
+                Eq(position{{0, 0, 4}, block_face::top}));
+
+    EXPECT_THAT(get_dynamics_position(trail[2]), 
+                Eq(position{{0, 1, 4}, block_face::top}));
 }
 
 TEST_THAT(Snake,
@@ -117,15 +123,24 @@ TEST_THAT(Snake,
 
     util::repeat(4, [this] { this->s->advance(); });
 
-    auto const body = this->s->get_body();
+    auto const trail = this->s->get_trail();
 
-    ASSERT_THAT(body.size(), Eq(5u));
+    ASSERT_THAT(trail.size(), Eq(5u));
 
-    EXPECT_THAT(body[0], Eq(position{{0, 0, 2}, block_face::front}));
-    EXPECT_THAT(body[1], Eq(position{{0, 0, 3}, block_face::front}));
-    EXPECT_THAT(body[2], Eq(position{{0, 0, 4}, block_face::front}));
-    EXPECT_THAT(body[3], Eq(position{{0, 0, 4}, block_face::top}));
-    EXPECT_THAT(body[4], Eq(position{{0, 1, 4}, block_face::top}));
+    EXPECT_THAT(get_dynamics_position(trail[0]), 
+                Eq(position{{0, 0, 2}, block_face::front}));
+    
+    EXPECT_THAT(get_dynamics_position(trail[1]), 
+                Eq(position{{0, 0, 3}, block_face::front}));
+    
+    EXPECT_THAT(get_dynamics_position(trail[2]), 
+                Eq(position{{0, 0, 4}, block_face::front}));
+    
+    EXPECT_THAT(get_dynamics_position(trail[3]), 
+                Eq(position{{0, 0, 4}, block_face::top}));
+    
+    EXPECT_THAT(get_dynamics_position(trail[4]), 
+                Eq(position{{0, 1, 4}, block_face::top}));
 }
 
 TEST_THAT(Snake,
@@ -420,6 +435,32 @@ TEST_THAT(Snake,
     this->s->turn_right();
     EXPECT_THAT(this->s->get_direction(), 
                 Eq(canonical_direction::positive_y()));
+}
+
+TEST_THAT(Snake,
+     WHAT(GetLength),
+     WHEN(Always),
+     THEN(ReturnsTheNumberOfPartsInTheBodyOfTheSnake))
+{
+    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length));
+
+    this->s->grow(3);
+
+    this->s->advance();
+    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 1));
+
+    this->s->turn_right();
+
+    this->s->advance();
+    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 2));
+
+    this->s->advance();
+    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
+
+    this->s->turn_right();
+
+    this->s->advance();
+    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
 }
 
 } }

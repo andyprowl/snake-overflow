@@ -149,7 +149,7 @@ movement_profile get_continuation_profile(util::value_ref<movement_profile> p)
 
 movement_profile get_opposite_profile(util::value_ref<movement_profile> p)
 {
-    return {get_opposite_block_face(p.face),
+    return {get_opposite_face(p.face),
             get_opposite_direction(p.direction)};
 }
 
@@ -160,7 +160,7 @@ movement_profile get_left_turn_profile(util::value_ref<movement_profile> p)
 
 movement_profile get_right_turn_profile(util::value_ref<movement_profile> p)
 {
-    auto const opposite_block_face = get_opposite_block_face(p.face);
+    auto const opposite_block_face = get_opposite_face(p.face);
 
     auto const profile = movement_profile{opposite_block_face, 
                                           p.direction};

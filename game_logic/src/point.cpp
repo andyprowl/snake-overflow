@@ -1,6 +1,8 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/point.hpp"
+#include <algorithm>
+#include <array>
 #include <tuple>
 
 namespace snake_overflow
@@ -40,7 +42,12 @@ point point::z_unit()
 
 bool is_unit(util::value_ref<point> p)
 {
-    return (p.x + p.y + p.z == 1);
+    auto coords = std::array<int, 3>{std::abs(p.x), 
+                                     std::abs(p.y), 
+                                     std::abs(p.z)};
+
+    return ((std::count(std::cbegin(coords), std::cend(coords), 1) == 1) &&
+           (coords[0] + coords[1] + coords[2] == 1));
 }
 
 bool operator == (util::value_ref<point> lhs, util::value_ref<point> rhs)

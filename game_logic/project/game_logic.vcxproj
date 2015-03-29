@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\block.cpp" />
     <ClCompile Include="..\src\cube_builder.cpp" />
-    <ClCompile Include="..\src\direction.cpp" />
+    <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\movement_profile.cpp" />
     <ClCompile Include="..\src\point.cpp" />
