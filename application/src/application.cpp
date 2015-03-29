@@ -68,6 +68,12 @@ void application::create_snake()
     this->hero->turn_right();
 
     util::repeat(6, [this] { this->hero->advance(); });
+
+    this->hero->grow(5);
+
+    this->hero->turn_left();
+
+    util::repeat(4, [this] { this->hero->advance(); });
 }
 
 void application::setup_parameters()

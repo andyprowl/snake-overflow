@@ -112,5 +112,8 @@
     <ClInclude Include="..\export\include\snake_overflow\territory.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

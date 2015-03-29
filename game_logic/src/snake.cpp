@@ -18,7 +18,7 @@ snake::snake(territory const& habitat,
     , current_dynamics{initial_dynamics}
     , growth{0}
 {
-    this->body.push_back(initial_dynamics);
+    this->trail.push_back(initial_dynamics);
 
     grow(initial_length - 1);
 
@@ -27,7 +27,7 @@ snake::snake(territory const& habitat,
 
 std::vector<dynamics> snake::get_trail() const
 {
-    return {std::cbegin(this->body), std::cend(this->body)};
+    return {std::cbegin(this->trail), std::cend(this->trail)};
 }
 
 canonical_direction snake::get_direction() const
@@ -37,14 +37,14 @@ canonical_direction snake::get_direction() const
 
 int snake::get_length() const
 {
-    return static_cast<int>(this->body.size());
+    return static_cast<int>(this->trail.size());
 }
 
 void snake::advance()
 {
     this->current_dynamics = this->habitat.compute_step(this->current_dynamics);
 
-    this->body.push_back(current_dynamics);
+    this->trail.push_back(current_dynamics);
 
     if (this->growth > 0)
     {
@@ -52,7 +52,7 @@ void snake::advance()
     }
     else
     {
-        this->body.pop_front();
+        this->trail.pop_front();
     }
 }
 
@@ -67,7 +67,9 @@ void snake::turn_left()
 
     auto const new_profile = get_left_turn_profile(current_profile);
 
-    apply_movement_profile(new_profile);
+    this->current_dynamics.profile = new_profile;
+
+    this->trail.back().action = maneuvre::turn_left;
 }
 
 void snake::turn_right()
@@ -76,12 +78,9 @@ void snake::turn_right()
 
     auto const new_profile = get_right_turn_profile(current_profile);
 
-    apply_movement_profile(new_profile);
-}
+    this->current_dynamics.profile = new_profile;
 
-void snake::apply_movement_profile(util::value_ref<movement_profile> p)
-{
-    this->current_dynamics.profile = p;
+    this->trail.back().action = maneuvre::turn_right;
 }
 
 }

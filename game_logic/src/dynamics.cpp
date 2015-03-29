@@ -10,6 +10,7 @@ dynamics::dynamics(util::value_ref<point> location,
                    util::value_ref<movement_profile> profile)
     : location{location}
     , profile{profile}
+    , action{maneuvre::move_forward}
 {
 }
 

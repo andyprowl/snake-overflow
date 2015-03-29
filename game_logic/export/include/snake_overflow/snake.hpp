@@ -39,13 +39,9 @@ public:
 
 private:
 
-    void apply_movement_profile(util::value_ref<movement_profile> p);
-
-private:
-
     territory const& habitat;
 
-    std::deque<dynamics> body;
+    std::deque<dynamics> trail;
 
     dynamics current_dynamics;
 

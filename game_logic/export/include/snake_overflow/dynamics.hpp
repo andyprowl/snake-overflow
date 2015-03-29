@@ -1,7 +1,8 @@
 #pragma once
 
-#include "snake_overflow/point.hpp"
+#include "snake_overflow/maneuvre.hpp"
 #include "snake_overflow/movement_profile.hpp"
+#include "snake_overflow/point.hpp"
 #include "util/value_ref.hpp"
 
 namespace snake_overflow
@@ -22,6 +23,8 @@ public:
     point location;
 
     movement_profile profile;
+
+    maneuvre action;
 
 };
 

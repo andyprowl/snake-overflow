@@ -438,6 +438,31 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(GetTrail),
+     WHEN(Always),
+     THEN(ReturnsInformationOnTheManeuvreMadeAtEachPositionInTheTrail))
+{
+    this->s->grow(3);
+
+    this->s->advance();
+    this->s->turn_right();
+    this->s->advance();
+    this->s->advance();
+    this->s->turn_right();
+    this->s->advance();
+
+    auto const trail = this->s->get_trail();
+    ASSERT_THAT(trail.size(), Eq(6u));
+
+    EXPECT_THAT(trail[0].action, Eq(maneuvre::move_forward));
+    EXPECT_THAT(trail[1].action, Eq(maneuvre::move_forward));
+    EXPECT_THAT(trail[2].action, Eq(maneuvre::turn_right));
+    EXPECT_THAT(trail[3].action, Eq(maneuvre::move_forward));
+    EXPECT_THAT(trail[4].action, Eq(maneuvre::turn_right));
+    EXPECT_THAT(trail[5].action, Eq(maneuvre::move_forward));
+}
+
+TEST_THAT(Snake,
      WHAT(GetLength),
      WHEN(Always),
      THEN(ReturnsTheNumberOfPartsInTheBodyOfTheSnake))

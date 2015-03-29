@@ -103,6 +103,7 @@
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\point.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\position.hpp" />

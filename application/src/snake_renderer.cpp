@@ -40,7 +40,7 @@ void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
 
     auto const translation = compute_snake_part_translation(d);
 
-    draw_snake_part(rotation, translation, is_head);
+    draw_snake_part(rotation, translation, d, is_head);
 }
 
 cinder::Vec3f snake_renderer::compute_snake_part_translation(
@@ -84,20 +84,22 @@ cinder::Vec3f snake_renderer::get_face_normal_vector(
 void snake_renderer::draw_snake_part(
     util::value_ref<cinder::Quatf> rotation, 
     util::value_ref<cinder::Vec3f> translation,
+    util::value_ref<dynamics> d,
     bool const is_head) const
 {
     cinder::gl::translate(translation);
 
     cinder::gl::rotate(rotation);
 
-    draw_snake_part_shape(is_head);
+    draw_snake_part_shape(d, is_head);
 
     cinder::gl::rotate(rotation.inverse());
 
     cinder::gl::translate(translation.inverse());
 }
 
-void snake_renderer::draw_snake_part_shape(bool const is_head) const
+void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
+                                           bool const is_head) const
 {
     cinder::gl::color(cinder::Color{1.f, 0.f, 0.f});
 
@@ -107,44 +109,123 @@ void snake_renderer::draw_snake_part_shape(bool const is_head) const
     }
     else
     {
-        draw_inner_body_part();
+        draw_inner_part(d);
     }
 }
 
-void snake_renderer::draw_inner_body_part() const
+void snake_renderer::draw_inner_part(util::value_ref<dynamics> d) const
 {
-    cinder::gl::drawCube(cinder::Vec3f::zero(), get_snake_inner_part_sizes());
+    switch (d.action)
+    {
+        case maneuvre::move_forward:
+        {
+            return draw_inner_part_on_forward_movement();
+        }
+
+        case maneuvre::turn_left:
+        {
+            return draw_inner_part_on_left_turn();
+        }
+
+        case maneuvre::turn_right:
+        {
+            return draw_inner_part_on_right_turn();
+        }
+
+        default:
+        {
+            assert(false);
+        }
+    }
+}
+
+void snake_renderer::draw_inner_part_on_forward_movement() const
+{
+    auto const sizes = get_snake_inner_part_sizes();
+
+    return cinder::gl::drawCube(cinder::Vec3f::zero(), sizes);
+}
+
+void snake_renderer::draw_inner_part_on_left_turn() const
+{
+    auto const margin = (this->block_size - this->width) / 2;
+
+    auto const length = this->block_size - margin;
+
+    cinder::gl::drawCube({0.f, -margin / 2.f, 0.f}, 
+                         {this->width, length, this->height});
+
+    cinder::gl::drawCube({-(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                         {margin, this->width, this->height});
+}
+
+void snake_renderer::draw_inner_part_on_right_turn() const
+{
+    auto const margin = (this->block_size - this->width) / 2;
+
+    auto const length = this->block_size - margin;
+
+    cinder::gl::drawCube({0.f, -margin / 2.f, 0.f}, 
+                         {this->width, length, this->height});
+
+    cinder::gl::drawCube({(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                         {margin, this->width, this->height});
 }
 
 void snake_renderer::draw_head() const
 {
     glBegin(GL_TRIANGLES);
 
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
+    draw_head_base();
 
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
+    draw_head_top_triangle();
 
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
+    draw_head_bottom_triangle();
 
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
+    draw_head_left_triangle();
 
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
-
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
+    draw_head_right_triangle();
 
     glEnd();
+}
+
+void snake_renderer::draw_head_base() const
+{
+    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
+
+    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
+}
+
+void snake_renderer::draw_head_top_triangle() const
+{
+    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(0.f, 0.f, 0.f);
+}
+
+void snake_renderer::draw_head_bottom_triangle() const
+{
+    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(0.f, 0.f, 0.f);
+}
+
+void snake_renderer::draw_head_left_triangle() const
+{
+    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(0.f, 0.f, 0.f);
+}
+
+void snake_renderer::draw_head_right_triangle() const
+{
+    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
+    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
+    glVertex3f(0.f, 0.f, 0.f);
 }
 
 cinder::Vec3f snake_renderer::get_snake_inner_part_sizes() const
