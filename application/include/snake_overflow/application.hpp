@@ -57,6 +57,8 @@ private:
 
     void draw_frame();
 
+    int get_zoom_step() const;
+
 private:
 
     terrain habitat;
