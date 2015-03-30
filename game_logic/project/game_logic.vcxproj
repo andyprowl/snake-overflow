@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\block.cpp" />
     <ClCompile Include="..\src\rgba_color.cpp" />
-    <ClCompile Include="..\src\cube_builder.cpp" />
+    <ClCompile Include="..\src\terrain_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\movement_profile.cpp" />
@@ -103,7 +103,7 @@
     <ClInclude Include="..\export\include\snake_overflow\block_face.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp" />

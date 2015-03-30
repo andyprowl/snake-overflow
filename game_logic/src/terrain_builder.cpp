@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/block.hpp"
-#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/point.hpp"
 #include "util/sequence.hpp"
@@ -11,7 +11,7 @@ namespace snake_overflow
 
 using util::sequence;
 
-cube_builder::cube_builder(terrain& build_site)
+terrain_builder::terrain_builder(terrain& build_site)
     : build_site{build_site}
 {
 }
@@ -26,11 +26,11 @@ bool is_surface_block(int const x,
             (z == 0) || (z == side_length - 1));
 }
 
-void cube_builder::add_cube(util::value_ref<point> origin, 
-                            int const side_length,
-                            util::value_ref<std::string> texture,
-                            util::value_ref<rgba_color> color,
-                            bool const solid) const
+void terrain_builder::add_cube(util::value_ref<point> origin, 
+                               int const side_length,
+                               util::value_ref<std::string> texture,
+                               util::value_ref<rgba_color> color,
+                               bool const solid) const
 {
     for (auto const x : sequence(0, side_length))
     {
@@ -50,12 +50,12 @@ void cube_builder::add_cube(util::value_ref<point> origin,
     }
 }
 
-void cube_builder::add_centered_cube(util::value_ref<point> center, 
-                                     int const side_length,
-                                     util::value_ref<std::string> texture,
-                                     util::value_ref<rgba_color> color,
-                                     bool const solid) const
-{
+void terrain_builder::add_centered_cube(util::value_ref<point> center, 
+                                        int const side_length,
+                                        util::value_ref<std::string> texture,
+                                        util::value_ref<rgba_color> color,
+                                        bool const solid) const
+    {
     auto const half_length = side_length / 2;
     
     auto const origin = center - point{half_length, half_length, half_length};

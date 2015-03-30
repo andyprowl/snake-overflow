@@ -26,13 +26,13 @@
     <ClCompile Include="..\src\block_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cube_builder_test_suite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\snake_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\terrain_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_builder_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
