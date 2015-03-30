@@ -19,26 +19,26 @@ terrain_builder::terrain_builder(terrain& build_site)
 bool is_surface_block(int const x, 
                       int const y, 
                       int const z, 
-                      int const side_length)
+                      util::value_ref<point> sizes)
 {
-    return ((x == 0) || (x == side_length - 1) ||
-            (y == 0) || (y == side_length - 1) ||
-            (z == 0) || (z == side_length - 1));
+    return ((x == 0) || (x == sizes.x - 1) ||
+            (y == 0) || (y == sizes.y - 1) ||
+            (z == 0) || (z == sizes.z - 1));
 }
 
-void terrain_builder::add_cube(util::value_ref<point> origin, 
-                               int const side_length,
-                               util::value_ref<std::string> texture,
-                               util::value_ref<rgba_color> color,
-                               bool const solid) const
+void terrain_builder::add_cuboid(util::value_ref<point> origin, 
+                                 util::value_ref<point> sizes, 
+                                 util::value_ref<std::string> texture,
+                                 util::value_ref<rgba_color> color,
+                                 bool solid) const
 {
-    for (auto const x : sequence(0, side_length))
+    for (auto const x : sequence(0, sizes.x))
     {
-        for (auto const y : sequence(0, side_length))
+        for (auto const y : sequence(0, sizes.y))
         {
-            for (auto const z : sequence(0, side_length))
+            for (auto const z : sequence(0, sizes.z))
             {
-                if (is_surface_block(x, y, z, side_length))
+                if (is_surface_block(x, y, z, sizes))
                 {
                     this->build_site.add_block({origin + point{x, y, z}, 
                                                 texture,
@@ -50,17 +50,43 @@ void terrain_builder::add_cube(util::value_ref<point> origin,
     }
 }
 
+void terrain_builder::add_cube(util::value_ref<point> origin, 
+                               int const side_length,
+                               util::value_ref<std::string> texture,
+                               util::value_ref<rgba_color> color,
+                               bool const solid) const
+{
+    add_cuboid(origin, 
+               {side_length, side_length, side_length},
+               texture,
+               color,
+               solid);
+}
+
+void terrain_builder::add_centered_cuboid(util::value_ref<point> center, 
+                                          util::value_ref<point> sizes,
+                                          util::value_ref<std::string> texture,
+                                          util::value_ref<rgba_color> color,
+                                          bool const solid) const
+{
+    auto const half_sizes = point{sizes.x / 2, sizes.y / 2, sizes.z / 2};
+    
+    auto const origin = center - half_sizes;
+
+    add_cuboid(origin, sizes, texture, color, solid);
+}
+
 void terrain_builder::add_centered_cube(util::value_ref<point> center, 
                                         int const side_length,
                                         util::value_ref<std::string> texture,
                                         util::value_ref<rgba_color> color,
                                         bool const solid) const
-    {
-    auto const half_length = side_length / 2;
-    
-    auto const origin = center - point{half_length, half_length, half_length};
-
-    add_cube(origin, side_length, texture, color, solid);
+{
+    add_centered_cuboid(center, 
+                        {side_length, side_length, side_length}, 
+                        texture, 
+                        color, 
+                        solid);
 }
 
 }

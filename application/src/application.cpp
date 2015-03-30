@@ -119,27 +119,27 @@ void application::create_habitat()
                               {255, 255, 255, 255},
                               true);
 
-    builder.add_cube({this->cube_side_length / 2, 
-                      this->cube_side_length / 4, 
-                      this->cube_side_length / 4}, 
-                      this->cube_side_length / 4, 
-                      "water2.jpg",
-                      {255, 255, 255, 100},
-                      false);
+    builder.add_cuboid({this->cube_side_length / 2, 
+                        this->cube_side_length / 4, 
+                        this->cube_side_length / 4}, 
+                       {this->cube_side_length / 4, 5, 3},
+                       "water2.jpg",
+                       {255, 255, 255, 100},
+                       false);
 
-    builder.add_cube({-this->cube_side_length / 2, 
-                      -this->cube_side_length / 4, 
-                      this->cube_side_length / 4 + 4}, 
-                      10, 
-                      "lava5.jpg",
-                      {255, 255, 255, 255},
-                      true);
+    builder.add_cuboid({-this->cube_side_length / 2, 
+                        -this->cube_side_length / 4, 
+                        this->cube_side_length / 4 + 4}, 
+                       {7, 6, 4}, 
+                       "lava5.jpg",
+                       {255, 255, 255, 255},
+                       true);
 
     builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
-                      7, 
-                      "stone3.jpg",
-                      {255, 255, 255, 255},
-                      true);
+                     7, 
+                     "stone3.jpg",
+                     {255, 255, 255, 255},
+                     true);
 }
 
 void application::create_snake()
