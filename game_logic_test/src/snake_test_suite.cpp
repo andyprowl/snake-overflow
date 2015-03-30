@@ -3,7 +3,7 @@
 #include "snake_overflow/cube_builder.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/snake.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 #include "util/repeat.hpp"
 #include "util/sequence.hpp"
 #include <memory>
@@ -24,7 +24,7 @@ protected:
         auto builder = cube_builder{this->habitat};
 
         builder.add_cube({0, 0, 0}, 
-                         this->territory_side_length, 
+                         this->terrain_side_length, 
                          "texture.jpg", 
                          {255, 255, 255, 255},
                          true);
@@ -36,9 +36,9 @@ protected:
 
 protected:
 
-    int territory_side_length = 5;
+    int terrain_side_length = 5;
 
-    territory habitat;
+    terrain habitat;
 
     point initial_location = {0, 0, 0};
 

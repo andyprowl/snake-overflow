@@ -5,19 +5,19 @@
 #include "snake_overflow/movement_profile.hpp"
 #include "snake_overflow/point.hpp"
 #include "snake_overflow/position.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 #include "util/contains.hpp"
 #include <algorithm>
 
 namespace snake_overflow
 {
 
-util::value_ref<std::vector<block>> territory::get_blocks() const
+util::value_ref<std::vector<block>> terrain::get_blocks() const
 {
     return this->blocks;
 }
 
-void territory::add_block(util::value_ref<block> b)
+void terrain::add_block(util::value_ref<block> b)
 {
     if (contains_block(b.origin))
     {
@@ -27,7 +27,7 @@ void territory::add_block(util::value_ref<block> b)
     this->blocks.push_back(b);
 }
 
-dynamics territory::compute_step(util::value_ref<dynamics> d) const
+dynamics terrain::compute_step(util::value_ref<dynamics> d) const
 {
     auto turn_dynamics = compute_hypothetical_turn_to_adjacent_block(d);
 
@@ -50,7 +50,7 @@ dynamics territory::compute_step(util::value_ref<dynamics> d) const
     }
 }
 
-dynamics territory::compute_hypothetical_turn_to_adjacent_block(
+dynamics terrain::compute_hypothetical_turn_to_adjacent_block(
     util::value_ref<dynamics> d) const
 {
     auto const fallback = get_continuation_profile(d.profile);
@@ -65,7 +65,7 @@ dynamics territory::compute_hypothetical_turn_to_adjacent_block(
     return {location, opp_fallback};
 }
 
-dynamics territory::compute_fallback_turn_on_same_block(
+dynamics terrain::compute_fallback_turn_on_same_block(
     util::value_ref<dynamics> d) const
 {
     auto const fallback = get_continuation_profile(d.profile);
@@ -73,7 +73,7 @@ dynamics territory::compute_fallback_turn_on_same_block(
     return {d.location, fallback};
 }
 
-bool territory::contains_solid_block(util::value_ref<point> p) const
+bool terrain::contains_solid_block(util::value_ref<point> p) const
 {
     auto const it = std::find_if(std::cbegin(this->blocks),
                                  std::cend(this->blocks),
@@ -85,7 +85,7 @@ bool territory::contains_solid_block(util::value_ref<point> p) const
     return (it != std::cend(this->blocks));
 }
 
-bool territory::contains_block(util::value_ref<point> p) const
+bool terrain::contains_block(util::value_ref<point> p) const
 {
     auto const it = std::find_if(std::cbegin(this->blocks),
                                  std::cend(this->blocks),

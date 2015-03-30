@@ -13,7 +13,7 @@ struct canonical_direction;
 struct dynamics;
 struct point;
 
-class territory
+class terrain
 {
 
 public:

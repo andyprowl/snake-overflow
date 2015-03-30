@@ -5,7 +5,7 @@
 #include "snake_overflow/canonical_direction.hpp"
 #include "snake_overflow/dynamics.hpp"
 #include "snake_overflow/position.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -13,7 +13,7 @@ namespace snake_overflow { namespace testing
 using ::testing::Eq;
 using ::testing::Test;
 
-class Territory : public Test
+class Terrain : public Test
 {
 
 protected:
@@ -35,7 +35,7 @@ protected:
         EXPECT_THAT(this->t.compute_step(d), Eq(expected_result));
     }
 
-    block add_block_to_territory(util::value_ref<point> p)
+    block add_block_to_terrain(util::value_ref<point> p)
     {
         auto const b = block{p, "texture.jpg", {0, 0, 0, 255}, true};
 
@@ -44,7 +44,7 @@ protected:
         return b;
     }
 
-    block add_non_solid_block_to_territory(util::value_ref<point> p)
+    block add_non_solid_block_to_terrain(util::value_ref<point> p)
     {
         auto const b = block{p, "texture.jpg", {0, 0, 0, 255}, false};
 
@@ -55,7 +55,7 @@ protected:
 
 protected:
 
-    territory t;
+    terrain t;
 
 };
 
@@ -66,7 +66,7 @@ auto const negative_y_direction = canonical_direction::negative_y();
 auto const positive_z_direction = canonical_direction::positive_z();
 auto const negative_z_direction = canonical_direction::negative_z();
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(GetBlocks),
      WHEN(ImmediatelyAfterDefaultConstruction),
      THEN(ReturnsAnEmptyCollectionOfBlocks))
@@ -76,12 +76,12 @@ TEST_THAT(Territory,
     EXPECT_TRUE(blocks.empty());
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(AddBlock),
-     WHEN(GivenABlockThatIsNotAlreadyPartOfTheTerritory),
-     THEN(AddsTheBlockToTheTerritory))
+     WHEN(GivenABlockThatIsNotAlreadyPartOfTheTerrain),
+     THEN(AddsTheBlockToTheTerrain))
 {
-    auto const b = add_block_to_territory({0, 1, 2});
+    auto const b = add_block_to_terrain({0, 1, 2});
 
     auto const blocks = this->t.get_blocks();
 
@@ -90,12 +90,12 @@ TEST_THAT(Territory,
     EXPECT_THAT(blocks[0], Eq(b));
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(AddBlock),
-     WHEN(GivenABlockThatIsAlreadyPartOfTheTerritory),
+     WHEN(GivenABlockThatIsAlreadyPartOfTheTerrain),
      THEN(DoesNotAddThatBlockAgain))
 {
-    auto const b = add_block_to_territory({0, 1, 2});
+    auto const b = add_block_to_terrain({0, 1, 2});
 
     this->t.add_block(b);
 
@@ -104,7 +104,7 @@ TEST_THAT(Territory,
     ASSERT_THAT(blocks.size(), Eq(1u));
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionInTheMiddleOfASurfaceParallelToXAndADirectionAlongX),
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
@@ -136,7 +136,7 @@ TEST_THAT(Territory,
                 {{0, 1, 0}, {block_face::bottom, negative_x_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionInTheMiddleOfASurfaceParallelToYAndADirectionAlongY),
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
@@ -168,7 +168,7 @@ TEST_THAT(Territory,
                 {{1, 0, 0}, {block_face::bottom, negative_y_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionInTheMiddleOfASurfaceParallelToZAndADirectionAlongZ),
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))
@@ -200,7 +200,7 @@ TEST_THAT(Territory,
                 {{3, 1, 0}, {block_face::right, negative_z_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionOnTheEdgeOfASurfaceParallelToXAndADirectionAlongX),
      THEN(ReturnsAPositionOnTheAdjacentSurfaceWithAppropriateDirection))
@@ -232,7 +232,7 @@ TEST_THAT(Territory,
                 {{0, 1, 0}, {block_face::left, positive_z_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionOnTheEdgeOfASurfaceParallelToYAndADirectionAlongY),
      THEN(ReturnsAPositionOnTheAdjacentSurfaceWithAppropriateDirection))
@@ -264,7 +264,7 @@ TEST_THAT(Territory,
                 {{1, 0, 0}, {block_face::front, positive_z_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionOnTheEdgeOfASurfaceParallelToZAndADirectionAlongZ),
      THEN(ReturnsAPositionOnTheAdjacentSurfaceWithAppropriateDirection))
@@ -296,37 +296,37 @@ TEST_THAT(Territory,
                 {{3, 1, 0}, {block_face::bottom, negative_x_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionOnTheEdgeOfASurfaceAndADirectionThatLeadsToATurnBlock),
      THEN(ReturnsAPositionOnTheAppropriateSurfaceOfThatBlock))
 {
     create_cube_with_vertex_on_origin(4);
 
-    add_block_to_territory({1, -1, 2});
+    add_block_to_terrain({1, -1, 2});
 
     verify_step({{1, 0, 3}, {block_face::front, negative_z_direction}}, 
                 {{1, -1, 2}, {block_face::top, negative_y_direction}});
 
-    add_block_to_territory({4, 3, 2});
+    add_block_to_terrain({4, 3, 2});
 
     verify_step({{3, 2, 2}, {block_face::right, positive_y_direction}}, 
                 {{4, 3, 2}, {block_face::front, positive_x_direction}});
 
-    add_block_to_territory({2, 4, 4});
+    add_block_to_terrain({2, 4, 4});
 
     verify_step({{2, 3, 3}, {block_face::top, positive_y_direction}}, 
                 {{2, 4, 4}, {block_face::front, positive_z_direction}});
 }
 
-TEST_THAT(Territory,
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(WhenTheNextBlockToBeWalkedIsNotSolid),
      THEN(ThatBlockIsNotTakenIntoConsideration))
 {
     create_cube_with_vertex_on_origin(4);
 
-    add_non_solid_block_to_territory({0, 0, 4});
+    add_non_solid_block_to_terrain({0, 0, 4});
 
     verify_step({{0, 0, 3}, {block_face::front, positive_z_direction}}, 
                 {{0, 0, 3}, {block_face::top, positive_y_direction}});

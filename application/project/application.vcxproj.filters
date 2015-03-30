@@ -24,9 +24,6 @@
     <ClCompile Include="..\src\application.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\territory_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\point_conversion.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
     <ClCompile Include="..\src\color_conversion.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\terrain_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -51,9 +51,6 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\point_conversion.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\territory_renderer.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\application.hpp">
@@ -69,6 +66,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\terrain_renderer.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

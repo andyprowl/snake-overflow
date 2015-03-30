@@ -7,17 +7,17 @@ namespace snake_overflow
 
 struct block;
 
-class territory;
+class terrain;
 class texture_repository;
 
-class territory_renderer
+class terrain_renderer
 {
 
 public:
 
-    territory_renderer(float block_size, texture_repository const& textures);
+    terrain_renderer(float block_size, texture_repository const& textures);
 
-    void render(util::value_ref<territory> t) const;
+    void render(util::value_ref<terrain> t) const;
 
 private:
 

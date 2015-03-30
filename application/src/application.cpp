@@ -154,7 +154,7 @@ void application::create_renderers()
     
     create_snake_renderer();
 
-    create_territory_renderer();
+    create_terrain_renderer();
 }
 
 void application::create_snake_renderer()
@@ -171,9 +171,9 @@ void application::create_snake_renderer()
                                                            skin);
 }
 
-void application::create_territory_renderer()
+void application::create_terrain_renderer()
 {
-    this->habitat_renderer = std::make_unique<territory_renderer>(
+    this->habitat_renderer = std::make_unique<terrain_renderer>(
         this->block_size, 
         *this->textures);
 }

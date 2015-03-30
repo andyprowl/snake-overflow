@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/cube_builder.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/point.hpp"
 
@@ -16,7 +16,7 @@ class CubeBuilder : public Test
 
 protected:
 
-    territory t;
+    terrain t;
 
     cube_builder builder{t};
 
@@ -25,7 +25,7 @@ protected:
 TEST_THAT(CubeBuilder,
      WHAT(AddCube),
      WHEN(GivenAnOriginBlockAndASideLength),
-     THEN(AddsASeriesOfBlocksLaidOutAsACubeToTheTerritoryPassedAtConstruction))
+     THEN(AddsASeriesOfBlocksLaidOutAsACubeToTheTerrainPassedAtConstruction))
 {
     this->builder.add_cube({-1, 3, 4}, 3, "texture.jpg", {0, 0, 0, 255}, true);
 
