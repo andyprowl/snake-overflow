@@ -27,7 +27,8 @@ protected:
                          this->terrain_side_length, 
                          "texture.jpg", 
                          {255, 255, 255, 255},
-                         true);
+                         true,
+                         false);
 
         this->s = std::make_unique<snake>(habitat, 
                                           initial_dynamics, 

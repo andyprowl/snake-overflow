@@ -117,15 +117,31 @@ void application::create_habitat()
                               this->cube_side_length, 
                               "grass4.jpg",
                               {255, 255, 255, 255},
-                              true);
+                              true,
+                              false);
 
-    builder.add_cuboid({this->cube_side_length / 2, 
-                        this->cube_side_length / 4, 
-                        this->cube_side_length / 4}, 
-                       {this->cube_side_length / 4, 5, 3},
-                       "water2.jpg",
+    auto const pool_sizes = point{5, 7, 3};
+
+    auto const pool_origin = point{this->cube_side_length / 2,
+                                   this->cube_side_length / 2 - pool_sizes.y,
+                                   this->cube_side_length / 4};
+
+    builder.add_cuboid(pool_origin,
+                       pool_sizes,
+                       "brick1.jpg",
+                       {255, 255, 255, 255},
+                       true,
+                       true);
+
+    builder.remove_cuboid(pool_origin + point{1, 1, 1},
+                          pool_sizes - point{2, 2, 1});
+
+    builder.add_cuboid(pool_origin + point{1, 1, 1}, 
+                       pool_sizes - point{2, 2, 1},
+                       "water4.jpg",
                        {255, 255, 255, 100},
-                       false);
+                       false,
+                       true);
 
     builder.add_cuboid({-this->cube_side_length / 2, 
                         -this->cube_side_length / 4, 
@@ -133,13 +149,15 @@ void application::create_habitat()
                        {7, 6, 4}, 
                        "lava5.jpg",
                        {255, 255, 255, 255},
-                       true);
+                       true,
+                       false);
 
     builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
                      7, 
                      "stone3.jpg",
                      {255, 255, 255, 255},
-                     true);
+                     true,
+                     false);
 }
 
 void application::create_snake()

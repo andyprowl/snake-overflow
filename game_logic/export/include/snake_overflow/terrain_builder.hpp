@@ -21,25 +21,32 @@ public:
                     util::value_ref<point> sizes, 
                     util::value_ref<std::string> texture,
                     util::value_ref<rgba_color> color,
-                    bool solid) const;
+                    bool solid,
+                    bool full) const;
 
     void add_cube(util::value_ref<point> origin, 
                   int side_length, 
                   util::value_ref<std::string> texture,
                   util::value_ref<rgba_color> color,
-                  bool solid) const;
+                  bool solid,
+                  bool full) const;
 
     void add_centered_cuboid(util::value_ref<point> center, 
                              util::value_ref<point> sizes, 
                              util::value_ref<std::string> texture,
                              util::value_ref<rgba_color> color,
-                             bool solid) const;
+                             bool solid,
+                             bool full) const;
 
     void add_centered_cube(util::value_ref<point> center, 
                            int const side_length,
                            util::value_ref<std::string> texture,
                            util::value_ref<rgba_color> color,
-                           bool solid) const;
+                           bool solid,
+                           bool full) const;
+
+    void remove_cuboid(util::value_ref<point> origin, 
+                       util::value_ref<point> sizes) const;
 
 private:
 

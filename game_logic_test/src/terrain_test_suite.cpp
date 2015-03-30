@@ -28,7 +28,8 @@ protected:
                          side_length, 
                          "texture.jpg", 
                          {0, 0, 0, 255}, 
-                         true);
+                         true,
+                         false);
     }
 
     void verify_step(util::value_ref<dynamics> d,
