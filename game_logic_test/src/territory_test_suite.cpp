@@ -22,7 +22,7 @@ protected:
     {
         cube_builder builder{this->t};
 
-        builder.add_cube({0, 0, 0}, side_length);
+        builder.add_cube({0, 0, 0}, side_length, "texture.jpg");
     }
 
     void verify_step(util::value_ref<dynamics> d,
@@ -59,7 +59,7 @@ TEST_THAT(Territory,
      WHEN(GivenABlockThatIsNotAlreadyPartOfTheTerritory),
      THEN(AddsTheBlockToTheTerritory))
 {
-    auto const b = block{{0, 1, 2}};
+    auto const b = block{{0, 1, 2}, "texture.jpg"};
 
     this->t.add_block(b);
 
@@ -75,7 +75,7 @@ TEST_THAT(Territory,
      WHEN(GivenABlockThatIsAlreadyPartOfTheTerritory),
      THEN(DoesNotAddThatBlockAgain))
 {
-    auto const b = block{{0, 1, 2}};
+    auto const b = block{{0, 1, 2}, "texture.jpg"};
 
     this->t.add_block(b);
 
@@ -285,17 +285,17 @@ TEST_THAT(Territory,
 {
     create_cube_with_vertex_on_origin(4);
 
-    this->t.add_block({{1, -1, 2}});
+    this->t.add_block({{1, -1, 2}, "texture.jpg"});
 
     verify_step({{1, 0, 3}, {block_face::front, negative_z_direction}}, 
                 {{1, -1, 2}, {block_face::top, negative_y_direction}});
 
-    this->t.add_block({{4, 3, 2}});
+    this->t.add_block({{4, 3, 2}, "texture.jpg"});
 
     verify_step({{3, 2, 2}, {block_face::right, positive_y_direction}}, 
                 {{4, 3, 2}, {block_face::front, positive_x_direction}});
 
-    this->t.add_block({{2, 4, 4}});
+    this->t.add_block({{2, 4, 4}, "texture.jpg"});
 
     verify_step({{2, 3, 3}, {block_face::top, positive_y_direction}}, 
                 {{2, 4, 4}, {block_face::front, positive_z_direction}});

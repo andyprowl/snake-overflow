@@ -11,14 +11,14 @@ struct block
 
 public:
 
-    block(util::value_ref<point> origin);
+    block(util::value_ref<point> origin, std::string texture);
 
-    point get_origin() const;
-
-private:
+public:
 
     point origin;
 
+    std::string texture;
+    
 };
 
 bool operator == (util::value_ref<block> lhs, util::value_ref<block> rhs);

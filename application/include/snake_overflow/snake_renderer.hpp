@@ -1,6 +1,7 @@
 #pragma once
 
 #include "util/value_ref.hpp"
+#include "cinder/gl/Texture.h"
 
 namespace snake_overflow
 {
@@ -17,9 +18,14 @@ class snake_renderer
 
 public:
 
-    snake_renderer(float snake_width, float snake_height, float block_size);
+    snake_renderer(float snake_width, 
+                   float snake_height, 
+                   float block_size,
+                   cinder::gl::Texture skin);
 
     void render(util::value_ref<snake> s) const;
+
+    void set_skin(cinder::gl::Texture skin);
 
 private:
 
@@ -79,6 +85,8 @@ private:
     float height;
 
     float block_size;
+
+    cinder::gl::Texture skin;
 
 };
 

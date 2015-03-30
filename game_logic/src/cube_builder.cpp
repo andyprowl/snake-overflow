@@ -27,17 +27,19 @@ bool is_surface_block(int const x,
 }
 
 void cube_builder::add_cube(util::value_ref<point> origin, 
-                            int const side_length) const
+                            int const side_length,
+                            std::string texture) const
 {
-    for (auto const x : sequence(origin.x, origin.x + side_length))
+    for (auto const x : sequence(0, side_length))
     {
-        for (auto const y : sequence(origin.y, origin.y + side_length))
+        for (auto const y : sequence(0, side_length))
         {
-            for (auto const z : sequence(origin.z, origin.z + side_length))
+            for (auto const z : sequence(0, side_length))
             {
                 if (is_surface_block(x, y, z, side_length))
                 {
-                    this->build_site.add_block(point{x, y, z});
+                    this->build_site.add_block({origin + point{x, y, z}, 
+                                                texture});
                 }
             }
         }
@@ -45,26 +47,14 @@ void cube_builder::add_cube(util::value_ref<point> origin,
 }
 
 void cube_builder::add_centered_cube(util::value_ref<point> center, 
-                                     int const side_length) const
+                                     int const side_length,
+                                     std::string texture) const
 {
     auto const half_length = side_length / 2;
+    
+    auto const origin = center - point{half_length, half_length, half_length};
 
-    for (auto const x : sequence(center.x, center.x + side_length))
-    {
-        for (auto const y : sequence(center.y, center.y + side_length))
-        {
-            for (auto const z : sequence(center.z, center.z + side_length))
-            {
-                if (is_surface_block(x, y, z, side_length))
-                {
-                    this->build_site.add_block(
-                        point{x - half_length, 
-                              y - half_length, 
-                              z - half_length});
-                }
-            }
-        }
-    }
+    add_cube(origin, side_length, texture);
 }
 
 }

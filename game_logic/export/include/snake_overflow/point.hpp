@@ -49,3 +49,23 @@ point operator * (util::value_ref<point> p, int factor);
 point operator * (int factor, util::value_ref<point> p);
 
 }
+
+namespace std
+{
+
+template<>
+struct hash<snake_overflow::point>
+{
+
+public:
+
+    std::size_t operator () (util::value_ref<snake_overflow::point> const p)
+    {
+        return (std::hash<std::size_t>{}(static_cast<std::size_t>(p.x)) ^
+                std::hash<std::size_t>{}(static_cast<std::size_t>(p.y)) ^
+                std::hash<std::size_t>{}(static_cast<std::size_t>(p.z)));
+    }
+
+};
+
+}

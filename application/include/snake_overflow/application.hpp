@@ -1,8 +1,8 @@
 #pragma once
 
-#include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/territory.hpp"
 #include "snake_overflow/territory_renderer.hpp"
+#include "snake_overflow/texture_repository.hpp"
 #include "cinder/Arcball.h"
 #include "cinder/Camera.h"
 #include "cinder/params/Params.h"
@@ -12,6 +12,7 @@ namespace snake_overflow
 {
 
 class snake;
+class snake_renderer;
 
 class application : public cinder::app::AppNative 
 {
@@ -32,45 +33,49 @@ public:
 
     virtual void mouseDrag(cinder::app::MouseEvent e) override;
 
+    virtual void mouseWheel(cinder::app::MouseEvent e) override;
+
 private:
 
     void create_habitat();
 
     void create_snake();
 
+    void create_texture_repository();
+
+    void create_renderers();
+
+    void create_snake_renderer();
+
+    void create_territory_renderer();
+
     void setup_perspective_camera();
 
     void setup_arcball_manipulator();
 
-    void setup_gui_control_parameters();
-
     void setup_depth_buffer();
 
-    void draw_game();
+    void draw_frame();
 
 private:
 
     territory habitat;
 
     std::unique_ptr<snake> hero;
+    
+    int cube_side_length = 20;
 
-    int cube_side_length = 16;
+    float block_size = 25.f;
 
-    float block_size = 15.f;
+    std::unique_ptr<texture_repository> textures;
 
-    float snake_height = 5.f;
+    std::unique_ptr<territory_renderer> habitat_renderer;
 
-    float snake_width = block_size / 3;
-
-    territory_renderer habitat_renderer{block_size};
-
-    snake_renderer hero_renderer{snake_width, snake_height, block_size};
+    std::unique_ptr<snake_renderer> hero_renderer;
 
     cinder::CameraPersp camera;
-
-    cinder::params::InterfaceGlRef parameters;
-
-    float camera_distance = 500.f;
+    
+    float camera_distance = 650.f;
 
     cinder::Arcball arcball;
 

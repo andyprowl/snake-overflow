@@ -12,14 +12,14 @@
 namespace snake_overflow
 {
 
-std::vector<block> territory::get_blocks() const
+util::value_ref<std::vector<block>> territory::get_blocks() const
 {
     return this->blocks;
 }
 
 void territory::add_block(util::value_ref<block> b)
 {
-    if (util::contains(this->blocks, b))
+    if (contains_block(b.origin))
     {
         return;
     }
@@ -79,7 +79,7 @@ bool territory::contains_block(util::value_ref<point> p) const
                                  std::cend(this->blocks),
                                  [&p] (util::value_ref<block> b)
     {
-        return (b.get_origin() == p);
+        return (b.origin == p);
     });
 
     return (it != std::cend(this->blocks));

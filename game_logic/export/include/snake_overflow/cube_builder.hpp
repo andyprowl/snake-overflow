@@ -16,10 +16,13 @@ public:
 
     cube_builder(territory& build_site);
 
-    void add_cube(util::value_ref<point> origin, int side_length) const;
+    void add_cube(util::value_ref<point> origin, 
+                  int side_length, 
+                  std::string texture) const;
     
     void add_centered_cube(util::value_ref<point> center, 
-                           int const side_length) const;
+                           int const side_length,
+                           std::string texture) const;
 
 private:
 

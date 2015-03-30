@@ -18,7 +18,7 @@ class territory
 
 public:
     
-    std::vector<block> get_blocks() const;
+    util::value_ref<std::vector<block>> get_blocks() const;
 
     void add_block(util::value_ref<block> b);
 

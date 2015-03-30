@@ -27,11 +27,11 @@ TEST_THAT(CubeBuilder,
      WHEN(GivenAnOriginBlockAndASideLength),
      THEN(AddsASeriesOfBlocksLaidOutAsACubeToTheTerritoryPassedAtConstruction))
 {
-    this->builder.add_cube({-1, 3, 4}, 3);
+    this->builder.add_cube({-1, 3, 4}, 3, "texture.jpg");
 
     auto const blocks = this->t.get_blocks();
 
-    ASSERT_THAT(blocks.size(), Eq(9u));
+    ASSERT_THAT(blocks.size(), Eq(26u));
 }
 
 } }

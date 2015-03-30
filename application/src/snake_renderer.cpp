@@ -12,15 +12,19 @@ namespace snake_overflow
 
 snake_renderer::snake_renderer(float const snake_width, 
                                float const snake_height,
-                               float const block_size)
+                               float const block_size,
+                               cinder::gl::Texture skin)
     : width{snake_width}
     , height{snake_height}
     , block_size{block_size}
+    , skin{std::move(skin)}
 {
 }
 
 void snake_renderer::render(util::value_ref<snake> s) const
 {
+    this->skin.enableAndBind();
+
     auto const trail = s.get_trail();
 
     auto const length = s.get_length();
@@ -31,6 +35,13 @@ void snake_renderer::render(util::value_ref<snake> s) const
 
         render_snake_part(trail[i], (i == length - 1), is_edge_winding);
     }
+
+    this->skin.unbind();
+}
+
+void snake_renderer::set_skin(cinder::gl::Texture skin)
+{
+    this->skin = std::move(skin);
 }
 
 bool snake_renderer::is_trail_winding_around_edge(
@@ -114,7 +125,7 @@ void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
                                            bool const is_head,
                                            bool const is_edge_winding) const
 {
-    cinder::gl::color(cinder::Color{1.f, 0.f, 0.f});
+    cinder::gl::color(cinder::Color{1.f, 1.f, 1.f});
 
     if (is_head)
     {
