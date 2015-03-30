@@ -18,6 +18,9 @@ public:
 
     void add_cube(util::value_ref<point> origin, int side_length) const;
     
+    void add_centered_cube(util::value_ref<point> center, 
+                           int const side_length) const;
+
 private:
 
     territory& build_site;

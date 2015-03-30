@@ -54,6 +54,22 @@ void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
     draw_snake_part(rotation, translation, d, is_head, is_edge_winding);
 }
 
+cinder::Quatf snake_renderer::compute_snake_part_rotation(
+    util::value_ref<dynamics> d) const
+{
+    auto const normal = get_face_normal_vector(d.profile.face);
+    
+    auto const normal_rotation = cinder::Quatf{cinder::Vec3f::zAxis(), normal};
+
+    auto const direction = get_dynamics_direction_vector(d);
+
+    auto const direction_rotation = cinder::Quatf{
+        cinder::Vec3f::yAxis() * normal_rotation, 
+        vec3f_from_point(direction)};
+
+    return normal_rotation * direction_rotation;
+}
+
 cinder::Vec3f snake_renderer::compute_snake_part_translation(
     util::value_ref<dynamics> d) const
 {
@@ -66,22 +82,6 @@ cinder::Vec3f snake_renderer::compute_snake_part_translation(
     auto const surface_offset = normal * this->block_size / 2;
 
     return block_origin + surface_offset;
-}
-
-cinder::Quatf snake_renderer::compute_snake_part_rotation(
-    util::value_ref<dynamics> d) const
-{
-    auto const normal = get_face_normal_vector(d.profile.face);
-    
-    auto const normal_rotation = cinder::Quatf{cinder::Vec3f::zAxis(), normal};
-
-    auto const direction = get_dynamics_direction_vector(d);
-
-    auto const direction_rotation = cinder::Quatf{
-        normal_rotation * cinder::Vec3f::yAxis(), 
-        vec3f_from_point(direction)};
-
-    return normal_rotation * direction_rotation;
 }
 
 cinder::Vec3f snake_renderer::get_face_normal_vector(
@@ -99,15 +99,15 @@ void snake_renderer::draw_snake_part(
     bool const is_head,
     bool const is_edge_winding) const
 {
+    cinder::gl::pushModelView();
+
     cinder::gl::translate(translation);
 
     cinder::gl::rotate(rotation);
 
     draw_snake_part_shape(d, is_head, is_edge_winding);
 
-    cinder::gl::rotate(rotation.inverse());
-
-    cinder::gl::translate(translation.inverse());
+    cinder::gl::popModelView();
 }
 
 void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
@@ -138,12 +138,12 @@ void snake_renderer::draw_inner_part(util::value_ref<dynamics> d,
 
         case maneuvre::turn_left:
         {
-            return draw_inner_part_on_left_turn();
+            return draw_inner_part_on_left_turn(d);
         }
 
         case maneuvre::turn_right:
         {
-            return draw_inner_part_on_right_turn();
+            return draw_inner_part_on_right_turn(d);
         }
 
         default:
@@ -161,7 +161,8 @@ void snake_renderer::draw_inner_part_on_forward_movement(
     return cinder::gl::drawCube(cinder::Vec3f::zero(), sizes);
 }
 
-void snake_renderer::draw_inner_part_on_left_turn() const
+void snake_renderer::draw_inner_part_on_left_turn(
+    util::value_ref<dynamics> d) const
 {
     auto const margin = (this->block_size - this->width) / 2;
 
@@ -170,11 +171,26 @@ void snake_renderer::draw_inner_part_on_left_turn() const
     cinder::gl::drawCube({0.f, -margin / 2.f, 0.f}, 
                          {this->width, length, this->height});
 
-    cinder::gl::drawCube({-(this->block_size - margin) / 2.f, 0.f, 0.f}, 
-                         {margin, this->width, this->height});
+    // SHAME ON THE AUTHOR!
+    // This check is due to a fail. I probably got the maths wrong at some 
+    // point, and without this, right turns are not rendered properly on top and 
+    // bottom faces of a block.
+    if (((d.profile.face == block_face::top) || 
+         (d.profile.face == block_face::bottom)) && 
+        (d.profile.direction == canonical_direction::negative_y()))
+    {
+        cinder::gl::drawCube({+(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                             {margin, this->width, this->height});
+    }
+    else
+    {
+        cinder::gl::drawCube({-(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                             {margin, this->width, this->height});
+    }
 }
 
-void snake_renderer::draw_inner_part_on_right_turn() const
+void snake_renderer::draw_inner_part_on_right_turn(
+    util::value_ref<dynamics> d) const
 {
     auto const margin = (this->block_size - this->width) / 2;
 
@@ -183,8 +199,22 @@ void snake_renderer::draw_inner_part_on_right_turn() const
     cinder::gl::drawCube({0.f, -margin / 2.f, 0.f}, 
                          {this->width, length, this->height});
 
-    cinder::gl::drawCube({(this->block_size - margin) / 2.f, 0.f, 0.f}, 
-                         {margin, this->width, this->height});
+    // SHAME ON THE AUTHOR!
+    // This check is due to a fail. I probably got the maths wrong at some 
+    // point, and without this, right turns are not rendered properly on top and 
+    // bottom faces of a block.
+    if (((d.profile.face == block_face::top) || 
+         (d.profile.face == block_face::bottom)) && 
+        (d.profile.direction == canonical_direction::negative_y()))
+    {
+        cinder::gl::drawCube({-(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                             {margin, this->width, this->height});
+    }
+    else
+    {
+        cinder::gl::drawCube({(this->block_size - margin) / 2.f, 0.f, 0.f}, 
+                             {margin, this->width, this->height});
+    }
 }
 
 void snake_renderer::draw_head() const

@@ -31,7 +31,7 @@ TEST_THAT(CubeBuilder,
 
     auto const blocks = this->t.get_blocks();
 
-    ASSERT_THAT(blocks.size(), Eq(27u));
+    ASSERT_THAT(blocks.size(), Eq(9u));
 }
 
 } }

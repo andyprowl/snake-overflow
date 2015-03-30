@@ -54,9 +54,9 @@ private:
 
     void draw_inner_part_on_forward_movement(bool is_edge_winding) const;
 
-    void draw_inner_part_on_left_turn() const;
+    void draw_inner_part_on_left_turn(util::value_ref<dynamics> d) const;
 
-    void draw_inner_part_on_right_turn() const;
+    void draw_inner_part_on_right_turn(util::value_ref<dynamics> d) const;
 
     void draw_head() const;
 
