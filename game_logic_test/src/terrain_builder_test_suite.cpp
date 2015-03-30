@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/point.hpp"
@@ -11,18 +11,18 @@ namespace snake_overflow { namespace testing
 using ::testing::Eq;
 using ::testing::Test;
 
-class CubeBuilder : public Test
+class TerrainBuilder : public Test
 {
 
 protected:
 
     terrain t;
 
-    cube_builder builder{t};
+    terrain_builder builder{t};
 
 };
 
-TEST_THAT(CubeBuilder,
+TEST_THAT(TerrainBuilder,
      WHAT(AddCube),
      WHEN(GivenAnOriginBlockAndASideLength),
      THEN(AddsASeriesOfBlocksLaidOutAsACubeToTheTerrainPassedAtConstruction))

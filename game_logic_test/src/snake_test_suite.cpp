@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
@@ -21,7 +21,7 @@ protected:
 
     virtual void SetUp() override
     {
-        auto builder = cube_builder{this->habitat};
+        auto builder = terrain_builder{this->habitat};
 
         builder.add_cube({0, 0, 0}, 
                          this->terrain_side_length, 

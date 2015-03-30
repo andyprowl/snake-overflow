@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/block.hpp"
-#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/canonical_direction.hpp"
 #include "snake_overflow/dynamics.hpp"
 #include "snake_overflow/position.hpp"
@@ -20,7 +20,7 @@ protected:
 
     void create_cube_with_vertex_on_origin(int const side_length)
     {
-        cube_builder builder{this->t};
+        auto builder = terrain_builder{this->t};
 
         builder.add_cube({0, 0, 0}, 
                          side_length, 

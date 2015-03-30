@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/application.hpp"
-#include "snake_overflow/cube_builder.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
@@ -111,7 +111,7 @@ void application::mouseWheel(cinder::app::MouseEvent const e)
 
 void application::create_habitat()
 {
-    auto builder = cube_builder{this->habitat};
+    auto builder = terrain_builder{this->habitat};
 
     builder.add_centered_cube({0, 0, 0}, 
                               this->cube_side_length, 

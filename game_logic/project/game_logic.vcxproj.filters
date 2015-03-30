@@ -29,9 +29,6 @@
     <ClCompile Include="..\src\block.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\cube_builder.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\snake.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\terrain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_builder.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,9 +94,6 @@
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp">
-      <Filter>export\include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
@@ -119,6 +116,9 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\terrain.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

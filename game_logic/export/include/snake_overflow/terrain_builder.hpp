@@ -10,12 +10,12 @@ struct rgba_color;
 
 class terrain;
 
-class cube_builder
+class terrain_builder
 {
 
 public:
 
-    cube_builder(terrain& build_site);
+    terrain_builder(terrain& build_site);
 
     void add_cube(util::value_ref<point> origin, 
                   int side_length, 

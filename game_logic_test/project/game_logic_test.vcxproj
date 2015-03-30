@@ -103,7 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\block_test_suite.cpp" />
-    <ClCompile Include="..\src\cube_builder_test_suite.cpp" />
+    <ClCompile Include="..\src\terrain_builder_test_suite.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\snake_test_suite.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
