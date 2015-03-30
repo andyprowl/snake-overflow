@@ -27,6 +27,17 @@ void terrain::add_block(util::value_ref<block> b)
     this->blocks.push_back(b);
 }
 
+void terrain::remove_block(util::value_ref<point> origin)
+{
+    auto const it = find_block(origin);
+    if (it == std::cend(this->blocks))
+    {
+        return;
+    }
+
+    this->blocks.erase(it);
+}
+
 dynamics terrain::compute_step(util::value_ref<dynamics> d) const
 {
     auto turn_dynamics = compute_hypothetical_turn_to_adjacent_block(d);
@@ -75,26 +86,32 @@ dynamics terrain::compute_fallback_turn_on_same_block(
 
 bool terrain::contains_solid_block(util::value_ref<point> p) const
 {
-    auto const it = std::find_if(std::cbegin(this->blocks),
-                                 std::cend(this->blocks),
-                                 [&p] (util::value_ref<block> b)
-    {
-        return ((b.origin == p) && b.is_solid);
-    });
+    auto const it = find_block(p);
 
-    return (it != std::cend(this->blocks));
+    if (it == std::cend(this->blocks))
+    {
+        return false;
+    }
+
+    return it->is_solid;
 }
 
 bool terrain::contains_block(util::value_ref<point> p) const
 {
-    auto const it = std::find_if(std::cbegin(this->blocks),
-                                 std::cend(this->blocks),
-                                 [&p] (util::value_ref<block> b)
+    auto const it = find_block(p);
+
+    return (it != std::cend(this->blocks));
+}
+
+std::vector<block>::const_iterator terrain::find_block(
+    util::value_ref<point> p) const
+{
+    return std::find_if(std::cbegin(this->blocks),
+                        std::cend(this->blocks),
+                        [&p] (util::value_ref<block> b)
     {
         return (b.origin == p);
     });
-
-    return (it != std::cend(this->blocks));
 }
 
 }

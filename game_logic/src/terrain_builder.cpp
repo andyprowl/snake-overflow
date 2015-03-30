@@ -16,16 +16,6 @@ terrain_builder::terrain_builder(terrain& build_site)
 {
 }
 
-bool is_surface_block(int const x, 
-                      int const y, 
-                      int const z, 
-                      util::value_ref<point> sizes)
-{
-    return ((x == 0) || (x == sizes.x - 1) ||
-            (y == 0) || (y == sizes.y - 1) ||
-            (z == 0) || (z == sizes.z - 1));
-}
-
 void terrain_builder::add_cuboid(util::value_ref<point> origin, 
                                  util::value_ref<point> sizes, 
                                  util::value_ref<std::string> texture,
@@ -87,6 +77,16 @@ void terrain_builder::add_centered_cube(util::value_ref<point> center,
                         texture, 
                         color, 
                         solid);
+}
+
+bool terrain_builder::is_surface_block(int const x, 
+                                       int const y, 
+                                       int const z, 
+                                       util::value_ref<point> sizes) const
+{
+    return ((x == 0) || (x == sizes.x - 1) ||
+            (y == 0) || (y == sizes.y - 1) ||
+            (z == 0) || (z == sizes.z - 1));
 }
 
 }

@@ -22,6 +22,8 @@ public:
 
     void add_block(util::value_ref<block> b);
 
+    void remove_block(util::value_ref<point> origin);
+
     dynamics compute_step(util::value_ref<dynamics> d) const;
 
 private:
@@ -35,6 +37,9 @@ private:
     bool contains_solid_block(util::value_ref<point> p) const;
 
     bool contains_block(util::value_ref<point> p) const;
+
+    std::vector<block>::const_iterator find_block(
+        util::value_ref<point> p) const;
 
 private:
 

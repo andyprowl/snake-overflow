@@ -43,6 +43,13 @@ public:
 
 private:
 
+    bool is_surface_block(int x, 
+                          int y, 
+                          int z, 
+                          util::value_ref<point> sizes) const;
+
+private:
+
     terrain& build_site;
 
 };

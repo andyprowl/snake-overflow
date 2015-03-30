@@ -10,7 +10,9 @@
 namespace snake_overflow { namespace testing
 {
 
+using ::testing::Contains;
 using ::testing::Eq;
+using ::testing::Not;
 using ::testing::Test;
 
 class Terrain : public Test
@@ -102,6 +104,40 @@ TEST_THAT(Terrain,
     auto const blocks = this->t.get_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveBlock),
+     WHEN(GivenABlockThatIsPartOfTheTerrain),
+     WHEN(RemovesThatBlockFromTheTerrain))
+{
+    auto const b1 = add_block_to_terrain({0, 1, 2});
+    auto const b2 = add_block_to_terrain({1, 2, 3});
+
+    this->t.remove_block(b1.origin);
+
+    auto const blocks = this->t.get_blocks();
+
+    ASSERT_THAT(blocks.size(), Eq(1u));
+    EXPECT_THAT(blocks, Not(Contains(b1)));
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveBlock),
+     WHEN(GivenABlockThatIsNotPartOfTheTerrain),
+     WHEN(DoesNothing))
+{
+    auto const b1 = add_block_to_terrain({0, 1, 2});
+    auto const b2 = add_block_to_terrain({1, 2, 3});
+
+    this->t.remove_block(b1.origin);
+
+    this->t.remove_block(b1.origin);
+
+    auto const blocks = this->t.get_blocks();
+
+    ASSERT_THAT(blocks.size(), Eq(1u));
+    EXPECT_THAT(blocks, Not(Contains(b1)));
 }
 
 TEST_THAT(Terrain,
