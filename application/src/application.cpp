@@ -58,14 +58,28 @@ void application::keyDown(cinder::app::KeyEvent const e)
 {
     switch (e.getCode())
     {
+        case cinder::app::KeyEvent::KEY_a:
         case cinder::app::KeyEvent::KEY_LEFT:
         {
             return this->hero->turn_left();
         }
 
+        case cinder::app::KeyEvent::KEY_d:
         case cinder::app::KeyEvent::KEY_RIGHT:
         {
             return this->hero->turn_right();
+        }
+
+        case cinder::app::KeyEvent::KEY_w:
+        {
+            this->camera_distance -= get_zoom_step();
+            return;
+        }
+
+        case cinder::app::KeyEvent::KEY_s:
+        {
+            this->camera_distance += get_zoom_step();
+            return;
         }
 
         case cinder::app::KeyEvent::KEY_p:
@@ -92,9 +106,7 @@ void application::mouseDrag(cinder::app::MouseEvent const e)
 
 void application::mouseWheel(cinder::app::MouseEvent const e)
 {
-    auto const mouse_wheel_zoom_factor = 20;
-
-    this->camera_distance -= e.getWheelIncrement() * mouse_wheel_zoom_factor;
+    this->camera_distance -= e.getWheelIncrement() * get_zoom_step();
 }
 
 void application::create_habitat()
@@ -210,6 +222,11 @@ void application::draw_frame()
     this->hero_renderer->render(*this->hero);
 
     this->habitat_renderer->render(this->habitat);
+}
+
+int application::get_zoom_step() const
+{
+    return 20;
 }
 
 }
