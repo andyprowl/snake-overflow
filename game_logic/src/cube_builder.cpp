@@ -2,7 +2,7 @@
 
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/cube_builder.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 #include "snake_overflow/point.hpp"
 #include "util/sequence.hpp"
 
@@ -11,7 +11,7 @@ namespace snake_overflow
 
 using util::sequence;
 
-cube_builder::cube_builder(territory& build_site)
+cube_builder::cube_builder(terrain& build_site)
     : build_site{build_site}
 {
 }

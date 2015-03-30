@@ -117,7 +117,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\src\territory_renderer.cpp" />
+    <ClCompile Include="..\src\terrain_renderer.cpp" />
     <ClCompile Include="..\src\texture_binder.cpp" />
     <ClCompile Include="..\src\texture_repository.cpp" />
   </ItemGroup>
@@ -127,7 +127,7 @@
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\point_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\snake_renderer.hpp" />
-    <ClInclude Include="..\include\snake_overflow\territory_renderer.hpp" />
+    <ClInclude Include="..\include\snake_overflow\terrain_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\texture_binder.hpp" />
     <ClInclude Include="..\include\snake_overflow\texture_repository.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />

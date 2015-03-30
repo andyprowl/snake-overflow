@@ -44,9 +44,6 @@
     <ClCompile Include="..\src\dynamics.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\territory.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\movement_profile.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\rgba_color.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,13 +112,13 @@
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\territory.hpp">
-      <Filter>export\include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\terrain.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

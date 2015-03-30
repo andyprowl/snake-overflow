@@ -4,14 +4,14 @@
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/movement_profile.hpp"
 #include "snake_overflow/snake.hpp"
-#include "snake_overflow/territory.hpp"
+#include "snake_overflow/terrain.hpp"
 #include "util/repeat.hpp"
 #include "util/sequence.hpp"
 
 namespace snake_overflow
 {
 
-snake::snake(territory const& habitat,
+snake::snake(terrain const& habitat,
              util::value_ref<dynamics> initial_dynamics, 
              int const initial_length)
     : habitat{habitat}

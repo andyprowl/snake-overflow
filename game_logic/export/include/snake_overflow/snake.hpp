@@ -10,14 +10,14 @@ namespace snake_overflow
 
 struct canonical_direction;
 
-class territory;
+class terrain;
 
 class snake
 {
 
 public:
 
-    snake(territory const& habitat, 
+    snake(terrain const& habitat, 
           util::value_ref<dynamics> initial_dynamics, 
           int initial_length);
 
@@ -39,7 +39,7 @@ public:
 
 private:
 
-    territory const& habitat;
+    terrain const& habitat;
 
     std::deque<dynamics> trail;
 

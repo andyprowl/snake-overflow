@@ -3,22 +3,22 @@
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/color_conversion.hpp"
 #include "snake_overflow/point_conversion.hpp"
-#include "snake_overflow/territory.hpp"
-#include "snake_overflow/territory_renderer.hpp"
+#include "snake_overflow/terrain.hpp"
+#include "snake_overflow/terrain_renderer.hpp"
 #include "snake_overflow/texture_binder.hpp"
 #include "snake_overflow/texture_repository.hpp"
 
 namespace snake_overflow
 {
 
-territory_renderer::territory_renderer(float const block_size,
-                                       texture_repository const& textures)
+terrain_renderer::terrain_renderer(float const block_size,
+                                   texture_repository const& textures)
     : block_size{block_size}
     , textures{textures}
 {
 }
 
-void territory_renderer::render(util::value_ref<territory> t) const
+void terrain_renderer::render(util::value_ref<terrain> t) const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -32,7 +32,7 @@ void territory_renderer::render(util::value_ref<territory> t) const
     cinder::gl::disableAlphaBlending();
 }
 
-void territory_renderer::render_block(util::value_ref<block> b) const
+void terrain_renderer::render_block(util::value_ref<block> b) const
 {
     auto const block_cube = cinder::Vec3f{this->block_size, 
                                           this->block_size, 

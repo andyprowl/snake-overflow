@@ -8,14 +8,14 @@ namespace snake_overflow
 struct point;
 struct rgba_color;
 
-class territory;
+class terrain;
 
 class cube_builder
 {
 
 public:
 
-    cube_builder(territory& build_site);
+    cube_builder(terrain& build_site);
 
     void add_cube(util::value_ref<point> origin, 
                   int side_length, 
@@ -31,7 +31,7 @@ public:
 
 private:
 
-    territory& build_site;
+    terrain& build_site;
 
 };
 

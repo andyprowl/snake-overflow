@@ -1,7 +1,7 @@
 #pragma once
 
-#include "snake_overflow/territory.hpp"
-#include "snake_overflow/territory_renderer.hpp"
+#include "snake_overflow/terrain.hpp"
+#include "snake_overflow/terrain_renderer.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "cinder/Arcball.h"
 #include "cinder/Camera.h"
@@ -47,7 +47,7 @@ private:
 
     void create_snake_renderer();
 
-    void create_territory_renderer();
+    void create_terrain_renderer();
 
     void setup_perspective_camera();
 
@@ -59,7 +59,7 @@ private:
 
 private:
 
-    territory habitat;
+    terrain habitat;
 
     std::unique_ptr<snake> hero;
     
@@ -69,7 +69,7 @@ private:
 
     std::unique_ptr<texture_repository> textures;
 
-    std::unique_ptr<territory_renderer> habitat_renderer;
+    std::unique_ptr<terrain_renderer> habitat_renderer;
 
     std::unique_ptr<snake_renderer> hero_renderer;
 
