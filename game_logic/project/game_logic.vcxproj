@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\block.cpp" />
+    <ClCompile Include="..\src\rgba_color.cpp" />
     <ClCompile Include="..\src\cube_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
@@ -101,6 +102,7 @@
     <ClInclude Include="..\export\include\snake_overflow\block.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\block_face.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\cube_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />

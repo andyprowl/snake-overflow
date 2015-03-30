@@ -31,7 +31,7 @@ dynamics territory::compute_step(util::value_ref<dynamics> d) const
 {
     auto turn_dynamics = compute_hypothetical_turn_to_adjacent_block(d);
 
-    if (contains_block(turn_dynamics.location))
+    if (contains_solid_block(turn_dynamics.location))
     {
         return turn_dynamics;
     }
@@ -40,7 +40,7 @@ dynamics territory::compute_step(util::value_ref<dynamics> d) const
         d.location + get_direction_vector(d.profile.direction), 
         d.profile.face};
 
-    if (contains_block(inertial_target.location))
+    if (contains_solid_block(inertial_target.location))
     {
         return {inertial_target.location, d.profile};
     }
@@ -71,6 +71,18 @@ dynamics territory::compute_fallback_turn_on_same_block(
     auto const fallback = get_continuation_profile(d.profile);
 
     return {d.location, fallback};
+}
+
+bool territory::contains_solid_block(util::value_ref<point> p) const
+{
+    auto const it = std::find_if(std::cbegin(this->blocks),
+                                 std::cend(this->blocks),
+                                 [&p] (util::value_ref<block> b)
+    {
+        return ((b.origin == p) && b.is_solid);
+    });
+
+    return (it != std::cend(this->blocks));
 }
 
 bool territory::contains_block(util::value_ref<point> p) const

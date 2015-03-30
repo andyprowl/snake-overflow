@@ -28,7 +28,9 @@ bool is_surface_block(int const x,
 
 void cube_builder::add_cube(util::value_ref<point> origin, 
                             int const side_length,
-                            std::string texture) const
+                            util::value_ref<std::string> texture,
+                            util::value_ref<rgba_color> color,
+                            bool const solid) const
 {
     for (auto const x : sequence(0, side_length))
     {
@@ -39,7 +41,9 @@ void cube_builder::add_cube(util::value_ref<point> origin,
                 if (is_surface_block(x, y, z, side_length))
                 {
                     this->build_site.add_block({origin + point{x, y, z}, 
-                                                texture});
+                                                texture,
+                                                color,
+                                                solid});
                 }
             }
         }
@@ -48,13 +52,15 @@ void cube_builder::add_cube(util::value_ref<point> origin,
 
 void cube_builder::add_centered_cube(util::value_ref<point> center, 
                                      int const side_length,
-                                     std::string texture) const
+                                     util::value_ref<std::string> texture,
+                                     util::value_ref<rgba_color> color,
+                                     bool const solid) const
 {
     auto const half_length = side_length / 2;
     
     auto const origin = center - point{half_length, half_length, half_length};
 
-    add_cube(origin, side_length, texture);
+    add_cube(origin, side_length, texture, color, solid);
 }
 
 }

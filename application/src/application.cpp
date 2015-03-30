@@ -101,23 +101,33 @@ void application::create_habitat()
 {
     auto builder = cube_builder{this->habitat};
 
-    builder.add_centered_cube({0, 0, 0}, this->cube_side_length, "grass4.jpg");
+    builder.add_centered_cube({0, 0, 0}, 
+                              this->cube_side_length, 
+                              "grass4.jpg",
+                              {255, 255, 255, 255},
+                              true);
 
     builder.add_cube({this->cube_side_length / 2, 
                       this->cube_side_length / 4, 
                       this->cube_side_length / 4}, 
                       this->cube_side_length / 4, 
-                      "ice1.jpg");
+                      "water2.jpg",
+                      {255, 255, 255, 100},
+                      false);
 
     builder.add_cube({-this->cube_side_length / 2, 
                       -this->cube_side_length / 4, 
                       this->cube_side_length / 4 + 4}, 
                       10, 
-                      "lava5.jpg");
+                      "lava5.jpg",
+                      {255, 255, 255, 255},
+                      true);
 
     builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
                       7, 
-                      "stone3.jpg");
+                      "stone3.jpg",
+                      {255, 255, 255, 255},
+                      true);
 }
 
 void application::create_snake()
@@ -197,9 +207,9 @@ void application::setup_depth_buffer()
 
 void application::draw_frame()
 {
-    this->habitat_renderer->render(this->habitat);
-
     this->hero_renderer->render(*this->hero);
+
+    this->habitat_renderer->render(this->habitat);
 }
 
 }

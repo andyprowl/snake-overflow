@@ -32,6 +32,8 @@ private:
     dynamics compute_fallback_turn_on_same_block(
         util::value_ref<dynamics> d) const;
 
+    bool contains_solid_block(util::value_ref<point> p) const;
+
     bool contains_block(util::value_ref<point> p) const;
 
 private:

@@ -23,7 +23,11 @@ protected:
     {
         auto builder = cube_builder{this->habitat};
 
-        builder.add_cube({0, 0, 0}, this->territory_side_length, "texture.jpg");
+        builder.add_cube({0, 0, 0}, 
+                         this->territory_side_length, 
+                         "texture.jpg", 
+                         {255, 255, 255, 255},
+                         true);
 
         this->s = std::make_unique<snake>(habitat, 
                                           initial_dynamics, 

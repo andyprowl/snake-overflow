@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\application.cpp" />
+    <ClCompile Include="..\src\color_conversion.cpp" />
     <ClCompile Include="..\src\point_conversion.cpp" />
     <ClCompile Include="..\src\snake_renderer.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
@@ -117,14 +118,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\src\territory_renderer.cpp" />
+    <ClCompile Include="..\src\texture_binder.cpp" />
     <ClCompile Include="..\src\texture_repository.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\resources.hpp" />
     <ClInclude Include="..\include\snake_overflow\application.hpp" />
+    <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\point_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\snake_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\territory_renderer.hpp" />
+    <ClInclude Include="..\include\snake_overflow\texture_binder.hpp" />
     <ClInclude Include="..\include\snake_overflow\texture_repository.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>

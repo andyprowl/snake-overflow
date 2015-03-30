@@ -6,6 +6,7 @@ namespace snake_overflow
 {
 
 struct point;
+struct rgba_color;
 
 class territory;
 
@@ -18,11 +19,15 @@ public:
 
     void add_cube(util::value_ref<point> origin, 
                   int side_length, 
-                  std::string texture) const;
+                  util::value_ref<std::string> texture,
+                  util::value_ref<rgba_color> color,
+                  bool solid) const;
     
     void add_centered_cube(util::value_ref<point> center, 
                            int const side_length,
-                           std::string texture) const;
+                           util::value_ref<std::string> texture,
+                           util::value_ref<rgba_color> color,
+                           bool solid) const;
 
 private:
 

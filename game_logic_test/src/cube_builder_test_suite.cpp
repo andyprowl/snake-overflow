@@ -27,7 +27,7 @@ TEST_THAT(CubeBuilder,
      WHEN(GivenAnOriginBlockAndASideLength),
      THEN(AddsASeriesOfBlocksLaidOutAsACubeToTheTerritoryPassedAtConstruction))
 {
-    this->builder.add_cube({-1, 3, 4}, 3, "texture.jpg");
+    this->builder.add_cube({-1, 3, 4}, 3, "texture.jpg", {0, 0, 0, 255}, true);
 
     auto const blocks = this->t.get_blocks();
 
