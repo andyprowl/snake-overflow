@@ -84,6 +84,8 @@ void terrain::add_item(std::unique_ptr<item>&& i)
         throw block_not_found_exception{};
     }
 
+    throw_if_block_face_is_occupied(*it, pos.face);
+
     it->items.push_back(i.get());
 
     this->items.push_back(std::move(i));
@@ -121,6 +123,22 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
     else
     {
         return compute_fallback_turn_on_same_block(d);
+    }
+}
+
+void terrain::throw_if_block_face_is_occupied(util::value_ref<block> b, 
+                                              block_face face) const
+{
+    auto it = std::find_if(std::cbegin(b.items), 
+                           std::cend(b.items),
+                           [face] (item const* const i)
+    {
+        return (i->get_position().face == face);
+    });
+
+    if (it != std::cend(b.items))
+    {
+        throw position_not_free_exception{};
     }
 }
 

@@ -10,6 +10,8 @@
 namespace snake_overflow
 {
 
+enum class block_face;
+
 struct block;
 struct canonical_direction;
 struct footprint;
@@ -24,6 +26,10 @@ class block_not_found_exception : public virtual std::exception
 };
 
 class item_not_found_exception : public virtual std::exception
+{
+};
+
+class position_not_free_exception : public virtual std::exception
 {
 };
 
@@ -53,6 +59,9 @@ public:
     footprint compute_next_footprint(util::value_ref<footprint> d) const;
 
 private:
+
+    void throw_if_block_face_is_occupied(util::value_ref<block> b, 
+                                         block_face face) const;
 
     void remove_item_from_placement_block(util::value_ref<item> i);
 

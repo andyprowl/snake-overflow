@@ -275,6 +275,24 @@ TEST_THAT(Terrain,
 }
 
 TEST_THAT(Terrain,
+     WHAT(AddItem),
+     WHEN(GivenAnItemWithAValidPositionInWhichAnotherItemIsAlreadyPresent),
+     THEN(Throws))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    auto i1 = make_item(pos);
+
+    this->t.add_item(std::move(i1));
+
+    auto i2 = make_item(pos);
+
+    EXPECT_THROW(this->t.add_item(std::move(i2)), position_not_free_exception);
+}
+
+TEST_THAT(Terrain,
      WHAT(RemoveItem),
      WHEN(GivenAnItemThatWasPreviouslyAddedToTheTerrain),
      THEN(RemovesThatItemFromTheBlockItIsPlacedOnAndReturnsItsOwnership))
@@ -325,7 +343,7 @@ TEST_THAT(Terrain,
 
     EXPECT_THAT(this->t.get_num_of_items(), Eq(1));
 
-    auto i = make_item({{1, 0, 1}, block_face::front});
+    auto i = make_item({{1, 0, 2}, block_face::front});
 
     auto& last_added_item = *i;
 
