@@ -38,6 +38,25 @@ void terrain::remove_block(util::value_ref<point> origin)
     this->blocks.erase(it);
 }
 
+bool terrain::contains_block(util::value_ref<point> p) const
+{
+    auto const it = find_block(p);
+
+    return (it != std::cend(this->blocks));
+}
+
+bool terrain::contains_solid_block(util::value_ref<point> p) const
+{
+    auto const it = find_block(p);
+
+    if (it == std::cend(this->blocks))
+    {
+        return false;
+    }
+
+    return it->is_solid;
+}
+
 block terrain::get_block(util::value_ref<point> origin) const
 {
     auto const it = find_block(origin);
@@ -93,25 +112,6 @@ footprint terrain::compute_fallback_turn_on_same_block(
     auto const fallback = get_continuation_profile(d.profile);
 
     return {d.location, fallback};
-}
-
-bool terrain::contains_solid_block(util::value_ref<point> p) const
-{
-    auto const it = find_block(p);
-
-    if (it == std::cend(this->blocks))
-    {
-        return false;
-    }
-
-    return it->is_solid;
-}
-
-bool terrain::contains_block(util::value_ref<point> p) const
-{
-    auto const it = find_block(p);
-
-    return (it != std::cend(this->blocks));
 }
 
 std::vector<block>::const_iterator terrain::find_block(

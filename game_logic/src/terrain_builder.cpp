@@ -51,7 +51,7 @@ void terrain_builder::add_box(util::value_ref<point> origin,
         }
         else
         {
-            this->build_site.add_block({p + origin, "", {0, 0, 0, 0}, false});
+            this->build_site.add_block({p + origin, "", {0, 0, 0, 0}, solid});
         }
     });
 }

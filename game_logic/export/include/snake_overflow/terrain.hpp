@@ -28,6 +28,10 @@ public:
 
     void remove_block(util::value_ref<point> origin);
 
+    bool contains_block(util::value_ref<point> p) const;
+
+    bool contains_solid_block(util::value_ref<point> p) const;
+
     block get_block(util::value_ref<point> origin) const;
 
     footprint compute_next_footprint(util::value_ref<footprint> d) const;
@@ -39,10 +43,6 @@ private:
 
     footprint compute_fallback_turn_on_same_block(
         util::value_ref<footprint> d) const;
-
-    bool contains_solid_block(util::value_ref<point> p) const;
-
-    bool contains_block(util::value_ref<point> p) const;
 
     std::vector<block>::const_iterator find_block(
         util::value_ref<point> p) const;

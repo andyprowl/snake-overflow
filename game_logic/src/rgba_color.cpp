@@ -16,42 +16,42 @@ rgba_color::rgba_color(unsigned char const r,
 {
 }
 
-rgba_color black()
+rgba_color rgba_color::black()
 {
     return {0, 0, 0, 255};
 }
 
-rgba_color red()
+rgba_color rgba_color::red()
 {
     return {255, 0, 0, 255};
 }
 
-rgba_color green()
+rgba_color rgba_color::green()
 {
     return {0, 255, 0, 255};
 }
 
-rgba_color blue()
+rgba_color rgba_color::blue()
 {
     return {0, 0, 255, 255};
 }
 
-rgba_color yellow()
+rgba_color rgba_color::yellow()
 {
     return {255, 255, 0, 255};
 }
 
-rgba_color purple()
+rgba_color rgba_color::purple()
 {
     return {255, 0, 255, 255};
 }
 
-rgba_color cyan()
+rgba_color rgba_color::cyan()
 {
     return {0, 255, 255, 255};
 }
 
-rgba_color white()
+rgba_color rgba_color::white()
 {
     return {255, 255, 255, 255};
 }
