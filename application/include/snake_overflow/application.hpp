@@ -57,7 +57,7 @@ private:
 
     void setup_depth_buffer();
 
-    void create_fps_text_font();
+    void create_fonts();
 
     void draw_frame();
 
@@ -79,7 +79,7 @@ private:
     
     int cube_side_length = 20;
 
-    float block_size = 25.f;
+    float block_size = 20.f;
 
     std::unique_ptr<texture_repository> textures;
 
@@ -89,7 +89,7 @@ private:
 
     cinder::CameraPersp camera;
     
-    float camera_distance = 650.f;
+    float camera_distance = 550.f;
 
     cinder::Arcball arcball;
 

@@ -25,7 +25,7 @@ void application::setup()
 
     setup_depth_buffer();
 
-    create_fps_text_font();
+    create_fonts();
 
     this->last_frame_time = std::chrono::system_clock::now();
 }
@@ -39,7 +39,7 @@ void application::prepareSettings(Settings* const settings)
 
 void application::update()
 {
-    if ((getElapsedFrames() % 2 == 0) && !(this->paused))
+    if ((getElapsedFrames() % 3 == 0) && !(this->paused))
     {
         this->hero->advance();
     }
@@ -242,7 +242,7 @@ void application::setup_depth_buffer()
     cinder::gl::enableDepthWrite();
 }
 
-void application::create_fps_text_font()
+void application::create_fonts()
 {
     this->fps_text_font = cinder::Font{"Arial", 25.0};
 
