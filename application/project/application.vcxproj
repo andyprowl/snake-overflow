@@ -111,6 +111,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\application.cpp" />
     <ClCompile Include="..\src\color_conversion.cpp" />
+    <ClCompile Include="..\src\item_renderer.cpp" />
     <ClCompile Include="..\src\point_conversion.cpp" />
     <ClCompile Include="..\src\snake_renderer.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
@@ -125,6 +126,7 @@
     <ClInclude Include="..\include\resources.hpp" />
     <ClInclude Include="..\include\snake_overflow\application.hpp" />
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
+    <ClInclude Include="..\include\snake_overflow\item_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\point_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\snake_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\terrain_renderer.hpp" />

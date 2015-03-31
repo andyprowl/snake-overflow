@@ -13,18 +13,6 @@
 namespace snake_overflow
 {
 
-std::vector<block> terrain::get_blocks() const
-{
-    auto v = std::vector<block>{};
-
-    for (auto const& entry : this->block_index)
-    {
-        v.push_back(entry.second);
-    }
-
-    return v;
-}
-
 void terrain::add_block(util::value_ref<block> b)
 {
     if (contains_block(b.origin))
@@ -64,19 +52,13 @@ bool terrain::contains_block(util::value_ref<point> p) const
     auto const it = this->block_index.find(p);
     
     return (it != std::cend(this->block_index));
-
-    //auto const it = find_block(p);
-
-    //return (it != std::cend(this->blocks));
 }
 
 bool terrain::contains_solid_block(util::value_ref<point> p) const
 {
     auto const it = this->block_index.find(p);
-    //auto const it = find_block(p);
 
     if (it == std::cend(this->block_index))
-    //if (it == std::cend(this->blocks))
     {
         return false;
     }
@@ -87,16 +69,28 @@ bool terrain::contains_solid_block(util::value_ref<point> p) const
 block terrain::get_block(util::value_ref<point> origin) const
 {
     auto const it = this->block_index.find(origin);
-    //auto const it = find_block(origin);
 
     if (it == std::cend(this->block_index))
-    //if (it == std::cend(this->blocks))
     {
         throw block_not_found_exception{};
     }
 
-    //return *it;
     return it->second;
+}
+
+std::vector<block> terrain::get_all_blocks() const
+{
+    auto v = std::vector<block>{};
+
+    std::transform(std::begin(this->blocks),
+                   std::end(this->blocks),
+                   std::back_inserter(v),
+                   [] (block const* const b)
+    {
+        return *b;
+    });
+
+    return v;
 }
 
 void terrain::add_item(std::unique_ptr<item>&& i)

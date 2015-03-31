@@ -33,7 +33,7 @@ TEST_THAT(TerrainBuilder,
                            {0, 0, 0, 255}, 
                            true);
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(27u));
 }
@@ -70,7 +70,7 @@ TEST_THAT(TerrainBuilder,
 
     this->builder.remove_box({1, 2, 1}, {3, 3, 3});
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(98u));
 }

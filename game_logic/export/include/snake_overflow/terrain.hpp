@@ -51,8 +51,6 @@ public:
         }
     }
 
-    std::vector<block> get_blocks() const;
-
     void add_block(util::value_ref<block> b);
 
     void remove_block(util::value_ref<point> origin);
@@ -63,9 +61,20 @@ public:
 
     block get_block(util::value_ref<point> origin) const;
 
+    std::vector<block> get_all_blocks() const;
+
     void add_item(std::unique_ptr<item>&& i);
 
     std::unique_ptr<item> remove_item(util::value_ref<item> i);
+
+    template<typename F>
+    void for_each_item(F&& f) const
+    {
+        for (auto const& i : this->items)
+        {
+            (std::forward<F>(f))(*i);
+        }
+    }
 
     int get_num_of_items() const;
 

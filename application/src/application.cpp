@@ -4,11 +4,17 @@
 #include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
+#include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
 #include <unordered_set>
+
+
+#include "snake_overflow/fruit.hpp"
+#include <memory>
+
 
 namespace snake_overflow
 {
@@ -16,6 +22,8 @@ namespace snake_overflow
 void application::setup()
 {
     create_habitat();
+
+    spawn_items();
 
     create_snake();
 
@@ -167,6 +175,17 @@ void application::create_habitat()
                      true);
 }
 
+void application::spawn_items()
+{
+    auto picker = random_item_position_picker{this->habitat};
+
+    for (auto i = 0; i < 30; ++i)
+    {
+        auto const pos = picker.pick_item_position();
+        this->habitat.add_item(std::make_unique<fruit>(pos, 5));
+    }
+}
+
 void application::create_snake()
 {
     auto const snake_origin = point{0, 
@@ -191,6 +210,8 @@ void application::create_renderers()
     
     create_snake_renderer();
 
+    create_item_renderer();
+
     create_terrain_renderer();
 }
 
@@ -198,19 +219,25 @@ void application::create_snake_renderer()
 {
     float snake_width = this->block_size / 2;
 
-    float snake_height = snake_width * 0.66;
+    float snake_height = snake_width;
 
     auto const skin = this->textures->get_texture("snake7.jpg");
 
-    this->hero_renderer = std::make_unique<snake_renderer>(snake_width, 
-                                                           snake_height, 
-                                                           this->block_size,
-                                                           skin);
+    this->hero_drawer = std::make_unique<snake_renderer>(snake_width, 
+                                                         snake_height, 
+                                                         this->block_size,
+                                                         skin);
+}
+
+void application::create_item_renderer()
+{
+    this->item_drawer = std::make_unique<item_renderer>(this->block_size, 
+                                                        *this->textures);
 }
 
 void application::create_terrain_renderer()
 {
-    this->habitat_renderer = std::make_unique<terrain_renderer>(
+    this->habitat_drawer = std::make_unique<terrain_renderer>(
         this->block_size, 
         *this->textures);
 }
@@ -251,9 +278,11 @@ void application::create_fonts()
 
 void application::draw_frame()
 {
-    this->hero_renderer->render(*this->hero);
+    this->hero_drawer->render(*this->hero);
 
-    this->habitat_renderer->render(this->habitat);
+    this->item_drawer->render(this->habitat);
+
+    this->habitat_drawer->render(this->habitat);
 
     if (this->paused)
     {

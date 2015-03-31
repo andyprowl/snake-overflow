@@ -1,5 +1,6 @@
 #pragma once
 
+#include "snake_overflow/item_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_renderer.hpp"
 #include "snake_overflow/texture_repository.hpp"
@@ -13,6 +14,7 @@
 namespace snake_overflow
 {
 
+class random_item_position_picker;
 class snake;
 class snake_renderer;
 
@@ -41,6 +43,8 @@ private:
 
     void create_habitat();
 
+    void spawn_items();
+
     void create_snake();
 
     void create_texture_repository();
@@ -48,6 +52,8 @@ private:
     void create_renderers();
 
     void create_snake_renderer();
+
+    void create_item_renderer();
 
     void create_terrain_renderer();
 
@@ -83,9 +89,11 @@ private:
 
     std::unique_ptr<texture_repository> textures;
 
-    std::unique_ptr<terrain_renderer> habitat_renderer;
+    std::unique_ptr<snake_renderer> hero_drawer;
 
-    std::unique_ptr<snake_renderer> hero_renderer;
+    std::unique_ptr<item_renderer> item_drawer;
+
+    std::unique_ptr<terrain_renderer> habitat_drawer;
 
     cinder::CameraPersp camera;
     

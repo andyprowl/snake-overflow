@@ -81,11 +81,11 @@ auto const positive_z_direction = canonical_direction::positive_z();
 auto const negative_z_direction = canonical_direction::negative_z();
 
 TEST_THAT(Terrain,
-     WHAT(GetBlocks),
+     WHAT(GetAllBlocks),
      WHEN(ImmediatelyAfterDefaultConstruction),
      THEN(ReturnsAnEmptyCollectionOfBlocks))
 {
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     EXPECT_TRUE(blocks.empty());
 }
@@ -97,7 +97,7 @@ TEST_THAT(Terrain,
 {
     auto const b = add_block_to_terrain({0, 1, 2});
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
 
@@ -113,7 +113,7 @@ TEST_THAT(Terrain,
 
     this->t.add_block(b);
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
 }
@@ -128,7 +128,7 @@ TEST_THAT(Terrain,
 
     this->t.remove_block(b1.origin);
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
     EXPECT_THAT(blocks, Not(Contains(b1)));
@@ -160,7 +160,7 @@ TEST_THAT(Terrain,
 
     this->t.remove_block(b1.origin);
 
-    auto const blocks = this->t.get_blocks();
+    auto const blocks = this->t.get_all_blocks();
 
     ASSERT_THAT(blocks.size(), Eq(1u));
     EXPECT_THAT(blocks, Not(Contains(b1)));
@@ -228,6 +228,23 @@ TEST_THAT(Terrain,
     add_non_solid_block_to_terrain(origin);
 
     EXPECT_FALSE(this->t.contains_solid_block(origin));
+}
+
+TEST_THAT(Terrain,
+     WHAT(ForEachBlock),
+     WHEN(GivenACallableObjectThatAcceptsABlock),
+     THEN(InvokesThatCallableObjectForEachBlockInTheTerrain))
+{
+    create_cube_with_vertex_on_origin(3);
+
+    auto blocks = std::vector<block>{};
+
+    this->t.for_each_block([&blocks] (util::value_ref<block> b)
+    {
+        blocks.push_back(b);
+    });
+
+    EXPECT_THAT(blocks, Eq(this->t.get_all_blocks()));
 }
 
 TEST_THAT(Terrain, 
@@ -368,6 +385,40 @@ TEST_THAT(Terrain,
     this->t.remove_item(last_added_item);
 
     EXPECT_THAT(this->t.get_num_of_items(), Eq(1));
+}
+
+
+TEST_THAT(Terrain,
+     WHAT(ForEachItem),
+     WHEN(GivenACallableObjectThatAcceptsAItem),
+     THEN(InvokesThatCallableObjectForEachItemInTheTerrain))
+{
+    create_cube_with_vertex_on_origin(3);
+
+    auto i1 = make_item({{1, 0, 2}, block_face::front});
+    auto i1_ptr = i1.get();
+    this->t.add_item(std::move(i1));
+
+    auto i2 = make_item({{0, 1, 2}, block_face::top});
+    auto i2_ptr = i2.get();
+    this->t.add_item(std::move(i2));
+
+    auto i3 = make_item({{0, 1, 1}, block_face::left});
+    auto i3_ptr = i3.get();
+    this->t.add_item(std::move(i3));
+
+    auto items = std::vector<item const*>{};
+
+    this->t.for_each_item([&items] (util::value_ref<item> i)
+    {
+        items.push_back(&i);
+    });
+
+    EXPECT_THAT(items.size(), Eq(3u));
+
+    EXPECT_THAT(items, Contains(i1_ptr));
+    EXPECT_THAT(items, Contains(i2_ptr));
+    EXPECT_THAT(items, Contains(i3_ptr));
 }
 
 TEST_THAT(Terrain,
