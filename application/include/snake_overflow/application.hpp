@@ -61,11 +61,15 @@ private:
 
     void draw_frame();
 
-    void draw_fps_text() const;
-    
     int get_zoom_step() const;
 
-    std::string get_fps_text() const;
+    void calculate_current_fps();
+
+    void draw_pause_text();
+
+    void draw_fps_text() const;
+
+    std::string get_current_fps_text() const;
 
 private:
 
@@ -95,7 +99,11 @@ private:
 
     std::chrono::time_point<std::chrono::system_clock> last_frame_time;
 
-    cinder::Font text_font;
+    float current_fps = 60.0;
+
+    cinder::Font fps_text_font;
+
+    cinder::Font pause_text_font;
 
 };
 

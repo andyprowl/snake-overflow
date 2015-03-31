@@ -26,18 +26,20 @@ void application::setup()
     setup_depth_buffer();
 
     create_fps_text_font();
+
+    this->last_frame_time = std::chrono::system_clock::now();
 }
 
 void application::prepareSettings(Settings* const settings)
 {
-    settings->setWindowSize(800, 600);
+    settings->setWindowSize(1024, 768);
 
-    settings->setFrameRate(60);
+    settings->setFrameRate(30);
 }
 
 void application::update()
 {
-    if ((getElapsedFrames() % 5 == 0) && !(this->paused))
+    if ((getElapsedFrames() % 2 == 0) && !(this->paused))
     {
         this->hero->advance();
     }
@@ -242,7 +244,9 @@ void application::setup_depth_buffer()
 
 void application::create_fps_text_font()
 {
-    this->text_font = cinder::Font{"Arial", 25.0};
+    this->fps_text_font = cinder::Font{"Arial", 25.0};
+
+    this->pause_text_font = cinder::Font{"Arial", 100.0};
 }
 
 void application::draw_frame()
@@ -251,12 +255,35 @@ void application::draw_frame()
 
     this->habitat_renderer->render(this->habitat);
 
+    if (this->paused)
+    {
+        draw_pause_text();
+    }
+
+    calculate_current_fps();
+
     if (this->show_fps)
     {
         draw_fps_text();
     }
+}
 
-    this->last_frame_time = std::chrono::system_clock::now();
+void application::draw_pause_text()
+{
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(getWindowSize());
+
+    auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
+
+    auto const text = "[PAUSED]";
+    
+    auto const origin = cinder::Vec2f{getWindowBounds().getLR().y - 135.f, 
+                                      10.f};
+
+    cinder::gl::drawString(text, origin, color, this->pause_text_font);
+
+    cinder::gl::disableAlphaBlending();
 }
 
 void application::draw_fps_text() const
@@ -267,7 +294,9 @@ void application::draw_fps_text() const
 
     auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
 
-    cinder::gl::drawString(get_fps_text(), {10., 10.}, color, this->text_font);
+    auto const text = get_current_fps_text();
+
+    cinder::gl::drawString(text, {10., 10.}, color, this->fps_text_font);
 
     cinder::gl::disableAlphaBlending();
 }
@@ -277,16 +306,21 @@ int application::get_zoom_step() const
     return 20;
 }
 
-std::string application::get_fps_text() const
+void application::calculate_current_fps()
 {
     auto const time = std::chrono::system_clock::now();
-    
+
     auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
         time - this->last_frame_time);
 
-    auto const fps = 1000.f / elapsed.count();
+    this->current_fps = 1000.f / elapsed.count();
 
-    return "FPS: " + std::to_string(fps);
+    this->last_frame_time = time;
+}
+
+std::string application::get_current_fps_text() const
+{
+    return "FPS: " + std::to_string(this->current_fps);
 }
 
 }
