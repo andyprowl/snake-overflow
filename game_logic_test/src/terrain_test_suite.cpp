@@ -39,6 +39,11 @@ protected:
 
     block add_block_to_terrain(util::value_ref<point> p)
     {
+        return add_solid_block_to_terrain(p);
+    }
+
+    block add_solid_block_to_terrain(util::value_ref<point> p)
+    {
         auto const b = block{p, "texture.jpg", {0, 0, 0, 255}, true};
 
         this->t.add_block(b);
@@ -149,8 +154,6 @@ TEST_THAT(Terrain,
 
     auto const b = add_block_to_terrain(origin);
 
-    this->t.add_block(b);
-
     EXPECT_THAT(this->t.get_block(origin), Eq(b));
 }
 
@@ -160,6 +163,58 @@ TEST_THAT(Terrain,
      THEN(Throws))
 {
     EXPECT_THROW(this->t.get_block({0, 1, 2}), block_not_found_exception);
+}
+
+TEST_THAT(Terrain, 
+     WHAT(ContainsBlock),
+     WHEN(GivenAPointWhichIsTheOriginOfABlockThatIsPartOfTheTerrain),
+     THEN(ReturnsTrue))
+{
+    auto const origin = point{0, 1, 2};
+
+    add_block_to_terrain(origin);
+
+    EXPECT_TRUE(this->t.contains_block(origin));
+}
+
+TEST_THAT(Terrain, 
+     WHAT(ContainsBlock),
+     WHEN(GivenAPointWhichIsNotTheOriginOfABlockThatIsPartOfTheTerrain),
+     THEN(ReturnsFalse))
+{
+    EXPECT_FALSE(this->t.contains_block({0, 0, 0}));
+}
+
+TEST_THAT(Terrain, 
+     WHAT(ContainsSolidBlock),
+     WHEN(GivenAPointWhichIsTheOriginOfASolidBlockThatIsPartOfTheTerrain),
+     THEN(ReturnsTrue))
+{
+    auto const origin = point{0, 1, 2};
+
+    add_solid_block_to_terrain(origin);
+
+    EXPECT_TRUE(this->t.contains_solid_block(origin));
+}
+
+TEST_THAT(Terrain, 
+     WHAT(ContainsBlock),
+     WHEN(GivenAPointWhichIsTheOriginOfANonSolidBlockThatIsPartOfTheTerrain),
+     THEN(ReturnsFalse))
+{
+    auto const origin = point{0, 1, 2};
+
+    add_non_solid_block_to_terrain(origin);
+
+    EXPECT_FALSE(this->t.contains_solid_block(origin));
+}
+
+TEST_THAT(Terrain, 
+     WHAT(ContainsBlock),
+     WHEN(GivenAPointWhichIsNotTheOriginOfAnyBlockThatIsPartOfTheTerrain),
+     THEN(ReturnsFalse))
+{
+    EXPECT_FALSE(this->t.contains_solid_block({0, 0, 0}));
 }
 
 TEST_THAT(Terrain,
