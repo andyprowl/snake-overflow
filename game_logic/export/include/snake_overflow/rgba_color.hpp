@@ -15,6 +15,22 @@ public:
                unsigned char b, 
                unsigned char alpha);
 
+    static rgba_color black();
+
+    static rgba_color red();
+
+    static rgba_color green();
+
+    static rgba_color blue();
+
+    static rgba_color yellow();
+
+    static rgba_color purple();
+
+    static rgba_color cyan();
+
+    static rgba_color white();
+
 public:
 
     unsigned char r;
