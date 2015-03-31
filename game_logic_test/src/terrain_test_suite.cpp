@@ -313,6 +313,32 @@ TEST_THAT(Terrain,
 }
 
 TEST_THAT(Terrain,
+     WHAT(GetNumOfItems),
+     WHEN(Always),
+     THEN(ReturnsTheNumberOfItemsPresentInTheTerrain))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    EXPECT_THAT(this->t.get_num_of_items(), Eq(0));
+
+    this->t.add_item(make_item({{1, 0, 1}, block_face::front}));
+
+    EXPECT_THAT(this->t.get_num_of_items(), Eq(1));
+
+    auto i = make_item({{1, 0, 1}, block_face::front});
+
+    auto& last_added_item = *i;
+
+    this->t.add_item(std::move(i));
+
+    EXPECT_THAT(this->t.get_num_of_items(), Eq(2));
+
+    this->t.remove_item(last_added_item);
+
+    EXPECT_THAT(this->t.get_num_of_items(), Eq(1));
+}
+
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionInTheMiddleOfASurfaceParallelToXAndADirectionAlongX),
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))

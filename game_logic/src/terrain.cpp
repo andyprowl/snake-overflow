@@ -96,6 +96,11 @@ std::unique_ptr<item> terrain::remove_item(util::value_ref<item> i)
     return release_item_ownership(i);
 }
 
+int terrain::get_num_of_items() const
+{
+    return static_cast<int>(this->items.size());
+}
+
 footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
 {
     auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(d);

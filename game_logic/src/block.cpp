@@ -18,9 +18,17 @@ block::block(util::value_ref<point> origin,
 }
 
 auto tuple_from_block(util::value_ref<block> b) 
-    -> decltype(std::forward_as_tuple(b.origin, b.texture, b.color, b.is_solid))
+    -> decltype(std::forward_as_tuple(b.origin, 
+                                      b.texture, 
+                                      b.color, 
+                                      b.is_solid,
+                                      b.items))
 {
-    return std::forward_as_tuple(b.origin, b.texture, b.color, b.is_solid);
+    return std::forward_as_tuple(b.origin, 
+                                 b.texture, 
+                                 b.color, 
+                                 b.is_solid,
+                                 b.items);
 }
 
 bool operator == (util::value_ref<block> lhs, util::value_ref<block> rhs)

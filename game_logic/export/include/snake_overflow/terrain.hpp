@@ -48,6 +48,8 @@ public:
 
     std::unique_ptr<item> remove_item(util::value_ref<item> i);
 
+    int get_num_of_items() const;
+
     footprint compute_next_footprint(util::value_ref<footprint> d) const;
 
 private:

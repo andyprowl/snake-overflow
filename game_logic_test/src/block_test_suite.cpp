@@ -1,6 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/block.hpp"
+#include "snake_overflow/fruit.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -110,6 +111,26 @@ TEST_THAT(Block,
                           "texture.jpg", 
                           {0, 0, 0, 255}, 
                           false};
+
+    EXPECT_FALSE(b1 == b2);
+}
+
+TEST_THAT(Block,
+     WHAT(EqualityComparisonOperator),
+     WHEN(GivenTwoBlocksWithDifferentItems),
+     THEN(ReturnsFalse))
+{
+    auto b1 = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
+
+    fruit f1{{{0, 0, 0}, block_face::front}, 5};
+
+    b1.items.push_back(&f1);
+
+    auto b2 = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
+
+    fruit f2{{{0, 1, 0}, block_face::front}, 5};
+
+    b2.items.push_back(&f2);
 
     EXPECT_FALSE(b1 == b2);
 }
