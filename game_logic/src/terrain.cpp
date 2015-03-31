@@ -221,4 +221,18 @@ std::vector<block>::const_iterator terrain::find_block(
     });
 }
 
+bool is_position_occupied(util::value_ref<position> pos, terrain const& t)
+{
+    auto const b = t.get_block(pos.location);
+
+    auto it = std::find_if(std::cbegin(b.items), 
+                           std::cend(b.items),
+                           [&pos] (item const* const i)
+    {
+        return (i->get_position().face == pos.face);
+    });
+
+    return (it != std::cend(b.items));
+}
+
 }

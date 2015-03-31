@@ -357,6 +357,32 @@ TEST_THAT(Terrain,
 }
 
 TEST_THAT(Terrain,
+     WHAT(IsPositionOccupied),
+     WHEN(GivenAPositionAndATerrainThatContainsAnItemAtThatPosition),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    this->t.add_item(make_item(pos));
+
+    EXPECT_TRUE(is_position_occupied(pos, t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsPositionOccupied),
+     WHEN(GivenAPositionAndATerrainThatDoesNotContainAnItemAtThatPosition),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    EXPECT_FALSE(is_position_occupied(pos, t));
+}
+
+TEST_THAT(Terrain,
      WHAT(ComputeStep),
      WHEN(GivenAPositionInTheMiddleOfASurfaceParallelToXAndADirectionAlongX),
      THEN(ReturnsAPositionOnTheSameSurfaceOfTheAppropriateAdjacentBlock))

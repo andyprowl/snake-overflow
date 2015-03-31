@@ -87,4 +87,6 @@ private:
 
 };
 
+bool is_position_occupied(util::value_ref<position> pos, terrain const& t);
+
 }
