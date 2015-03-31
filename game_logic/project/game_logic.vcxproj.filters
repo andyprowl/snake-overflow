@@ -65,7 +65,7 @@
     <ClCompile Include="..\src\dynamics.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\item_spawner.cpp">
+    <ClCompile Include="..\src\random_item_position_picker.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -130,7 +130,10 @@
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\item_spawner.hpp">
+    <ClInclude Include="..\export\include\snake_overflow\random_item_position_picker.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\item_position_picker.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

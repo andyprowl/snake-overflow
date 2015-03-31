@@ -35,7 +35,7 @@
     <ClCompile Include="..\src\terrain_builder_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\item_spawner_test_suite.cpp">
+    <ClCompile Include="..\src\random_item_position_picker_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

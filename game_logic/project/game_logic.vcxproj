@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\block.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
-    <ClCompile Include="..\src\item_spawner.cpp" />
+    <ClCompile Include="..\src\random_item_position_picker.cpp" />
     <ClCompile Include="..\src\rgba_color.cpp" />
     <ClCompile Include="..\src\terrain_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
@@ -105,7 +105,8 @@
     <ClInclude Include="..\export\include\snake_overflow\block_face.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\item_spawner.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\item_position_picker.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\random_item_position_picker.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\footprint.hpp" />

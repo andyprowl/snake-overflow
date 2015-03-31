@@ -1,19 +1,34 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/block.hpp"
-#include "snake_overflow/item_spawner.hpp"
+#include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/terrain.hpp"
 
 namespace snake_overflow
 {
 
-item_spawner::item_spawner(terrain& world)
+random_item_position_picker::random_item_position_picker(terrain& world)
     : world{world}
+    , valid_positions(compute_valid_positions())
+    , normal_distribution{0, static_cast<int>(valid_positions.size())}
 {
 }
 
-std::vector<position> item_spawner::get_valid_positions() const
+std::vector<position> random_item_position_picker::get_valid_positions() const
+{
+    return this->valid_positions;
+}
+
+position random_item_position_picker::pick_item_position() const
+{
+    auto const index = this->normal_distribution(this->random_generator);
+
+    return this->valid_positions[index];
+}
+
+std::vector<position> 
+    random_item_position_picker::compute_valid_positions() const
 {
     auto const blocks = this->world.get_blocks();
 
@@ -27,7 +42,7 @@ std::vector<position> item_spawner::get_valid_positions() const
     return valid_positions;
 }
 
-void item_spawner::validate_block(
+void random_item_position_picker::validate_block(
     util::value_ref<block> b, 
     std::vector<position>& valid_positions) const
 {
@@ -44,7 +59,7 @@ void item_spawner::validate_block(
     add_position_if_valid({b.origin, block_face::bottom}, valid_positions);
 }
 
-void item_spawner::add_position_if_valid(
+void random_item_position_picker::add_position_if_valid(
     util::value_ref<position> pos,
     std::vector<position>& valid_positions) const
 {
