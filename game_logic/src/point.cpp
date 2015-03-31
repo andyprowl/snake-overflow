@@ -57,8 +57,7 @@ bool is_unit(util::value_ref<point> p)
 
 bool operator == (util::value_ref<point> lhs, util::value_ref<point> rhs)
 {
-    return (std::make_tuple(lhs.x, lhs.y, lhs.z) ==
-            std::make_tuple(rhs.x, rhs.y, rhs.z));
+    return ((lhs.x == rhs.x) && (lhs.y == rhs.y) && (lhs.z == rhs.z));
 }
 
 bool operator != (util::value_ref<point> lhs, util::value_ref<point> rhs)

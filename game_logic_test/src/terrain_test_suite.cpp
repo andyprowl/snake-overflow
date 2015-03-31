@@ -276,6 +276,20 @@ TEST_THAT(Terrain,
 
 TEST_THAT(Terrain,
      WHAT(AddItem),
+     WHEN(GivenAnItemWithAPositionThatBelongsToAnExistingBlockButIsNotWalkable),
+     THEN(Throws))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const bad_position = position{{0, 0, 0}, block_face::back};
+
+    auto i = make_item(bad_position);
+
+    EXPECT_THROW(this->t.add_item(std::move(i)), bad_item_position_exception);
+}
+
+TEST_THAT(Terrain,
+     WHAT(AddItem),
      WHEN(GivenAnItemWithAValidPositionInWhichAnotherItemIsAlreadyPresent),
      THEN(Throws))
 {
@@ -289,7 +303,7 @@ TEST_THAT(Terrain,
 
     auto i2 = make_item(pos);
 
-    EXPECT_THROW(this->t.add_item(std::move(i2)), position_not_free_exception);
+    EXPECT_THROW(this->t.add_item(std::move(i2)), bad_item_position_exception);
 }
 
 TEST_THAT(Terrain,
@@ -357,9 +371,9 @@ TEST_THAT(Terrain,
 }
 
 TEST_THAT(Terrain,
-     WHAT(IsPositionOccupied),
+     WHAT(IsPositionFreeOfItems),
      WHEN(GivenAPositionAndATerrainThatContainsAnItemAtThatPosition),
-     THEN(ReturnsTrue))
+     THEN(ReturnsFalse))
 {
     create_cube_with_vertex_on_origin(4);
 
@@ -367,19 +381,155 @@ TEST_THAT(Terrain,
 
     this->t.add_item(make_item(pos));
 
-    EXPECT_TRUE(is_position_occupied(pos, t));
+    EXPECT_FALSE(is_position_free_of_items(pos, this->t));
 }
 
 TEST_THAT(Terrain,
-     WHAT(IsPositionOccupied),
+     WHAT(IsPositionFreeOfItems),
      WHEN(GivenAPositionAndATerrainThatDoesNotContainAnItemAtThatPosition),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    EXPECT_TRUE(is_position_free_of_items(pos, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsPositionWalkable),
+     WHEN(GivenAPositionAndATerrainWhereThePositionDoesNotHaveAnAdjacentBlock),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(4);
+    
+    EXPECT_TRUE(is_position_walkable({{1, 0, 1}, block_face::front}, this->t));
+    EXPECT_TRUE(is_position_walkable({{1, 3, 1}, block_face::back}, this->t));
+    EXPECT_TRUE(is_position_walkable({{0, 0, 1}, block_face::left}, this->t));
+    EXPECT_TRUE(is_position_walkable({{3, 0, 1}, block_face::right}, this->t));
+    EXPECT_TRUE(is_position_walkable({{1, 0, 3}, block_face::top}, this->t));
+    EXPECT_TRUE(is_position_walkable({{1, 1, 0}, block_face::bottom}, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsPositionWalkable),
+     WHEN(GivenAPositionAndATerrainWhereThePositionDoesNotHaveAnAdjacentBlock),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(4);
+    
+    EXPECT_FALSE(is_position_walkable({{1, 1, 1}, block_face::front}, this->t));
+    EXPECT_FALSE(is_position_walkable({{1, 2, 1}, block_face::back}, this->t));
+    EXPECT_FALSE(is_position_walkable({{1, 0, 1}, block_face::left}, this->t));
+    EXPECT_FALSE(is_position_walkable({{2, 0, 1}, block_face::right}, this->t));
+    EXPECT_FALSE(is_position_walkable({{1, 0, 2}, block_face::top}, this->t));
+    EXPECT_FALSE(is_position_walkable({{1, 1, 1}, block_face::bottom}, 
+                                      this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(CanPlaceItemAtPosition),
+     WHEN(GivenAPositionThatIsWalkableAndFreeOfItems),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    EXPECT_TRUE(can_place_item_at_position(pos, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(CanPlaceItemAtPosition),
+     WHEN(GivenAPositionThatIsWalkableButNotFreeOfItems),
      THEN(ReturnsFalse))
 {
     create_cube_with_vertex_on_origin(4);
 
     auto const pos = position{{1, 0, 1}, block_face::front};
 
-    EXPECT_FALSE(is_position_occupied(pos, t));
+    auto i = make_item(pos);
+
+    this->t.add_item(std::move(i));
+
+    EXPECT_FALSE(can_place_item_at_position(pos, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(CanPlaceItemAtPosition),
+     WHEN(GivenAPositionThatIsFreeOfItemsButNotWalkable),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::right};
+    
+    EXPECT_FALSE(can_place_item_at_position(pos, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(GetAllFreeValidItemPositions),
+     WHEN(Always),
+     THEN(ReturnsOnlyPositionsOnTheNonNeighboringSurfaceOfABlock))
+{
+    create_cube_with_vertex_on_origin(2);
+
+    auto const positions = this->t.get_all_free_item_positions();
+
+    EXPECT_THAT(positions.size(), Eq(24));
+
+    EXPECT_THAT(positions, Contains(position{{0, 0, 0}, block_face::front}));    
+    EXPECT_THAT(positions, Contains(position{{0, 0, 1}, block_face::front}));    
+    EXPECT_THAT(positions, Contains(position{{1, 0, 0}, block_face::front}));    
+    EXPECT_THAT(positions, Contains(position{{1, 0, 1}, block_face::front}));    
+
+    EXPECT_THAT(positions, Contains(position{{0, 1, 0}, block_face::back}));    
+    EXPECT_THAT(positions, Contains(position{{0, 1, 1}, block_face::back}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 0}, block_face::back}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 1}, block_face::back}));    
+
+    EXPECT_THAT(positions, Contains(position{{0, 0, 0}, block_face::left}));    
+    EXPECT_THAT(positions, Contains(position{{0, 0, 1}, block_face::left}));    
+    EXPECT_THAT(positions, Contains(position{{0, 1, 0}, block_face::left}));    
+    EXPECT_THAT(positions, Contains(position{{0, 1, 1}, block_face::left}));    
+
+    EXPECT_THAT(positions, Contains(position{{1, 0, 0}, block_face::right}));    
+    EXPECT_THAT(positions, Contains(position{{1, 0, 1}, block_face::right}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 0}, block_face::right}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 1}, block_face::right}));    
+
+    EXPECT_THAT(positions, Contains(position{{0, 0, 1}, block_face::top}));    
+    EXPECT_THAT(positions, Contains(position{{0, 1, 1}, block_face::top}));    
+    EXPECT_THAT(positions, Contains(position{{1, 0, 1}, block_face::top}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 1}, block_face::top}));    
+
+    EXPECT_THAT(positions, Contains(position{{0, 0, 0}, block_face::bottom}));    
+    EXPECT_THAT(positions, Contains(position{{0, 1, 0}, block_face::bottom}));    
+    EXPECT_THAT(positions, Contains(position{{1, 0, 0}, block_face::bottom}));    
+    EXPECT_THAT(positions, Contains(position{{1, 1, 0}, block_face::bottom}));    
+}
+
+TEST_THAT(Terrain,
+     WHAT(GetAllFreeValidItemPositions),
+     WHEN(Always),
+     THEN(ReturnsOnlyPositionsThatAreNotOccupiedByAnyItem))
+{
+    create_cube_with_vertex_on_origin(2);
+
+    auto const pos1 = position{{0, 0, 0}, block_face::front};
+
+    this->t.add_item(make_item(pos1));
+
+    auto const pos2 = position{{0, 0, 1}, block_face::front};
+
+    this->t.add_item(make_item(pos2));
+
+    auto const positions = this->t.get_all_free_item_positions();
+
+    EXPECT_THAT(positions.size(), Eq(22));
+
+    EXPECT_THAT(positions, Not(Contains(pos1)));
+    EXPECT_THAT(positions, Not(Contains(pos2)));
 }
 
 TEST_THAT(Terrain,

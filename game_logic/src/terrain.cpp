@@ -13,9 +13,16 @@
 namespace snake_overflow
 {
 
-util::value_ref<std::vector<block>> terrain::get_blocks() const
+std::vector<block> terrain::get_blocks() const
 {
-    return this->blocks;
+    auto v = std::vector<block>{};
+
+    for (auto const& entry : this->block_index)
+    {
+        v.push_back(entry.second);
+    }
+
+    return v;
 }
 
 void terrain::add_block(util::value_ref<block> b)
@@ -25,68 +32,86 @@ void terrain::add_block(util::value_ref<block> b)
         return;
     }
 
-    this->blocks.push_back(b);
+    auto result = this->block_index.emplace(b.origin, b);
+
+    this->blocks.push_back(&(result.first->second));
 }
 
 void terrain::remove_block(util::value_ref<point> origin)
 {
-    auto const it = find_block(origin);
-    if (it == std::cend(this->blocks))
+    auto const it = this->block_index.find(origin);
+    if (it == std::cend(this->block_index))
     {
         return;
     }
 
-    if (!it->items.empty())
+    if (!it->second.items.empty())
     {
         throw block_not_empty_exception{};
     }
 
-    this->blocks.erase(it);
+    auto const vector_it = std::remove(std::begin(this->blocks), 
+                                       std::end(this->blocks), 
+                                       &it->second);
+
+    this->blocks.erase(vector_it, std::cend(this->blocks));
+
+    this->block_index.erase(origin);
 }
 
 bool terrain::contains_block(util::value_ref<point> p) const
 {
-    auto const it = find_block(p);
+    auto const it = this->block_index.find(p);
+    
+    return (it != std::cend(this->block_index));
 
-    return (it != std::cend(this->blocks));
+    //auto const it = find_block(p);
+
+    //return (it != std::cend(this->blocks));
 }
 
 bool terrain::contains_solid_block(util::value_ref<point> p) const
 {
-    auto const it = find_block(p);
+    auto const it = this->block_index.find(p);
+    //auto const it = find_block(p);
 
-    if (it == std::cend(this->blocks))
+    if (it == std::cend(this->block_index))
+    //if (it == std::cend(this->blocks))
     {
         return false;
     }
 
-    return it->is_solid;
+    return it->second.is_solid;
 }
 
 block terrain::get_block(util::value_ref<point> origin) const
 {
-    auto const it = find_block(origin);
-    if (it == std::cend(this->blocks))
+    auto const it = this->block_index.find(origin);
+    //auto const it = find_block(origin);
+
+    if (it == std::cend(this->block_index))
+    //if (it == std::cend(this->blocks))
     {
         throw block_not_found_exception{};
     }
 
-    return *it;
+    //return *it;
+    return it->second;
 }
 
 void terrain::add_item(std::unique_ptr<item>&& i)
 {
     auto const pos = i->get_position();
 
-    auto it = find_block(pos.location);
-    if (it == std::cend(this->blocks))
+    auto it = this->block_index.find(pos.location);
+    if (it == std::cend(this->block_index))
     {
         throw block_not_found_exception{};
     }
 
-    throw_if_block_face_is_occupied(*it, pos.face);
+    throw_if_position_is_not_viable(pos);
 
-    it->items.push_back(i.get());
+    it->second.items.push_back(i.get());
 
     this->items.push_back(std::move(i));
 }
@@ -103,9 +128,21 @@ int terrain::get_num_of_items() const
     return static_cast<int>(this->items.size());
 }
 
-footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
+std::vector<position> terrain::get_all_free_item_positions() const
 {
-    auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(d);
+    auto valid_positions = std::vector<position>{};
+
+    for (auto const b : this->blocks)
+    {
+        gather_all_free_item_positions_on_block(*b, valid_positions);
+    }
+
+    return valid_positions;
+}
+
+footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
+{
+    auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(f);
 
     if (contains_solid_block(turn_footprint.location))
     {
@@ -113,32 +150,27 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
     }
     
     auto const inertial_target = position{
-        d.location + get_direction_vector(d.profile.direction), 
-        d.profile.face};
+        f.location + get_direction_vector(f.profile.direction), 
+        f.profile.face};
 
     if (contains_solid_block(inertial_target.location))
     {
-        return {inertial_target.location, d.profile};
+        return {inertial_target.location, f.profile};
     }
     else
     {
-        return compute_fallback_turn_on_same_block(d);
+        return compute_fallback_turn_on_same_block(f);
     }
 }
 
-void terrain::throw_if_block_face_is_occupied(util::value_ref<block> b, 
-                                              block_face face) const
+void terrain::throw_if_position_is_not_viable(
+    util::value_ref<position> pos) const
 {
-    auto it = std::find_if(std::cbegin(b.items), 
-                           std::cend(b.items),
-                           [face] (item const* const i)
-    {
-        return (i->get_position().face == face);
-    });
+    auto const viable = can_place_item_at_position(pos, *this);
 
-    if (it != std::cend(b.items))
+    if (!(viable))
     {
-        throw position_not_free_exception{};
+        throw bad_item_position_exception{};
     }
 }
 
@@ -146,18 +178,18 @@ void terrain::remove_item_from_placement_block(util::value_ref<item> i)
 {
     auto const pos = i.get_position();
 
-    auto const it = find_block(pos.location);
+    auto const it = this->block_index.find(pos.location);
     
-    auto const block_item_it = std::find(std::cbegin(it->items), 
-                                         std::cend(it->items), 
+    auto const block_item_it = std::find(std::cbegin(it->second.items), 
+                                         std::cend(it->second.items), 
                                          &i);
 
-    if (block_item_it == std::cend(it->items))
+    if (block_item_it == std::cend(it->second.items))
     {
         throw item_not_found_exception{};
     }
 
-    it->items.erase(block_item_it);
+    it->second.items.erase(block_item_it);
 }
 
 std::unique_ptr<item> terrain::release_item_ownership(util::value_ref<item> i)
@@ -174,6 +206,33 @@ std::unique_ptr<item> terrain::release_item_ownership(util::value_ref<item> i)
     this->items.erase(item_it);
 
     return owned_item;
+}
+
+void terrain::gather_all_free_item_positions_on_block(
+    util::value_ref<block> b, 
+    std::vector<position>& positions) const
+{
+    gather_item_position_if_free({b.origin, block_face::front}, positions);
+
+    gather_item_position_if_free({b.origin, block_face::back}, positions);
+
+    gather_item_position_if_free({b.origin, block_face::left}, positions);
+
+    gather_item_position_if_free({b.origin, block_face::right}, positions);
+
+    gather_item_position_if_free({b.origin, block_face::top}, positions);
+
+    gather_item_position_if_free({b.origin, block_face::bottom}, positions);
+}
+
+void terrain::gather_item_position_if_free(
+    util::value_ref<position> pos,
+    std::vector<position>& positions) const
+{
+    if (can_place_item_at_position(pos, *this))
+    {
+        positions.push_back(pos);
+    }
 }
 
 footprint terrain::compute_hypothetical_turn_to_adjacent_block(
@@ -199,29 +258,7 @@ footprint terrain::compute_fallback_turn_on_same_block(
     return {d.location, fallback};
 }
 
-std::vector<block>::iterator terrain::find_block(
-    util::value_ref<point> p)
-{
-    return std::find_if(std::begin(this->blocks),
-                        std::end(this->blocks),
-                        [&p] (util::value_ref<block> b)
-    {
-        return (b.origin == p);
-    });
-}
-
-std::vector<block>::const_iterator terrain::find_block(
-    util::value_ref<point> p) const
-{
-    return std::find_if(std::cbegin(this->blocks),
-                        std::cend(this->blocks),
-                        [&p] (util::value_ref<block> b)
-    {
-        return (b.origin == p);
-    });
-}
-
-bool is_position_occupied(util::value_ref<position> pos, terrain const& t)
+bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)
 {
     auto const b = t.get_block(pos.location);
 
@@ -232,7 +269,24 @@ bool is_position_occupied(util::value_ref<position> pos, terrain const& t)
         return (i->get_position().face == pos.face);
     });
 
-    return (it != std::cend(b.items));
+    return (it == std::cend(b.items));
+}
+
+bool is_position_walkable(util::value_ref<position> pos, terrain const& t)
+{
+    auto const n = get_face_normal(pos.face);
+
+    auto const adjacent_origin = pos.location + n;
+
+    auto const has_neighbor = t.contains_solid_block(adjacent_origin);
+
+    return !(has_neighbor);
+}
+
+bool can_place_item_at_position(util::value_ref<position> pos, 
+                                terrain const& t)
+{
+    return (is_position_walkable(pos, t) && is_position_free_of_items(pos, t));
 }
 
 }

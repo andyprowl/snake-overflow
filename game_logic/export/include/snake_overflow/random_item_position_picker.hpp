@@ -20,20 +20,7 @@ public:
 
     random_item_position_picker(terrain& world);
 
-    std::vector<position> get_valid_positions() const;
-
     virtual position pick_item_position() const override;
-
-private:
-
-    std::vector<position> compute_valid_positions() const;
-
-    void validate_block(util::value_ref<block> b, 
-                        std::vector<position>& valid_positions) const;
-
-    void add_position_if_valid(
-        util::value_ref<position> pos,
-        std::vector<position>& valid_positions) const;
 
 private:
 

@@ -22,15 +22,13 @@ void terrain_renderer::render(util::value_ref<terrain> t) const
 {
     cinder::gl::enableAlphaBlending();
 
-    auto const& blocks = t.get_blocks();
-
-    for (auto const& b : blocks)
+    t.for_each_block([this] (util::value_ref<block> b)
     {
         if (is_block_visible(b))
         {
             render_block(b);
         }
-    }
+    });
 
     cinder::gl::disableAlphaBlending();
 }
