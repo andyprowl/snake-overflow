@@ -4,8 +4,10 @@
 #include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/canonical_direction.hpp"
 #include "snake_overflow/footprint.hpp"
+#include "snake_overflow/fruit.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/terrain.hpp"
+#include <memory>
 
 namespace snake_overflow { namespace testing
 {
@@ -58,6 +60,11 @@ protected:
         this->t.add_block(b);
 
         return b;
+    }
+
+    std::unique_ptr<item> make_item(util::value_ref<position> placement)
+    {
+        return std::make_unique<fruit>(placement, 5);
     }
 
 protected:
@@ -113,7 +120,7 @@ TEST_THAT(Terrain,
 
 TEST_THAT(Terrain,
      WHAT(RemoveBlock),
-     WHEN(GivenABlockThatIsPartOfTheTerrain),
+     WHEN(GivenABlockThatIsPartOfTheTerrainAndContainsNoItems),
      WHEN(RemovesThatBlockFromTheTerrain))
 {
     auto const b1 = add_block_to_terrain({0, 1, 2});
@@ -125,6 +132,20 @@ TEST_THAT(Terrain,
 
     ASSERT_THAT(blocks.size(), Eq(1u));
     EXPECT_THAT(blocks, Not(Contains(b1)));
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveBlock),
+     WHEN(GivenABlockThatIsPartOfTheTerrainAndContainsAtLeastOneItem),
+     WHEN(Throws))
+{
+    auto const b = add_block_to_terrain({0, 1, 2});
+
+    auto i = make_item({b.origin, block_face::front});
+
+    this->t.add_item(std::move(i));
+
+    EXPECT_THROW(this->t.remove_block(b.origin), block_not_empty_exception);
 }
 
 TEST_THAT(Terrain,
@@ -215,6 +236,80 @@ TEST_THAT(Terrain,
      THEN(ReturnsFalse))
 {
     EXPECT_FALSE(this->t.contains_solid_block({0, 0, 0}));
+}
+
+TEST_THAT(Terrain,
+     WHAT(AddItem),
+     WHEN(GivenAnItemWithAValidPosition),
+     THEN(AcquiresItsOwnershipAndPlacesTheItem))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    auto i = make_item(pos);
+
+    auto added_item = i.get();
+
+    this->t.add_item(std::move(i));
+
+    auto const b = this->t.get_block(pos.location);
+
+    EXPECT_THAT(b.items.size(), Eq(1u));
+
+    EXPECT_THAT(b.items, Contains(added_item));
+}
+
+TEST_THAT(Terrain,
+     WHAT(AddItem),
+     WHEN(GivenAnItemWithAPositionThatDoesNotBelongToAnyExistingBlock),
+     THEN(Throws))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const bogus_position = position{{10, 15, 1}, block_face::front};
+
+    auto i = make_item(bogus_position);
+
+    EXPECT_THROW(this->t.add_item(std::move(i)), block_not_found_exception);
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveItem),
+     WHEN(GivenAnItemThatWasPreviouslyAddedToTheTerrain),
+     THEN(RemovesThatItemFromTheBlockItIsPlacedOnAndReturnsItsOwnership))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    auto i = make_item(pos);
+
+    auto& added_item = *i;
+
+    this->t.add_item(std::move(i));
+
+    auto removed_item = this->t.remove_item(added_item);
+
+    EXPECT_THAT(removed_item.get(), Eq(&added_item));
+
+    auto const b = this->t.get_block(pos.location);
+
+    EXPECT_TRUE(b.items.empty());
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveItem),
+     WHEN(GivenAnItemThatWasNotPreviouslyAddedToTheTerrain),
+     THEN(Throws))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const pos = position{{1, 0, 1}, block_face::front};
+
+    auto i = make_item(pos);
+
+    EXPECT_THROW(this->t.remove_item(*i), item_not_found_exception);
 }
 
 TEST_THAT(Terrain,

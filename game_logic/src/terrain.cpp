@@ -2,6 +2,7 @@
 
 #include "snake_overflow/canonical_direction.hpp"
 #include "snake_overflow/footprint.hpp"
+#include "snake_overflow/item.hpp"
 #include "snake_overflow/movement_profile.hpp"
 #include "snake_overflow/point.hpp"
 #include "snake_overflow/position.hpp"
@@ -33,6 +34,11 @@ void terrain::remove_block(util::value_ref<point> origin)
     if (it == std::cend(this->blocks))
     {
         return;
+    }
+
+    if (!it->items.empty())
+    {
+        throw block_not_empty_exception{};
     }
 
     this->blocks.erase(it);
@@ -68,6 +74,28 @@ block terrain::get_block(util::value_ref<point> origin) const
     return *it;
 }
 
+void terrain::add_item(std::unique_ptr<item>&& i)
+{
+    auto const pos = i->get_position();
+
+    auto it = find_block(pos.location);
+    if (it == std::cend(this->blocks))
+    {
+        throw block_not_found_exception{};
+    }
+
+    it->items.push_back(i.get());
+
+    this->items.push_back(std::move(i));
+}
+
+std::unique_ptr<item> terrain::remove_item(util::value_ref<item> i)
+{
+    remove_item_from_placement_block(i);
+
+    return release_item_ownership(i);
+}
+
 footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
 {
     auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(d);
@@ -91,6 +119,40 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
     }
 }
 
+void terrain::remove_item_from_placement_block(util::value_ref<item> i)
+{
+    auto const pos = i.get_position();
+
+    auto const it = find_block(pos.location);
+    
+    auto const block_item_it = std::find(std::cbegin(it->items), 
+                                         std::cend(it->items), 
+                                         &i);
+
+    if (block_item_it == std::cend(it->items))
+    {
+        throw item_not_found_exception{};
+    }
+
+    it->items.erase(block_item_it);
+}
+
+std::unique_ptr<item> terrain::release_item_ownership(util::value_ref<item> i)
+{
+    auto const item_it = std::find_if(std::begin(this->items),
+                                      std::end(this->items),
+                                      [&i] (std::unique_ptr<item> const& p)
+    {
+        return (p.get() == &i);
+    });
+
+    auto owned_item = std::move(*item_it);
+
+    this->items.erase(item_it);
+
+    return owned_item;
+}
+
 footprint terrain::compute_hypothetical_turn_to_adjacent_block(
     util::value_ref<footprint> d) const
 {
@@ -112,6 +174,17 @@ footprint terrain::compute_fallback_turn_on_same_block(
     auto const fallback = get_continuation_profile(d.profile);
 
     return {d.location, fallback};
+}
+
+std::vector<block>::iterator terrain::find_block(
+    util::value_ref<point> p)
+{
+    return std::find_if(std::begin(this->blocks),
+                        std::end(this->blocks),
+                        [&p] (util::value_ref<block> b)
+    {
+        return (b.origin == p);
+    });
 }
 
 std::vector<block>::const_iterator terrain::find_block(

@@ -3,9 +3,12 @@
 #include "snake_overflow/point.hpp"
 #include "snake_overflow/rgba_color.hpp"
 #include "util/value_ref.hpp"
+#include <vector>
 
 namespace snake_overflow
 {
+
+class item;
     
 struct block
 {
@@ -26,6 +29,8 @@ public:
     rgba_color color;
 
     bool is_solid;
+
+    std::vector<item*> items;
     
 };
 
