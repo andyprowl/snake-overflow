@@ -51,7 +51,7 @@ bool snake_renderer::is_trail_winding_around_edge(
     if (i == trail.size() - 1) return false;
 
     return ((trail[i].action ==  maneuvre::move_forward) &&
-            (trail[i].profile.face == trail[i + 1].profile.face));
+            (trail[i].step.profile.face == trail[i + 1].step.profile.face));
 }
 
 void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
@@ -68,11 +68,11 @@ void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
 cinder::Quatf snake_renderer::compute_snake_part_rotation(
     util::value_ref<dynamics> d) const
 {
-    auto const normal = get_face_normal_vector(d.profile.face);
+    auto const normal = get_face_normal_vector(d.step.profile.face);
     
     auto const normal_rotation = cinder::Quatf{cinder::Vec3f::zAxis(), normal};
 
-    auto const direction = get_dynamics_direction_vector(d);
+    auto const direction = get_footprint_direction_vector(d.step);
 
     auto const direction_rotation = cinder::Quatf{
         cinder::Vec3f::yAxis() * normal_rotation, 
@@ -84,7 +84,7 @@ cinder::Quatf snake_renderer::compute_snake_part_rotation(
 cinder::Vec3f snake_renderer::compute_snake_part_translation(
     util::value_ref<dynamics> d) const
 {
-    auto const pos = get_dynamics_position(d);
+    auto const pos = get_footprint_position(d.step);
 
     auto const normal = get_face_normal_vector(pos.face);
     
@@ -186,9 +186,9 @@ void snake_renderer::draw_inner_part_on_left_turn(
     // This check is due to a fail. I probably got the maths wrong at some 
     // point, and without this, right turns are not rendered properly on top and 
     // bottom faces of a block.
-    if (((d.profile.face == block_face::top) || 
-         (d.profile.face == block_face::bottom)) && 
-        (d.profile.direction == canonical_direction::negative_y()))
+    if (((d.step.profile.face == block_face::top) || 
+         (d.step.profile.face == block_face::bottom)) && 
+        (d.step.profile.direction == canonical_direction::negative_y()))
     {
         cinder::gl::drawCube({+(this->block_size - margin) / 2.f, 0.f, 0.f}, 
                              {margin, this->width, this->height});
@@ -214,9 +214,9 @@ void snake_renderer::draw_inner_part_on_right_turn(
     // This check is due to a fail. I probably got the maths wrong at some 
     // point, and without this, right turns are not rendered properly on top and 
     // bottom faces of a block.
-    if (((d.profile.face == block_face::top) || 
-         (d.profile.face == block_face::bottom)) && 
-        (d.profile.direction == canonical_direction::negative_y()))
+    if (((d.step.profile.face == block_face::top) || 
+         (d.step.profile.face == block_face::bottom)) && 
+        (d.step.profile.direction == canonical_direction::negative_y()))
     {
         cinder::gl::drawCube({-(this->block_size - margin) / 2.f, 0.f, 0.f}, 
                              {margin, this->width, this->height});

@@ -41,7 +41,7 @@ private:
         util::value_ref<dynamics> d) const;
 
     cinder::Vec3f compute_snake_part_translation(
-        util::value_ref<dynamics> pos) const;
+        util::value_ref<dynamics> d) const;
 
     cinder::Vec3f get_face_normal_vector(block_face face) const;
 

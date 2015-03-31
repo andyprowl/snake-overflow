@@ -1,5 +1,7 @@
 #pragma once
 
+#include "util/value_ref.hpp"
+
 namespace snake_overflow
 {
 
@@ -24,5 +26,11 @@ public:
     unsigned char alpha;
 
 };
+
+bool operator == (util::value_ref<rgba_color> lhs, 
+                  util::value_ref<rgba_color> rhs);
+
+bool operator != (util::value_ref<rgba_color> lhs, 
+                  util::value_ref<rgba_color> rhs);
 
 }

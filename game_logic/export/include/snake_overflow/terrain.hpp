@@ -10,8 +10,12 @@ namespace snake_overflow
 
 struct block;
 struct canonical_direction;
-struct dynamics;
+struct footprint;
 struct point;
+
+class block_not_found_exception : public virtual std::exception
+{
+};
 
 class terrain
 {
@@ -24,15 +28,17 @@ public:
 
     void remove_block(util::value_ref<point> origin);
 
-    dynamics compute_step(util::value_ref<dynamics> d) const;
+    block get_block(util::value_ref<point> origin) const;
+
+    footprint compute_next_footprint(util::value_ref<footprint> d) const;
 
 private:
 
-    dynamics compute_hypothetical_turn_to_adjacent_block(
-        util::value_ref<dynamics> d) const;
+    footprint compute_hypothetical_turn_to_adjacent_block(
+        util::value_ref<footprint> d) const;
 
-    dynamics compute_fallback_turn_on_same_block(
-        util::value_ref<dynamics> d) const;
+    footprint compute_fallback_turn_on_same_block(
+        util::value_ref<footprint> d) const;
 
     bool contains_solid_block(util::value_ref<point> p) const;
 

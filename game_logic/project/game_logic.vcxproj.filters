@@ -38,9 +38,6 @@
     <ClCompile Include="..\src\sequence.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\dynamics.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\movement_profile.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -60,6 +57,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\terrain_builder.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\footprint.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dynamics.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -94,9 +97,6 @@
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp">
-      <Filter>export\include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
@@ -119,6 +119,12 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\footprint.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

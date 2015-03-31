@@ -27,11 +27,10 @@ protected:
                          this->terrain_side_length, 
                          "texture.jpg", 
                          {255, 255, 255, 255},
-                         true,
-                         false);
+                         true);
 
         this->s = std::make_unique<snake>(habitat, 
-                                          initial_dynamics, 
+                                          initial_footprint, 
                                           initial_length);
     }
 
@@ -52,8 +51,8 @@ protected:
 
     int initial_length = 3;
 
-    dynamics initial_dynamics = {initial_location, 
-                                {initial_face, initial_direction}};
+    footprint initial_footprint = {initial_location, 
+                                   {initial_face, initial_direction}};
 
     std::unique_ptr<snake> s;
 
@@ -62,7 +61,7 @@ protected:
 TEST_THAT(Snake,
      WHAT(GetTrail),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASequenceOfDynamicsOfTheLengthPassedAtConstruction))
+     THEN(ReturnsASequenceOfFootprintOfTheLengthPassedAtConstruction))
 {
     auto const trail = this->s->get_trail();
 
@@ -72,19 +71,19 @@ TEST_THAT(Snake,
 TEST_THAT(Snake,
      WHAT(GetTrail),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASetOfConsecutiveDynamicsStartingFromTheInitialOne))
+     THEN(ReturnsASetOfConsecutiveFootprintStartingFromTheInitialOne))
 {
     auto const trail = this->s->get_trail();
 
     ASSERT_THAT(trail.size(), Eq(this->initial_length));    
 
-    EXPECT_THAT(trail[0], Eq(this->initial_dynamics));
+    EXPECT_THAT(trail[0].step, Eq(this->initial_footprint));
 
-    auto const dir = get_dynamics_direction_vector(this->initial_dynamics);    
+    auto const dir = get_footprint_direction_vector(this->initial_footprint);    
     for (auto const i : util::sequence(0, this->initial_length))
     {
         auto expected_block = this->initial_location + i * dir;
-        EXPECT_THAT(trail[i].location, Eq(expected_block));
+        EXPECT_THAT(trail[i].step.location, Eq(expected_block));
     }
 }
 
@@ -109,13 +108,13 @@ TEST_THAT(Snake,
 
     ASSERT_THAT(trail.size(), Eq(3u));
 
-    EXPECT_THAT(get_dynamics_position(trail[0]), 
+    EXPECT_THAT(get_footprint_position(trail[0].step), 
                 Eq(position{{0, 0, 4}, block_face::front}));
 
-    EXPECT_THAT(get_dynamics_position(trail[1]), 
+    EXPECT_THAT(get_footprint_position(trail[1].step), 
                 Eq(position{{0, 0, 4}, block_face::top}));
 
-    EXPECT_THAT(get_dynamics_position(trail[2]), 
+    EXPECT_THAT(get_footprint_position(trail[2].step), 
                 Eq(position{{0, 1, 4}, block_face::top}));
 }
 
@@ -132,19 +131,19 @@ TEST_THAT(Snake,
 
     ASSERT_THAT(trail.size(), Eq(5u));
 
-    EXPECT_THAT(get_dynamics_position(trail[0]), 
+    EXPECT_THAT(get_footprint_position(trail[0].step), 
                 Eq(position{{0, 0, 2}, block_face::front}));
     
-    EXPECT_THAT(get_dynamics_position(trail[1]), 
+    EXPECT_THAT(get_footprint_position(trail[1].step), 
                 Eq(position{{0, 0, 3}, block_face::front}));
     
-    EXPECT_THAT(get_dynamics_position(trail[2]), 
+    EXPECT_THAT(get_footprint_position(trail[2].step), 
                 Eq(position{{0, 0, 4}, block_face::front}));
     
-    EXPECT_THAT(get_dynamics_position(trail[3]), 
+    EXPECT_THAT(get_footprint_position(trail[3].step), 
                 Eq(position{{0, 0, 4}, block_face::top}));
     
-    EXPECT_THAT(get_dynamics_position(trail[4]), 
+    EXPECT_THAT(get_footprint_position(trail[4].step), 
                 Eq(position{{0, 1, 4}, block_face::top}));
 }
 

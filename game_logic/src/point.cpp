@@ -25,6 +25,11 @@ point point::operator - () const
     return {-(this->x), -(this->y), -(this->z)};
 }
 
+point point::zero()
+{
+    return {0, 0, 0};
+}
+
 point point::x_unit()
 {
     return {1, 0, 0};

@@ -2,6 +2,7 @@
 
 #include "util/value_ref.hpp"
 #include <functional>
+#include <vector>
 
 namespace snake_overflow
 {
@@ -64,6 +65,8 @@ canonical_direction get_direction_from_vector(util::value_ref<point> v);
 
 canonical_direction get_opposite_direction(
     util::value_ref<canonical_direction> dir);
+
+std::vector<canonical_direction> get_all_canonical_directions();
 
 }
 

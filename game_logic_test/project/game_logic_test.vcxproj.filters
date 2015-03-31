@@ -49,13 +49,13 @@
     <ClInclude Include="..\include\snake_overflow\direction_format.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\dynamics_format.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\snake_overflow\point_format.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\position_format.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\footprint_format.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
