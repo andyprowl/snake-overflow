@@ -12,13 +12,13 @@ namespace snake_overflow
 {
 
 snake::snake(terrain const& habitat,
-             util::value_ref<dynamics> initial_dynamics, 
+             util::value_ref<footprint> initial_footprint, 
              int const initial_length)
     : habitat{habitat}
-    , current_dynamics{initial_dynamics}
+    , current_dynamics{initial_footprint, maneuvre::move_forward}
     , growth{0}
 {
-    this->trail.push_back(initial_dynamics);
+    this->trail.push_back(current_dynamics);
 
     grow(initial_length - 1);
 
@@ -32,7 +32,7 @@ std::vector<dynamics> snake::get_trail() const
 
 canonical_direction snake::get_direction() const
 {
-    return get_dynamics_direction(this->current_dynamics);
+    return get_footprint_direction(this->current_dynamics.step);
 }
 
 int snake::get_length() const
@@ -42,7 +42,10 @@ int snake::get_length() const
 
 void snake::advance()
 {
-    this->current_dynamics = this->habitat.compute_step(this->current_dynamics);
+    auto const step = this->habitat.compute_next_footprint(
+        this->current_dynamics.step);
+
+    this->current_dynamics = {step, maneuvre::move_forward};
 
     this->trail.push_back(current_dynamics);
 
@@ -63,22 +66,22 @@ void snake::grow(int const size)
 
 void snake::turn_left()
 {    
-    auto const current_profile = this->current_dynamics.profile;
+    auto const current_profile = this->current_dynamics.step.profile;
 
     auto const new_profile = get_left_turn_profile(current_profile);
 
-    this->current_dynamics.profile = new_profile;
+    this->current_dynamics.step.profile = new_profile;
 
     this->trail.back().action = maneuvre::turn_left;
 }
 
 void snake::turn_right()
 {
-    auto const current_profile = this->current_dynamics.profile;
+    auto const current_profile = this->current_dynamics.step.profile;
 
     auto const new_profile = get_right_turn_profile(current_profile);
 
-    this->current_dynamics.profile = new_profile;
+    this->current_dynamics.step.profile = new_profile;
 
     this->trail.back().action = maneuvre::turn_right;
 }

@@ -2,11 +2,13 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
+#include <unordered_set>
 
 namespace snake_overflow
 {
@@ -22,6 +24,8 @@ void application::setup()
     setup_arcball_manipulator();
 
     setup_depth_buffer();
+
+    create_fps_text_font();
 }
 
 void application::prepareSettings(Settings* const settings)
@@ -88,6 +92,12 @@ void application::keyDown(cinder::app::KeyEvent const e)
             return;
         }
 
+        case cinder::app::KeyEvent::KEY_f:
+        {
+            this->show_fps = !(this->show_fps);
+            return;
+        }
+
         default:
         {
         }
@@ -117,47 +127,42 @@ void application::create_habitat()
                               this->cube_side_length, 
                               "grass4.jpg",
                               {255, 255, 255, 255},
-                              true,
-                              false);
+                              true);
 
-    auto const pool_sizes = point{5, 7, 3};
+    auto const pool_sizes = point{7, 9, 3};
 
     auto const pool_origin = point{this->cube_side_length / 2,
                                    this->cube_side_length / 2 - pool_sizes.y,
                                    this->cube_side_length / 4};
 
-    builder.add_cuboid(pool_origin,
-                       pool_sizes,
-                       "brick1.jpg",
-                       {255, 255, 255, 255},
-                       true,
-                       true);
+    builder.add_box(pool_origin,
+                    pool_sizes,
+                    "brick1.jpg",
+                    {255, 255, 255, 255},
+                    true);
 
-    builder.remove_cuboid(pool_origin + point{1, 1, 1},
-                          pool_sizes - point{2, 2, 1});
+    builder.remove_box(pool_origin + point{1, 1, 1},
+                       pool_sizes - point{2, 2, 1});
 
-    builder.add_cuboid(pool_origin + point{1, 1, 1}, 
-                       pool_sizes - point{2, 2, 1},
-                       "water4.jpg",
-                       {255, 255, 255, 100},
-                       false,
-                       true);
+    builder.add_box(pool_origin + point{1, 1, 1}, 
+                    pool_sizes - point{2, 2, 1},
+                    "water4.jpg",
+                    {255, 255, 255, 100},
+                     false);
 
-    builder.add_cuboid({-this->cube_side_length / 2, 
-                        -this->cube_side_length / 4, 
-                        this->cube_side_length / 4 + 4}, 
-                       {7, 6, 4}, 
-                       "lava5.jpg",
-                       {255, 255, 255, 255},
-                       true,
-                       false);
+    builder.add_box({-this->cube_side_length / 2, 
+                    -this->cube_side_length / 4, 
+                    this->cube_side_length / 4 + 4}, 
+                    {7, 6, 4}, 
+                    "lava5.jpg",
+                    {255, 255, 255, 255},
+                    true);
 
     builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
                      7, 
                      "stone3.jpg",
                      {255, 255, 255, 255},
-                     true,
-                     false);
+                     true);
 }
 
 void application::create_snake()
@@ -166,11 +171,11 @@ void application::create_snake()
                                     -this->cube_side_length / 2, 
                                     -this->cube_side_length / 2};
 
-    auto const initial_state = dynamics{snake_origin, 
+    auto const initial_step = footprint{snake_origin, 
                                         {block_face::front, 
                                         canonical_direction::positive_z()}};
 
-    this->hero = std::make_unique<snake>(this->habitat, initial_state, 25);
+    this->hero = std::make_unique<snake>(this->habitat, initial_step, 35);
 }
 
 void application::create_texture_repository()
@@ -189,9 +194,9 @@ void application::create_renderers()
 
 void application::create_snake_renderer()
 {
-    float snake_height = 8.f;
-
     float snake_width = this->block_size / 2;
+
+    float snake_height = snake_width * 0.66;
 
     auto const skin = this->textures->get_texture("snake7.jpg");
 
@@ -235,16 +240,53 @@ void application::setup_depth_buffer()
     cinder::gl::enableDepthWrite();
 }
 
+void application::create_fps_text_font()
+{
+    this->text_font = cinder::Font{"Arial", 25.0};
+}
+
 void application::draw_frame()
 {
     this->hero_renderer->render(*this->hero);
 
     this->habitat_renderer->render(this->habitat);
+
+    if (this->show_fps)
+    {
+        draw_fps_text();
+    }
+
+    this->last_frame_time = std::chrono::system_clock::now();
+}
+
+void application::draw_fps_text() const
+{
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(getWindowSize());
+
+    auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
+
+    cinder::gl::drawString(get_fps_text(), {10., 10.}, color, this->text_font);
+
+    cinder::gl::disableAlphaBlending();
 }
 
 int application::get_zoom_step() const
 {
     return 20;
+}
+
+std::string application::get_fps_text() const
+{
+    auto const time = std::chrono::system_clock::now();
+    
+    auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
+        time - this->last_frame_time);
+
+    auto const fps = 1000.f / elapsed.count();
+
+    return "FPS: " + std::to_string(fps);
 }
 
 }

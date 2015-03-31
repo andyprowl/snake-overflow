@@ -18,7 +18,7 @@ class snake
 public:
 
     snake(terrain const& habitat, 
-          util::value_ref<dynamics> initial_dynamics, 
+          util::value_ref<footprint> initial_footprint, 
           int initial_length);
 
     std::vector<dynamics> get_trail() const;

@@ -24,31 +24,13 @@ protected:
 
 TEST_THAT(TerrainBuilder,
      WHAT(AddCube),
-     WHEN(GivenASideLengthAndAFlagIndicatingThatTheCubeShouldNotBeFull),
-     THEN(AddsASeriesOfBlocksLaidOutAsACubeFrameToTheAssociatedTerrain))
-{
-    this->builder.add_cube({-1, 3, 4}, 
-                           3, 
-                           "texture.jpg", 
-                           {0, 0, 0, 255}, 
-                           true,
-                           false);
-
-    auto const blocks = this->t.get_blocks();
-
-    ASSERT_THAT(blocks.size(), Eq(26u));
-}
-
-TEST_THAT(TerrainBuilder,
-     WHAT(AddCube),
-     WHEN(GivenASideLengthAndAFlagIndicatingThatTheCubeShouldBeFull),
+     WHEN(GivenASideLength),
      THEN(AddsASeriesOfBlocksLaidOutAsAFullCubeToTheAssociatedTerrain))
 {
     this->builder.add_cube({-1, 3, 4}, 
                            3, 
                            "texture.jpg", 
                            {0, 0, 0, 255}, 
-                           true,
                            true);
 
     auto const blocks = this->t.get_blocks();
@@ -57,18 +39,37 @@ TEST_THAT(TerrainBuilder,
 }
 
 TEST_THAT(TerrainBuilder,
-     WHAT(RemoveCuboid),
-     WHEN(GivenAnOriginBlockAndASetOfThreeSizesThatIdentityACuboid),
-     THEN(RemovesTheExistingBlocksThatArePartOfTheIdentifyTheCuboid))
+     WHAT(AddCube),
+     WHEN(Always),
+     THEN(CreatesInnerBlocksAsInvisibleAndNonSolid))
+{
+    auto const origin = point{-1, 3, 4};
+
+    this->builder.add_cube(origin, 
+                           3, 
+                           "texture.jpg", 
+                           {0, 0, 0, 255}, 
+                           true);
+
+    auto const b = this->t.get_block(origin + point{1, 1, 1});
+
+    EXPECT_FALSE(b.is_solid);
+    EXPECT_FALSE(is_block_visible(b));
+    EXPECT_TRUE(b.texture.empty());
+}
+
+TEST_THAT(TerrainBuilder,
+     WHAT(RemoveBox),
+     WHEN(GivenAnOriginBlockAndASetOfThreeSizesThatIdentifyABox),
+     THEN(RemovesTheExistingBlocksThatArePartOfTheIdentifiedBox))
 {
     this->builder.add_cube({0, 0, 0}, 
                            5, 
                            "texture.jpg", 
                            {0, 0, 0, 255}, 
-                           true, 
                            true);
 
-    this->builder.remove_cuboid({1, 2, 1}, {3, 3, 3});
+    this->builder.remove_box({1, 2, 1}, {3, 3, 3});
 
     auto const blocks = this->t.get_blocks();
 

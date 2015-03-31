@@ -6,7 +6,9 @@
 #include "cinder/Arcball.h"
 #include "cinder/Camera.h"
 #include "cinder/params/Params.h"
+#include <chrono>
 #include <memory>
+#include <string>
 
 namespace snake_overflow
 {
@@ -55,9 +57,15 @@ private:
 
     void setup_depth_buffer();
 
+    void create_fps_text_font();
+
     void draw_frame();
 
+    void draw_fps_text() const;
+    
     int get_zoom_step() const;
+
+    std::string get_fps_text() const;
 
 private:
 
@@ -82,6 +90,12 @@ private:
     cinder::Arcball arcball;
 
     bool paused = false;
+
+    bool show_fps = false;
+
+    std::chrono::time_point<std::chrono::system_clock> last_frame_time;
+
+    cinder::Font text_font;
 
 };
 

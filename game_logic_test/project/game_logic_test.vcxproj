@@ -95,7 +95,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\snake_overflow\block_face_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\direction_format.hpp" />
-    <ClInclude Include="..\include\snake_overflow\dynamics_format.hpp" />
+    <ClInclude Include="..\include\snake_overflow\footprint_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\point_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\position_format.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />

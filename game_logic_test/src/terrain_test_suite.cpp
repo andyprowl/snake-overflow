@@ -3,7 +3,7 @@
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/canonical_direction.hpp"
-#include "snake_overflow/dynamics.hpp"
+#include "snake_overflow/footprint.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/terrain.hpp"
 
@@ -28,14 +28,13 @@ protected:
                          side_length, 
                          "texture.jpg", 
                          {0, 0, 0, 255}, 
-                         true,
-                         false);
+                         true);
     }
 
-    void verify_step(util::value_ref<dynamics> d,
-                     util::value_ref<dynamics> expected_result)
+    void verify_step(util::value_ref<footprint> d,
+                     util::value_ref<footprint> expected_result)
     {
-        EXPECT_THAT(this->t.compute_step(d), Eq(expected_result));
+        EXPECT_THAT(this->t.compute_next_footprint(d), Eq(expected_result));
     }
 
     block add_block_to_terrain(util::value_ref<point> p)
@@ -139,6 +138,28 @@ TEST_THAT(Terrain,
 
     ASSERT_THAT(blocks.size(), Eq(1u));
     EXPECT_THAT(blocks, Not(Contains(b1)));
+}
+
+TEST_THAT(Terrain,
+     WHAT(GetBlock),
+     WHEN(GivenTheOriginOfABlockThatIsPartOfTheTerrain),
+     THEN(ReturnsThatBlock))
+{
+    auto const origin = point{0, 1, 2};
+
+    auto const b = add_block_to_terrain(origin);
+
+    this->t.add_block(b);
+
+    EXPECT_THAT(this->t.get_block(origin), Eq(b));
+}
+
+TEST_THAT(Terrain,
+     WHAT(GetBlock),
+     WHEN(GivenTheOriginOfABlockThatIsNotPartOfTheTerrain),
+     THEN(Throws))
+{
+    EXPECT_THROW(this->t.get_block({0, 1, 2}), block_not_found_exception);
 }
 
 TEST_THAT(Terrain,

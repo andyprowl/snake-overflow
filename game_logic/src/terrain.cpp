@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/canonical_direction.hpp"
-#include "snake_overflow/dynamics.hpp"
+#include "snake_overflow/footprint.hpp"
 #include "snake_overflow/movement_profile.hpp"
 #include "snake_overflow/point.hpp"
 #include "snake_overflow/position.hpp"
@@ -38,13 +38,24 @@ void terrain::remove_block(util::value_ref<point> origin)
     this->blocks.erase(it);
 }
 
-dynamics terrain::compute_step(util::value_ref<dynamics> d) const
+block terrain::get_block(util::value_ref<point> origin) const
 {
-    auto turn_dynamics = compute_hypothetical_turn_to_adjacent_block(d);
-
-    if (contains_solid_block(turn_dynamics.location))
+    auto const it = find_block(origin);
+    if (it == std::cend(this->blocks))
     {
-        return turn_dynamics;
+        throw block_not_found_exception{};
+    }
+
+    return *it;
+}
+
+footprint terrain::compute_next_footprint(util::value_ref<footprint> d) const
+{
+    auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(d);
+
+    if (contains_solid_block(turn_footprint.location))
+    {
+        return turn_footprint;
     }
     
     auto const inertial_target = position{
@@ -61,8 +72,8 @@ dynamics terrain::compute_step(util::value_ref<dynamics> d) const
     }
 }
 
-dynamics terrain::compute_hypothetical_turn_to_adjacent_block(
-    util::value_ref<dynamics> d) const
+footprint terrain::compute_hypothetical_turn_to_adjacent_block(
+    util::value_ref<footprint> d) const
 {
     auto const fallback = get_continuation_profile(d.profile);
 
@@ -76,8 +87,8 @@ dynamics terrain::compute_hypothetical_turn_to_adjacent_block(
     return {location, opp_fallback};
 }
 
-dynamics terrain::compute_fallback_turn_on_same_block(
-    util::value_ref<dynamics> d) const
+footprint terrain::compute_fallback_turn_on_same_block(
+    util::value_ref<footprint> d) const
 {
     auto const fallback = get_continuation_profile(d.profile);
 

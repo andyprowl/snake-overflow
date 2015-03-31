@@ -12,6 +12,8 @@ public:
 
     point(int x, int y, int z);
 
+    static point zero();
+
     static point x_unit();
 
     static point y_unit();

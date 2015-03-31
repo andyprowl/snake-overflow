@@ -120,4 +120,14 @@ canonical_direction get_opposite_direction(
     return {dir.axis, opposite_way};
 }
 
+std::vector<canonical_direction> get_all_canonical_directions()
+{
+    return {canonical_direction::positive_x(),
+            canonical_direction::negative_x(),
+            canonical_direction::positive_y(),
+            canonical_direction::negative_y(),
+            canonical_direction::positive_z(),
+            canonical_direction::negative_z()};
+}
+
 }
