@@ -125,4 +125,6 @@ bool is_position_walkable(util::value_ref<position> pos, terrain const& t);
 bool can_place_item_at_position(util::value_ref<position> pos, 
                                 terrain const& t);
 
+item* find_item(util::value_ref<position> pos, terrain const& t);
+
 }

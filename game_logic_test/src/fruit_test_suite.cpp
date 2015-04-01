@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/fruit.hpp"
-#include "snake_overflow/testing/game_fixture.hpp"
+#include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
 #include "util/repeat.hpp"
 #include <memory>
 
@@ -12,14 +12,14 @@ using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Ref;
 
-class Fruit : public GameFixture
+class Fruit : public CubeTerrainGameFixture
 {
 
 protected:
 
     virtual void SetUp() override
     {
-        GameFixture::SetUp();
+        CubeTerrainGameFixture::SetUp();
 
         auto& g = get_game();
 

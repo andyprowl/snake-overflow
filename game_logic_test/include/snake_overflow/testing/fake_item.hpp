@@ -5,6 +5,10 @@
 namespace snake_overflow { namespace testing
 {
 
+class item_picked_exception : public virtual std::exception
+{
+};
+
 class fake_item : public item
 {
 
@@ -22,6 +26,7 @@ public:
 
     virtual void pick(snake&) override
     {
+        throw item_picked_exception{};
     }
 
 private:

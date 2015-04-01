@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/testing/game_fixture.hpp"
+#include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -8,7 +8,7 @@ namespace snake_overflow { namespace testing
 using ::testing::Eq;
 using ::testing::Ref;
 
-class Game : public GameFixture
+class Game : public CubeTerrainGameFixture
 {
 };
 

@@ -283,4 +283,18 @@ bool can_place_item_at_position(util::value_ref<position> pos,
     return (is_position_walkable(pos, t) && is_position_free_of_items(pos, t));
 }
 
+item* find_item(util::value_ref<position> pos, terrain const& t)
+{
+    auto const b = t.get_block(pos.location);
+
+    auto const it = std::find_if(std::cbegin(b.items), 
+                                 std::cend(b.items),
+                                 [&pos] (item const* const i)
+    {
+        return (i->get_position().face == pos.face);
+    });
+
+    return (it != std::cend(b.items)) ? *it : nullptr;
+}
+
 }

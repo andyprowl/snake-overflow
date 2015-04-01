@@ -82,6 +82,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\block.cpp" />
+    <ClCompile Include="..\src\collision_handler.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\fruit.cpp" />
     <ClCompile Include="..\src\game.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="..\export\include\snake_overflow\block.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\block_face.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\collision_handler.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\fruit.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game.hpp" />

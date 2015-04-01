@@ -47,7 +47,10 @@
     <ClCompile Include="..\src\game_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game_fixture.cpp">
+    <ClCompile Include="..\src\collision_handler_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cube_terrain_game_fixture.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,10 +76,10 @@
     <ClInclude Include="..\include\snake_overflow\footprint_format.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\testing\game_fixture.hpp">
+    <ClInclude Include="..\include\snake_overflow\testing\fake_item.hpp">
       <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\testing\fake_item.hpp">
+    <ClInclude Include="..\include\snake_overflow\testing\cube_terrain_game_fixture.hpp">
       <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
   </ItemGroup>
