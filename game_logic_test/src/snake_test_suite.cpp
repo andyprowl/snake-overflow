@@ -139,6 +139,27 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(Advance),
+     WHEN(Always),
+     THEN(InvokesAllHandlersRegisteredForMovementEvents))
+{
+    boost::optional<footprint> step;
+
+    this->s->register_movement_handler([&step] (util::value_ref<footprint> fp)
+    {
+        step = fp;
+    });
+
+    this->s->advance();
+
+    auto const expected_step = footprint{
+        {0, 0, 3}, 
+        {block_face::front, canonical_direction::positive_z()}};
+
+    EXPECT_THAT(*step, Eq(expected_step));
+}
+
+TEST_THAT(Snake,
      WHAT(Grow),
      WHEN(GivenASize),
      THEN(MakesFollowingAdvancementsGrowTheSnakeRatherThanShiftingIt))
@@ -511,5 +532,6 @@ TEST_THAT(Snake,
     this->s->advance();
     EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
 }
+
 
 } }

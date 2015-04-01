@@ -2,6 +2,7 @@
 
 #include "snake_overflow/dynamics.hpp"
 #include "util/value_ref.hpp"
+#include <boost/signals2/signal.hpp>
 #include <deque>
 #include <vector>
 
@@ -14,6 +15,11 @@ class terrain;
 
 class snake
 {
+
+public:
+
+    using movement_event_handler = 
+          std::function<void(util::value_ref<footprint>)>;
 
 public:
 
@@ -39,6 +45,18 @@ public:
 
     void turn_right();
 
+    boost::signals2::connection register_movement_handler(
+        movement_event_handler handler) const;
+
+private:
+
+    using movement_event = 
+          boost::signals2::signal<void(util::value_ref<footprint>)>;
+
+private:
+
+    void grow_or_cut_trail_tail();
+
 private:
 
     terrain const& habitat;
@@ -47,7 +65,9 @@ private:
 
     dynamics current_dynamics;
 
-    int growth;
+    int cells_to_grow;
+
+    mutable movement_event on_movement;
 
 };
 

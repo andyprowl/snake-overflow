@@ -16,7 +16,7 @@ snake::snake(terrain const& habitat,
              int const initial_length)
     : habitat{habitat}
     , current_dynamics{initial_footprint, maneuvre::move_forward}
-    , growth{0}
+    , cells_to_grow{0}
 {
     this->trail.push_back(current_dynamics);
 
@@ -54,19 +54,14 @@ void snake::advance()
 
     this->trail.push_back(current_dynamics);
 
-    if (this->growth > 0)
-    {
-        this->growth--;
-    }
-    else
-    {
-        this->trail.pop_front();
-    }
+    grow_or_cut_trail_tail();
+
+    this->on_movement(step);
 }
 
 void snake::grow(int const size)
 {
-    this->growth += size;
+    this->cells_to_grow += size;
 }
 
 void snake::turn_left()
@@ -89,6 +84,24 @@ void snake::turn_right()
     this->current_dynamics.step.profile = new_profile;
 
     this->trail.back().action = maneuvre::turn_right;
+}
+
+boost::signals2::connection snake::register_movement_handler(
+    movement_event_handler handler) const
+{
+    return this->on_movement.connect(handler);
+}
+
+void snake::grow_or_cut_trail_tail()
+{
+    if (this->cells_to_grow > 0)
+    {
+        this->cells_to_grow--;
+    }
+    else
+    {
+        this->trail.pop_front();
+    }
 }
 
 }
