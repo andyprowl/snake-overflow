@@ -11,6 +11,7 @@ game::game(std::unique_ptr<terrain>&& habitat, std::unique_ptr<snake>&& hero)
     , hero{std::move(hero)}
     , score{0}
 {
+    this->collider = std::make_unique<collision_handler>(*this);
 }
 
 terrain& game::get_terrain() const

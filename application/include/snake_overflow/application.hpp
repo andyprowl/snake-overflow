@@ -81,11 +81,15 @@ private:
 
     void calculate_current_fps();
 
-    void draw_pause_text();
+    void draw_pause_text() const;
 
     void draw_fps_text() const;
 
+    void draw_score_text() const;
+
     std::string get_current_fps_text() const;
+
+    std::string get_score_text() const;
 
     void turn_snake_left() const;
 
@@ -124,6 +128,8 @@ private:
     cinder::Font fps_text_font;
 
     cinder::Font pause_text_font;
+
+    cinder::Font score_text_font;
 
     std::unordered_map<int, std::function<void()>> keyboard_commands;
 

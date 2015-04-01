@@ -1,5 +1,6 @@
 #pragma once
 
+#include "snake_overflow/collision_handler.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
 
@@ -26,6 +27,8 @@ private:
     std::unique_ptr<terrain> habitat;
     
     std::unique_ptr<snake> hero;
+
+    std::unique_ptr<collision_handler> collider;
 
     int score;
 

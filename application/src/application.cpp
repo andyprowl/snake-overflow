@@ -170,11 +170,22 @@ void application::spawn_items()
 
     auto const picker = random_item_position_picker{habitat};
 
-    for (auto i = 0; i < 30; ++i)
+    auto num_of_spawned_items = 0;
+    while (num_of_spawned_items < 30)
     {
-        auto const pos = picker.pick_item_position();
+        try
+        {
+            auto const pos = picker.pick_item_position();
 
-        habitat.add_item(std::make_unique<fruit>(pos, *this->current_game, 5));
+            auto i = std::make_unique<fruit>(pos, *this->current_game, 5);
+
+            habitat.add_item(std::move(i));
+
+            ++num_of_spawned_items;
+        }
+        catch (std::exception const&)
+        {
+        }
     }
 }
 
@@ -253,6 +264,8 @@ void application::create_fonts()
     this->fps_text_font = cinder::Font{"Arial", 25.0};
 
     this->pause_text_font = cinder::Font{"Arial", 100.0};
+
+    this->score_text_font = cinder::Font{"Arial", 50.0};
 }
 
 void application::setup_keyboard_commands()
@@ -322,9 +335,11 @@ void application::draw_frame()
     {
         draw_fps_text();
     }
+
+    draw_score_text();
 }
 
-void application::draw_pause_text()
+void application::draw_pause_text() const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -332,10 +347,11 @@ void application::draw_pause_text()
 
     auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
 
-    auto const text = "[PAUSED]";
+    auto const text = "PAUSED";
     
-    auto const origin = cinder::Vec2f{getWindowBounds().getLR().y - 135.f, 
-                                      10.f};
+    auto const right_border = getWindowBounds().getLR().x;
+
+    auto const origin = cinder::Vec2f{right_border - 345.f, 10.f};
 
     cinder::gl::drawString(text, origin, color, this->pause_text_font);
 
@@ -353,6 +369,25 @@ void application::draw_fps_text() const
     auto const text = get_current_fps_text();
 
     cinder::gl::drawString(text, {10., 10.}, color, this->fps_text_font);
+
+    cinder::gl::disableAlphaBlending();
+}
+
+void application::draw_score_text() const
+{
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(getWindowSize());
+
+    auto const color = cinder::ColorA{0.f, 1.f, 0.f, 1.f};
+
+    auto const text = get_score_text();
+
+    auto const bottom_border = static_cast<float>(getWindowBounds().getLR().y);
+
+    auto const origin = cinder::Vec2f{10.f, bottom_border - 50.f};
+
+    cinder::gl::drawString(text, origin, color, this->score_text_font);
 
     cinder::gl::disableAlphaBlending();
 }
@@ -377,6 +412,11 @@ void application::calculate_current_fps()
 std::string application::get_current_fps_text() const
 {
     return "FPS: " + std::to_string(this->current_fps);
+}
+
+std::string application::get_score_text() const
+{
+    return "Score: " + std::to_string(this->current_game->get_score());
 }
 
 void application::turn_snake_left() const
