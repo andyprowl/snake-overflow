@@ -34,7 +34,7 @@ protected:
 
 TEST_THAT(CollisionHandler,
      WHAT(InternalEventHandlingLogic),
-     WHEN(WhenTheSnakeCollidesWithAnItem),
+     WHEN(WhenTheHeadOfTheSnakeCollidesWithAnItem),
      THEN(LetsTheItemBePickedByTheSnake))
 {
     auto i = make_item({{0, 0, 4}, block_face::front});
@@ -48,6 +48,32 @@ TEST_THAT(CollisionHandler,
     s.advance();
 
     EXPECT_THROW(s.advance(), item_picked_exception);
+}
+
+TEST_THAT(CollisionHandler,
+     WHAT(InternalEventHandlingLogic),
+     WHEN(WhenTheHeadOfTheSnakeCollidesWithAPartOfItsBody),
+     THEN(TerminatesTheGame))
+{
+    auto& s = get_snake();
+
+    s.grow(5);
+
+    s.turn_right();
+
+    s.advance();
+
+    s.turn_right();
+
+    s.advance();
+
+    s.turn_right();
+
+    s.advance();
+
+    auto& g = get_game();
+
+    EXPECT_TRUE(g.is_game_over());
 }
 
 } }

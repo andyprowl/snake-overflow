@@ -499,12 +499,12 @@ TEST_THAT(Snake,
     auto const trail = this->s->get_trail();
     ASSERT_THAT(trail.size(), Eq(6u));
 
-    EXPECT_THAT(trail[0].action, Eq(maneuvre::move_forward));
-    EXPECT_THAT(trail[1].action, Eq(maneuvre::move_forward));
-    EXPECT_THAT(trail[2].action, Eq(maneuvre::turn_right));
-    EXPECT_THAT(trail[3].action, Eq(maneuvre::move_forward));
-    EXPECT_THAT(trail[4].action, Eq(maneuvre::turn_right));
-    EXPECT_THAT(trail[5].action, Eq(maneuvre::move_forward));
+    EXPECT_THAT(trail[0].action, Eq(maneuvre::straight_move));
+    EXPECT_THAT(trail[1].action, Eq(maneuvre::straight_move));
+    EXPECT_THAT(trail[2].action, Eq(maneuvre::right_turn));
+    EXPECT_THAT(trail[3].action, Eq(maneuvre::straight_move));
+    EXPECT_THAT(trail[4].action, Eq(maneuvre::right_turn));
+    EXPECT_THAT(trail[5].action, Eq(maneuvre::straight_move));
 }
 
 TEST_THAT(Snake,
@@ -538,11 +538,9 @@ TEST_THAT(Snake,
      WHEN(GivenAPositionThatTheSnakeOccupies),
      THEN(ReturnsTrue))
 {
-    EXPECT_TRUE(this->s->occupies_position({{0, 0, 0}, block_face::front}));
+    EXPECT_TRUE(this->s->is_position_in_tail({{0, 0, 0}, block_face::front}));
 
-    EXPECT_TRUE(this->s->occupies_position({{0, 0, 1}, block_face::front}));
-
-    EXPECT_TRUE(this->s->occupies_position({{0, 0, 2}, block_face::front}));
+    EXPECT_TRUE(this->s->is_position_in_tail({{0, 0, 1}, block_face::front}));
 }
 
 TEST_THAT(Snake,
@@ -550,11 +548,11 @@ TEST_THAT(Snake,
      WHEN(GivenAPositionThatTheSnakeDoesNotOccupy),
      THEN(ReturnsFalse))
 {
-    EXPECT_FALSE(this->s->occupies_position({{0, 0, 3}, block_face::front}));
+    EXPECT_FALSE(this->s->is_position_in_tail({{0, 0, 3}, block_face::front}));
 
-    EXPECT_FALSE(this->s->occupies_position({{1, 0, 1}, block_face::front}));
+    EXPECT_FALSE(this->s->is_position_in_tail({{1, 0, 1}, block_face::front}));
 
-    EXPECT_FALSE(this->s->occupies_position({{0, 0, 0}, block_face::bottom}));
+    EXPECT_FALSE(this->s->is_position_in_tail({{0, 0, 0}, block_face::bottom}));
 }
 
 } }

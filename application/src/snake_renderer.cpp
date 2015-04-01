@@ -50,7 +50,7 @@ bool snake_renderer::is_trail_winding_around_edge(
 {
     if (i == trail.size() - 1) return false;
 
-    return ((trail[i].action ==  maneuvre::move_forward) &&
+    return ((trail[i].action ==  maneuvre::straight_move) &&
             (trail[i].step.profile.face == trail[i + 1].step.profile.face));
 }
 
@@ -142,17 +142,17 @@ void snake_renderer::draw_inner_part(util::value_ref<dynamics> d,
 {
     switch (d.action)
     {
-        case maneuvre::move_forward:
+        case maneuvre::straight_move:
         {
             return draw_inner_part_on_forward_movement(is_edge_winding);
         }
 
-        case maneuvre::turn_left:
+        case maneuvre::left_turn:
         {
             return draw_inner_part_on_left_turn(d);
         }
 
-        case maneuvre::turn_right:
+        case maneuvre::right_turn:
         {
             return draw_inner_part_on_right_turn(d);
         }

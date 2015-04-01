@@ -6,6 +6,10 @@
 
 namespace snake_overflow
 {
+
+class game_over_exception : public virtual std::exception
+{
+};
     
 class game
 {
@@ -22,6 +26,10 @@ public:
 
     void add_points(int points);
 
+    bool is_game_over() const;
+
+    void set_game_over();
+
 private:
 
     std::unique_ptr<terrain> habitat;
@@ -31,6 +39,8 @@ private:
     std::unique_ptr<collision_handler> collider;
 
     int score;
+
+    bool is_over;
 
 };
 

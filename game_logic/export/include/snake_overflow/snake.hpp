@@ -33,7 +33,7 @@ public:
 
     canonical_direction get_direction() const;
     
-    bool occupies_position(util::value_ref<position> pos) const;
+    bool is_position_in_tail(util::value_ref<position> pos) const;
 
     int get_length() const;
 
@@ -55,7 +55,7 @@ private:
 
 private:
 
-    void grow_or_cut_trail_tail();
+    void grow_or_cut_last_tail_part();
 
 private:
 

@@ -63,4 +63,32 @@ TEST_THAT(Game,
     EXPECT_THAT(this->g->get_score(), Eq(0));
 }
 
+TEST_THAT(Game,
+     WHAT(AddPoints),
+     WHEN(WhenTheGameIsOver),
+     THEN(Throws))
+{
+    this->g->set_game_over();
+
+    EXPECT_THROW(this->g->add_points(3), game_over_exception);
+}
+
+TEST_THAT(Game,
+     WHAT(IsOver),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(ReturnsFalse))
+{
+    EXPECT_FALSE(this->g->is_game_over());
+}
+
+TEST_THAT(Game,
+     WHAT(SetGameOver),
+     WHEN(Always),
+     THEN(SetsTheGameOverFlag))
+{
+    this->g->set_game_over();
+
+    EXPECT_TRUE(g->is_game_over());
+}
+
 } }

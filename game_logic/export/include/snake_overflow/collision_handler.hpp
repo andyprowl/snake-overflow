@@ -25,6 +25,10 @@ private:
 
     void on_snake_movement(snake& s, util::value_ref<position> pos) const;
 
+    void handle_item_collision(snake& s, util::value_ref<position> pos) const;
+
+    void handle_self_collision(snake& s, util::value_ref<position> pos) const;
+
 private:
 
     game& parent_game;

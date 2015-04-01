@@ -50,7 +50,9 @@ void application::prepareSettings(Settings* const settings)
 
 void application::update()
 {
-    if ((getElapsedFrames() % 3 == 0) && !(this->paused))
+    auto const game_over = this->current_game->is_game_over();
+
+    if ((getElapsedFrames() % 3 == 0) && !(this->paused) && !game_over)
     {
         auto& s = this->current_game->get_snake();
 
@@ -110,7 +112,7 @@ void application::create_game()
                                         {block_face::front, 
                                         canonical_direction::positive_z()}};
 
-    auto s = std::make_unique<snake>(*habitat, initial_step, 35);
+    auto s = std::make_unique<snake>(*habitat, initial_step, 3);
 
     this->current_game = std::make_unique<game>(std::move(habitat), 
                                                 std::move(s));
@@ -266,6 +268,8 @@ void application::create_fonts()
     this->pause_text_font = cinder::Font{"Arial", 100.0};
 
     this->score_text_font = cinder::Font{"Arial", 50.0};
+
+    this->game_over_text_font = cinder::Font{"Arial", 150.0};
 }
 
 void application::setup_keyboard_commands()
@@ -337,6 +341,11 @@ void application::draw_frame()
     }
 
     draw_score_text();
+
+    if (this->current_game->is_game_over())
+    {
+        draw_game_over_text();
+    }
 }
 
 void application::draw_pause_text() const
@@ -388,6 +397,22 @@ void application::draw_score_text() const
     auto const origin = cinder::Vec2f{10.f, bottom_border - 50.f};
 
     cinder::gl::drawString(text, origin, color, this->score_text_font);
+
+    cinder::gl::disableAlphaBlending();
+}
+
+void application::draw_game_over_text() const
+{
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(getWindowSize());
+
+    auto const center = getWindowBounds().getCenter() - cinder::Vec2f{0.f, 50.f};
+
+    cinder::gl::drawStringCentered("GAME OVER", 
+                                   center, 
+                                   cinder::ColorA{1.f, 0.f, 0.f, 1.f}, 
+                                   this->game_over_text_font);
 
     cinder::gl::disableAlphaBlending();
 }
