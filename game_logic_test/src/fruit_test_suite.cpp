@@ -1,56 +1,46 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/fruit.hpp"
-#include "snake_overflow/snake.hpp"
-#include "snake_overflow/terrain.hpp"
-#include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/testing/game_fixture.hpp"
 #include "util/repeat.hpp"
 #include <memory>
 
-namespace snake_overflow
+namespace snake_overflow { namespace testing
 {
 
 using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Ref;
-using ::testing::Test;
 
-class Fruit : public Test
+class Fruit : public GameFixture
 {
 
 protected:
 
     virtual void SetUp() override
     {
-        auto builder = terrain_builder{this->habitat};
+        GameFixture::SetUp();
 
-        builder.add_cube({0, 0, 0}, 10, "", {0, 0, 0, 255}, true);
+        auto& g = get_game();
 
-        this->hero = std::make_unique<snake>(this->habitat, 
-                                             this->initial_snake_footprint,
-                                             this->initial_snake_length);
+        auto i = std::make_unique<fruit>(this->placement, 
+                                         g,
+                                         this->nutrition_value);
 
-        this->f = std::make_unique<fruit>(this->placement, 
-                                          this->nutrition_value);
+        this->f = i.get();
+
+        auto& ground = get_terrain();
+
+        ground.add_item(std::move(i));
     }
 
 protected:
 
     int nutrition_value = 5;
 
-    terrain habitat;
-    
-    int initial_snake_length = 3;
+    position placement = {{1, 0, 2}, block_face::front};
 
-    footprint initial_snake_footprint = footprint{
-        {0, 0, 0}, 
-        {block_face::front, canonical_direction::positive_z()}};
-
-    std::unique_ptr<snake> hero;
-
-    position placement = {{3, 0, 4}, block_face::front};
-
-    std::unique_ptr<fruit> f;
+    fruit* f;
 
 };
 
@@ -75,14 +65,46 @@ TEST_THAT(Fruit,
      WHEN(GivenAPickingSnake),
      THEN(MakesTheSnakeGrowByItsNutritionValue))
 {
-    this->f->pick(*hero);
+    auto& s = get_snake();
 
-    util::repeat(10, [this] { this->hero->advance(); });
+    this->f->pick(s);
+
+    util::repeat(10, [&s] { s.advance(); });
 
     auto const expected_length = this->initial_snake_length + 
                                  this->nutrition_value;
 
-    EXPECT_THAT(this->hero->get_length(), Eq(expected_length));
+    EXPECT_THAT(s.get_length(), Eq(expected_length));
 }
 
+TEST_THAT(Fruit,
+     WHAT(Pick),
+     WHEN(Always),
+     THEN(RemovesTheItemFromTheTerrain))
+{
+    auto& s = get_snake();
+
+    this->f->pick(s);
+
+    auto& t = get_terrain();
+
+    auto const b = t.get_block(placement.location);
+    
+    EXPECT_THAT(b.items.size(), Eq(0u));
 }
+
+TEST_THAT(Fruit,
+     WHAT(Pick),
+     WHEN(Always),
+     THEN(AddsTheNutritionValueToTheCurrentScore))
+{
+    auto& s = get_snake();
+
+    this->f->pick(s);
+
+    auto& g = get_game();
+
+    EXPECT_THAT(g.get_score(), Eq(this->nutrition_value));
+}
+
+} }

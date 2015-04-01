@@ -1,6 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/game.hpp"
+#include <algorithm>
 
 namespace snake_overflow
 {
@@ -29,7 +30,7 @@ int game::get_score() const
 
 void game::add_points(int const points)
 {
-    this->score += points;
+    this->score = std::max(0, this->score + points);
 }
 
 }

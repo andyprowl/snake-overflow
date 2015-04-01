@@ -4,9 +4,9 @@
 #include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/canonical_direction.hpp"
 #include "snake_overflow/footprint.hpp"
-#include "snake_overflow/fruit.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/terrain.hpp"
+#include "snake_overflow/testing/fake_item.hpp"
 #include <memory>
 
 namespace snake_overflow { namespace testing
@@ -64,7 +64,7 @@ protected:
 
     std::unique_ptr<item> make_item(util::value_ref<position> placement)
     {
-        return std::make_unique<fruit>(placement, 5);
+        return std::make_unique<fake_item>(placement);
     }
 
 protected:

@@ -1,12 +1,13 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/application.hpp"
-#include "snake_overflow/terrain_builder.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
+#include "snake_overflow/terrain.hpp"
+#include "snake_overflow/terrain_builder.hpp"
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
 #include <unordered_set>
@@ -21,11 +22,11 @@ namespace snake_overflow
 
 void application::setup()
 {
-    create_habitat();
+    create_game();
+
+    populate_habitat();
 
     spawn_items();
-
-    create_snake();
 
     create_renderers();
     
@@ -34,6 +35,8 @@ void application::setup()
     setup_depth_buffer();
 
     create_fonts();
+
+    setup_keyboard_commands();
 
     this->last_frame_time = std::chrono::system_clock::now();
 }
@@ -49,7 +52,9 @@ void application::update()
 {
     if ((getElapsedFrames() % 3 == 0) && !(this->paused))
     {
-        this->hero->advance();
+        auto& s = this->current_game->get_snake();
+
+        s.advance();
     }
 }
 
@@ -70,47 +75,11 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    switch (e.getCode())
+    auto it = this->keyboard_commands.find(e.getCode());
+    
+    if (it != std::cend(this->keyboard_commands))
     {
-        case cinder::app::KeyEvent::KEY_a:
-        case cinder::app::KeyEvent::KEY_LEFT:
-        {
-            return this->hero->turn_left();
-        }
-
-        case cinder::app::KeyEvent::KEY_d:
-        case cinder::app::KeyEvent::KEY_RIGHT:
-        {
-            return this->hero->turn_right();
-        }
-
-        case cinder::app::KeyEvent::KEY_w:
-        {
-            this->camera_distance -= get_zoom_step();
-            return;
-        }
-
-        case cinder::app::KeyEvent::KEY_s:
-        {
-            this->camera_distance += get_zoom_step();
-            return;
-        }
-
-        case cinder::app::KeyEvent::KEY_p:
-        {
-            this->paused = !(this->paused);
-            return;
-        }
-
-        case cinder::app::KeyEvent::KEY_f:
-        {
-            this->show_fps = !(this->show_fps);
-            return;
-        }
-
-        default:
-        {
-        }
+        (it->second)();
     }
 }
 
@@ -129,9 +98,29 @@ void application::mouseWheel(cinder::app::MouseEvent const e)
     this->camera_distance -= e.getWheelIncrement() * get_zoom_step();
 }
 
-void application::create_habitat()
+void application::create_game()
 {
-    auto builder = terrain_builder{this->habitat};
+    auto habitat = std::make_unique<terrain>();
+
+    auto const snake_origin = point{0, 
+                                    -this->cube_side_length / 2, 
+                                    -this->cube_side_length / 2};
+
+    auto const initial_step = footprint{snake_origin, 
+                                        {block_face::front, 
+                                        canonical_direction::positive_z()}};
+
+    auto s = std::make_unique<snake>(*habitat, initial_step, 35);
+
+    this->current_game = std::make_unique<game>(std::move(habitat), 
+                                                std::move(s));
+}
+
+void application::populate_habitat()
+{
+    auto& habitat = this->current_game->get_terrain();
+
+    auto builder = terrain_builder{habitat};
 
     builder.add_centered_cube({0, 0, 0}, 
                               this->cube_side_length, 
@@ -177,26 +166,16 @@ void application::create_habitat()
 
 void application::spawn_items()
 {
-    auto picker = random_item_position_picker{this->habitat};
+    auto& habitat = this->current_game->get_terrain();
+
+    auto const picker = random_item_position_picker{habitat};
 
     for (auto i = 0; i < 30; ++i)
     {
         auto const pos = picker.pick_item_position();
-        this->habitat.add_item(std::make_unique<fruit>(pos, 5));
+
+        habitat.add_item(std::make_unique<fruit>(pos, *this->current_game, 5));
     }
-}
-
-void application::create_snake()
-{
-    auto const snake_origin = point{0, 
-                                    -this->cube_side_length / 2, 
-                                    -this->cube_side_length / 2};
-
-    auto const initial_step = footprint{snake_origin, 
-                                        {block_face::front, 
-                                        canonical_direction::positive_z()}};
-
-    this->hero = std::make_unique<snake>(this->habitat, initial_step, 35);
 }
 
 void application::create_texture_repository()
@@ -276,13 +255,61 @@ void application::create_fonts()
     this->pause_text_font = cinder::Font{"Arial", 100.0};
 }
 
+void application::setup_keyboard_commands()
+{
+    setup_action_commands();
+
+    setup_camera_commands();
+
+    setup_option_commands();
+}
+
+void application::setup_action_commands()
+{
+    using cinder::app::KeyEvent;
+
+    auto turn_left_cmd = [this] { turn_snake_left(); };
+    this->keyboard_commands[KeyEvent::KEY_a] = turn_left_cmd;
+    this->keyboard_commands[KeyEvent::KEY_LEFT] = turn_left_cmd;
+
+    auto turn_right_cmd = [this] { turn_snake_right(); };
+    this->keyboard_commands[KeyEvent::KEY_d] = turn_right_cmd;
+    this->keyboard_commands[KeyEvent::KEY_RIGHT] = turn_right_cmd;
+}
+
+void application::setup_camera_commands()
+{
+    using cinder::app::KeyEvent;
+    
+    auto zoom_in_cmd = [this] { this->camera_distance -= get_zoom_step(); };
+    this->keyboard_commands[KeyEvent::KEY_w] = zoom_in_cmd;
+
+    auto zoom_out_cmd = [this] { this->camera_distance += get_zoom_step(); };
+    this->keyboard_commands[KeyEvent::KEY_s] = zoom_out_cmd;
+}
+
+void application::setup_option_commands()
+{
+    using cinder::app::KeyEvent;
+
+    auto toggle_pause_cmd = [this] { this->paused = !(this->paused); };
+    this->keyboard_commands[KeyEvent::KEY_p] = toggle_pause_cmd;
+
+    auto toggle_show_fps_cmd = [this] { this->show_fps = !(this->show_fps); };
+    this->keyboard_commands[KeyEvent::KEY_f] = toggle_show_fps_cmd;
+}
+
 void application::draw_frame()
 {
-    this->hero_drawer->render(*this->hero);
+    auto& hero = this->current_game->get_snake();
 
-    this->item_drawer->render(this->habitat);
+    auto& habitat = this->current_game->get_terrain();
 
-    this->habitat_drawer->render(this->habitat);
+    this->hero_drawer->render(hero);
+
+    this->item_drawer->render(habitat);
+
+    this->habitat_drawer->render(habitat);
 
     if (this->paused)
     {
@@ -350,6 +377,20 @@ void application::calculate_current_fps()
 std::string application::get_current_fps_text() const
 {
     return "FPS: " + std::to_string(this->current_fps);
+}
+
+void application::turn_snake_left() const
+{
+    auto& s = this->current_game->get_snake();
+
+    return s.turn_left();
+}
+
+void application::turn_snake_right() const
+{
+    auto& s = this->current_game->get_snake();
+
+    return s.turn_right();
 }
 
 }

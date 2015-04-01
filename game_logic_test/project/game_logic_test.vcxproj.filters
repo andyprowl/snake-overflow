@@ -15,6 +15,9 @@
     <Filter Include="include\snake_overflow">
       <UniqueIdentifier>{6296b629-15b0-49ec-9a2b-e53540cf11fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\snake_overflow\testing">
+      <UniqueIdentifier>{18baba12-9ead-49c0-bc68-6e2c4c5b9c98}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\stdafx.cpp">
@@ -44,6 +47,9 @@
     <ClCompile Include="..\src\game_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game_fixture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -66,6 +72,12 @@
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\footprint_format.hpp">
       <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\testing\game_fixture.hpp">
+      <Filter>include\snake_overflow\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\testing\fake_item.hpp">
+      <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

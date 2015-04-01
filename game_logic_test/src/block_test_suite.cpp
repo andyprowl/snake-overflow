@@ -1,7 +1,8 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/block.hpp"
-#include "snake_overflow/fruit.hpp"
+#include "snake_overflow/terrain.hpp"
+#include "snake_overflow/testing/fake_item.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -11,6 +12,11 @@ using ::testing::Test;
 
 class Block : public Test
 {
+
+protected:
+
+    terrain ground;
+
 };
 
 TEST_THAT(Block,
@@ -122,13 +128,13 @@ TEST_THAT(Block,
 {
     auto b1 = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    fruit f1{{{0, 0, 0}, block_face::front}, 5};
+    fake_item f1{{{0, 0, 0}, block_face::front}};
 
     b1.items.push_back(&f1);
 
     auto b2 = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    fruit f2{{{0, 1, 0}, block_face::front}, 5};
+    fake_item f2{{{0, 1, 0}, block_face::front}};
 
     b2.items.push_back(&f2);
 

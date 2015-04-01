@@ -1,15 +1,17 @@
 #pragma once
 
+#include "snake_overflow/game.hpp"
 #include "snake_overflow/item_renderer.hpp"
-#include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_renderer.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "cinder/Arcball.h"
 #include "cinder/Camera.h"
 #include "cinder/params/Params.h"
 #include <chrono>
+#include <functional>
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace snake_overflow
 {
@@ -41,11 +43,11 @@ public:
 
 private:
 
-    void create_habitat();
+    void create_game();
 
     void spawn_items();
 
-    void create_snake();
+    void populate_habitat();
 
     void create_texture_repository();
 
@@ -65,6 +67,14 @@ private:
 
     void create_fonts();
 
+    void setup_keyboard_commands();
+
+    void setup_action_commands();
+
+    void setup_camera_commands();
+
+    void setup_option_commands();
+
     void draw_frame();
 
     int get_zoom_step() const;
@@ -77,12 +87,14 @@ private:
 
     std::string get_current_fps_text() const;
 
+    void turn_snake_left() const;
+
+    void turn_snake_right() const;
+
 private:
 
-    terrain habitat;
-
-    std::unique_ptr<snake> hero;
-    
+    std::unique_ptr<game> current_game;
+        
     int cube_side_length = 20;
 
     float block_size = 20.f;
@@ -112,6 +124,8 @@ private:
     cinder::Font fps_text_font;
 
     cinder::Font pause_text_font;
+
+    std::unordered_map<int, std::function<void()>> keyboard_commands;
 
 };
 
