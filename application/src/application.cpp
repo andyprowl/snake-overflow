@@ -309,7 +309,14 @@ void application::setup_option_commands()
 {
     using cinder::app::KeyEvent;
 
-    auto toggle_pause_cmd = [this] { this->paused = !(this->paused); };
+    auto toggle_pause_cmd = [this] 
+    { 
+        if (!this->current_game->is_game_over())
+        {
+            this->paused = !(this->paused); 
+        }
+    };
+
     this->keyboard_commands[KeyEvent::KEY_p] = toggle_pause_cmd;
 
     auto toggle_show_fps_cmd = [this] { this->show_fps = !(this->show_fps); };
