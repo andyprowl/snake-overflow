@@ -32,8 +32,8 @@ public:
     dynamics get_trail_head() const;
 
     canonical_direction get_direction() const;
-
-    canonical_direction get_trail_direction(int part_index) const;
+    
+    bool occupies_position(util::value_ref<position> pos) const;
 
     int get_length() const;
 

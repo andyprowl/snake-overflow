@@ -533,5 +533,28 @@ TEST_THAT(Snake,
     EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
 }
 
+TEST_THAT(Snake,
+     WHAT(OccupiesPosition),
+     WHEN(GivenAPositionThatTheSnakeOccupies),
+     THEN(ReturnsTrue))
+{
+    EXPECT_TRUE(this->s->occupies_position({{0, 0, 0}, block_face::front}));
+
+    EXPECT_TRUE(this->s->occupies_position({{0, 0, 1}, block_face::front}));
+
+    EXPECT_TRUE(this->s->occupies_position({{0, 0, 2}, block_face::front}));
+}
+
+TEST_THAT(Snake,
+     WHAT(OccupiesPosition),
+     WHEN(GivenAPositionThatTheSnakeDoesNotOccupy),
+     THEN(ReturnsFalse))
+{
+    EXPECT_FALSE(this->s->occupies_position({{0, 0, 3}, block_face::front}));
+
+    EXPECT_FALSE(this->s->occupies_position({{1, 0, 1}, block_face::front}));
+
+    EXPECT_FALSE(this->s->occupies_position({{0, 0, 0}, block_face::bottom}));
+}
 
 } }

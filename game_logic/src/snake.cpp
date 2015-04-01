@@ -40,6 +40,18 @@ canonical_direction snake::get_direction() const
     return get_footprint_direction(this->current_dynamics.step);
 }
 
+bool snake::occupies_position(util::value_ref<position> pos) const
+{
+    auto const it = std::find_if(std::cbegin(this->trail), 
+                                 std::cend(this->trail),
+                                 [&pos] (util::value_ref<dynamics> d)
+    {
+        return (get_footprint_position(d.step) == pos);
+    });
+
+    return (it != std::cend(this->trail));
+}
+
 int snake::get_length() const
 {
     return static_cast<int>(this->trail.size());

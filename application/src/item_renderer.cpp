@@ -103,7 +103,7 @@ void item_renderer::draw_fruit_shape() const
 
     cinder::gl::color(color);
 
-    auto const radius = this->block_size / 4;
+    auto const radius = this->block_size / 3;
 
     auto const binder = texture_binder{this->textures, "apple.jpg"};
 
