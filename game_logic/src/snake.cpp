@@ -30,6 +30,11 @@ std::vector<dynamics> snake::get_trail() const
     return {std::cbegin(this->trail), std::cend(this->trail)};
 }
 
+dynamics snake::get_trail_head() const
+{
+    return this->current_dynamics;
+}
+
 canonical_direction snake::get_direction() const
 {
     return get_footprint_direction(this->current_dynamics.step);

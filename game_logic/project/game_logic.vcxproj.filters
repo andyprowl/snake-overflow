@@ -71,6 +71,9 @@
     <ClCompile Include="..\src\fruit.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -143,6 +146,9 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\item.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\game.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

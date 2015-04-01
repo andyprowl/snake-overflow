@@ -23,6 +23,8 @@ public:
 
     std::vector<dynamics> get_trail() const;
 
+    dynamics get_trail_head() const;
+
     canonical_direction get_direction() const;
 
     canonical_direction get_trail_direction(int part_index) const;

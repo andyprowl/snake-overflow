@@ -15,7 +15,7 @@ struct footprint
 public:
 
     footprint(util::value_ref<point> location,
-               util::value_ref<movement_profile> profile);
+              util::value_ref<movement_profile> profile);
 
 public:
 

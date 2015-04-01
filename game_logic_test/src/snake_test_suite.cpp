@@ -98,6 +98,26 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(GetTrailHead),
+     WHEN(Always),
+     THEN(ReturnsTheDynamicsOfTheHeadOfTheSnake))
+{
+    auto const d1 = this->s->get_trail_head();
+
+    EXPECT_THAT(get_footprint_position(d1.step).location, 
+                Eq(point{0, 0, this->initial_length - 1}));
+
+    EXPECT_THAT(get_footprint_direction(d1.step), 
+                Eq(canonical_direction::positive_z()));
+
+    this->s->turn_right();
+    auto const d2 = this->s->get_trail_head();
+    EXPECT_THAT(get_footprint_direction(d2.step), 
+                Eq(canonical_direction::positive_x()));
+    
+}
+
+TEST_THAT(Snake,
      WHAT(Advance),
      WHEN(Always),
      THEN(ShiftsTheBodyOfTheSnakeOnePositionTowardsTheCurrentDirection))
