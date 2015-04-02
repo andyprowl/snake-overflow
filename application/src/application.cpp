@@ -2,6 +2,7 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/camera_view.hpp"
+#include "snake_overflow/hud_renderer.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
@@ -28,13 +29,11 @@ void application::setup()
 
     spawn_items();
 
-    create_world_renderer();
-    
+    create_renderers();
+
     setup_arcball_manipulator();
 
     setup_depth_buffer();
-
-    create_fonts();
 
     setup_keyboard_commands();
 
@@ -204,12 +203,24 @@ void application::spawn_items()
     }
 }
 
+void application::create_renderers()
+{
+    create_world_renderer();
+
+    create_hud_renderer();
+}
+
 void application::create_world_renderer()
 {
     this->textures = std::make_unique<texture_repository>();
 
     this->world_drawer = std::make_unique<world_renderer>(this->block_size,
                                                           *this->textures);
+}
+
+void application::create_hud_renderer()
+{
+    this->hud_drawer = std::make_unique<hud_renderer>();
 }
 
 void application::setup_perspective_camera()
@@ -270,19 +281,6 @@ void application::setup_depth_buffer()
     cinder::gl::enableDepthRead();
     
     cinder::gl::enableDepthWrite();
-}
-
-void application::create_fonts()
-{
-    this->fps_text_font = cinder::Font{"Arial", 25.0};
-
-    this->pause_text_font = cinder::Font{"Arial", 100.0};
-
-    this->score_text_font = cinder::Font{"Arial", 50.0};
-
-    this->game_over_text_font = cinder::Font{"Arial", 150.0};
-
-    this->auto_follow_text_font = cinder::Font{"Arial", 25.0};
 }
 
 void application::setup_keyboard_commands()
@@ -346,7 +344,11 @@ void application::setup_option_commands()
 
     this->keyboard_commands[KeyEvent::KEY_p] = toggle_pause_cmd;
 
-    auto toggle_show_fps_cmd = [this] { this->show_fps = !(this->show_fps); };
+    auto toggle_show_fps_cmd = [this] 
+    { 
+        this->hud_drawer->toogle_show_fps(); 
+    };
+
     this->keyboard_commands[KeyEvent::KEY_f] = toggle_show_fps_cmd;
 }
 
@@ -354,17 +356,13 @@ void application::draw_frame()
 {
     draw_world();
 
-    if (this->paused) { draw_pause_text(); }
-
     calculate_current_fps();
 
-    if (this->show_fps) { draw_fps_text(); }
-
-    draw_score_text();
-
-    if (this->current_game->is_game_over()) { draw_game_over_text(); }
-
-    if (this->auto_follow) { draw_auto_follow_text(); }
+    this->hud_drawer->render(this->current_fps,
+                             this->current_game->get_score(),
+                             this->paused,
+                             this->current_game->is_game_over(),
+                             this->auto_follow);
 }
 
 void application::draw_world()
@@ -374,97 +372,6 @@ void application::draw_world()
     auto& t = this->current_game->get_terrain();
 
     this->world_drawer->render(s, t);
-}
-
-void application::draw_pause_text() const
-{
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(getWindowSize());
-
-    auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
-
-    auto const text = "PAUSED";
-    
-    auto const right_border = getWindowBounds().getLR().x;
-
-    auto const origin = cinder::Vec2f{right_border - 345.f, 10.f};
-
-    cinder::gl::drawString(text, origin, color, this->pause_text_font);
-
-    cinder::gl::disableAlphaBlending();
-}
-
-void application::draw_fps_text() const
-{
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(getWindowSize());
-
-    auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
-
-    auto const text = get_current_fps_text();
-
-    cinder::gl::drawString(text, {10., 10.}, color, this->fps_text_font);
-
-    cinder::gl::disableAlphaBlending();
-}
-
-void application::draw_score_text() const
-{
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(getWindowSize());
-
-    auto const color = cinder::ColorA{0.f, 1.f, 0.f, 1.f};
-
-    auto const text = get_score_text();
-
-    auto const bottom_border = static_cast<float>(getWindowBounds().getLR().y);
-
-    auto const origin = cinder::Vec2f{10.f, bottom_border - 50.f};
-
-    cinder::gl::drawString(text, origin, color, this->score_text_font);
-
-    cinder::gl::disableAlphaBlending();
-}
-
-void application::draw_game_over_text() const
-{
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(getWindowSize());
-
-    auto const center = getWindowBounds().getCenter() - cinder::Vec2f{0.f, 50.f};
-
-    cinder::gl::drawStringCentered("GAME OVER", 
-                                   center, 
-                                   cinder::ColorA{1.f, 0.f, 0.f, 1.f}, 
-                                   this->game_over_text_font);
-
-    cinder::gl::disableAlphaBlending();
-}
-
-void application::draw_auto_follow_text() const
-{
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(getWindowSize());
-
-    auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
-
-    auto const text = "Auto-follow ON";
-
-    auto const bottom_border = getWindowBounds().getLR().y;
-
-    auto const right_border = getWindowBounds().getLR().x;
-
-    auto const origin = cinder::Vec2f{right_border - 150.f, 
-                                      bottom_border - 35.f};
-
-    cinder::gl::drawString(text, origin, color, this->auto_follow_text_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 int application::get_zoom_step() const
@@ -482,16 +389,6 @@ void application::calculate_current_fps()
     this->current_fps = 1000.f / elapsed.count();
 
     this->last_frame_time = time;
-}
-
-std::string application::get_current_fps_text() const
-{
-    return "FPS: " + std::to_string(this->current_fps);
-}
-
-std::string application::get_score_text() const
-{
-    return "Score: " + std::to_string(this->current_game->get_score());
 }
 
 void application::turn_snake_left() const

@@ -16,6 +16,7 @@ namespace snake_overflow
 
 struct camera_view;
 
+class hud_renderer;
 class random_item_position_picker;
 class snake;
 class world_renderer;
@@ -49,7 +50,11 @@ private:
 
     void populate_habitat(terrain& habitat);
         
+    void create_renderers();
+
     void create_world_renderer();
+
+    void create_hud_renderer();
 
     void setup_perspective_camera();
 
@@ -60,8 +65,6 @@ private:
     void setup_arcball_manipulator();
 
     void setup_depth_buffer();
-
-    void create_fonts();
 
     void setup_keyboard_commands();
 
@@ -79,20 +82,6 @@ private:
 
     void calculate_current_fps();
 
-    void draw_pause_text() const;
-
-    void draw_fps_text() const;
-
-    void draw_score_text() const;
-
-    void draw_game_over_text() const;
-
-    void draw_auto_follow_text() const;
-
-    std::string get_current_fps_text() const;
-
-    std::string get_score_text() const;
-
     void turn_snake_left() const;
 
     void turn_snake_right() const;
@@ -109,6 +98,8 @@ private:
 
     std::unique_ptr<world_renderer> world_drawer;
 
+    std::unique_ptr<hud_renderer> hud_drawer;
+
     cinder::CameraPersp camera;
     
     float camera_distance = 600.f;
@@ -117,23 +108,11 @@ private:
 
     bool paused = false;
 
-    bool show_fps = false;
-
     bool auto_follow = false;
 
     std::chrono::time_point<std::chrono::system_clock> last_frame_time;
 
     float current_fps = 60.0;
-
-    cinder::Font fps_text_font;
-
-    cinder::Font pause_text_font;
-
-    cinder::Font score_text_font;
-
-    cinder::Font game_over_text_font;
-
-    cinder::Font auto_follow_text_font;
 
     std::unordered_map<int, std::function<void()>> keyboard_commands;
 
