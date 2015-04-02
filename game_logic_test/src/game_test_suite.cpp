@@ -6,6 +6,7 @@ namespace snake_overflow { namespace testing
 {
 
 using ::testing::Eq;
+using ::testing::Ne;
 using ::testing::Ref;
 
 class Game : public CubeTerrainGameFixture
@@ -129,6 +130,36 @@ TEST_THAT(Game,
     this->g->set_game_over();
 
     EXPECT_THROW(this->g->toggle_game_pause(), game_over_exception);
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameIsPaused),
+     THEN(DoesNotAdvanceTheSnake))
+{
+    auto& s = get_snake();
+
+    auto const initial_footprint = s.get_trail_head().step;
+
+    this->g->toggle_game_pause();
+
+    this->g->update();
+
+    EXPECT_THAT(s.get_trail_head().step, Eq(initial_footprint));
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameIsNotPaused),
+     THEN(AdvancesTheSnake))
+{
+    auto& s = get_snake();
+
+    auto const initial_footprint = s.get_trail_head().step;
+
+    this->g->update();
+
+    EXPECT_THAT(s.get_trail_head().step, Ne(initial_footprint));
 }
 
 } }

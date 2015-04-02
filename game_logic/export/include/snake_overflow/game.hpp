@@ -22,6 +22,8 @@ public:
 
     snake& get_snake() const;
 
+    void update();
+
     int get_score() const;
 
     void add_points(int points);

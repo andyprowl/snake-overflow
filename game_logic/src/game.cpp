@@ -26,6 +26,14 @@ snake& game::get_snake() const
     return *(this->hero);
 }
 
+void game::update()
+{
+    if (!is_game_paused())
+    {
+        this->hero->advance();
+    }
+}
+
 int game::get_score() const
 {
     return this->score;

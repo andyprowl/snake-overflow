@@ -51,13 +51,9 @@ void application::update()
 {
     auto const game_over = this->current_game->is_game_over();
 
-    auto const paused = this->current_game->is_game_paused();
-
-    if ((getElapsedFrames() % 3 == 0) && !paused && !game_over)
+    if ((getElapsedFrames() % 3 == 0) && !game_over)
     {
-        auto& s = this->current_game->get_snake();
-
-        s.advance();
+        this->current_game->update();
     }
 }
 
@@ -81,7 +77,13 @@ void application::keyDown(cinder::app::KeyEvent const e)
     
     if (it != std::cend(this->keyboard_commands))
     {
-        (it->second)();
+        try
+        {
+            (it->second)();
+        }
+        catch (std::exception const&)
+        {
+        }
     }
 }
 
@@ -338,10 +340,7 @@ void application::setup_option_commands()
 
     auto toggle_pause_cmd = [this] 
     { 
-        if (!this->current_game->is_game_over())
-        {
-            this->current_game->toggle_game_pause();
-        }
+        this->current_game->toggle_game_pause();
     };
 
     this->keyboard_commands[KeyEvent::KEY_p] = toggle_pause_cmd;
