@@ -1,8 +1,6 @@
 #pragma once
 
 #include "snake_overflow/game.hpp"
-#include "snake_overflow/item_renderer.hpp"
-#include "snake_overflow/terrain_renderer.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "cinder/Arcball.h"
 #include "cinder/Camera.h"
@@ -20,7 +18,7 @@ struct camera_view;
 
 class random_item_position_picker;
 class snake;
-class snake_renderer;
+class world_renderer;
 
 class application : public cinder::app::AppNative 
 {
@@ -50,16 +48,8 @@ private:
     void spawn_items();
 
     void populate_habitat(terrain& habitat);
-
-    void create_texture_repository();
-
-    void create_renderers();
-
-    void create_snake_renderer();
-
-    void create_item_renderer();
-
-    void create_terrain_renderer();
+        
+    void create_world_renderer();
 
     void setup_perspective_camera();
 
@@ -83,9 +73,7 @@ private:
 
     void draw_frame();
 
-    void draw_snake();
-
-    void draw_terrain();
+    void draw_world();
 
     int get_zoom_step() const;
 
@@ -119,11 +107,7 @@ private:
 
     std::unique_ptr<texture_repository> textures;
 
-    std::unique_ptr<snake_renderer> hero_drawer;
-
-    std::unique_ptr<item_renderer> item_drawer;
-
-    std::unique_ptr<terrain_renderer> habitat_drawer;
+    std::unique_ptr<world_renderer> world_drawer;
 
     cinder::CameraPersp camera;
     

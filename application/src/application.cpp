@@ -9,6 +9,7 @@
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/world_renderer.hpp"
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
 #include <unordered_set>
@@ -27,7 +28,7 @@ void application::setup()
 
     spawn_items();
 
-    create_renderers();
+    create_world_renderer();
     
     setup_arcball_manipulator();
 
@@ -203,47 +204,12 @@ void application::spawn_items()
     }
 }
 
-void application::create_texture_repository()
+void application::create_world_renderer()
 {
     this->textures = std::make_unique<texture_repository>();
-}
 
-void application::create_renderers()
-{
-    create_texture_repository();
-    
-    create_snake_renderer();
-
-    create_item_renderer();
-
-    create_terrain_renderer();
-}
-
-void application::create_snake_renderer()
-{
-    float snake_width = this->block_size / 2;
-
-    float snake_height = snake_width;
-
-    auto const skin = this->textures->get_texture("snake7.jpg");
-
-    this->hero_drawer = std::make_unique<snake_renderer>(snake_width, 
-                                                         snake_height, 
-                                                         this->block_size,
-                                                         skin);
-}
-
-void application::create_item_renderer()
-{
-    this->item_drawer = std::make_unique<item_renderer>(this->block_size, 
-                                                        *this->textures);
-}
-
-void application::create_terrain_renderer()
-{
-    this->habitat_drawer = std::make_unique<terrain_renderer>(
-        this->block_size, 
-        *this->textures);
+    this->world_drawer = std::make_unique<world_renderer>(this->block_size,
+                                                          *this->textures);
 }
 
 void application::setup_perspective_camera()
@@ -386,9 +352,7 @@ void application::setup_option_commands()
 
 void application::draw_frame()
 {
-    draw_snake();
-
-    draw_terrain();
+    draw_world();
 
     if (this->paused) { draw_pause_text(); }
 
@@ -403,20 +367,13 @@ void application::draw_frame()
     if (this->auto_follow) { draw_auto_follow_text(); }
 }
 
-void application::draw_snake()
+void application::draw_world()
 {
-    auto& hero = this->current_game->get_snake();
+    auto& s = this->current_game->get_snake();
 
-    this->hero_drawer->render(hero);
-}
+    auto& t = this->current_game->get_terrain();
 
-void application::draw_terrain()
-{
-    auto& habitat = this->current_game->get_terrain();
-
-    this->item_drawer->render(habitat);
-
-    this->habitat_drawer->render(habitat);
+    this->world_drawer->render(s, t);
 }
 
 void application::draw_pause_text() const
