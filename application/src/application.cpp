@@ -1,6 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/application.hpp"
+#include "snake_overflow/camera_view.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
@@ -23,8 +24,6 @@ namespace snake_overflow
 void application::setup()
 {
     create_game();
-
-    populate_habitat();
 
     spawn_items();
 
@@ -64,11 +63,10 @@ void application::draw()
 {
     setup_perspective_camera();
 
-    cinder::gl::rotate(this->arcball.getQuat());
-
-    cinder::gl::rotate(cinder::Quatf{cinder::Vec3f::xAxis(), 1.57f});
-
-    cinder::gl::rotate(cinder::Quatf{cinder::Vec3f::yAxis(), 3.14f});
+    if (!this->auto_follow)
+    {
+        cinder::gl::rotate(this->arcball.getQuat());
+    }
     
     cinder::gl::clear({0.f, 0.f, 0.0f}, true);
     
@@ -87,12 +85,20 @@ void application::keyDown(cinder::app::KeyEvent const e)
 
 void application::mouseDown(cinder::app::MouseEvent const e)
 {
-    this->arcball.mouseDown(e.getPos());
+    auto const pos = e.getPos();
+
+    auto const bottom = static_cast<int>(getWindowBounds().getLR().y);
+
+    this->arcball.mouseDown({pos.x, bottom - pos.y});
 }
 
 void application::mouseDrag(cinder::app::MouseEvent const e)
 {
-    this->arcball.mouseDrag(e.getPos());
+    auto const pos = e.getPos();
+
+    auto const bottom = static_cast<int>(getWindowBounds().getLR().y);
+
+    this->arcball.mouseDrag({pos.x, bottom - pos.y});
 }
 
 void application::mouseWheel(cinder::app::MouseEvent const e)
@@ -104,24 +110,24 @@ void application::create_game()
 {
     auto habitat = std::make_unique<terrain>();
 
+    populate_habitat(*habitat);
+
     auto const snake_origin = point{0, 
-                                    -this->cube_side_length / 2, 
-                                    -this->cube_side_length / 2};
+                                    -5, 
+                                    this->cube_side_length / 2};
 
     auto const initial_step = footprint{snake_origin, 
-                                        {block_face::front, 
-                                        canonical_direction::positive_z()}};
+                                        {block_face::top, 
+                                        canonical_direction::positive_y()}};
 
-    auto s = std::make_unique<snake>(*habitat, initial_step, 3);
+    auto s = std::make_unique<snake>(*habitat, initial_step, 5);
 
     this->current_game = std::make_unique<game>(std::move(habitat), 
                                                 std::move(s));
 }
 
-void application::populate_habitat()
+void application::populate_habitat(terrain& habitat)
 {
-    auto& habitat = this->current_game->get_terrain();
-
     auto builder = terrain_builder{habitat};
 
     builder.add_centered_cube({0, 0, 0}, 
@@ -161,6 +167,12 @@ void application::populate_habitat()
 
     builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
                      7, 
+                     "stone3.jpg",
+                     {255, 255, 255, 255},
+                     true);
+
+    builder.add_cube({0, 0, this->cube_side_length / 2}, 
+                     1, 
                      "stone3.jpg",
                      {255, 255, 255, 255},
                      true);
@@ -236,13 +248,46 @@ void application::create_terrain_renderer()
 
 void application::setup_perspective_camera()
 {
-    auto const eye = cinder::Vec3f{0.f, 0.f, -this->camera_distance};
-    auto const center = cinder::Vec3f::zero();
-    auto const up = cinder::Vec3f::yAxis();
+    auto const view = this->auto_follow ? get_auto_follow_camera_view()
+                                        : get_camera_view();
 
     this->camera.setPerspective(60.0f, getWindowAspectRatio(), 5.f, 3000.f);
-    this->camera.lookAt(eye, center, up);
+    
+    this->camera.lookAt(view.eye, view.center, view.up);
+    
     cinder::gl::setMatrices(this->camera);
+}
+
+camera_view application::get_camera_view() const
+{
+    auto const eye = cinder::Vec3f{0.f, 0.f, this->camera_distance};
+
+    auto const center = cinder::Vec3f::zero();
+
+    auto const up = cinder::Vec3f::yAxis();
+
+    return {eye, center, up};
+}
+
+camera_view application::get_auto_follow_camera_view() const
+{
+    auto& s = this->current_game->get_snake();
+        
+    auto head = s.get_trail_head();
+
+    auto pos = get_footprint_position(head.step);
+
+    auto const normalized_eye = vec3f_from_point(pos.location).normalized();
+
+    auto const eye = normalized_eye * this->camera_distance;
+
+    auto const center = cinder::Vec3f::zero();
+
+    auto const n = normalized_eye.cross(cinder::Vec3f::xAxis());
+
+    auto const up = (n == cinder::Vec3f::zero()) ? normalized_eye : n;
+
+    return {eye, center, up};
 }
 
 void application::setup_arcball_manipulator()
@@ -270,6 +315,8 @@ void application::create_fonts()
     this->score_text_font = cinder::Font{"Arial", 50.0};
 
     this->game_over_text_font = cinder::Font{"Arial", 150.0};
+
+    this->auto_follow_text_font = cinder::Font{"Arial", 25.0};
 }
 
 void application::setup_keyboard_commands()
@@ -303,6 +350,20 @@ void application::setup_camera_commands()
 
     auto zoom_out_cmd = [this] { this->camera_distance += get_zoom_step(); };
     this->keyboard_commands[KeyEvent::KEY_s] = zoom_out_cmd;
+
+    this->keyboard_commands[KeyEvent::KEY_SPACE] = [this] 
+    {
+        this->auto_follow = !(this->auto_follow); 
+
+        if (!this->auto_follow) 
+        {
+            auto rot = this->camera.getOrientation();
+            
+            rot = cinder::Quatf{rot.getAxis(), -rot.getAngle()};
+
+            this->arcball.setQuat(rot);
+        }
+    };
 }
 
 void application::setup_option_commands()
@@ -325,34 +386,37 @@ void application::setup_option_commands()
 
 void application::draw_frame()
 {
+    draw_snake();
+
+    draw_terrain();
+
+    if (this->paused) { draw_pause_text(); }
+
+    calculate_current_fps();
+
+    if (this->show_fps) { draw_fps_text(); }
+
+    draw_score_text();
+
+    if (this->current_game->is_game_over()) { draw_game_over_text(); }
+
+    if (this->auto_follow) { draw_auto_follow_text(); }
+}
+
+void application::draw_snake()
+{
     auto& hero = this->current_game->get_snake();
 
-    auto& habitat = this->current_game->get_terrain();
-
     this->hero_drawer->render(hero);
+}
+
+void application::draw_terrain()
+{
+    auto& habitat = this->current_game->get_terrain();
 
     this->item_drawer->render(habitat);
 
     this->habitat_drawer->render(habitat);
-
-    if (this->paused)
-    {
-        draw_pause_text();
-    }
-
-    calculate_current_fps();
-
-    if (this->show_fps)
-    {
-        draw_fps_text();
-    }
-
-    draw_score_text();
-
-    if (this->current_game->is_game_over())
-    {
-        draw_game_over_text();
-    }
 }
 
 void application::draw_pause_text() const
@@ -420,6 +484,28 @@ void application::draw_game_over_text() const
                                    center, 
                                    cinder::ColorA{1.f, 0.f, 0.f, 1.f}, 
                                    this->game_over_text_font);
+
+    cinder::gl::disableAlphaBlending();
+}
+
+void application::draw_auto_follow_text() const
+{
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(getWindowSize());
+
+    auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
+
+    auto const text = "Auto-follow ON";
+
+    auto const bottom_border = getWindowBounds().getLR().y;
+
+    auto const right_border = getWindowBounds().getLR().x;
+
+    auto const origin = cinder::Vec2f{right_border - 150.f, 
+                                      bottom_border - 35.f};
+
+    cinder::gl::drawString(text, origin, color, this->auto_follow_text_font);
 
     cinder::gl::disableAlphaBlending();
 }

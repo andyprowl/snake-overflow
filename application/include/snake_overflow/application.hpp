@@ -16,6 +16,8 @@
 namespace snake_overflow
 {
 
+struct camera_view;
+
 class random_item_position_picker;
 class snake;
 class snake_renderer;
@@ -47,7 +49,7 @@ private:
 
     void spawn_items();
 
-    void populate_habitat();
+    void populate_habitat(terrain& habitat);
 
     void create_texture_repository();
 
@@ -60,6 +62,10 @@ private:
     void create_terrain_renderer();
 
     void setup_perspective_camera();
+
+    camera_view get_camera_view() const;
+
+    camera_view get_auto_follow_camera_view() const;
 
     void setup_arcball_manipulator();
 
@@ -77,6 +83,10 @@ private:
 
     void draw_frame();
 
+    void draw_snake();
+
+    void draw_terrain();
+
     int get_zoom_step() const;
 
     void calculate_current_fps();
@@ -88,6 +98,8 @@ private:
     void draw_score_text() const;
 
     void draw_game_over_text() const;
+
+    void draw_auto_follow_text() const;
 
     std::string get_current_fps_text() const;
 
@@ -115,13 +127,15 @@ private:
 
     cinder::CameraPersp camera;
     
-    float camera_distance = 550.f;
+    float camera_distance = 600.f;
 
     cinder::Arcball arcball;
 
     bool paused = false;
 
     bool show_fps = false;
+
+    bool auto_follow = false;
 
     std::chrono::time_point<std::chrono::system_clock> last_frame_time;
 
@@ -134,6 +148,8 @@ private:
     cinder::Font score_text_font;
 
     cinder::Font game_over_text_font;
+
+    cinder::Font auto_follow_text_font;
 
     std::unordered_map<int, std::function<void()>> keyboard_commands;
 
