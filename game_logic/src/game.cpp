@@ -15,6 +15,7 @@ game::game(std::unique_ptr<terrain>&& habitat,
     , score{0}
     , is_over{false}
     , is_paused{false}
+    , snake_advancement_interval{3}
     , terrain_filling_interval{100}
     , age{0}
 {
@@ -38,7 +39,10 @@ void game::update()
         return;
     }
 
-    this->hero->advance();
+    if (this->age % this->snake_advancement_interval == 0)
+    {
+        this->hero->advance();
+    }
 
     if (this->age % this->terrain_filling_interval == 0)
     {
@@ -80,6 +84,16 @@ void game::toggle_game_pause()
     throw_if_game_is_over();
 
     this->is_paused = !(this->is_paused);
+}
+
+int game::get_snake_advancement_interval() const
+{
+    return this->snake_advancement_interval;
+}
+
+void game::set_snake_advancement_interval(int const interval)
+{
+    this->snake_advancement_interval = interval;
 }
 
 int game::get_terrain_item_filling_interval() const

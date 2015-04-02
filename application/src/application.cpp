@@ -48,10 +48,7 @@ void application::setup()
 
 void application::update()
 {
-    if ((getElapsedFrames() % 3 == 0))
-    {
-        this->current_game->update();
-    }
+    this->current_game->update();
 }
 
 void application::draw()

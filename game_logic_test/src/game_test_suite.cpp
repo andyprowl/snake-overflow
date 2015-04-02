@@ -135,6 +135,26 @@ TEST_THAT(Game,
 }
 
 TEST_THAT(Game,
+     WHAT(GetSnakeAdvancementInterval),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(ReturnsANonNegativeValue))
+{
+    EXPECT_THAT(this->g->get_snake_advancement_interval(), Gt(0));
+}
+
+TEST_THAT(Game,
+     WHAT(GetSnakeAdvancementInterval),
+     WHEN(AfterSettingTheInterval),
+     THEN(ReturnsTheNewlySetValue))
+{
+    auto const new_interval = 1337;
+    
+    this->g->set_snake_advancement_interval(new_interval);
+
+    EXPECT_THAT(this->g->get_snake_advancement_interval(), Eq(new_interval));
+}
+
+TEST_THAT(Game,
      WHAT(Update),
      WHEN(WhenTheGameIsPaused),
      THEN(DoesNotAdvanceTheSnake))
@@ -153,7 +173,7 @@ TEST_THAT(Game,
 TEST_THAT(Game,
      WHAT(Update),
      WHEN(WhenTheGameIsOver),
-     THEN(DoesNothing))
+     THEN(DoesNotAdvanceTheSnake))
 {
     auto& s = get_snake();
 
@@ -168,16 +188,28 @@ TEST_THAT(Game,
 
 TEST_THAT(Game,
      WHAT(Update),
-     WHEN(WhenTheGameIsNotPausedAndNotOver),
+     WHEN(WhenCalledForTheNthTimeWithNEqualToTheSnakeAdvancementInterval),
      THEN(AdvancesTheSnake))
 {
     auto& s = get_snake();
 
     auto const initial_footprint = s.get_trail_head().step;
 
+    auto const interval = this->g->get_snake_advancement_interval();
+
     this->g->update();
 
-    EXPECT_THAT(s.get_trail_head().step, Ne(initial_footprint));
+    auto const next_footprint = s.get_trail_head().step;
+
+    EXPECT_THAT(next_footprint, Ne(initial_footprint));
+
+    util::repeat(interval - 1, [this] { this->g->update(); });
+
+    EXPECT_THAT(s.get_trail_head().step, Eq(next_footprint));
+
+    this->g->update();
+
+    EXPECT_THAT(s.get_trail_head().step, Ne(next_footprint));
 }
 
 TEST_THAT(Game,
@@ -220,6 +252,30 @@ TEST_THAT(Game,
     this->g->update();
 
     EXPECT_TRUE(this->terrain_filler->invoked);
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameIsPaused),
+     THEN(DoesNotFillTheTerrain))
+{
+    this->g->toggle_game_pause();
+
+    this->g->update();
+
+    EXPECT_FALSE(this->terrain_filler->invoked);
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameIsOver),
+     THEN(DoesNotFillTheTerrain))
+{
+    this->g->set_game_over();
+
+    this->g->update();
+
+    EXPECT_FALSE(this->terrain_filler->invoked);
 }
 
 } }

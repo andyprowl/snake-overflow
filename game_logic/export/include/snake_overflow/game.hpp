@@ -39,6 +39,10 @@ public:
 
     void toggle_game_pause();
 
+    int get_snake_advancement_interval() const;
+
+    void set_snake_advancement_interval(int interval);
+
     int get_terrain_item_filling_interval() const;
 
     void set_terrain_item_filling_interval(int interval);
@@ -62,6 +66,8 @@ private:
     bool is_over;
 
     bool is_paused;
+
+    int snake_advancement_interval;
 
     int terrain_filling_interval;
 
