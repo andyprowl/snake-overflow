@@ -31,6 +31,8 @@ private:
 
     void draw_fruit_shape() const;
 
+    void draw_diet_pill_shape() const;
+
 private:
 
     float block_size;

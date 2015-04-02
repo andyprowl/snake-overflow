@@ -2,6 +2,7 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/camera_manipulator.hpp"
+#include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
@@ -104,7 +105,12 @@ void application::create_game()
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
         return std::make_unique<fruit>(pos, *this->current_game, 5);
-    }, 100);
+    }, 90);
+
+    is->register_item_factory([this] (util::value_ref<position> pos)
+    {
+        return std::make_unique<diet_pill>(pos, *this->current_game, 5);
+    }, 10);
 
     auto f = std::make_unique<load_driven_terrain_item_filler>(std::move(is));
 

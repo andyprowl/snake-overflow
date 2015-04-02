@@ -59,6 +59,9 @@
     <ClCompile Include="..\src\terrain_item_filler_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\diet_pill_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">

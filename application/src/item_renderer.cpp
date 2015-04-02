@@ -1,5 +1,6 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/item.hpp"
 #include "snake_overflow/item_renderer.hpp"
@@ -93,8 +94,14 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     auto f = dynamic_cast<fruit const*>(&i);
     if (f != nullptr)
     {
-        draw_fruit_shape();
+        return draw_fruit_shape();
     }
+
+    auto dp = dynamic_cast<diet_pill const*>(&i);
+    if (dp != nullptr)
+    {
+        return draw_diet_pill_shape();
+    } 
 }
 
 void item_renderer::draw_fruit_shape() const
@@ -107,7 +114,20 @@ void item_renderer::draw_fruit_shape() const
 
     auto const binder = texture_binder{this->textures, "apple.jpg"};
 
-    cinder::gl::drawSphere(-cinder::Vec3f::zero(), radius, 24);
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
+}
+
+void item_renderer::draw_diet_pill_shape() const
+{
+    auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
+
+    cinder::gl::color(color);
+
+    auto const radius = this->block_size / 2;
+
+    auto const binder = texture_binder{this->textures, "pill2.jpg"};
+
+    cinder::gl::drawCube(cinder::Vec3f::zero(), {radius * 2, radius, radius});
 }
 
 }

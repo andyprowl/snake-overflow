@@ -41,6 +41,8 @@ public:
 
     void grow(int size);
 
+    void shrink(int size);
+
     void turn_left();
 
     void turn_right();
@@ -66,6 +68,8 @@ private:
     dynamics current_dynamics;
 
     int cells_to_grow;
+
+    int cells_to_shrink;
 
     mutable movement_event on_movement;
 

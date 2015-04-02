@@ -189,6 +189,23 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(Shrink),
+     WHEN(GivenASize),
+     THEN(MakesFollowingAdvancementsShrinkTheSnakeRatherThanShiftingIt))
+{
+    this->s->shrink(2);
+
+    util::repeat(4, [this] { this->s->advance(); });
+
+    auto const trail = this->s->get_trail();
+
+    ASSERT_THAT(trail.size(), Eq(1u));
+
+    EXPECT_THAT(get_footprint_position(trail[0].step), 
+                Eq(position{{0, 1, 4}, block_face::top}));
+}
+
+TEST_THAT(Snake,
      WHAT(TurnLeft),
      WHEN(WhenWalkingOnTheFrontSurface),
      THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
