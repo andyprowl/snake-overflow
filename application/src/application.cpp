@@ -5,6 +5,7 @@
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
+#include "snake_overflow/keyboard_input_handler.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
@@ -28,17 +29,15 @@ void application::prepareSettings(Settings* const settings)
 
 void application::setup()
 {
+    create_game();
+
     create_renderers();
 
     create_camera_manipulator();
 
+    create_keyboard_input_handler();
+
     setup_depth_buffer();
-
-    setup_keyboard_commands();
-
-    create_game();
-
-    spawn_items();
 
     this->last_frame_time = std::chrono::system_clock::now();
 }
@@ -62,18 +61,7 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    auto it = this->keyboard_commands.find(e.getCode());
-    
-    if (it != std::cend(this->keyboard_commands))
-    {
-        try
-        {
-            (it->second)();
-        }
-        catch (std::exception const&)
-        {
-        }
-    }
+    this->keyboard_handler->process_keyboard_input(e.getCode());
 }
 
 void application::mouseDown(cinder::app::MouseEvent const e)
@@ -93,9 +81,7 @@ void application::mouseWheel(cinder::app::MouseEvent const e)
 
 void application::create_game()
 {
-    auto habitat = std::make_unique<terrain>();
-
-    populate_habitat(*habitat);
+    auto habitat = create_terrain();
 
     auto const snake_origin = point{0, -5, this->cube_side_length / 2};
 
@@ -107,11 +93,15 @@ void application::create_game()
 
     this->current_game = std::make_unique<game>(std::move(habitat), 
                                                 std::move(s));
+
+    spawn_items(*this->current_game);
 }
 
-void application::populate_habitat(terrain& habitat)
+std::unique_ptr<terrain> application::create_terrain()
 {
-    auto builder = terrain_builder{habitat};
+    auto habitat = std::make_unique<terrain>();
+
+    auto builder = terrain_builder{*habitat};
 
     builder.add_centered_cube({0, 0, 0}, 
                               this->cube_side_length, 
@@ -159,11 +149,13 @@ void application::populate_habitat(terrain& habitat)
                      "stone3.jpg",
                      {255, 255, 255, 255},
                      true);
+
+    return std::move(habitat);
 }
 
-void application::spawn_items()
+void application::spawn_items(game const& g)
 {
-    auto& habitat = this->current_game->get_terrain();
+    auto& habitat = g.get_terrain();
 
     auto const picker = random_item_position_picker{habitat};
 
@@ -211,70 +203,19 @@ void application::create_camera_manipulator()
     this->camera_handler = std::make_unique<camera_manipulator>();
 }
 
+void application::create_keyboard_input_handler()
+{
+    this->keyboard_handler = std::make_unique<keyboard_input_handler>(
+        *this->current_game,
+        *this->hud_drawer,
+        *this->camera_handler);
+}
+
 void application::setup_depth_buffer()
 {
     cinder::gl::enableDepthRead();
     
     cinder::gl::enableDepthWrite();
-}
-
-void application::setup_keyboard_commands()
-{
-    setup_action_commands();
-
-    setup_camera_commands();
-
-    setup_option_commands();
-}
-
-void application::setup_action_commands()
-{
-    using cinder::app::KeyEvent;
-
-    auto turn_left_cmd = [this] { turn_snake_left(); };
-    
-    this->keyboard_commands[KeyEvent::KEY_a] = turn_left_cmd;
-    this->keyboard_commands[KeyEvent::KEY_LEFT] = turn_left_cmd;
-
-    auto turn_right_cmd = [this] { turn_snake_right(); };
-    
-    this->keyboard_commands[KeyEvent::KEY_d] = turn_right_cmd;
-    this->keyboard_commands[KeyEvent::KEY_RIGHT] = turn_right_cmd;
-}
-
-void application::setup_camera_commands()
-{
-    using cinder::app::KeyEvent;
-    
-    this->keyboard_commands[KeyEvent::KEY_w] = [this] 
-    { 
-        this->camera_handler->zoom(1.f);
-    };
-    
-    this->keyboard_commands[KeyEvent::KEY_s] = [this] 
-    { 
-        this->camera_handler->zoom(-1.f);
-    };
-
-    this->keyboard_commands[KeyEvent::KEY_SPACE] = [this] 
-    { 
-        this->camera_handler->toggle_auto_follow(); 
-    };
-}
-
-void application::setup_option_commands()
-{
-    using cinder::app::KeyEvent;
-
-    this->keyboard_commands[KeyEvent::KEY_p] = [this] 
-    { 
-        this->current_game->toggle_game_pause();
-    };
-
-    this->keyboard_commands[KeyEvent::KEY_f] = [this] 
-    { 
-        this->hud_drawer->toogle_show_fps(); 
-    };
 }
 
 void application::draw_frame()
@@ -311,20 +252,6 @@ void application::calculate_current_fps()
     this->current_fps = 1000.f / elapsed.count();
 
     this->last_frame_time = time;
-}
-
-void application::turn_snake_left() const
-{
-    auto& s = this->current_game->get_snake();
-
-    return s.turn_left();
-}
-
-void application::turn_snake_right() const
-{
-    auto& s = this->current_game->get_snake();
-
-    return s.turn_right();
 }
 
 }

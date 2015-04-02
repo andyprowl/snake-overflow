@@ -57,6 +57,9 @@
     <ClCompile Include="..\src\camera_manipulator.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\keyboard_input_handler.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -99,6 +102,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
