@@ -6,6 +6,8 @@
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
 #include "snake_overflow/keyboard_input_handler.hpp"
+#include "snake_overflow/load_driven_terrain_item_filler.hpp"
+#include "snake_overflow/probabilistic_item_spawner.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
@@ -88,7 +90,7 @@ void application::create_terrain_provider()
 
 void application::create_game()
 {
-    auto habitat = this->habitat_provider->create_terrain("");
+    auto t = this->habitat_provider->create_terrain("");
 
     auto const snake_origin = point{0, -5, 10};
 
@@ -96,37 +98,27 @@ void application::create_game()
                                         {block_face::top, 
                                         canonical_direction::positive_y()}};
 
-    auto s = std::make_unique<snake>(*habitat, initial_step, 5);
+    auto s = std::make_unique<snake>(*t, initial_step, 5);
 
-    this->current_game = std::make_unique<game>(std::move(habitat), 
-                                                std::move(s));
+    auto p = std::make_unique<random_item_position_picker>(*t);
 
-    spawn_items(*this->current_game);
-}
+    auto is = std::make_unique<probabilistic_item_spawner>(*t, std::move(p));
 
-void application::spawn_items(game const& g)
-{
-    auto& habitat = g.get_terrain();
-
-    auto const picker = random_item_position_picker{habitat};
-
-    auto num_of_spawned_items = 0;
-    while (num_of_spawned_items < 30)
+    is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        try
-        {
-            auto const pos = picker.pick_item_position();
+        return std::make_unique<fruit>(pos, *this->current_game, 5);
+    }, 100);
 
-            auto i = std::make_unique<fruit>(pos, *this->current_game, 5);
+    auto f = std::make_unique<load_driven_terrain_item_filler>(std::move(is));
 
-            habitat.add_item(std::move(i));
+    f->set_minimum_load_factor(0.005);
+    f->set_maximum_load_factor(0.01);
 
-            ++num_of_spawned_items;
-        }
-        catch (std::exception const&)
-        {
-        }
-    }
+    this->current_game = std::make_unique<game>(std::move(t), 
+                                                std::move(s),
+                                                std::move(f));
+
+    this->current_game->set_terrain_item_filling_interval(150);
 }
 
 void application::create_renderers()

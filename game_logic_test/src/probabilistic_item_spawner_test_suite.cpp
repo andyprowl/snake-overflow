@@ -24,18 +24,22 @@ protected:
 
     virtual void SetUp() override
     {
-        ON_CALL(position_picker, pick_item_position())
-                .WillByDefault(Invoke([this]
-        {
-            return this->random_picker->pick_item_position();
-        }));
-
         auto builder = terrain_builder{this->ground};
 
         builder.add_cube({0, 0, 0}, 5, "", rgba_color::white(), true);
 
-        this->spawner = std::make_unique<probabilistic_item_spawner>(this->ground, 
-                                                       this->position_picker);
+        auto pp = std::make_unique<item_position_picker_mock>();
+
+        ON_CALL(*pp, pick_item_position()).WillByDefault(Invoke([this]
+        {
+            return this->random_picker->pick_item_position();
+        }));
+
+        this->position_picker = pp.get();
+
+        this->spawner = std::make_unique<probabilistic_item_spawner>(
+            this->ground, 
+            std::move(pp));
 
         this->random_picker = std::make_unique<random_item_position_picker>(
             this->ground);
@@ -45,7 +49,7 @@ protected:
 
     terrain ground;
 
-    item_position_picker_mock position_picker;
+    item_position_picker_mock* position_picker = nullptr;
 
     std::unique_ptr<random_item_position_picker> random_picker;
 
@@ -116,7 +120,7 @@ TEST_THAT(ProbabilisticItemSpawner,
 
     this->spawner->register_item_factory(factory, 100);
 
-    EXPECT_CALL(this->position_picker, pick_item_position())
+    EXPECT_CALL(*this->position_picker, pick_item_position())
                 .WillOnce(Return(position{{0, 0, 0}, block_face::front}))
                 .WillOnce(Return(position{{0, 0, 0}, block_face::front}))
                 .WillOnce(Return(position{{0, 0, 0}, block_face::front}))

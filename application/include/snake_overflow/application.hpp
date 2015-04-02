@@ -40,8 +40,6 @@ private:
 
     void create_game();
 
-    void spawn_items(game const& g);
-
     void create_renderers();
 
     void create_world_renderer();

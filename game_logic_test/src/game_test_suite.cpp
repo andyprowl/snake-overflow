@@ -1,11 +1,13 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
+#include "util/repeat.hpp"
 
 namespace snake_overflow { namespace testing
 {
 
 using ::testing::Eq;
+using ::testing::Gt;
 using ::testing::Ne;
 using ::testing::Ref;
 
@@ -176,6 +178,48 @@ TEST_THAT(Game,
     this->g->update();
 
     EXPECT_THAT(s.get_trail_head().step, Ne(initial_footprint));
+}
+
+TEST_THAT(Game,
+     WHAT(GetTerrainItemFillingInterval),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(ReturnsANonNegativeValue))
+{
+    EXPECT_THAT(this->g->get_terrain_item_filling_interval(), Gt(0));
+}
+
+TEST_THAT(Game,
+     WHAT(GetTerrainItemFillingInterval),
+     WHEN(AfterSettingTheInterval),
+     THEN(ReturnsTheNewlySetValue))
+{
+    auto const new_interval = 1337;
+    
+    this->g->set_terrain_item_filling_interval(new_interval);
+
+    EXPECT_THAT(this->g->get_terrain_item_filling_interval(), Eq(new_interval));
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenCalledForTheNthTimeWithNEqualToTheItemGenerationInterval),
+     THEN(LetsTheTerrainItemFillerGenerateItems))
+{
+    auto const interval = this->g->get_terrain_item_filling_interval();
+
+    this->g->update();
+
+    EXPECT_TRUE(this->terrain_filler->invoked);
+
+    this->terrain_filler->invoked = false;
+
+    util::repeat(interval - 1, [this] { this->g->update(); });
+
+    EXPECT_FALSE(this->terrain_filler->invoked);
+
+    this->g->update();
+
+    EXPECT_TRUE(this->terrain_filler->invoked);
 }
 
 } }

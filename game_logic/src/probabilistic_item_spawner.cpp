@@ -12,9 +12,9 @@ namespace snake_overflow
     
 probabilistic_item_spawner::probabilistic_item_spawner(
     terrain& ground, 
-    item_position_picker& position_picker)
+    std::unique_ptr<item_position_picker>&& position_picker)
     : item_spawner{ground}
-    , position_picker{position_picker}
+    , position_picker{std::move(position_picker)}
 {
 }
 
@@ -71,7 +71,7 @@ int probabilistic_item_spawner::
 
 void probabilistic_item_spawner::spawn_new_item() const
 {
-    auto const pos = this->position_picker.pick_item_position();
+    auto const pos = this->position_picker->pick_item_position();
 
     auto const index = pick_random_factory_index();
 

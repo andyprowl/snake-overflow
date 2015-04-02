@@ -30,8 +30,9 @@ public:
 
 public:
 
-    probabilistic_item_spawner(terrain& ground, 
-                               item_position_picker& position_picker);
+    probabilistic_item_spawner(
+        terrain& ground, 
+        std::unique_ptr<item_position_picker>&& position_picker);
     
     virtual void spawn(int num_of_items_to_spawn) override;
 
@@ -49,7 +50,7 @@ private:
 
 private:
 
-    item_position_picker& position_picker;
+    std::unique_ptr<item_position_picker> position_picker;
 
     std::vector<item_factory> factories;
 

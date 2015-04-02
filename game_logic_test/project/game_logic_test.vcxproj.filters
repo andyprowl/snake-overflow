@@ -94,5 +94,8 @@
     <ClInclude Include="..\include\snake_overflow\testing\item_spawner_spy.hpp">
       <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\testing\terrain_item_filler_spy.hpp">
+      <Filter>include\snake_overflow\testing</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

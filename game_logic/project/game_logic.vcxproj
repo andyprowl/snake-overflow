@@ -105,6 +105,7 @@
     </ClCompile>
     <ClCompile Include="..\src\block_face.cpp" />
     <ClCompile Include="..\src\terrain.cpp" />
+    <ClCompile Include="..\src\load_driven_terrain_item_filler.cpp" />
     <ClCompile Include="..\src\terrain_item_filler.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +131,7 @@
     <ClInclude Include="..\export\include\snake_overflow\position.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\load_driven_terrain_item_filler.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_item_filler.hpp" />
     <ClInclude Include="..\export\include\util\contains.hpp" />
     <ClInclude Include="..\export\include\util\hashing.hpp" />

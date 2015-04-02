@@ -6,12 +6,17 @@
 namespace snake_overflow
 {
 
-game::game(std::unique_ptr<terrain>&& habitat, std::unique_ptr<snake>&& hero)
+game::game(std::unique_ptr<terrain>&& habitat, 
+           std::unique_ptr<snake>&& hero,
+           std::unique_ptr<terrain_item_filler>&& habitat_filler)
     : habitat{std::move(habitat)}
     , hero{std::move(hero)}
+    , habitat_filler{std::move(habitat_filler)}
     , score{0}
     , is_over{false}
     , is_paused{false}
+    , terrain_filling_interval{100}
+    , age{0}
 {
     this->collider = std::make_unique<collision_handler>(*this);
 }
@@ -28,10 +33,19 @@ snake& game::get_snake() const
 
 void game::update()
 {
-    if (!is_game_paused() && !is_game_over())
+    if (is_game_paused() || is_game_over())
     {
-        this->hero->advance();
+        return;
     }
+
+    this->hero->advance();
+
+    if (this->age % this->terrain_filling_interval == 0)
+    {
+        this->habitat_filler->fill_terrain();
+    }
+
+    ++(this->age);
 }
 
 int game::get_score() const
@@ -66,6 +80,16 @@ void game::toggle_game_pause()
     throw_if_game_is_over();
 
     this->is_paused = !(this->is_paused);
+}
+
+int game::get_terrain_item_filling_interval() const
+{
+    return this->terrain_filling_interval;
+}
+
+void game::set_terrain_item_filling_interval(int const interval)
+{
+    this->terrain_filling_interval = interval;
 }
 
 void game::throw_if_game_is_over() const

@@ -11,7 +11,13 @@ void CubeTerrainGameFixture::SetUp()
 
     auto s = create_snake(*t);
 
-    this->g = std::make_unique<game>(std::move(t), std::move(s));
+    this->spawner = std::make_unique<item_spawner_spy>(*t);
+
+    auto tf = std::make_unique<terrain_item_filler_spy>(*this->spawner);
+
+    this->terrain_filler = tf.get();
+
+    this->g = std::make_unique<game>(std::move(t), std::move(s), std::move(tf));
 }
 
 std::unique_ptr<terrain> CubeTerrainGameFixture::create_terrain()

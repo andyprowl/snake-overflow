@@ -3,6 +3,7 @@
 #include "snake_overflow/collision_handler.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
+#include "snake_overflow/terrain_item_filler.hpp"
 
 namespace snake_overflow
 {
@@ -16,7 +17,9 @@ class game
 
 public:
 
-    game(std::unique_ptr<terrain>&& habitat, std::unique_ptr<snake>&& hero);
+    game(std::unique_ptr<terrain>&& habitat, 
+         std::unique_ptr<snake>&& hero,
+         std::unique_ptr<terrain_item_filler>&& habitat_filler);
 
     terrain& get_terrain() const;
 
@@ -36,6 +39,10 @@ public:
 
     void toggle_game_pause();
 
+    int get_terrain_item_filling_interval() const;
+
+    void set_terrain_item_filling_interval(int interval);
+
 private:
 
     void throw_if_game_is_over() const;
@@ -46,6 +53,8 @@ private:
     
     std::unique_ptr<snake> hero;
 
+    std::unique_ptr<terrain_item_filler> habitat_filler;
+
     std::unique_ptr<collision_handler> collider;
 
     int score;
@@ -53,6 +62,10 @@ private:
     bool is_over;
 
     bool is_paused;
+
+    int terrain_filling_interval;
+
+    int age;
 
 };
 

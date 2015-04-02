@@ -4,6 +4,8 @@
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/testing/item_spawner_spy.hpp"
+#include "snake_overflow/testing/terrain_item_filler_spy.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -34,6 +36,10 @@ protected:
     int initial_snake_length = 3;
 
     int terrain_side_length = 7;
+
+    std::unique_ptr<item_spawner_spy> spawner;
+
+    terrain_item_filler_spy* terrain_filler = nullptr;
 
     std::unique_ptr<game> g;
 
