@@ -88,7 +88,47 @@ TEST_THAT(Game,
 {
     this->g->set_game_over();
 
-    EXPECT_TRUE(g->is_game_over());
+    EXPECT_TRUE(this->g->is_game_over());
+}
+
+TEST_THAT(Game,
+     WHAT(IsGamePaused),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(ReturnsFalse))
+{
+    EXPECT_FALSE(this->g->is_game_paused());
+}
+
+TEST_THAT(Game,
+     WHAT(ToogleGamePause),
+     WHEN(WhenTheGameIsNotPaused),
+     THEN(PausesTheGame))
+{
+    this->g->toggle_game_pause();
+
+    EXPECT_TRUE(this->g->is_game_paused());
+}
+
+TEST_THAT(Game,
+     WHAT(ToogleGamePause),
+     WHEN(WhenTheGameIsPaused),
+     THEN(UnpausesTheGame))
+{
+    this->g->toggle_game_pause();
+
+    this->g->toggle_game_pause();
+
+    EXPECT_FALSE(this->g->is_game_paused());
+}
+
+TEST_THAT(Game,
+     WHAT(ToggleGamePause),
+     WHEN(WhenTheGameIsOver),
+     THEN(Throws))
+{
+    this->g->set_game_over();
+
+    EXPECT_THROW(this->g->toggle_game_pause(), game_over_exception);
 }
 
 } }

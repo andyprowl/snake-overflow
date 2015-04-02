@@ -11,6 +11,7 @@ game::game(std::unique_ptr<terrain>&& habitat, std::unique_ptr<snake>&& hero)
     , hero{std::move(hero)}
     , score{0}
     , is_over{false}
+    , is_paused{false}
 {
     this->collider = std::make_unique<collision_handler>(*this);
 }
@@ -32,10 +33,7 @@ int game::get_score() const
 
 void game::add_points(int const points)
 {
-    if (is_game_over())
-    {
-        throw game_over_exception{};
-    }
+    throw_if_game_is_over();
 
     this->score = std::max(0, this->score + points);
 }
@@ -48,6 +46,26 @@ bool game::is_game_over() const
 void game::set_game_over()
 {
     this->is_over = true;
+}
+
+bool game::is_game_paused() const
+{
+    return this->is_paused;
+}
+
+void game::toggle_game_pause()
+{
+    throw_if_game_is_over();
+
+    this->is_paused = !(this->is_paused);
+}
+
+void game::throw_if_game_is_over() const
+{
+    if (is_game_over())
+    {
+        throw game_over_exception{};
+    }
 }
 
 }

@@ -51,7 +51,9 @@ void application::update()
 {
     auto const game_over = this->current_game->is_game_over();
 
-    if ((getElapsedFrames() % 3 == 0) && !(this->paused) && !game_over)
+    auto const paused = this->current_game->is_game_paused();
+
+    if ((getElapsedFrames() % 3 == 0) && !paused && !game_over)
     {
         auto& s = this->current_game->get_snake();
 
@@ -338,7 +340,7 @@ void application::setup_option_commands()
     { 
         if (!this->current_game->is_game_over())
         {
-            this->paused = !(this->paused); 
+            this->current_game->toggle_game_pause();
         }
     };
 
@@ -360,7 +362,7 @@ void application::draw_frame()
 
     this->hud_drawer->render(this->current_fps,
                              this->current_game->get_score(),
-                             this->paused,
+                             this->current_game->is_game_paused(),
                              this->current_game->is_game_over(),
                              this->auto_follow);
 }

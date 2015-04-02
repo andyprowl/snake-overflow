@@ -30,6 +30,14 @@ public:
 
     void set_game_over();
 
+    bool is_game_paused() const;
+
+    void toggle_game_pause();
+
+private:
+
+    void throw_if_game_is_over() const;
+
 private:
 
     std::unique_ptr<terrain> habitat;
@@ -41,6 +49,8 @@ private:
     int score;
 
     bool is_over;
+
+    bool is_paused;
 
 };
 

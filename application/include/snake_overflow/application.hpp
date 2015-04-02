@@ -90,23 +90,21 @@ private:
 
     std::unique_ptr<game> current_game;
         
-    int cube_side_length = 20;
-
-    float block_size = 20.f;
-
     std::unique_ptr<texture_repository> textures;
 
     std::unique_ptr<world_renderer> world_drawer;
 
     std::unique_ptr<hud_renderer> hud_drawer;
 
+    int cube_side_length = 20;
+
+    float block_size = 20.f;
+
     cinder::CameraPersp camera;
     
     float camera_distance = 600.f;
 
     cinder::Arcball arcball;
-
-    bool paused = false;
 
     bool auto_follow = false;
 
