@@ -1,30 +1,24 @@
 #pragma once
 
-#include "snake_overflow/game.hpp"
-#include "snake_overflow/texture_repository.hpp"
-#include "cinder/Arcball.h"
-#include "cinder/Camera.h"
-#include "cinder/params/Params.h"
 #include <chrono>
 #include <functional>
 #include <memory>
-#include <string>
 #include <unordered_map>
 
 namespace snake_overflow
 {
 
-struct camera_view;
-
+class camera_manipulator;
+class game;
 class hud_renderer;
-class random_item_position_picker;
-class snake;
+class terrain;
+class texture_repository;
 class world_renderer;
 
 class application : public cinder::app::AppNative 
 {
  
-public:
+private:
     
     virtual void prepareSettings(Settings* settings) override;
 
@@ -42,8 +36,6 @@ public:
 
     virtual void mouseWheel(cinder::app::MouseEvent e) override;
 
-private:
-
     void create_game();
 
     void spawn_items();
@@ -56,13 +48,7 @@ private:
 
     void create_hud_renderer();
 
-    void setup_perspective_camera();
-
-    camera_view get_camera_view() const;
-
-    camera_view get_auto_follow_camera_view() const;
-
-    void setup_arcball_manipulator();
+    void create_camera_manipulator();
 
     void setup_depth_buffer();
 
@@ -77,8 +63,6 @@ private:
     void draw_frame();
 
     void draw_world();
-
-    int get_zoom_step() const;
 
     void calculate_current_fps();
 
@@ -96,17 +80,11 @@ private:
 
     std::unique_ptr<hud_renderer> hud_drawer;
 
+    std::unique_ptr<camera_manipulator> camera_handler;
+
     int cube_side_length = 20;
 
     float block_size = 20.f;
-
-    cinder::CameraPersp camera;
-    
-    float camera_distance = 600.f;
-
-    cinder::Arcball arcball;
-
-    bool auto_follow = false;
 
     std::chrono::time_point<std::chrono::system_clock> last_frame_time;
 

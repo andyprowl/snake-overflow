@@ -1,7 +1,9 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/application.hpp"
+#include "snake_overflow/camera_manipulator.hpp"
 #include "snake_overflow/camera_view.hpp"
+#include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/point_conversion.hpp"
@@ -10,6 +12,7 @@
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/texture_repository.hpp"
 #include "snake_overflow/world_renderer.hpp"
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
@@ -23,23 +26,6 @@
 namespace snake_overflow
 {
 
-void application::setup()
-{
-    create_game();
-
-    spawn_items();
-
-    create_renderers();
-
-    setup_arcball_manipulator();
-
-    setup_depth_buffer();
-
-    setup_keyboard_commands();
-
-    this->last_frame_time = std::chrono::system_clock::now();
-}
-
 void application::prepareSettings(Settings* const settings)
 {
     settings->setWindowSize(1024, 768);
@@ -47,11 +33,26 @@ void application::prepareSettings(Settings* const settings)
     settings->setFrameRate(30);
 }
 
+void application::setup()
+{
+    create_renderers();
+
+    create_camera_manipulator();
+
+    setup_depth_buffer();
+
+    setup_keyboard_commands();
+
+    create_game();
+
+    spawn_items();
+
+    this->last_frame_time = std::chrono::system_clock::now();
+}
+
 void application::update()
 {
-    auto const game_over = this->current_game->is_game_over();
-
-    if ((getElapsedFrames() % 3 == 0) && !game_over)
+    if ((getElapsedFrames() % 3 == 0))
     {
         this->current_game->update();
     }
@@ -59,14 +60,9 @@ void application::update()
 
 void application::draw()
 {
-    setup_perspective_camera();
+    auto const& s = this->current_game->get_snake();
 
-    if (!this->auto_follow)
-    {
-        cinder::gl::rotate(this->arcball.getQuat());
-    }
-    
-    cinder::gl::clear({0.f, 0.f, 0.0f}, true);
+    this->camera_handler->set_camera_matrices(s);
     
     draw_frame();
 }
@@ -89,25 +85,17 @@ void application::keyDown(cinder::app::KeyEvent const e)
 
 void application::mouseDown(cinder::app::MouseEvent const e)
 {
-    auto const pos = e.getPos();
-
-    auto const bottom = static_cast<int>(getWindowBounds().getLR().y);
-
-    this->arcball.mouseDown({pos.x, bottom - pos.y});
+    this->camera_handler->begin_arcball_drag(e.getPos());
 }
 
 void application::mouseDrag(cinder::app::MouseEvent const e)
 {
-    auto const pos = e.getPos();
-
-    auto const bottom = static_cast<int>(getWindowBounds().getLR().y);
-
-    this->arcball.mouseDrag({pos.x, bottom - pos.y});
+    this->camera_handler->continue_arcball_drag(e.getPos());
 }
 
 void application::mouseWheel(cinder::app::MouseEvent const e)
 {
-    this->camera_distance -= e.getWheelIncrement() * get_zoom_step();
+    this->camera_handler->zoom(e.getWheelIncrement());
 }
 
 void application::create_game()
@@ -116,9 +104,7 @@ void application::create_game()
 
     populate_habitat(*habitat);
 
-    auto const snake_origin = point{0, 
-                                    -5, 
-                                    this->cube_side_length / 2};
+    auto const snake_origin = point{0, -5, this->cube_side_length / 2};
 
     auto const initial_step = footprint{snake_origin, 
                                         {block_face::top, 
@@ -227,57 +213,9 @@ void application::create_hud_renderer()
     this->hud_drawer = std::make_unique<hud_renderer>();
 }
 
-void application::setup_perspective_camera()
+void application::create_camera_manipulator()
 {
-    auto const view = this->auto_follow ? get_auto_follow_camera_view()
-                                        : get_camera_view();
-
-    this->camera.setPerspective(60.0f, getWindowAspectRatio(), 5.f, 3000.f);
-    
-    this->camera.lookAt(view.eye, view.center, view.up);
-    
-    cinder::gl::setMatrices(this->camera);
-}
-
-camera_view application::get_camera_view() const
-{
-    auto const eye = cinder::Vec3f{0.f, 0.f, this->camera_distance};
-
-    auto const center = cinder::Vec3f::zero();
-
-    auto const up = cinder::Vec3f::yAxis();
-
-    return {eye, center, up};
-}
-
-camera_view application::get_auto_follow_camera_view() const
-{
-    auto& s = this->current_game->get_snake();
-        
-    auto head = s.get_trail_head();
-
-    auto pos = get_footprint_position(head.step);
-
-    auto const normalized_eye = vec3f_from_point(pos.location).normalized();
-
-    auto const eye = normalized_eye * this->camera_distance;
-
-    auto const center = cinder::Vec3f::zero();
-
-    auto const n = normalized_eye.cross(cinder::Vec3f::xAxis());
-
-    auto const up = (n == cinder::Vec3f::zero()) ? normalized_eye : n;
-
-    return {eye, center, up};
-}
-
-void application::setup_arcball_manipulator()
-{
-    this->arcball.setWindowSize(getWindowSize());
-
-    this->arcball.setCenter(getWindowCenter());
-    
-    this->arcball.setRadius(150);
+    this->camera_handler = std::make_unique<camera_manipulator>();
 }
 
 void application::setup_depth_buffer()
@@ -301,10 +239,12 @@ void application::setup_action_commands()
     using cinder::app::KeyEvent;
 
     auto turn_left_cmd = [this] { turn_snake_left(); };
+    
     this->keyboard_commands[KeyEvent::KEY_a] = turn_left_cmd;
     this->keyboard_commands[KeyEvent::KEY_LEFT] = turn_left_cmd;
 
     auto turn_right_cmd = [this] { turn_snake_right(); };
+    
     this->keyboard_commands[KeyEvent::KEY_d] = turn_right_cmd;
     this->keyboard_commands[KeyEvent::KEY_RIGHT] = turn_right_cmd;
 }
@@ -313,24 +253,19 @@ void application::setup_camera_commands()
 {
     using cinder::app::KeyEvent;
     
-    auto zoom_in_cmd = [this] { this->camera_distance -= get_zoom_step(); };
-    this->keyboard_commands[KeyEvent::KEY_w] = zoom_in_cmd;
-
-    auto zoom_out_cmd = [this] { this->camera_distance += get_zoom_step(); };
-    this->keyboard_commands[KeyEvent::KEY_s] = zoom_out_cmd;
+    this->keyboard_commands[KeyEvent::KEY_w] = [this] 
+    { 
+        this->camera_handler->zoom(1.f);
+    };
+    
+    this->keyboard_commands[KeyEvent::KEY_s] = [this] 
+    { 
+        this->camera_handler->zoom(-1.f);
+    };
 
     this->keyboard_commands[KeyEvent::KEY_SPACE] = [this] 
-    {
-        this->auto_follow = !(this->auto_follow); 
-
-        if (!this->auto_follow) 
-        {
-            auto rot = this->camera.getOrientation();
-            
-            rot = cinder::Quatf{rot.getAxis(), -rot.getAngle()};
-
-            this->arcball.setQuat(rot);
-        }
+    { 
+        this->camera_handler->toggle_auto_follow(); 
     };
 }
 
@@ -338,23 +273,21 @@ void application::setup_option_commands()
 {
     using cinder::app::KeyEvent;
 
-    auto toggle_pause_cmd = [this] 
+    this->keyboard_commands[KeyEvent::KEY_p] = [this] 
     { 
         this->current_game->toggle_game_pause();
     };
 
-    this->keyboard_commands[KeyEvent::KEY_p] = toggle_pause_cmd;
-
-    auto toggle_show_fps_cmd = [this] 
+    this->keyboard_commands[KeyEvent::KEY_f] = [this] 
     { 
         this->hud_drawer->toogle_show_fps(); 
     };
-
-    this->keyboard_commands[KeyEvent::KEY_f] = toggle_show_fps_cmd;
 }
 
 void application::draw_frame()
 {
+    cinder::gl::clear({0.f, 0.f, 0.0f}, true);
+
     draw_world();
 
     calculate_current_fps();
@@ -363,7 +296,7 @@ void application::draw_frame()
                              this->current_game->get_score(),
                              this->current_game->is_game_paused(),
                              this->current_game->is_game_over(),
-                             this->auto_follow);
+                             this->camera_handler->is_auto_follow_on());
 }
 
 void application::draw_world()
@@ -373,11 +306,6 @@ void application::draw_world()
     auto& t = this->current_game->get_terrain();
 
     this->world_drawer->render(s, t);
-}
-
-int application::get_zoom_step() const
-{
-    return 20;
 }
 
 void application::calculate_current_fps()

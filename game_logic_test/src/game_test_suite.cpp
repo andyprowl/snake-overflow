@@ -150,7 +150,23 @@ TEST_THAT(Game,
 
 TEST_THAT(Game,
      WHAT(Update),
-     WHEN(WhenTheGameIsNotPaused),
+     WHEN(WhenTheGameIsOver),
+     THEN(DoesNothing))
+{
+    auto& s = get_snake();
+
+    auto const initial_footprint = s.get_trail_head().step;
+
+    this->g->set_game_over();
+
+    this->g->update();
+
+    EXPECT_THAT(s.get_trail_head().step, Eq(initial_footprint));
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameIsNotPausedAndNotOver),
      THEN(AdvancesTheSnake))
 {
     auto& s = get_snake();

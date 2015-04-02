@@ -54,6 +54,9 @@
     <ClCompile Include="..\src\hud_renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\camera_manipulator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -93,6 +96,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\hud_renderer.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

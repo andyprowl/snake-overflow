@@ -28,7 +28,7 @@ snake& game::get_snake() const
 
 void game::update()
 {
-    if (!is_game_paused())
+    if (!is_game_paused() && !is_game_over())
     {
         this->hero->advance();
     }

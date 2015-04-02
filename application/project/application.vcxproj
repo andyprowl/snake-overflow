@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\application.cpp" />
+    <ClCompile Include="..\src\camera_manipulator.cpp" />
     <ClCompile Include="..\src\camera_view.cpp" />
     <ClCompile Include="..\src\color_conversion.cpp" />
     <ClCompile Include="..\src\hud_renderer.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="..\include\resources.hpp" />
     <ClInclude Include="..\include\snake_overflow\application.hpp" />
+    <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_view.hpp" />
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\hud_renderer.hpp" />
