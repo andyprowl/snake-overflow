@@ -2,11 +2,9 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/camera_manipulator.hpp"
-#include "snake_overflow/camera_view.hpp"
+#include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
-#include "snake_overflow/position.hpp"
-#include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
@@ -17,11 +15,6 @@
 #include "cinder/ImageIo.h"
 #include "util/repeat.hpp"
 #include <unordered_set>
-
-
-#include "snake_overflow/fruit.hpp"
-#include <memory>
-
 
 namespace snake_overflow
 {
