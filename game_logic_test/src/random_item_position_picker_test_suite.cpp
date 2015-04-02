@@ -34,7 +34,8 @@ protected:
 
 };
 
-// This is more of an integration test, as it involves random behavior.
+// This is more of an integration test, since it relies on non-deterministic
+// behavior.
 TEST_THAT(RandomItemPositionPicker,
      WHAT(PickItemPosition),
      WHEN(Always),

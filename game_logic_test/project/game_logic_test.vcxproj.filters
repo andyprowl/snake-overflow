@@ -53,6 +53,12 @@
     <ClCompile Include="..\src\cube_terrain_game_fixture.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\probabilistic_item_spawner_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_item_filler_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -80,6 +86,12 @@
       <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\testing\cube_terrain_game_fixture.hpp">
+      <Filter>include\snake_overflow\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\testing\item_position_picker_mock.hpp">
+      <Filter>include\snake_overflow\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\testing\item_spawner_spy.hpp">
       <Filter>include\snake_overflow\testing</Filter>
     </ClInclude>
   </ItemGroup>

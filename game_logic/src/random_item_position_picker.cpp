@@ -11,13 +11,14 @@ namespace snake_overflow
 random_item_position_picker::random_item_position_picker(terrain& world)
     : world{world}
     , valid_positions(world.get_all_free_item_positions())
-    , normal_distribution{0, static_cast<int>(valid_positions.size())}
 {
 }
 
 position random_item_position_picker::pick_item_position() const
 {
-    auto const index = this->normal_distribution(this->random_generator);
+    auto const max_index = static_cast<int>(valid_positions.size()) - 1;
+
+    auto const index = this->random_generator.generate(0, max_index);
 
     return this->valid_positions[index];
 }

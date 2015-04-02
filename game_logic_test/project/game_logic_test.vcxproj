@@ -100,6 +100,8 @@
     <ClInclude Include="..\include\snake_overflow\position_format.hpp" />
     <ClInclude Include="..\include\snake_overflow\testing\fake_item.hpp" />
     <ClInclude Include="..\include\snake_overflow\testing\cube_terrain_game_fixture.hpp" />
+    <ClInclude Include="..\include\snake_overflow\testing\item_position_picker_mock.hpp" />
+    <ClInclude Include="..\include\snake_overflow\testing\item_spawner_spy.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
     <ClInclude Include="..\include\testing\test_naming.hpp" />
   </ItemGroup>
@@ -109,6 +111,7 @@
     <ClCompile Include="..\src\fruit_test_suite.cpp" />
     <ClCompile Include="..\src\cube_terrain_game_fixture.cpp" />
     <ClCompile Include="..\src\game_test_suite.cpp" />
+    <ClCompile Include="..\src\probabilistic_item_spawner_test_suite.cpp" />
     <ClCompile Include="..\src\random_item_position_picker_test_suite.cpp" />
     <ClCompile Include="..\src\terrain_builder_test_suite.cpp" />
     <ClCompile Include="..\src\main.cpp" />
@@ -117,6 +120,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\terrain_item_filler_test_suite.cpp" />
     <ClCompile Include="..\src\terrain_test_suite.cpp" />
   </ItemGroup>
   <ItemGroup>

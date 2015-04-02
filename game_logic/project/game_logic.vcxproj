@@ -86,6 +86,9 @@
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\fruit.cpp" />
     <ClCompile Include="..\src\game.cpp" />
+    <ClCompile Include="..\src\item_spawner.cpp" />
+    <ClCompile Include="..\src\probabilistic_item_spawner.cpp" />
+    <ClCompile Include="..\src\random_integer_generator.cpp" />
     <ClCompile Include="..\src\random_item_position_picker.cpp" />
     <ClCompile Include="..\src\rgba_color.cpp" />
     <ClCompile Include="..\src\terrain_builder.cpp" />
@@ -102,6 +105,7 @@
     </ClCompile>
     <ClCompile Include="..\src\block_face.cpp" />
     <ClCompile Include="..\src\terrain.cpp" />
+    <ClCompile Include="..\src\terrain_item_filler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\export\include\snake_overflow\block.hpp" />
@@ -113,6 +117,9 @@
     <ClInclude Include="..\export\include\snake_overflow\game.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item_position_picker.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\item_spawner.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\probabilistic_item_spawner.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\random_integer_generator.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\random_item_position_picker.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
@@ -123,6 +130,7 @@
     <ClInclude Include="..\export\include\snake_overflow\position.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\terrain_item_filler.hpp" />
     <ClInclude Include="..\export\include\util\contains.hpp" />
     <ClInclude Include="..\export\include\util\hashing.hpp" />
     <ClInclude Include="..\export\include\util\noexcept.hpp" />
