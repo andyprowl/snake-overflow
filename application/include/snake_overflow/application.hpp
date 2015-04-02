@@ -11,6 +11,7 @@ class game;
 class hud_renderer;
 class keyboard_input_handler;
 class terrain;
+class terrain_provider;
 class texture_repository;
 class world_renderer;
 
@@ -35,9 +36,9 @@ private:
 
     virtual void mouseWheel(cinder::app::MouseEvent e) override;
 
-    void create_game();
+    void create_terrain_provider();
 
-    std::unique_ptr<terrain> create_terrain();
+    void create_game();
 
     void spawn_items(game const& g);
 
@@ -63,6 +64,8 @@ private:
 
     std::unique_ptr<game> current_game;
         
+    std::unique_ptr<terrain_provider> habitat_provider;
+
     std::unique_ptr<texture_repository> textures;
 
     std::unique_ptr<world_renderer> world_drawer;
@@ -72,8 +75,6 @@ private:
     std::unique_ptr<camera_manipulator> camera_handler;
 
     std::unique_ptr<keyboard_input_handler> keyboard_handler;
-
-    int cube_side_length = 20;
 
     float block_size = 20.f;
 

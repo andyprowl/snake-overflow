@@ -10,7 +10,7 @@
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
-#include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/terrain_provider.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "snake_overflow/world_renderer.hpp"
 #include "cinder/ImageIo.h"
@@ -29,6 +29,8 @@ void application::prepareSettings(Settings* const settings)
 
 void application::setup()
 {
+    create_terrain_provider();
+
     create_game();
 
     create_renderers();
@@ -79,11 +81,16 @@ void application::mouseWheel(cinder::app::MouseEvent const e)
     this->camera_handler->zoom(e.getWheelIncrement());
 }
 
+void application::create_terrain_provider()
+{
+    this->habitat_provider = std::make_unique<terrain_provider>();
+}
+
 void application::create_game()
 {
-    auto habitat = create_terrain();
+    auto habitat = this->habitat_provider->create_terrain("");
 
-    auto const snake_origin = point{0, -5, this->cube_side_length / 2};
+    auto const snake_origin = point{0, -5, 10};
 
     auto const initial_step = footprint{snake_origin, 
                                         {block_face::top, 
@@ -95,62 +102,6 @@ void application::create_game()
                                                 std::move(s));
 
     spawn_items(*this->current_game);
-}
-
-std::unique_ptr<terrain> application::create_terrain()
-{
-    auto habitat = std::make_unique<terrain>();
-
-    auto builder = terrain_builder{*habitat};
-
-    builder.add_centered_cube({0, 0, 0}, 
-                              this->cube_side_length, 
-                              "grass4.jpg",
-                              {255, 255, 255, 255},
-                              true);
-
-    auto const pool_sizes = point{7, 9, 3};
-
-    auto const pool_origin = point{this->cube_side_length / 2,
-                                   this->cube_side_length / 2 - pool_sizes.y,
-                                   this->cube_side_length / 4};
-
-    builder.add_box(pool_origin,
-                    pool_sizes,
-                    "brick1.jpg",
-                    {255, 255, 255, 255},
-                    true);
-
-    builder.remove_box(pool_origin + point{1, 1, 1},
-                       pool_sizes - point{2, 2, 1});
-
-    builder.add_box(pool_origin + point{1, 1, 1}, 
-                    pool_sizes - point{2, 2, 1},
-                    "water4.jpg",
-                    {255, 255, 255, 100},
-                     false);
-
-    builder.add_box({-this->cube_side_length / 2, 
-                    -this->cube_side_length / 4, 
-                    this->cube_side_length / 4 + 4}, 
-                    {7, 6, 4}, 
-                    "lava5.jpg",
-                    {255, 255, 255, 255},
-                    true);
-
-    builder.add_cube({0, -this->cube_side_length / 2 - 7, 0}, 
-                     7, 
-                     "stone3.jpg",
-                     {255, 255, 255, 255},
-                     true);
-
-    builder.add_cube({0, 0, this->cube_side_length / 2}, 
-                     1, 
-                     "stone3.jpg",
-                     {255, 255, 255, 255},
-                     true);
-
-    return std::move(habitat);
 }
 
 void application::spawn_items(game const& g)

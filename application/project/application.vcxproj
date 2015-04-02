@@ -115,6 +115,7 @@
     <ClCompile Include="..\src\color_conversion.cpp" />
     <ClCompile Include="..\src\hud_renderer.cpp" />
     <ClCompile Include="..\src\keyboard_input_handler.cpp" />
+    <ClCompile Include="..\src\terrain_provider.cpp" />
     <ClCompile Include="..\src\world_renderer.cpp" />
     <ClCompile Include="..\src\item_renderer.cpp" />
     <ClCompile Include="..\src\point_conversion.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
     <ClInclude Include="..\include\snake_overflow\hud_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp" />
+    <ClInclude Include="..\include\snake_overflow\terrain_provider.hpp" />
     <ClInclude Include="..\include\snake_overflow\world_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\item_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\point_conversion.hpp" />

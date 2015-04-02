@@ -60,6 +60,9 @@
     <ClCompile Include="..\src\keyboard_input_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\terrain_provider.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -105,6 +108,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\terrain_provider.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
