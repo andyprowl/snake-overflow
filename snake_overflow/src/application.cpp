@@ -7,6 +7,7 @@
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/hud_renderer.hpp"
 #include "snake_overflow/keyboard_input_handler.hpp"
+#include "snake_overflow/invulnerability_spell.hpp"
 #include "snake_overflow/load_driven_terrain_item_filler.hpp"
 #include "snake_overflow/probabilistic_item_spawner.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
@@ -116,7 +117,22 @@ void application::create_game()
 
     auto p = std::make_unique<random_item_position_picker>(*t);
 
-    auto is = std::make_unique<probabilistic_item_spawner>(*t, std::move(p));
+    auto is = create_item_spawner(*t, std::move(p));
+
+    auto f = create_terrain_filler(std::move(is));
+
+    this->current_game = std::make_unique<game>(std::move(t), 
+                                                std::move(s),
+                                                std::move(f));
+
+    this->current_game->terrain_filling_interval = 150;
+}
+
+std::unique_ptr<item_spawner> application::create_item_spawner(
+    terrain& t,
+    std::unique_ptr<item_position_picker>&& p) const
+{
+    auto is = std::make_unique<probabilistic_item_spawner>(t, std::move(p));
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
@@ -128,18 +144,27 @@ void application::create_game()
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
         return std::make_unique<diet_pill>(pos, *this->current_game, 5);
-    }, 10);
+    }, 8);
 
+    is->register_item_factory([this] (util::value_ref<position> pos)
+    {
+        return std::make_unique<invulnerability_spell>(pos, 
+                                                       *this->current_game);
+    }, 2);
+
+    return std::move(is);
+}
+
+std::unique_ptr<terrain_item_filler> application::create_terrain_filler(
+    std::unique_ptr<item_spawner>&& is) const
+{
     auto f = std::make_unique<load_driven_terrain_item_filler>(std::move(is));
 
     f->set_minimum_load_factor(0.005);
+
     f->set_maximum_load_factor(0.01);
 
-    this->current_game = std::make_unique<game>(std::move(t), 
-                                                std::move(s),
-                                                std::move(f));
-
-    this->current_game->terrain_filling_interval = 150;
+    return std::move(f);
 }
 
 void application::create_renderers()

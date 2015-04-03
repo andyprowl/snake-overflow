@@ -2,6 +2,7 @@
 
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
+#include "snake_overflow/invulnerability_spell.hpp"
 #include "snake_overflow/item.hpp"
 #include "snake_overflow/item_renderer.hpp"
 #include "snake_overflow/point_conversion.hpp"
@@ -96,6 +97,12 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     {
         return draw_diet_pill_shape();
     } 
+
+    auto is = dynamic_cast<invulnerability_spell const*>(&i);
+    if (is != nullptr)
+    {
+        return draw_invulnerability_spell_shape();
+    }
 }
 
 void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
@@ -104,7 +111,7 @@ void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
 
     cinder::gl::color(color);
 
-    auto const radius = f.get_nutrition_value() * this->block_size / 15.f + 1.0;
+    auto const radius = f.get_nutrition_value() * this->block_size / 15.f + 1.f;
 
     auto const binder = texture_binder{this->textures, "apple.jpg"};
 
@@ -122,6 +129,19 @@ void item_renderer::draw_diet_pill_shape() const
     auto const binder = texture_binder{this->textures, "pill2.jpg"};
 
     cinder::gl::drawCube(cinder::Vec3f::zero(), {radius * 2, radius, radius});
+}
+
+void item_renderer::draw_invulnerability_spell_shape() const
+{
+    auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
+
+    cinder::gl::color(color);
+
+    auto const radius = this->block_size / 3.f + 1.f;
+
+    auto const binder = texture_binder{this->textures, "invulnerability.jpg"};
+
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
 }
 
 }

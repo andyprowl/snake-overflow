@@ -34,6 +34,8 @@ private:
 
     void draw_diet_pill_shape() const;
 
+    void draw_invulnerability_spell_shape() const;
+
 private:
 
     float block_size;

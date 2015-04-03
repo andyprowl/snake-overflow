@@ -9,8 +9,11 @@ namespace snake_overflow
 class camera_manipulator;
 class game;
 class hud_renderer;
+class item_position_picker;
+class item_spawner;
 class keyboard_input_handler;
 class terrain;
+class terrain_item_filler;
 class terrain_provider;
 class texture_repository;
 class world_renderer;
@@ -51,6 +54,13 @@ private:
     void start_new_game();
 
     void create_game();
+
+    std::unique_ptr<item_spawner> create_item_spawner(
+        terrain& t,
+        std::unique_ptr<item_position_picker>&& p) const;
+
+    std::unique_ptr<terrain_item_filler> create_terrain_filler(
+        std::unique_ptr<item_spawner>&& is) const;
     
     void create_keyboard_input_handler();
 
