@@ -32,74 +32,94 @@ TEST_THAT(Game,
 }
 
 TEST_THAT(Game,
-     WHAT(GetScore),
+     WHAT(Score),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsZero))
+     THEN(EvaluatesToZero))
 {
-    EXPECT_THAT(this->g->get_score(), Eq(0));
+    EXPECT_THAT(this->g->score, Eq(0));
 }
 
 TEST_THAT(Game,
-     WHAT(AddPoints),
-     WHEN(GivenAnAmountOfPoints),
+     WHAT(Score),
+     WHEN(WhenIncrementedByAnAmountOfPoints),
      THEN(AddsThatAmountToTheCurrentScore))
 {
-    this->g->add_points(3);
-    EXPECT_THAT(this->g->get_score(), Eq(3));
+    this->g->score += 3;
+    EXPECT_THAT(this->g->score, Eq(3));
 
-    this->g->add_points(5);
-    EXPECT_THAT(this->g->get_score(), Eq(8));
+    this->g->score += 5;
+    EXPECT_THAT(this->g->score, Eq(8));
 
-    this->g->add_points(-3);
-    EXPECT_THAT(this->g->get_score(), Eq(5));
+    this->g->score += -3;
+    EXPECT_THAT(this->g->score, Eq(5));
 }
 
 TEST_THAT(Game,
-     WHAT(AddPoints),
-     WHEN(GivenANegativeAmountOfPointsWhichWouldBringTheScoreBelowZero),
+     WHAT(Score),
+     WHEN(WhenSubtractingAnAmountOfPointsWhichWouldBringTheScoreBelowZero),
      THEN(SetsTheScoreToZero))
 {
-    this->g->add_points(3);
-    EXPECT_THAT(this->g->get_score(), Eq(3));
+    this->g->score += 3;
+    EXPECT_THAT(this->g->score, Eq(3));
 
-    this->g->add_points(-8);
-    EXPECT_THAT(this->g->get_score(), Eq(0));
+    this->g->score -= 8;
+    EXPECT_THAT(this->g->score, Eq(0));
 }
 
 TEST_THAT(Game,
-     WHAT(AddPoints),
-     WHEN(WhenTheGameIsOver),
+     WHAT(Score),
+     WHEN(WhenModifiedAndTheGameIsOver),
      THEN(Throws))
 {
-    this->g->set_game_over();
+    this->g->is_game_over = true;
 
-    EXPECT_THROW(this->g->add_points(3), game_over_exception);
+    EXPECT_THROW((this->g->score += 3), game_over_exception);
 }
 
 TEST_THAT(Game,
-     WHAT(IsOver),
+     WHAT(IsGameOver),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsFalse))
+     THEN(EvaluatesToFalse))
 {
-    EXPECT_FALSE(this->g->is_game_over());
+    EXPECT_FALSE(this->g->is_game_over);
 }
 
 TEST_THAT(Game,
-     WHAT(SetGameOver),
-     WHEN(Always),
+     WHAT(IsGameOver),
+     WHEN(IfTheGameIsNotOverAndTheValueIsSetToTrue),
      THEN(SetsTheGameOverFlag))
 {
-    this->g->set_game_over();
+    this->g->is_game_over = true;
 
-    EXPECT_TRUE(this->g->is_game_over());
+    EXPECT_TRUE(this->g->is_game_over);
+}
+
+TEST_THAT(Game,
+     WHAT(IsGameOver),
+     WHEN(IfTheGameIsOverAndTheValueIsSetToFalse),
+     THEN(Throws))
+{
+    this->g->is_game_over = true;
+
+    EXPECT_THROW((this->g->is_game_over = false), game_over_exception);
+}
+
+TEST_THAT(Game,
+     WHAT(IsGameOver),
+     WHEN(IfTheGameIsOverAndTheValueIsSetToTrue),
+     THEN(DoesNothing))
+{
+    this->g->is_game_over = true;
+
+    EXPECT_NO_THROW((this->g->is_game_over = true));
 }
 
 TEST_THAT(Game,
      WHAT(IsGamePaused),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsFalse))
+     THEN(EvaluatesToFalse))
 {
-    EXPECT_FALSE(this->g->is_game_paused());
+    EXPECT_FALSE(this->g->is_game_paused);
 }
 
 TEST_THAT(Game,
@@ -107,9 +127,9 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsNotPaused),
      THEN(PausesTheGame))
 {
-    this->g->toggle_game_pause();
+    toggle_game_pause(*(this->g));
 
-    EXPECT_TRUE(this->g->is_game_paused());
+    EXPECT_TRUE(this->g->is_game_paused);
 }
 
 TEST_THAT(Game,
@@ -117,41 +137,51 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsPaused),
      THEN(UnpausesTheGame))
 {
-    this->g->toggle_game_pause();
+    this->g->is_game_paused = true;
 
-    this->g->toggle_game_pause();
+    toggle_game_pause(*(this->g));
 
-    EXPECT_FALSE(this->g->is_game_paused());
+    EXPECT_FALSE(this->g->is_game_paused);
 }
 
 TEST_THAT(Game,
-     WHAT(ToggleGamePause),
-     WHEN(WhenTheGameIsOver),
+     WHAT(IsGameOver),
+     WHEN(WhenAssignedAndTheGameIsOver),
      THEN(Throws))
 {
-    this->g->set_game_over();
+    this->g->is_game_over = true;
 
-    EXPECT_THROW(this->g->toggle_game_pause(), game_over_exception);
+    EXPECT_THROW(toggle_game_pause(*(this->g)), game_over_exception);
 }
 
 TEST_THAT(Game,
-     WHAT(GetSnakeAdvancementInterval),
+     WHAT(SnakeAdvancementInterval),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsANonNegativeValue))
+     THEN(EvaluatesToANonNegativeValue))
 {
-    EXPECT_THAT(this->g->get_snake_advancement_interval(), Gt(0));
+    EXPECT_THAT(this->g->snake_advancement_interval, Gt(0));
 }
 
 TEST_THAT(Game,
-     WHAT(GetSnakeAdvancementInterval),
-     WHEN(AfterSettingTheInterval),
+     WHAT(SnakeAdvancementInterval),
+     WHEN(AfterSettingAValueGreaterThanOne),
      THEN(ReturnsTheNewlySetValue))
 {
     auto const new_interval = 1337;
     
-    this->g->set_snake_advancement_interval(new_interval);
+    this->g->snake_advancement_interval = new_interval;
 
-    EXPECT_THAT(this->g->get_snake_advancement_interval(), Eq(new_interval));
+    EXPECT_THAT(this->g->snake_advancement_interval, Eq(new_interval));
+}
+
+TEST_THAT(Game,
+     WHAT(SnakeAdvancementInterval),
+     WHEN(WhenTryingToSetAValueLowerThanOne),
+     THEN(SetsTheValueToOne))
+{    
+    this->g->snake_advancement_interval = 0;
+
+    EXPECT_THAT(this->g->snake_advancement_interval, Eq(1));
 }
 
 TEST_THAT(Game,
@@ -163,7 +193,7 @@ TEST_THAT(Game,
 
     auto const initial_footprint = s.get_trail_head().step;
 
-    this->g->toggle_game_pause();
+    this->g->is_game_paused = true;
 
     this->g->update();
 
@@ -179,7 +209,7 @@ TEST_THAT(Game,
 
     auto const initial_footprint = s.get_trail_head().step;
 
-    this->g->set_game_over();
+    this->g->is_game_over = true;
 
     this->g->update();
 
@@ -195,7 +225,7 @@ TEST_THAT(Game,
 
     auto const initial_footprint = s.get_trail_head().step;
 
-    auto const interval = this->g->get_snake_advancement_interval();
+    auto const interval = this->g->snake_advancement_interval;
 
     this->g->update();
 
@@ -213,23 +243,33 @@ TEST_THAT(Game,
 }
 
 TEST_THAT(Game,
-     WHAT(GetTerrainItemFillingInterval),
+     WHAT(TerrainItemFillingInterval),
      WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsANonNegativeValue))
+     THEN(EvaluatesToANonNegativeValue))
 {
-    EXPECT_THAT(this->g->get_terrain_item_filling_interval(), Gt(0));
+    EXPECT_THAT(this->g->terrain_filling_interval, Gt(0));
 }
 
 TEST_THAT(Game,
-     WHAT(GetTerrainItemFillingInterval),
-     WHEN(AfterSettingTheInterval),
-     THEN(ReturnsTheNewlySetValue))
+     WHAT(TerrainItemFillingInterval),
+     WHEN(AfterSettingTheIntervalToAValueGreaterThanZero),
+     THEN(EvaluatesToTheNewlySetValue))
 {
     auto const new_interval = 1337;
     
-    this->g->set_terrain_item_filling_interval(new_interval);
+    this->g->terrain_filling_interval = new_interval;
 
-    EXPECT_THAT(this->g->get_terrain_item_filling_interval(), Eq(new_interval));
+    EXPECT_THAT(this->g->terrain_filling_interval, Eq(new_interval));
+}
+
+TEST_THAT(Game,
+     WHAT(TerrainItemFillingInterval),
+     WHEN(WhenTryingToSetTheIntervalToAValueLowerThanOne),
+     THEN(TheValueIsSetToOne))
+{
+    this->g->terrain_filling_interval = -1;
+
+    EXPECT_THAT(this->g->terrain_filling_interval, Eq(1));
 }
 
 TEST_THAT(Game,
@@ -237,7 +277,7 @@ TEST_THAT(Game,
      WHEN(WhenCalledForTheNthTimeWithNEqualToTheItemGenerationInterval),
      THEN(LetsTheTerrainItemFillerGenerateItems))
 {
-    auto const interval = this->g->get_terrain_item_filling_interval();
+    auto const interval = this->g->terrain_filling_interval;
 
     this->g->update();
 
@@ -259,7 +299,7 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsPaused),
      THEN(DoesNotFillTheTerrain))
 {
-    this->g->toggle_game_pause();
+    this->g->is_game_paused = true;
 
     this->g->update();
 
@@ -271,7 +311,7 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsOver),
      THEN(DoesNotFillTheTerrain))
 {
-    this->g->set_game_over();
+    this->g->is_game_over = true;
 
     this->g->update();
 

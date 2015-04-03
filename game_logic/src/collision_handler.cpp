@@ -55,7 +55,7 @@ void collision_handler::handle_self_collision(
 {
     if (s.is_position_in_tail(pos))
     {
-        this->parent_game.set_game_over();
+        this->parent_game.is_game_over = true;
     }
 }
 

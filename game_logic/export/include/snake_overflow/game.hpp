@@ -1,6 +1,9 @@
 #pragma once
 
 #include "snake_overflow/collision_handler.hpp"
+#include "snake_overflow/game_boolean_parameter.hpp"
+#include "snake_overflow/game_integer_parameter.hpp"
+#include "snake_overflow/game_over_flag.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_item_filler.hpp"
@@ -8,10 +11,6 @@
 namespace snake_overflow
 {
 
-class game_over_exception : public virtual std::exception
-{
-};
-    
 class game
 {
 
@@ -27,25 +26,17 @@ public:
 
     void update();
 
-    int get_score() const;
+public:
 
-    void add_points(int points);
+    game_over_flag is_game_over;
 
-    bool is_game_over() const;
+    game_boolean_parameter is_game_paused;
 
-    void set_game_over();
+    game_integer_parameter score;
 
-    bool is_game_paused() const;
+    game_integer_parameter snake_advancement_interval;
 
-    void toggle_game_pause();
-
-    int get_snake_advancement_interval() const;
-
-    void set_snake_advancement_interval(int interval);
-
-    int get_terrain_item_filling_interval() const;
-
-    void set_terrain_item_filling_interval(int interval);
+    game_integer_parameter terrain_filling_interval;
 
 private:
 
@@ -61,18 +52,10 @@ private:
 
     std::unique_ptr<collision_handler> collider;
 
-    int score;
-
-    bool is_over;
-
-    bool is_paused;
-
-    int snake_advancement_interval;
-
-    int terrain_filling_interval;
-
     int age;
 
 };
+
+void toggle_game_pause(game& g);
 
 }

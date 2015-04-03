@@ -85,7 +85,7 @@ void keyboard_input_handler::setup_option_commands()
 
     this->keyboard_commands[KeyEvent::KEY_p] = [this] 
     { 
-        this->controlled_game.toggle_game_pause();
+        toggle_game_pause(this->controlled_game);
     };
 
     this->keyboard_commands[KeyEvent::KEY_f] = [this] 

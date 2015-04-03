@@ -29,7 +29,7 @@ void fruit::make_snake_grow_by_nutrition_value(snake& s) const
 
 void fruit::add_nutrition_value_to_game_score() const
 {
-    this->parent_game.add_points(this->nutrition_value);
+    this->parent_game.score += this->nutrition_value;
 }
 
 }

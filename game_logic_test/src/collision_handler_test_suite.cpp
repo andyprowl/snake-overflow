@@ -12,23 +12,12 @@ class CollisionHandler : public CubeTerrainGameFixture
 
 protected:
 
-    virtual void SetUp() override
-    {
-        CubeTerrainGameFixture::SetUp();
-
-        auto& g = get_game();
-
-        this->handler = std::make_unique<collision_handler>(g);
-    }
-
     std::unique_ptr<item> make_item(util::value_ref<position> pos)
     {
         return std::make_unique<fake_item>(pos);
     }
 
-protected:
-
-    std::unique_ptr<collision_handler> handler;
+    // The collision handler is implicitly created as part of the game object.
 
 };
 
@@ -73,7 +62,7 @@ TEST_THAT(CollisionHandler,
 
     auto& g = get_game();
 
-    EXPECT_TRUE(g.is_game_over());
+    EXPECT_TRUE(g.is_game_over);
 }
 
 } }

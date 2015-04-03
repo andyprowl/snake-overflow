@@ -123,7 +123,7 @@ void snake::grow_or_cut_last_tail_part()
         this->trail.pop_front();
     }
 
-    if ((this->cells_to_shrink > 0) && (this->trail.size() > 1))
+    if ((this->cells_to_shrink > 0) && (this->trail.size() > 2))
     {
         --(this->cells_to_shrink);
         

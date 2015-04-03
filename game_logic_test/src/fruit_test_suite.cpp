@@ -104,7 +104,7 @@ TEST_THAT(Fruit,
 
     auto& g = get_game();
 
-    EXPECT_THAT(g.get_score(), Eq(this->nutrition_value));
+    EXPECT_THAT(g.score, Eq(this->nutrition_value));
 }
 
 } }

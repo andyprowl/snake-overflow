@@ -193,15 +193,42 @@ TEST_THAT(Snake,
      WHEN(GivenASize),
      THEN(MakesFollowingAdvancementsShrinkTheSnakeRatherThanShiftingIt))
 {
+    this->s->grow(1);
+
+    this->s->advance();
+
     this->s->shrink(2);
 
     util::repeat(4, [this] { this->s->advance(); });
 
     auto const trail = this->s->get_trail();
 
-    ASSERT_THAT(trail.size(), Eq(1u));
+    ASSERT_THAT(trail.size(), Eq(2u));
 
     EXPECT_THAT(get_footprint_position(trail[0].step), 
+                Eq(position{{0, 1, 4}, block_face::top}));
+
+    EXPECT_THAT(get_footprint_position(trail[1].step), 
+                Eq(position{{0, 2, 4}, block_face::top}));
+}
+
+TEST_THAT(Snake,
+     WHAT(Shrink),
+     WHEN(GivenASizeWhichWouldReduceTheSnakeToLessThanTwoCells),
+     THEN(OnlyShrinksTheSnakeAsShortAsTwoCells))
+{
+    this->s->shrink(2);
+
+    util::repeat(4, [this] { this->s->advance(); });
+
+    auto const trail = this->s->get_trail();
+
+    ASSERT_THAT(trail.size(), Eq(2u));
+
+    EXPECT_THAT(get_footprint_position(trail[0].step), 
+                Eq(position{{0, 0, 4}, block_face::top}));
+
+    EXPECT_THAT(get_footprint_position(trail[1].step), 
                 Eq(position{{0, 1, 4}, block_face::top}));
 }
 

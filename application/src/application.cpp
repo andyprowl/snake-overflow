@@ -121,7 +121,7 @@ void application::create_game()
                                                 std::move(s),
                                                 std::move(f));
 
-    this->current_game->set_terrain_item_filling_interval(150);
+    this->current_game->terrain_filling_interval = 150;
 }
 
 void application::create_renderers()
@@ -173,9 +173,9 @@ void application::draw_frame()
     calculate_current_fps();
 
     this->hud_drawer->render(this->current_fps,
-                             this->current_game->get_score(),
-                             this->current_game->is_game_paused(),
-                             this->current_game->is_game_over(),
+                             this->current_game->score,
+                             this->current_game->is_game_paused,
+                             this->current_game->is_game_over,
                              this->camera_handler->is_auto_follow_on());
 }
 
