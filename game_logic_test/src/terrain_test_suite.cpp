@@ -464,7 +464,7 @@ TEST_THAT(Terrain,
 
 TEST_THAT(Terrain,
      WHAT(IsPositionWalkable),
-     WHEN(GivenAPositionAndATerrainWhereThePositionDoesNotHaveAnAdjacentBlock),
+     WHEN(GivenAPositionAndATerrainWhereThePositionHasAnAdjacentSolidBlock),
      THEN(ReturnsFalse))
 {
     create_cube_with_vertex_on_origin(4);
@@ -476,6 +476,34 @@ TEST_THAT(Terrain,
     EXPECT_FALSE(is_position_walkable({{1, 0, 2}, block_face::top}, this->t));
     EXPECT_FALSE(is_position_walkable({{1, 1, 1}, block_face::bottom}, 
                                       this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsPositionWalkable),
+     WHEN(GivenAPositionAndATerrainWhereThePositionHasAnAdjacentNonSolidBlock),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto builder = terrain_builder{this->t};
+
+    builder.add_cube({0, 0, 4}, 3, "", {0, 0, 0, 255}, false);
+    
+    EXPECT_TRUE(is_position_walkable({{1, 1, 3}, block_face::top}, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsPositionWalkable),
+     WHEN(GivenAPositionWhichIsNotOnASolidBlock),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto builder = terrain_builder{this->t};
+
+    builder.add_cube({0, 0, 4}, 3, "", {0, 0, 0, 255}, false);
+    
+    EXPECT_FALSE(is_position_walkable({{1, 1, 6}, block_face::top}, this->t));
 }
 
 TEST_THAT(Terrain,

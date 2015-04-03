@@ -37,15 +37,16 @@ void terrain_builder::add_box(util::value_ref<point> origin,
                               util::value_ref<point> sizes, 
                               util::value_ref<std::string> texture,
                               util::value_ref<rgba_color> color,
-                              bool const solid) const
+                              bool const solid,
+                              bool const invisible_inside) const
 {
     for_each_point_in_box(
         point::zero(), 
         sizes, 
-        [this, &origin, &sizes, &color, &texture, &solid] 
+        [this, &origin, &sizes, &color, &texture, solid, invisible_inside] 
         (util::value_ref<point> p)
     {
-        if (is_surface_block(p.x, p.y, p.z, sizes))
+        if (is_surface_block(p.x, p.y, p.z, sizes) || !invisible_inside)
         {
             this->build_site.add_block({p + origin, texture, color, solid});
         }
@@ -60,35 +61,38 @@ void terrain_builder::add_cube(util::value_ref<point> origin,
                                int const side_length,
                                util::value_ref<std::string> texture,
                                util::value_ref<rgba_color> color,
-                               bool const solid) const
+                               bool const solid,
+                               bool const invisible_inside) const
 {
     auto const sizes = point{side_length, side_length, side_length};
 
-    add_box(origin, sizes, texture, color, solid);
+    add_box(origin, sizes, texture, color, solid, invisible_inside);
 }
 
 void terrain_builder::add_centered_box(util::value_ref<point> center, 
                                        util::value_ref<point> sizes,
                                        util::value_ref<std::string> texture,
                                        util::value_ref<rgba_color> color,
-                                       bool const solid) const
+                                       bool const solid,
+                                       bool const invisible_inside) const
 {
     auto const half_sizes = point{sizes.x / 2, sizes.y / 2, sizes.z / 2};
     
     auto const origin = center - half_sizes;
 
-    add_box(origin, sizes, texture, color, solid);
+    add_box(origin, sizes, texture, color, solid, invisible_inside);
 }
 
 void terrain_builder::add_centered_cube(util::value_ref<point> center, 
                                         int const side_length,
                                         util::value_ref<std::string> texture,
                                         util::value_ref<rgba_color> color,
-                                        bool const solid) const
+                                        bool const solid,
+                                        bool const invisible_inside) const
 {
     auto const sizes = point{side_length, side_length, side_length};
 
-    add_centered_box(center, sizes, texture, color, solid);
+    add_centered_box(center, sizes, texture, color, solid, invisible_inside);
 }
 
 void terrain_builder::remove_box(util::value_ref<point> origin, 

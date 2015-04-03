@@ -21,7 +21,7 @@ std::unique_ptr<terrain> terrain_provider::create_terrain(std::string const&)
                               {255, 255, 255, 255},
                               true);
 
-    auto const pool_sizes = point{7, 9, 3};
+    auto const pool_sizes = point{7, 9, 5};
 
     auto const pool_origin = point{cube_side_length / 2,
                                    cube_side_length / 2 - pool_sizes.y,
@@ -40,6 +40,7 @@ std::unique_ptr<terrain> terrain_provider::create_terrain(std::string const&)
                     pool_sizes - point{2, 2, 1},
                     "water4.jpg",
                     {255, 255, 255, 100},
+                    false,
                     false);
 
     builder.add_box({-cube_side_length / 2, 

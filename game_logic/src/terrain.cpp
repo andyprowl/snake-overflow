@@ -268,13 +268,19 @@ bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)
 
 bool is_position_walkable(util::value_ref<position> pos, terrain const& t)
 {
+    auto const is_solid = t.contains_solid_block(pos.location);
+    if (!is_solid)
+    {
+        return false;
+    }
+
     auto const n = get_face_normal(pos.face);
 
     auto const adjacent_origin = pos.location + n;
 
-    auto const has_neighbor = t.contains_solid_block(adjacent_origin);
+    auto const has_solid_neighbor = t.contains_solid_block(adjacent_origin);
 
-    return !(has_neighbor);
+    return !(has_solid_neighbor);
 }
 
 bool can_place_item_at_position(util::value_ref<position> pos, 

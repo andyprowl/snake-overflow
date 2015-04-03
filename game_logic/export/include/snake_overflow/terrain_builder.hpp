@@ -21,25 +21,29 @@ public:
                  util::value_ref<point> sizes, 
                  util::value_ref<std::string> texture,
                  util::value_ref<rgba_color> color,
-                 bool solid) const;
+                 bool solid,
+                 bool invisible_inside = true) const;
 
     void add_cube(util::value_ref<point> origin, 
                   int side_length, 
                   util::value_ref<std::string> texture,
                   util::value_ref<rgba_color> color,
-                  bool solid) const;
+                  bool solid,
+                  bool invisible_inside = true) const;
 
     void add_centered_box(util::value_ref<point> center, 
                           util::value_ref<point> sizes, 
                           util::value_ref<std::string> texture,
                           util::value_ref<rgba_color> color,
-                          bool solid) const;
+                          bool solid,
+                          bool invisible_inside = true) const;
 
     void add_centered_cube(util::value_ref<point> center, 
                            int const side_length,
                            util::value_ref<std::string> texture,
                            util::value_ref<rgba_color> color,
-                           bool solid) const;
+                           bool solid,
+                           bool invisible_inside = true) const;
 
     void remove_box(util::value_ref<point> origin, 
                     util::value_ref<point> sizes) const;
