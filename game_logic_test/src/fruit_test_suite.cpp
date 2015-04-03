@@ -57,7 +57,7 @@ TEST_THAT(Fruit,
      WHEN(ImmediatelyAfterConstruction),
      THEN(HasTheValuePassedAtConstruction))
 {
-    EXPECT_THAT(this->f->nutrition_value, Eq(this->nutrition_value));
+    EXPECT_THAT(this->f->get_nutrition_value(), Eq(this->nutrition_value));
 }
 
 TEST_THAT(Fruit,

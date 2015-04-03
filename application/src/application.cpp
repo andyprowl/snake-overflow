@@ -104,7 +104,9 @@ void application::create_game()
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        return std::make_unique<fruit>(pos, *this->current_game, 5);
+        random_integer_generator generator{};
+        auto value = generator.generate(1, 5);
+        return std::make_unique<fruit>(pos, *this->current_game, value);
     }, 90);
 
     is->register_item_factory([this] (util::value_ref<position> pos)

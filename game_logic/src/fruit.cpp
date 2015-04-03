@@ -15,6 +15,11 @@ fruit::fruit(position const placement,
 {
 }
 
+int fruit::get_nutrition_value() const
+{
+    return this->nutrition_value;
+}
+
 void fruit::handle_picking(snake& s)
 {
     make_snake_grow_by_nutrition_value(s);

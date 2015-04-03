@@ -14,6 +14,11 @@ diet_pill::diet_pill(position const placement,
 {
 }
 
+int diet_pill::get_slim_power() const
+{
+    return this->slim_power;
+}
+
 void diet_pill::handle_picking(snake& s)
 {
     make_snake_shrink_by_slim_power(s);

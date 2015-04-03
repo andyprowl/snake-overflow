@@ -94,7 +94,7 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     auto f = dynamic_cast<fruit const*>(&i);
     if (f != nullptr)
     {
-        return draw_fruit_shape();
+        return draw_fruit_shape(*f);
     }
 
     auto dp = dynamic_cast<diet_pill const*>(&i);
@@ -104,13 +104,13 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     } 
 }
 
-void item_renderer::draw_fruit_shape() const
+void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 
     cinder::gl::color(color);
 
-    auto const radius = this->block_size / 3;
+    auto const radius = f.get_nutrition_value() * this->block_size / 15.f + 1.0;
 
     auto const binder = texture_binder{this->textures, "apple.jpg"};
 

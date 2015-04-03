@@ -50,11 +50,11 @@ TEST_THAT(DietPill,
 }
 
 TEST_THAT(DietPill,
-     WHAT(SlimPower),
+     WHAT(GetSlimPower),
      WHEN(ImmediatelyAfterConstruction),
      THEN(HasTheValuePassedAtConstruction))
 {
-    EXPECT_THAT(this->pill->slim_power, Eq(this->slim_power));
+    EXPECT_THAT(this->pill->get_slim_power(), Eq(this->slim_power));
 }
 
 TEST_THAT(DietPill,

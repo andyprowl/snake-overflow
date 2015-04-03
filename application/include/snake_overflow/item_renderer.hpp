@@ -5,6 +5,7 @@
 namespace snake_overflow
 {
 
+class fruit;
 class item;
 class terrain;
 class texture_repository;
@@ -29,7 +30,7 @@ private:
 
     void draw_item_shape(util::value_ref<item> i) const;
 
-    void draw_fruit_shape() const;
+    void draw_fruit_shape(util::value_ref<fruit> f) const;
 
     void draw_diet_pill_shape() const;
 
