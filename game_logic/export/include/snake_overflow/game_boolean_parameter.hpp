@@ -14,7 +14,8 @@ public:
 
     game_boolean_parameter(game_boolean_parameter const& rhs) = default;
 
-    game_boolean_parameter& operator = (game_boolean_parameter const& rhs) = delete;
+    game_boolean_parameter& operator = (
+        game_boolean_parameter const& rhs) = delete;
 
     game_boolean_parameter& operator = (bool value);
 

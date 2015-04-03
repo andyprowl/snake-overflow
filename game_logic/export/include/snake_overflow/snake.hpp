@@ -2,6 +2,7 @@
 
 #include "snake_overflow/collision_handler.hpp"
 #include "snake_overflow/dead_snake_flag.hpp"
+#include "snake_overflow/snake_boolean_parameter.hpp"
 #include "snake_overflow/snake_body.hpp"
 #include <memory>
 
@@ -36,6 +37,8 @@ public:
 public:
 
     dead_snake_flag is_dead;
+
+    snake_boolean_parameter invulnerability_bonus;
 
 private:
 

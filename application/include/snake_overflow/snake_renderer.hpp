@@ -78,6 +78,8 @@ private:
 
     cinder::Vec3f get_snake_inner_part_sizes(bool is_edge_winding) const;
 
+    cinder::Color get_snake_color(util::value_ref<snake> s) const;
+
 private:
 
     float width;

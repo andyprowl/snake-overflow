@@ -6,6 +6,8 @@
 namespace snake_overflow { namespace testing
 {
     
+using ::testing::Eq;
+
 class Snake : public CubeTerrainGameFixture
 {
 
@@ -120,6 +122,66 @@ TEST_THAT(Snake,
     s.is_dead.set();
 
     EXPECT_THROW(s.shrink(1), dead_snake_exception);
+}
+
+TEST_THAT(Snake,
+     WHAT(InvulnerabilityBonus),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(EvaluatesToFalse))
+{
+    auto& s = get_snake();
+
+    EXPECT_FALSE(s.invulnerability_bonus);
+}
+
+TEST_THAT(Snake,
+     WHAT(InvulnerabilityBonus),
+     WHEN(AfterSettingItsValue),
+     THEN(EvaluatesToTheNewlySetValue))
+{
+    auto& s = get_snake();
+
+    s.invulnerability_bonus = true;
+
+    EXPECT_TRUE(s.invulnerability_bonus);
+}
+
+TEST_THAT(Snake,
+     WHAT(InvulnerabilityBonus),
+     WHEN(WhenSettingItsValueAfterTheSnakeHasDied),
+     THEN(Throws))
+{
+    auto& s = get_snake();
+
+    s.is_dead.set();
+
+    EXPECT_THROW((s.invulnerability_bonus = true), dead_snake_exception);
+}
+
+TEST_THAT(Snake,
+     WHAT(Advance),
+     WHEN(WhenTheSnakeBitesItselfButHasAPositiveInvulnerabilityBonus),
+     THEN(DoesNotKillTheSnake))
+{
+    auto& s = get_snake();
+
+    s.grow(5);
+
+    s.turn_right();
+
+    s.advance();
+
+    s.turn_right();
+
+    s.advance();
+
+    s.turn_right();
+
+    s.invulnerability_bonus = true;
+
+    s.advance();
+
+    EXPECT_FALSE(s.is_dead);
 }
 
 } }

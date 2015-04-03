@@ -57,6 +57,11 @@ void keyboard_input_handler::setup_action_commands()
     
     this->keyboard_commands[KeyEvent::KEY_d] = turn_right_cmd;
     this->keyboard_commands[KeyEvent::KEY_RIGHT] = turn_right_cmd;
+
+    this->keyboard_commands[KeyEvent::KEY_i] = [this]
+    {
+        this->controlled_game.get_snake().invulnerability_bonus = true;
+    };
 }
 
 void keyboard_input_handler::setup_camera_commands()

@@ -4,7 +4,9 @@
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/snake.hpp"
+#include "snake_overflow/texture_binder.hpp"
 #include "util/sequence.hpp"
+#include "util/wave.hpp"
 #include <cassert>
 
 namespace snake_overflow
@@ -23,7 +25,9 @@ snake_renderer::snake_renderer(float const snake_width,
 
 void snake_renderer::render(util::value_ref<snake> s) const
 {
-    this->skin.enableAndBind();
+    auto binder = texture_binder{this->skin};
+    
+    cinder::gl::color(get_snake_color(s));
 
     auto const trail = s.get_body().get_trail();
 
@@ -35,8 +39,6 @@ void snake_renderer::render(util::value_ref<snake> s) const
 
         render_snake_part(trail[i], (i == length - 1), is_edge_winding);
     }
-
-    this->skin.unbind();
 }
 
 void snake_renderer::set_skin(cinder::gl::Texture skin)
@@ -125,8 +127,6 @@ void snake_renderer::draw_snake_part_shape(util::value_ref<dynamics> d,
                                            bool const is_head,
                                            bool const is_edge_winding) const
 {
-    cinder::gl::color(cinder::Color{1.f, 1.f, 1.f});
-
     if (is_head)
     {
         draw_head();
@@ -294,6 +294,22 @@ cinder::Vec3f snake_renderer::get_snake_inner_part_sizes(
     else
     {
         return {this->width, this->block_size, this->height};
+    }
+}
+
+cinder::Color snake_renderer::get_snake_color(util::value_ref<snake> s) const
+{
+    if (s.invulnerability_bonus)
+    {
+        auto const factor = cinder::app::getElapsedFrames() * 0.2f;
+
+        auto const c = util::wave(factor, 0.f, 1.f);
+
+        return {1.f, c, c};
+    }
+    else
+    {
+        return cinder::Color::white();
     }
 }
 

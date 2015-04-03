@@ -98,6 +98,7 @@
     <ClCompile Include="..\src\random_item_position_picker.cpp" />
     <ClCompile Include="..\src\rgba_color.cpp" />
     <ClCompile Include="..\src\snake.cpp" />
+    <ClCompile Include="..\src\snake_boolean_parameter.cpp" />
     <ClCompile Include="..\src\terrain_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\footprint.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="..\export\include\snake_overflow\random_item_position_picker.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\snake_boolean_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\footprint.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
@@ -153,6 +155,7 @@
     <ClInclude Include="..\export\include\util\repeat.hpp" />
     <ClInclude Include="..\export\include\util\sequence.hpp" />
     <ClInclude Include="..\export\include\util\value_ref.hpp" />
+    <ClInclude Include="..\export\include\util\wave.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

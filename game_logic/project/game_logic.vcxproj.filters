@@ -113,6 +113,9 @@
     <ClCompile Include="..\src\dead_snake_flag.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\snake_boolean_parameter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -227,6 +230,12 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\dead_snake_flag.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\wave.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\snake_boolean_parameter.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

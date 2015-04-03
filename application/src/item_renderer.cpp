@@ -8,6 +8,7 @@
 #include "snake_overflow/position.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/texture_binder.hpp"
+#include "util/wave.hpp"
 
 namespace snake_overflow
 {
@@ -27,13 +28,6 @@ void item_renderer::render(util::value_ref<terrain> t) const
     });
 }
 
-float wave(float x, float minimum, float maximum)
-{
-    auto const normalized_wave = (std::sin(x) + 1.f) / 2.f;
-
-    return minimum + normalized_wave * (maximum - minimum);
-}
-
 void item_renderer::render_item(util::value_ref<item> i) const
 {
     auto const pos = i.get_position();
@@ -42,12 +36,12 @@ void item_renderer::render_item(util::value_ref<item> i) const
 
     auto const n = vec3f_from_point(get_face_normal(pos.face));
     
-    auto const floater = wave(cinder::app::getElapsedSeconds() + 
-                              origin.x + 
-                              origin.y +
-                              origin.z, 
-                              0.8f, 
-                              1.0f);
+    auto const floater = util::wave(cinder::app::getElapsedSeconds() + 
+                                    origin.x + 
+                                    origin.y +
+                                    origin.z, 
+                                    0.8f, 
+                                    1.0f);
 
     auto const center = origin + n * (this->block_size * floater);
 

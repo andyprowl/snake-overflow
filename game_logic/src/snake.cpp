@@ -8,6 +8,7 @@ namespace snake_overflow
 snake::snake(std::unique_ptr<snake_body>&& body)
     : body{std::move(body)}
     , is_dead{false}
+    , invulnerability_bonus{false, is_dead}
 {
     this->collider = std::make_unique<collision_handler>(*this, this->is_dead);
 }

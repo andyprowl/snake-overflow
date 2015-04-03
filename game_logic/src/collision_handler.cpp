@@ -59,10 +59,15 @@ void collision_handler::handle_self_collision(
 {
     auto& body = hero.get_body();
 
-    if (body.is_position_in_tail(pos))
+    if (!body.is_position_in_tail(pos)) { return; }
+    
+    if (hero.invulnerability_bonus)
     {
-        this->dead_flag.set();
+        hero.invulnerability_bonus = false;
+        return;
     }
+
+    this->dead_flag.set();
 }
 
 }
