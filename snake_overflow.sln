@@ -14,6 +14,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game_logic_test", "game_log
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snake_overflow", "snake_overflow\project\snake_overflow.vcxproj", "{FDD68AC9-D34D-4C17-AA56-00C144DA8360}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terrain_serialization", "terrain_serialization\project\terrain_serialization.vcxproj", "{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terrain_serialization_test", "terrain_serialization_test\project\terrain_serialization_test.vcxproj", "{A2715361-758B-47E4-8B43-986C3CFA003C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,6 +40,14 @@ Global
 		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Debug|x64.Build.0 = Debug|x64
 		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.ActiveCfg = Release|x64
 		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.Build.0 = Release|x64
+		{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}.Debug|x64.ActiveCfg = Debug|x64
+		{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}.Debug|x64.Build.0 = Debug|x64
+		{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}.Release|x64.ActiveCfg = Release|x64
+		{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}.Release|x64.Build.0 = Release|x64
+		{A2715361-758B-47E4-8B43-986C3CFA003C}.Debug|x64.ActiveCfg = Debug|x64
+		{A2715361-758B-47E4-8B43-986C3CFA003C}.Debug|x64.Build.0 = Debug|x64
+		{A2715361-758B-47E4-8B43-986C3CFA003C}.Release|x64.ActiveCfg = Release|x64
+		{A2715361-758B-47E4-8B43-986C3CFA003C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

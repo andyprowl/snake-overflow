@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="export">
+      <UniqueIdentifier>{1d849fe4-da08-48a2-815f-0c154f920eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include">
+      <UniqueIdentifier>{e0195803-a15b-44a4-be71-976b5c6caea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include\snake_overflow">
+      <UniqueIdentifier>{1b4f480e-8466-47c0-b608-83bb6051eaa4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include\snake_overflow\serialization">
+      <UniqueIdentifier>{7bff76b6-f651-49c1-945f-4f6625b3bcee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\stdafx.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\block_type.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\block_type_list_reader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\stdafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

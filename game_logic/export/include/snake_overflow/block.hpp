@@ -3,6 +3,7 @@
 #include "snake_overflow/point.hpp"
 #include "snake_overflow/rgba_color.hpp"
 #include "util/value_ref.hpp"
+#include <string>
 #include <vector>
 
 namespace snake_overflow
