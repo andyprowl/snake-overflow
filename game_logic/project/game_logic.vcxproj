@@ -84,6 +84,7 @@
     <ClCompile Include="..\src\block.cpp" />
     <ClCompile Include="..\src\collision_handler.cpp" />
     <ClCompile Include="..\src\consumable_item.cpp" />
+    <ClCompile Include="..\src\dead_snake_flag.cpp" />
     <ClCompile Include="..\src\diet_pill.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\fruit.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="..\src\random_integer_generator.cpp" />
     <ClCompile Include="..\src\random_item_position_picker.cpp" />
     <ClCompile Include="..\src\rgba_color.cpp" />
+    <ClCompile Include="..\src\snake.cpp" />
     <ClCompile Include="..\src\terrain_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\footprint.cpp" />
@@ -103,7 +105,7 @@
     <ClCompile Include="..\src\point.cpp" />
     <ClCompile Include="..\src\position.cpp" />
     <ClCompile Include="..\src\sequence.cpp" />
-    <ClCompile Include="..\src\snake.cpp" />
+    <ClCompile Include="..\src\snake_body.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -119,6 +121,7 @@
     <ClInclude Include="..\export\include\snake_overflow\canonical_direction.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\collision_handler.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\consumable_item.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\dead_snake_flag.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\diet_pill.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\fruit.hpp" />
@@ -133,13 +136,14 @@
     <ClInclude Include="..\export\include\snake_overflow\random_integer_generator.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\random_item_position_picker.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\footprint.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\movement_profile.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\point.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\position.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\snake_body.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\load_driven_terrain_item_filler.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_item_filler.hpp" />

@@ -25,7 +25,7 @@ void snake_renderer::render(util::value_ref<snake> s) const
 {
     this->skin.enableAndBind();
 
-    auto const trail = s.get_trail();
+    auto const trail = s.get_body().get_trail();
 
     auto const length = s.get_length();
 

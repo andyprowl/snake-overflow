@@ -1,6 +1,5 @@
 #pragma once
 
-#include "snake_overflow/collision_handler.hpp"
 #include "snake_overflow/game_boolean_parameter.hpp"
 #include "snake_overflow/game_integer_parameter.hpp"
 #include "snake_overflow/game_over_flag.hpp"
@@ -49,8 +48,6 @@ private:
     std::unique_ptr<snake> hero;
 
     std::unique_ptr<terrain_item_filler> habitat_filler;
-
-    std::unique_ptr<collision_handler> collider;
 
     int age;
 

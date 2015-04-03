@@ -29,9 +29,6 @@
     <ClCompile Include="..\src\block_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\snake_test_suite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\terrain_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -47,9 +44,6 @@
     <ClCompile Include="..\src\game_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\collision_handler_test_suite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\cube_terrain_game_fixture.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -60,6 +54,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\diet_pill_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\snake_body_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\snake_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

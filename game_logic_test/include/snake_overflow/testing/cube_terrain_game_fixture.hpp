@@ -27,11 +27,15 @@ protected:
 
     snake& get_snake() const;
 
+    snake_body& get_snake_body() const;
+
 protected:
 
     terrain* habitat = nullptr;
 
     snake* hero = nullptr;
+
+    snake_body* hero_body = nullptr;
 
     int initial_snake_length = 3;
 

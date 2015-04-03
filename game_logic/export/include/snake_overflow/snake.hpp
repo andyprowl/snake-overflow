@@ -1,15 +1,12 @@
 #pragma once
 
-#include "snake_overflow/dynamics.hpp"
-#include "util/value_ref.hpp"
-#include <boost/signals2/signal.hpp>
-#include <deque>
-#include <vector>
+#include "snake_overflow/collision_handler.hpp"
+#include "snake_overflow/dead_snake_flag.hpp"
+#include "snake_overflow/snake_body.hpp"
+#include <memory>
 
 namespace snake_overflow
 {
-
-struct canonical_direction;
 
 class terrain;
 
@@ -18,60 +15,37 @@ class snake
 
 public:
 
-    using movement_event_handler = 
-          std::function<void(util::value_ref<footprint>)>;
+    snake(std::unique_ptr<snake_body>&& body);
 
-public:
+    snake_body& get_body() const;
 
-    snake(terrain const& habitat, 
-          util::value_ref<footprint> initial_footprint, 
-          int initial_length);
-
-    std::vector<dynamics> get_trail() const;
-
-    dynamics get_trail_head() const;
-
-    canonical_direction get_direction() const;
-    
-    bool is_position_in_tail(util::value_ref<position> pos) const;
+    terrain& get_terrain() const;
 
     int get_length() const;
 
     void advance();
 
-    void grow(int size);
-
-    void shrink(int size);
-
     void turn_left();
 
     void turn_right();
 
-    boost::signals2::connection register_movement_handler(
-        movement_event_handler handler) const;
+    void grow(int size);
+
+    void shrink(int size);
+
+public:
+
+    dead_snake_flag is_dead;
 
 private:
 
-    using movement_event = 
-          boost::signals2::signal<void(util::value_ref<footprint>)>;
+    void throw_if_dead();
 
 private:
 
-    void grow_or_cut_last_tail_part();
+    std::unique_ptr<snake_body> body;
 
-private:
-
-    terrain const& habitat;
-
-    std::deque<dynamics> trail;
-
-    dynamics current_dynamics;
-
-    int cells_to_grow;
-
-    int cells_to_shrink;
-
-    mutable movement_event on_movement;
+    std::unique_ptr<collision_handler> collider;
 
 };
 

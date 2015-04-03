@@ -71,7 +71,7 @@ TEST_THAT(Game,
      WHEN(WhenModifiedAndTheGameIsOver),
      THEN(Throws))
 {
-    this->g->is_game_over = true;
+    this->g->is_game_over.set();
 
     EXPECT_THROW((this->g->score += 3), game_over_exception);
 }
@@ -86,32 +86,34 @@ TEST_THAT(Game,
 
 TEST_THAT(Game,
      WHAT(IsGameOver),
-     WHEN(IfTheGameIsNotOverAndTheValueIsSetToTrue),
+     WHEN(IfTheGameIsNotOverAndTheValueIsSet),
      THEN(SetsTheGameOverFlag))
 {
-    this->g->is_game_over = true;
+    this->g->is_game_over.set();
 
     EXPECT_TRUE(this->g->is_game_over);
 }
 
 TEST_THAT(Game,
      WHAT(IsGameOver),
-     WHEN(IfTheGameIsOverAndTheValueIsSetToFalse),
-     THEN(Throws))
+     WHEN(IfTheGameIsOverAndTheValueIsSet),
+     THEN(DoesNothing))
 {
-    this->g->is_game_over = true;
-
-    EXPECT_THROW((this->g->is_game_over = false), game_over_exception);
+    this->g->is_game_over.set();
+    
+    EXPECT_TRUE(this->g->is_game_over);
+    
+    EXPECT_NO_THROW(this->g->is_game_over.set());
 }
 
 TEST_THAT(Game,
      WHAT(IsGameOver),
-     WHEN(IfTheGameIsOverAndTheValueIsSetToTrue),
-     THEN(DoesNothing))
+     WHEN(WhenTheSnakeIsDead),
+     THEN(EvaluatesToTrue))
 {
-    this->g->is_game_over = true;
+    this->hero->is_dead.set();
 
-    EXPECT_NO_THROW((this->g->is_game_over = true));
+    EXPECT_TRUE(this->g->is_game_over);
 }
 
 TEST_THAT(Game,
@@ -120,6 +122,16 @@ TEST_THAT(Game,
      THEN(EvaluatesToFalse))
 {
     EXPECT_FALSE(this->g->is_game_paused);
+}
+
+TEST_THAT(Game,
+     WHAT(IsGameOver),
+     WHEN(WhenSet),
+     THEN(KillsTheSnake))
+{
+    this->g->is_game_over.set();
+
+    EXPECT_TRUE(this->hero->is_dead);
 }
 
 TEST_THAT(Game,
@@ -149,7 +161,7 @@ TEST_THAT(Game,
      WHEN(WhenAssignedAndTheGameIsOver),
      THEN(Throws))
 {
-    this->g->is_game_over = true;
+    this->g->is_game_over.set();
 
     EXPECT_THROW(toggle_game_pause(*(this->g)), game_over_exception);
 }
@@ -189,15 +201,15 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsPaused),
      THEN(DoesNotAdvanceTheSnake))
 {
-    auto& s = get_snake();
+    auto& body = get_snake_body();
 
-    auto const initial_footprint = s.get_trail_head().step;
+    auto const initial_footprint = body.get_trail_head().step;
 
     this->g->is_game_paused = true;
 
     this->g->update();
 
-    EXPECT_THAT(s.get_trail_head().step, Eq(initial_footprint));
+    EXPECT_THAT(body.get_trail_head().step, Eq(initial_footprint));
 }
 
 TEST_THAT(Game,
@@ -205,15 +217,15 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsOver),
      THEN(DoesNotAdvanceTheSnake))
 {
-    auto& s = get_snake();
+    auto& body = get_snake_body();
 
-    auto const initial_footprint = s.get_trail_head().step;
+    auto const initial_footprint = body.get_trail_head().step;
 
-    this->g->is_game_over = true;
+    this->g->is_game_over.set();
 
     this->g->update();
 
-    EXPECT_THAT(s.get_trail_head().step, Eq(initial_footprint));
+    EXPECT_THAT(body.get_trail_head().step, Eq(initial_footprint));
 }
 
 TEST_THAT(Game,
@@ -221,25 +233,25 @@ TEST_THAT(Game,
      WHEN(WhenCalledForTheNthTimeWithNEqualToTheSnakeAdvancementInterval),
      THEN(AdvancesTheSnake))
 {
-    auto& s = get_snake();
+    auto& body = get_snake_body();
 
-    auto const initial_footprint = s.get_trail_head().step;
+    auto const initial_footprint = body.get_trail_head().step;
 
     auto const interval = this->g->snake_advancement_interval;
 
     this->g->update();
 
-    auto const next_footprint = s.get_trail_head().step;
+    auto const next_footprint = body.get_trail_head().step;
 
     EXPECT_THAT(next_footprint, Ne(initial_footprint));
 
     util::repeat(interval - 1, [this] { this->g->update(); });
 
-    EXPECT_THAT(s.get_trail_head().step, Eq(next_footprint));
+    EXPECT_THAT(body.get_trail_head().step, Eq(next_footprint));
 
     this->g->update();
 
-    EXPECT_THAT(s.get_trail_head().step, Ne(next_footprint));
+    EXPECT_THAT(body.get_trail_head().step, Ne(next_footprint));
 }
 
 TEST_THAT(Game,
@@ -311,7 +323,7 @@ TEST_THAT(Game,
      WHEN(WhenTheGameIsOver),
      THEN(DoesNotFillTheTerrain))
 {
-    this->g->is_game_over = true;
+    this->g->is_game_over.set();
 
     this->g->update();
 

@@ -1,30 +1,27 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/dead_snake_flag.hpp"
 #include "snake_overflow/game_over_flag.hpp"
 
 namespace snake_overflow
 {
 
-game_over_flag::game_over_flag(bool const is_over)
+game_over_flag::game_over_flag(bool const is_over, dead_snake_flag& snake_death)
     : is_over{is_over}
+    , snake_death{snake_death}
 {
 }
 
-game_over_flag& game_over_flag::operator = (bool const over)
+void game_over_flag::set()
 {
-    if ((this->is_over) && !over)
-    {
-        throw game_over_exception{};
-    }
+    this->is_over = true;
 
-    this->is_over = over;
-
-    return *this;
+    this->snake_death.set();
 }
 
 game_over_flag::operator bool () const
 {
-    return this->is_over;
+    return (this->is_over || this->snake_death);
 }
 
 }

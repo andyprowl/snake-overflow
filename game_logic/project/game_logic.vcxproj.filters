@@ -29,9 +29,6 @@
     <ClCompile Include="..\src\block.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\snake.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\position.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -107,6 +104,15 @@
     <ClCompile Include="..\src\game_boolean_parameter.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\snake_body.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\snake.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dead_snake_flag.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -146,9 +152,6 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\position.hpp">
-      <Filter>export\include\snake_overflow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\snake.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp">
@@ -215,6 +218,15 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\game_boolean_parameter.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\snake_body.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\snake.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\dead_snake_flag.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

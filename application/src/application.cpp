@@ -96,7 +96,9 @@ void application::create_game()
                                         {block_face::top, 
                                         canonical_direction::positive_y()}};
 
-    auto s = std::make_unique<snake>(*t, initial_step, 5);
+    auto body = std::make_unique<snake_body>(*t, initial_step, 5);
+
+    auto s = std::make_unique<snake>(std::move(body));
 
     auto p = std::make_unique<random_item_position_picker>(*t);
 

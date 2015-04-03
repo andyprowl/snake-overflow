@@ -45,9 +45,13 @@ std::unique_ptr<snake> CubeTerrainGameFixture::create_snake(terrain& habitat)
 
     this->initial_snake_length = 3;
 
-    auto s = std::make_unique<snake>(habitat, 
-                                     initial_snake_footprint,
-                                     this->initial_snake_length);
+    auto body = std::make_unique<snake_body>(habitat, 
+                                             initial_snake_footprint,
+                                             this->initial_snake_length);
+
+    this->hero_body = body.get();
+
+    auto s = std::make_unique<snake>(std::move(body));
 
     this->hero = s.get();
 
@@ -67,6 +71,11 @@ terrain& CubeTerrainGameFixture::get_terrain() const
 snake& CubeTerrainGameFixture::get_snake() const
 {
     return *(this->hero);
+}
+
+snake_body& CubeTerrainGameFixture::get_snake_body() const
+{
+    return *(this->hero_body);
 }
 
 } }

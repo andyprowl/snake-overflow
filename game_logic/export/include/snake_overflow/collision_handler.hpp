@@ -8,7 +8,7 @@ namespace snake_overflow
 
 struct position;
 
-class game;
+class dead_snake_flag;
 class snake;
 class terrain;
 
@@ -17,23 +17,25 @@ class collision_handler
 
 public:
 
-    collision_handler(game& g);
+    collision_handler(snake& hero, dead_snake_flag& dead_flag);
 
 private:
 
     void register_snake_movement_handler();
 
-    void on_snake_movement(snake& s, util::value_ref<position> pos) const;
+    void on_snake_movement(snake& hero, util::value_ref<position> pos) const;
 
-    void handle_item_collision(snake& s, util::value_ref<position> pos) const;
+    void handle_item_collision(snake& hero, 
+                               util::value_ref<position> pos) const;
 
-    void handle_self_collision(snake& s, util::value_ref<position> pos) const;
+    void handle_self_collision(snake& hero, 
+                               util::value_ref<position> pos) const;
 
 private:
 
-    game& parent_game;
-
-    terrain& ground;
+    snake& hero;
+    
+    dead_snake_flag& dead_flag;
 
     boost::signals2::scoped_connection on_movement_connection;
 

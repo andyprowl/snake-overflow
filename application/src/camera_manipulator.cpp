@@ -99,7 +99,7 @@ camera_view camera_manipulator::get_camera_view() const
 camera_view camera_manipulator::get_auto_follow_camera_view(
     snake const& s) const
 {
-    auto head = s.get_trail_head();
+    auto head = s.get_body().get_trail_head();
 
     auto pos = get_footprint_position(head.step);
 

@@ -8,17 +8,16 @@ namespace snake_overflow
 game::game(std::unique_ptr<terrain>&& habitat, 
            std::unique_ptr<snake>&& hero,
            std::unique_ptr<terrain_item_filler>&& habitat_filler)
-    : habitat{std::move(habitat)}
-    , hero{std::move(hero)}
-    , habitat_filler{std::move(habitat_filler)}
-    , is_game_over{false}
+    : is_game_over{false, hero->is_dead}
     , is_game_paused{false, is_game_over}
     , score{0, is_game_over, 0, boost::none}
     , snake_advancement_interval{3, is_game_over, 1, boost::none}
     , terrain_filling_interval{100, is_game_over, 1, boost::none}
+    , habitat{std::move(habitat)}
+    , hero{std::move(hero)}
+    , habitat_filler{std::move(habitat_filler)}
     , age{0}
 {
-    this->collider = std::make_unique<collision_handler>(*this);
 }
 
 terrain& game::get_terrain() const

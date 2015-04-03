@@ -108,7 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\block_test_suite.cpp" />
-    <ClCompile Include="..\src\collision_handler_test_suite.cpp" />
+    <ClCompile Include="..\src\snake_test_suite.cpp" />
     <ClCompile Include="..\src\diet_pill_test_suite.cpp" />
     <ClCompile Include="..\src\fruit_test_suite.cpp" />
     <ClCompile Include="..\src\cube_terrain_game_fixture.cpp" />
@@ -117,7 +117,7 @@
     <ClCompile Include="..\src\random_item_position_picker_test_suite.cpp" />
     <ClCompile Include="..\src\terrain_builder_test_suite.cpp" />
     <ClCompile Include="..\src\main.cpp" />
-    <ClCompile Include="..\src\snake_test_suite.cpp" />
+    <ClCompile Include="..\src\snake_body_test_suite.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

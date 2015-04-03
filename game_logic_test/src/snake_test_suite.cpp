@@ -1,602 +1,125 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/terrain_builder.hpp"
-#include "snake_overflow/position.hpp"
-#include "snake_overflow/snake.hpp"
-#include "snake_overflow/terrain.hpp"
-#include "util/repeat.hpp"
-#include "util/sequence.hpp"
-#include <memory>
+#include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
+#include "snake_overflow/testing/fake_item.hpp"
 
 namespace snake_overflow { namespace testing
 {
-
-using ::testing::Eq;
-using ::testing::Test;
-
-class Snake : public Test
+    
+class Snake : public CubeTerrainGameFixture
 {
 
 protected:
 
-    virtual void SetUp() override
+    std::unique_ptr<item> make_item(util::value_ref<position> pos)
     {
-        auto builder = terrain_builder{this->habitat};
-
-        builder.add_cube({0, 0, 0}, 
-                         this->terrain_side_length, 
-                         "texture.jpg", 
-                         {255, 255, 255, 255},
-                         true);
-
-        this->s = std::make_unique<snake>(habitat, 
-                                          initial_footprint, 
-                                          initial_length);
+        return std::make_unique<fake_item>(pos);
     }
 
-protected:
-
-    int terrain_side_length = 5;
-
-    terrain habitat;
-
-    point initial_location = {0, 0, 0};
-
-    block_face initial_face = block_face::front;
-
-    position initial_position{initial_location, initial_face};
-
-    canonical_direction initial_direction{canonical_axis::z, 
-                                          orientation::positive};
-
-    int initial_length = 3;
-
-    footprint initial_footprint = {initial_location, 
-                                   {initial_face, initial_direction}};
-
-    std::unique_ptr<snake> s;
+    // The collision handler is implicitly created as part of the game object.
 
 };
 
 TEST_THAT(Snake,
-     WHAT(GetTrail),
-     WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASequenceOfFootprintOfTheLengthPassedAtConstruction))
+     WHAT(Advance),
+     WHEN(WhenTheHeadOfTheSnakeCollidesWithAnItem),
+     THEN(LetsTheItemBePickedByTheSnake))
 {
-    auto const trail = this->s->get_trail();
+    auto i = make_item({{0, 0, 4}, block_face::front});
 
-    EXPECT_THAT(trail.size(), Eq(this->initial_length));
-}
+    auto& t = get_terrain();
 
-TEST_THAT(Snake,
-     WHAT(GetTrail),
-     WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsASetOfConsecutiveFootprintStartingFromTheInitialOne))
-{
-    auto const trail = this->s->get_trail();
+    t.add_item(std::move(i));
 
-    ASSERT_THAT(trail.size(), Eq(this->initial_length));    
+    auto& s = get_snake();
 
-    EXPECT_THAT(trail[0].step, Eq(this->initial_footprint));
+    s.advance();
 
-    auto const dir = get_footprint_direction_vector(this->initial_footprint);    
-    for (auto const i : util::sequence(0, this->initial_length))
-    {
-        auto expected_block = this->initial_location + i * dir;
-        EXPECT_THAT(trail[i].step.location, Eq(expected_block));
-    }
-}
-
-TEST_THAT(Snake,
-     WHAT(GetDirection),
-     WHEN(ImmediatelyAfterConstruction),
-     THEN(ReturnsTheDirectionPassedAtConstruction))
-{
-    auto const dir = this->s->get_direction();
-
-    EXPECT_THAT(dir, Eq(this->initial_direction));
-}
-
-TEST_THAT(Snake,
-     WHAT(GetTrailHead),
-     WHEN(Always),
-     THEN(ReturnsTheDynamicsOfTheHeadOfTheSnake))
-{
-    auto const d1 = this->s->get_trail_head();
-
-    EXPECT_THAT(get_footprint_position(d1.step).location, 
-                Eq(point{0, 0, this->initial_length - 1}));
-
-    EXPECT_THAT(get_footprint_direction(d1.step), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_right();
-    auto const d2 = this->s->get_trail_head();
-    EXPECT_THAT(get_footprint_direction(d2.step), 
-                Eq(canonical_direction::positive_x()));
-    
+    EXPECT_THROW(s.advance(), item_picked_exception);
 }
 
 TEST_THAT(Snake,
      WHAT(Advance),
-     WHEN(Always),
-     THEN(ShiftsTheBodyOfTheSnakeOnePositionTowardsTheCurrentDirection))
+     WHEN(WhenTheHeadOfTheSnakeCollidesWithAPartOfItsBody),
+     THEN(KillsTheSnake))
 {
-    util::repeat(4, [this] { this->s->advance(); });
+    auto& s = get_snake();
 
-    auto const trail = this->s->get_trail();
+    s.grow(5);
 
-    ASSERT_THAT(trail.size(), Eq(3u));
+    s.turn_right();
 
-    EXPECT_THAT(get_footprint_position(trail[0].step), 
-                Eq(position{{0, 0, 4}, block_face::front}));
+    s.advance();
 
-    EXPECT_THAT(get_footprint_position(trail[1].step), 
-                Eq(position{{0, 0, 4}, block_face::top}));
+    s.turn_right();
 
-    EXPECT_THAT(get_footprint_position(trail[2].step), 
-                Eq(position{{0, 1, 4}, block_face::top}));
+    s.advance();
+
+    s.turn_right();
+
+    s.advance();
+
+    EXPECT_TRUE(s.is_dead);
 }
 
 TEST_THAT(Snake,
      WHAT(Advance),
-     WHEN(Always),
-     THEN(InvokesAllHandlersRegisteredForMovementEvents))
+     WHEN(WhenTheSnakeIsDead),
+     THEN(Throws))
 {
-    boost::optional<footprint> step;
+    auto& s = get_snake();
 
-    this->s->register_movement_handler([&step] (util::value_ref<footprint> fp)
-    {
-        step = fp;
-    });
+    s.is_dead.set();
 
-    this->s->advance();
+    EXPECT_THROW(s.advance(), dead_snake_exception);
+}
 
-    auto const expected_step = footprint{
-        {0, 0, 3}, 
-        {block_face::front, canonical_direction::positive_z()}};
+TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenTheSnakeIsDead),
+     THEN(Throws))
+{
+    auto& s = get_snake();
 
-    EXPECT_THAT(*step, Eq(expected_step));
+    s.is_dead.set();
+
+    EXPECT_THROW(s.turn_left(), dead_snake_exception);
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenTheSnakeIsDead),
+     THEN(Throws))
+{
+    auto& s = get_snake();
+
+    s.is_dead.set();
+
+    EXPECT_THROW(s.turn_right(), dead_snake_exception);
 }
 
 TEST_THAT(Snake,
      WHAT(Grow),
-     WHEN(GivenASize),
-     THEN(MakesFollowingAdvancementsGrowTheSnakeRatherThanShiftingIt))
+     WHEN(WhenTheSnakeIsDead),
+     THEN(Throws))
 {
-    this->s->grow(2);
+    auto& s = get_snake();
 
-    util::repeat(4, [this] { this->s->advance(); });
+    s.is_dead.set();
 
-    auto const trail = this->s->get_trail();
-
-    ASSERT_THAT(trail.size(), Eq(5u));
-
-    EXPECT_THAT(get_footprint_position(trail[0].step), 
-                Eq(position{{0, 0, 2}, block_face::front}));
-    
-    EXPECT_THAT(get_footprint_position(trail[1].step), 
-                Eq(position{{0, 0, 3}, block_face::front}));
-    
-    EXPECT_THAT(get_footprint_position(trail[2].step), 
-                Eq(position{{0, 0, 4}, block_face::front}));
-    
-    EXPECT_THAT(get_footprint_position(trail[3].step), 
-                Eq(position{{0, 0, 4}, block_face::top}));
-    
-    EXPECT_THAT(get_footprint_position(trail[4].step), 
-                Eq(position{{0, 1, 4}, block_face::top}));
+    EXPECT_THROW(s.grow(1), dead_snake_exception);
 }
 
 TEST_THAT(Snake,
      WHAT(Shrink),
-     WHEN(GivenASize),
-     THEN(MakesFollowingAdvancementsShrinkTheSnakeRatherThanShiftingIt))
+     WHEN(WhenTheSnakeIsDead),
+     THEN(Throws))
 {
-    this->s->grow(1);
+    auto& s = get_snake();
 
-    this->s->advance();
+    s.is_dead.set();
 
-    this->s->shrink(2);
-
-    util::repeat(4, [this] { this->s->advance(); });
-
-    auto const trail = this->s->get_trail();
-
-    ASSERT_THAT(trail.size(), Eq(2u));
-
-    EXPECT_THAT(get_footprint_position(trail[0].step), 
-                Eq(position{{0, 1, 4}, block_face::top}));
-
-    EXPECT_THAT(get_footprint_position(trail[1].step), 
-                Eq(position{{0, 2, 4}, block_face::top}));
-}
-
-TEST_THAT(Snake,
-     WHAT(Shrink),
-     WHEN(GivenASizeWhichWouldReduceTheSnakeToLessThanTwoCells),
-     THEN(OnlyShrinksTheSnakeAsShortAsTwoCells))
-{
-    this->s->shrink(2);
-
-    util::repeat(4, [this] { this->s->advance(); });
-
-    auto const trail = this->s->get_trail();
-
-    ASSERT_THAT(trail.size(), Eq(2u));
-
-    EXPECT_THAT(get_footprint_position(trail[0].step), 
-                Eq(position{{0, 0, 4}, block_face::top}));
-
-    EXPECT_THAT(get_footprint_position(trail[1].step), 
-                Eq(position{{0, 1, 4}, block_face::top}));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheFrontSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
-{
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheFrontSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheBackSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
-{
-    util::repeat(8, [this] { this->s->advance(); });
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheBackSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    util::repeat(8, [this] { this->s->advance(); });
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheLeftSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
-{
-    this->s->turn_left();
-    util::repeat(3, [this] { this->s->advance(); });
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheLeftSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItLeft))
-{
-    this->s->turn_left();
-    util::repeat(3, [this] { this->s->advance(); });
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheRightSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    this->s->turn_right();
-    util::repeat(7, [this] { this->s->advance(); });
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheRightSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    this->s->turn_right();
-    util::repeat(7, [this] { this->s->advance(); });
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_z()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheTopSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    util::repeat(4, [this] { this->s->advance(); });
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheTopSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    util::repeat(4, [this] { this->s->advance(); });
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnLeft),
-     WHEN(WhenWalkingOnTheBottomSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    this->s->turn_right();
-    this->s->advance();
-    this->s->turn_right();
-    util::repeat(3, [this] { this->s->advance(); });
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_left();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(TurnRight),
-     WHEN(WhenWalkingOnTheBottomSurface),
-     THEN(CorrectlyChangesTheDirectionOfMovementOfTheSnakeByTurningItRight))
-{
-    this->s->turn_right();
-    this->s->advance();
-    this->s->turn_right();
-    util::repeat(3, [this] { this->s->advance(); });
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::negative_y()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_x()));
-
-    this->s->turn_right();
-    EXPECT_THAT(this->s->get_direction(), 
-                Eq(canonical_direction::positive_y()));
-}
-
-TEST_THAT(Snake,
-     WHAT(GetTrail),
-     WHEN(Always),
-     THEN(ReturnsInformationOnTheManeuvreMadeAtEachPositionInTheTrail))
-{
-    this->s->grow(3);
-
-    this->s->advance();
-    this->s->turn_right();
-    this->s->advance();
-    this->s->advance();
-    this->s->turn_right();
-    this->s->advance();
-
-    auto const trail = this->s->get_trail();
-    ASSERT_THAT(trail.size(), Eq(6u));
-
-    EXPECT_THAT(trail[0].action, Eq(maneuvre::straight_move));
-    EXPECT_THAT(trail[1].action, Eq(maneuvre::straight_move));
-    EXPECT_THAT(trail[2].action, Eq(maneuvre::right_turn));
-    EXPECT_THAT(trail[3].action, Eq(maneuvre::straight_move));
-    EXPECT_THAT(trail[4].action, Eq(maneuvre::right_turn));
-    EXPECT_THAT(trail[5].action, Eq(maneuvre::straight_move));
-}
-
-TEST_THAT(Snake,
-     WHAT(GetLength),
-     WHEN(Always),
-     THEN(ReturnsTheNumberOfPartsInTheBodyOfTheSnake))
-{
-    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length));
-
-    this->s->grow(3);
-
-    this->s->advance();
-    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 1));
-
-    this->s->turn_right();
-
-    this->s->advance();
-    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 2));
-
-    this->s->advance();
-    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
-
-    this->s->turn_right();
-
-    this->s->advance();
-    EXPECT_THAT(this->s->get_length(), Eq(this->initial_length + 3));
-}
-
-TEST_THAT(Snake,
-     WHAT(OccupiesPosition),
-     WHEN(GivenAPositionThatTheSnakeOccupies),
-     THEN(ReturnsTrue))
-{
-    EXPECT_TRUE(this->s->is_position_in_tail({{0, 0, 0}, block_face::front}));
-
-    EXPECT_TRUE(this->s->is_position_in_tail({{0, 0, 1}, block_face::front}));
-}
-
-TEST_THAT(Snake,
-     WHAT(OccupiesPosition),
-     WHEN(GivenAPositionThatTheSnakeDoesNotOccupy),
-     THEN(ReturnsFalse))
-{
-    EXPECT_FALSE(this->s->is_position_in_tail({{0, 0, 3}, block_face::front}));
-
-    EXPECT_FALSE(this->s->is_position_in_tail({{1, 0, 1}, block_face::front}));
-
-    EXPECT_FALSE(this->s->is_position_in_tail({{0, 0, 0}, block_face::bottom}));
+    EXPECT_THROW(s.shrink(1), dead_snake_exception);
 }
 
 } }
