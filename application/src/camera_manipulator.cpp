@@ -9,8 +9,11 @@
 namespace snake_overflow
 {
 
+static auto const initial_camera_distance = 600.f;
+
 camera_manipulator::camera_manipulator()
     : auto_follow{false}
+    , camera_distance{initial_camera_distance}
 {
     setup_arcball_manipulator();
 }
@@ -74,6 +77,13 @@ void camera_manipulator::continue_arcball_drag(cinder::Vec2i mouse_xy)
 void camera_manipulator::zoom(float const amount)
 {
     this->camera_distance -= amount * this->zoom_factor;
+}
+
+void camera_manipulator::reset()
+{
+    this->camera_distance = initial_camera_distance;
+
+    this->arcball.resetQuat();
 }
 
 void camera_manipulator::setup_arcball_manipulator()

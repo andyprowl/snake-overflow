@@ -107,10 +107,10 @@
     <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
+    <ClInclude Include="..\include\snake_overflow\terrain_provider.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\terrain_provider.hpp">
+    <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

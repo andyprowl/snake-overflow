@@ -23,6 +23,15 @@
 namespace snake_overflow
 {
 
+void application::start_new_game()
+{
+    create_game();
+
+    create_keyboard_input_handler();
+
+    this->camera_handler->reset();
+}
+
 void application::prepareSettings(Settings* const settings)
 {
     settings->setWindowSize(1024, 768);
@@ -32,17 +41,15 @@ void application::prepareSettings(Settings* const settings)
 
 void application::setup()
 {
-    create_terrain_provider();
-
-    create_game();
-
     create_renderers();
 
     create_camera_manipulator();
 
-    create_keyboard_input_handler();
-
     setup_depth_buffer();
+
+    create_terrain_provider();
+
+    start_new_game();
 
     this->last_frame_time = std::chrono::system_clock::now();
 }
@@ -63,7 +70,14 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    this->keyboard_handler->process_keyboard_input(e.getCode());
+    if (e.getCode() == cinder::app::KeyEvent::KEY_F5)
+    {
+        start_new_game();
+    }
+    else
+    {
+        this->keyboard_handler->process_keyboard_input(e.getCode());
+    }
 }
 
 void application::mouseDown(cinder::app::MouseEvent const e)

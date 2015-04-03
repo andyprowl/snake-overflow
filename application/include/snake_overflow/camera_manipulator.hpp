@@ -29,6 +29,8 @@ public:
 
     void zoom(float amount);
 
+    void reset();
+
 private:
 
     void setup_arcball_manipulator();
@@ -41,7 +43,7 @@ private:
 
     cinder::CameraPersp camera;
     
-    float camera_distance = 600.f;
+    float camera_distance;
 
     float zoom_factor = 20.f;
 

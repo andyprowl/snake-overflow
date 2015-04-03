@@ -38,8 +38,6 @@ private:
 
     void create_terrain_provider();
 
-    void create_game();
-
     void create_renderers();
 
     void create_world_renderer();
@@ -48,9 +46,13 @@ private:
 
     void create_camera_manipulator();
 
-    void create_keyboard_input_handler();
-
     void setup_depth_buffer();
+
+    void start_new_game();
+
+    void create_game();
+    
+    void create_keyboard_input_handler();
 
     void draw_frame();
 
