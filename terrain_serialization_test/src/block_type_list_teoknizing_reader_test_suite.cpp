@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/serialization/block_type_list_reader.hpp"
+#include "snake_overflow/serialization/block_type_list_tokenizing_reader.hpp"
 #include "snake_overflow/serialization/block_type.hpp"
 #include <sstream>
 
@@ -10,16 +10,16 @@ namespace snake_overflow { namespace serialization { namespace testing
 using ::testing::Eq;
 using ::testing::Test;
 
-class BlockTypeListReader : public Test
+class BlockTypeListTokenizingReader : public Test
 {
 
 protected:
 
-    block_type_list_reader reader;
+    block_type_list_tokenizing_reader reader;
 
 };
 
-TEST_THAT(BlockTypeListReader,
+TEST_THAT(BlockTypeListTokenizingReader,
      WHAT(FromStream),
      WHEN(GivenAContentThatDoesNotStartWithTheProperToken),
      THEN(Throws))
@@ -31,10 +31,10 @@ TEST_THAT(BlockTypeListReader,
 
     auto ss = std::stringstream{content};
 
-    EXPECT_THROW(reader.from_stream(ss), bad_block_type_list_exception);
+    EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
 
-TEST_THAT(BlockTypeListReader,
+TEST_THAT(BlockTypeListTokenizingReader,
      WHAT(FromStream),
      WHEN(GivenAContentThatDoesNotEndWithTheProperToken),
      THEN(Throws))
@@ -46,10 +46,10 @@ TEST_THAT(BlockTypeListReader,
 
     auto ss = std::stringstream{content};
 
-    EXPECT_THROW(reader.from_stream(ss), bad_block_type_list_exception);
+    EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
 
-TEST_THAT(BlockTypeListReader,
+TEST_THAT(BlockTypeListTokenizingReader,
      WHAT(FromStream),
      WHEN(GivenAContentWhereBlockTypeSymbolsContainMoreThanOneCharacter),
      THEN(ReturnsAMapWithThePropertiesOfTheListedBlockTypes))
@@ -62,10 +62,10 @@ TEST_THAT(BlockTypeListReader,
 
     auto ss = std::stringstream{content};
 
-    EXPECT_THROW(reader.from_stream(ss), bad_block_type_list_exception);
+    EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
 
-TEST_THAT(BlockTypeListReader,
+TEST_THAT(BlockTypeListTokenizingReader,
      WHAT(FromStream),
      WHEN(GivenAProperlyEncodedListOfBlockTypes),
      THEN(ReturnsAMapWithThePropertiesOfTheListedBlockTypes))
@@ -78,7 +78,7 @@ TEST_THAT(BlockTypeListReader,
 
     auto ss = std::stringstream{content};
 
-    auto blocks = reader.from_stream(ss);
+    auto blocks = this->reader.from_stream(ss);
 
     EXPECT_THAT(blocks.size(), Eq(3u));
 

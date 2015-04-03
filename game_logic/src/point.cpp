@@ -88,4 +88,16 @@ point operator * (int const factor, util::value_ref<point> p)
     return p * factor;
 }
 
+point cross(util::value_ref<point> lhs, util::value_ref<point> rhs)
+{
+    return {lhs.y * rhs.z - lhs.z * rhs.y, 
+            lhs.z * rhs.x - lhs.x * rhs.z, 
+            lhs.x * rhs.y - lhs.y * rhs.x};
+}
+
+int dot(util::value_ref<point> lhs, util::value_ref<point> rhs)
+{
+    return (lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z);
+}
+
 }

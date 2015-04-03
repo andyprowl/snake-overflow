@@ -29,13 +29,19 @@
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_tokenizing_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_reader.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_reader.hpp">
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_tokenizing_reader.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp">
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_reader.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
   </ItemGroup>
@@ -43,10 +49,13 @@
     <ClCompile Include="..\src\block_type.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\block_type_list_reader.cpp">
+    <ClCompile Include="..\src\stdafx.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\stdafx.cpp">
+    <ClCompile Include="..\src\block_type_list_tokenizing_reader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_layer_tokenizing_reader.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

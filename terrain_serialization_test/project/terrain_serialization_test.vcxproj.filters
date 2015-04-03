@@ -1,19 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="include\snake_overflow">
+    <Filter Include="export">
+      <UniqueIdentifier>{57afb74f-6a5b-4f70-8c55-4e179a3eedda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="export\include\snake_overflow">
       <UniqueIdentifier>{6296b629-15b0-49ec-9a2b-e53540cf11fa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\snake_overflow\testing">
-      <UniqueIdentifier>{18baba12-9ead-49c0-bc68-6e2c4c5b9c98}</UniqueIdentifier>
+    <Filter Include="export\include\snake_overflow\serialization">
+      <UniqueIdentifier>{8d90487c-9582-4378-bd53-a6ec4ba60ba7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{82253be4-92e1-4029-bf92-d2d5a0289bea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include\snake_overflow\serialization\testing">
+      <UniqueIdentifier>{721e8a32-7d14-4b2b-ab68-43acf1ea57a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,16 +35,19 @@
     <ClCompile Include="..\src\terrain_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_layer_reader_test_suite.cpp">
+    <ClCompile Include="..\src\block_type_list_teoknizing_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\block_type_list_reader_test_suite.cpp">
+    <ClCompile Include="..\src\terrain_layer_tokenizing_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\testing\block_type_list_reader_mock.hpp">
+      <Filter>export\include\snake_overflow\serialization\testing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

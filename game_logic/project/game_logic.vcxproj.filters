@@ -262,5 +262,8 @@
     <ClInclude Include="..\export\include\snake_overflow\block_type.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\util\tokenize.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
