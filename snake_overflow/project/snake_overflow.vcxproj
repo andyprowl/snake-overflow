@@ -14,7 +14,7 @@
     <ProjectGuid>{FDD68AC9-D34D-4C17-AA56-00C144DA8360}</ProjectGuid>
     <RootNamespace>CinderProject</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <ProjectName>application</ProjectName>
+    <ProjectName>snake_overflow</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">

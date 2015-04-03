@@ -2,11 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "application", "application\project\application.vcxproj", "{FDD68AC9-D34D-4C17-AA56-00C144DA8360}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D50477EE-9571-420E-87D5-81CB854355A8} = {D50477EE-9571-420E-87D5-81CB854355A8}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game_logic", "game_logic\project\game_logic.vcxproj", "{D50477EE-9571-420E-87D5-81CB854355A8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock", "gmock_1.7.0\msvc\2013\gmock.vcxproj", "{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}"
@@ -17,16 +12,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "game_logic_test", "game_log
 		{D50477EE-9571-420E-87D5-81CB854355A8} = {D50477EE-9571-420E-87D5-81CB854355A8}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snake_overflow", "snake_overflow\project\snake_overflow.vcxproj", "{FDD68AC9-D34D-4C17-AA56-00C144DA8360}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Debug|x64.ActiveCfg = Debug|x64
-		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Debug|x64.Build.0 = Debug|x64
-		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.ActiveCfg = Release|x64
-		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.Build.0 = Release|x64
 		{D50477EE-9571-420E-87D5-81CB854355A8}.Debug|x64.ActiveCfg = Debug|x64
 		{D50477EE-9571-420E-87D5-81CB854355A8}.Debug|x64.Build.0 = Debug|x64
 		{D50477EE-9571-420E-87D5-81CB854355A8}.Release|x64.ActiveCfg = Release|x64
@@ -39,6 +32,10 @@ Global
 		{E6A85327-8348-4BD7-944F-ED0F34BCBA86}.Debug|x64.Build.0 = Debug|x64
 		{E6A85327-8348-4BD7-944F-ED0F34BCBA86}.Release|x64.ActiveCfg = Release|x64
 		{E6A85327-8348-4BD7-944F-ED0F34BCBA86}.Release|x64.Build.0 = Release|x64
+		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Debug|x64.ActiveCfg = Debug|x64
+		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Debug|x64.Build.0 = Debug|x64
+		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.ActiveCfg = Release|x64
+		{FDD68AC9-D34D-4C17-AA56-00C144DA8360}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
