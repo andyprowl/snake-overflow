@@ -27,21 +27,21 @@ TEST_THAT(TerrainLayerSetDelegatingReader,
 {
     auto const content = "BEGIN LAYER { NORMAL:-y; HEIGHT:2; ORIGIN:0,0 }\n"
                          "   \n"
-                         "  111      \n"
+                         "    1 1 1       \n"
                          "\n"
                          "END LAYER\n"
                          "\n"
                          "BEGIN LAYER { NORMAL:-y; HEIGHT:3; ORIGIN:0,0 }\n"
-                         " 234  \n"
+                         "  2 3 4    \n"
                          "\n"
-                         "  3      \n"
+                         "    3       \n"
                          "END LAYER\n"
                          "\n"
                          "BEGIN LAYER { NORMAL:-y; HEIGHT:4; ORIGIN:0,0 }\n"
                          "\n"
                          "\n"
                          "\n"
-                         "        8\n"
+                         "                8 \n"
                          "END LAYER\n";
 
     auto ss = std::istringstream{content};

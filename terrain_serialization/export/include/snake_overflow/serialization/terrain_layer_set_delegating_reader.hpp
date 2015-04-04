@@ -18,6 +18,10 @@ public:
 
 private:
 
+    void eat_empty_line(std::istream& is) const;
+
+private:
+
     terrain_layer_reader& layer_reader;
 
 };

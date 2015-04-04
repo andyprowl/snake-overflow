@@ -126,8 +126,8 @@ void application::setup_depth_buffer()
 
 void application::create_terrain_provider()
 {
-    this->habitat_provider = std::make_unique<default_terrain_provider>();
-    //this->habitat_provider = std::make_unique<terrain_prototype_repository>();
+    //this->habitat_provider = std::make_unique<default_terrain_provider>();
+    this->habitat_provider = std::make_unique<terrain_prototype_repository>();
 }
 
 void application::start_new_game()
@@ -149,7 +149,7 @@ void application::create_game()
 
     auto const initial_step = pick_random_starting_footprint(*p, *t);
 
-    auto body = std::make_unique<snake_body>(*t, initial_step, 5);
+    auto body = std::make_unique<snake_body>(*t, initial_step, 3);
 
     auto s = std::make_unique<snake>(std::move(body));
 

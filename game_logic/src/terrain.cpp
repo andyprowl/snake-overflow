@@ -9,6 +9,8 @@
 #include "snake_overflow/terrain.hpp"
 #include "util/contains.hpp"
 #include <algorithm>
+#include <iterator>
+#include <vector>
 
 namespace snake_overflow
 {
@@ -104,23 +106,6 @@ std::vector<block> terrain::get_all_blocks() const
     return v;
 }
 
-void terrain::sort_for_rendering()
-{
-    std::stable_sort(std::begin(this->blocks), 
-                     std::end(this->blocks),
-                     [] (block const* const b1, block const* const b2)
-    {
-        if (b1->color.alpha == b2->color.alpha)
-        {
-            return (b1->origin < b2->origin);
-        }
-        else
-        {
-            return (b1->color.alpha > b2->color.alpha);
-        }
-    });
-}
-
 void terrain::add_item(std::unique_ptr<item>&& i)
 {
     auto const pos = i->get_position();
@@ -183,6 +168,13 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
     {
         return compute_fallback_turn_on_same_block(f);
     }
+}
+
+void terrain::finalize_for_rendering()
+{
+    sort_for_rendering_with_alpha_blending();
+
+    make_occluded_blocks_transparent();
 }
 
 void terrain::throw_if_position_is_not_viable(
@@ -278,6 +270,64 @@ footprint terrain::compute_fallback_turn_on_same_block(
     auto const fallback = get_continuation_profile(d.profile);
 
     return {d.location, fallback};
+}
+
+void terrain::sort_for_rendering_with_alpha_blending()
+{
+    std::stable_sort(std::begin(this->blocks), 
+                     std::end(this->blocks),
+                     [] (block const* const b1, block const* const b2)
+    {
+        if (b1->color.alpha == b2->color.alpha)
+        {
+            return (b1->origin < b2->origin);
+        }
+        else
+        {
+            return (b1->color.alpha > b2->color.alpha);
+        }
+    });
+}
+
+void terrain::make_occluded_blocks_transparent()
+{
+    auto occluded_blocks = std::vector<block*>{};
+
+    std::copy_if(std::cbegin(this->blocks),
+                 std::cend(this->blocks),
+                 std::back_inserter(occluded_blocks),
+                 [this] (block const* const b)
+    {
+        return has_only_non_transparent_neighbors(b->origin);
+    });
+
+    for (auto const b : occluded_blocks)
+    {
+        b->color.alpha = 0;
+    }
+}
+
+bool terrain::has_only_non_transparent_neighbors(
+    util::value_ref<point> location) const
+{
+    return (contains_non_transparent_block(location + point::x_unit()) &&
+            contains_non_transparent_block(location - point::x_unit()) &&
+            contains_non_transparent_block(location + point::y_unit()) &&
+            contains_non_transparent_block(location - point::y_unit()) &&
+            contains_non_transparent_block(location + point::z_unit()) &&
+            contains_non_transparent_block(location - point::z_unit()));
+}
+
+bool terrain::contains_non_transparent_block(util::value_ref<point> p) const
+{
+    auto const it = this->block_index.find(p);
+
+    if (it == std::cend(this->block_index))
+    {
+        return false;
+    }
+
+    return (it->second.color.alpha == 255);
 }
 
 bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)

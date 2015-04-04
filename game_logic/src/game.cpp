@@ -11,7 +11,7 @@ game::game(std::unique_ptr<terrain>&& habitat,
     : is_game_over{false, hero->is_dead}
     , is_game_paused{false, is_game_over}
     , score{0, is_game_over, 0, boost::none}
-    , snake_advancement_interval{3, is_game_over, 1, boost::none}
+    , snake_advancement_interval{4, is_game_over, 1, boost::none}
     , terrain_filling_interval{100, is_game_over, 1, boost::none}
     , habitat{std::move(habitat)}
     , hero{std::move(hero)}

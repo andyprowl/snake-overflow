@@ -23,9 +23,9 @@ TEST_THAT(TerrainLayerTokenizingReader,
      THEN(Throws))
 {
     auto const content = "\n"
-                         "  111\n"
-                         " 122211\n"
-                         "321\n"
+                         "    1 1 1 \n"
+                         "  1 2 2 2 1 1 \n"
+                         "3 2 1 \n"
                          "\n"
                          "END LAYER\n";
 
@@ -41,9 +41,9 @@ TEST_THAT(TerrainLayerTokenizingReader,
 {
     auto const content = "BEGIN LAYER { NORMAL:+z; DEPTH:0; ORIGIN:-50,-50 }\n"
                          "\n"
-                         "  111\n"
-                         " 122211\n"
-                         "321\n"
+                         "    1 1 1 \n"
+                         "  1 2 2 2 1 1 \n"
+                         "3 2 1 \n"
                          "\n";
 
     auto ss = std::istringstream{content};
@@ -58,10 +58,10 @@ TEST_THAT(TerrainLayerTokenizingReader,
 {
     auto const content = "BEGIN LAYER { NORMAL:+z; HEIGHT:5; ORIGIN:-50,-50 }\n"
                          "   \n"
-                         "  111      \n"
-                         " 122 211\n"
+                         "    1 1 1        \n"
+                         "  1 2 2   2 1 1 \n"
                          "\n"
-                         "321\n"
+                         "3 2 1 \n"
                          "\n"
                          "END LAYER\n";
 
@@ -94,10 +94,10 @@ TEST_THAT(TerrainLayerTokenizingReader,
 {
     auto const content = "BEGIN LAYER { NORMAL:-y; HEIGHT:2; ORIGIN:0,0 }\n"
                          "   \n"
-                         "  111      \n"
-                         " 122 211\n"
+                         "    1 1 1        \n"
+                         "  1 2 2   2 1 1 \n"
                          "\n"
-                         "321\n"
+                         "3 2 1 \n"
                          "\n"
                          "END LAYER\n";
 

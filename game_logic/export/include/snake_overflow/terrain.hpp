@@ -72,8 +72,6 @@ public:
 
     std::vector<block> get_all_blocks() const;
 
-    void sort_for_rendering();
-
     void add_item(std::unique_ptr<item>&& i);
 
     std::unique_ptr<item> remove_item(util::value_ref<item> i);
@@ -83,6 +81,8 @@ public:
     std::vector<position> get_all_free_item_positions() const;
 
     footprint compute_next_footprint(util::value_ref<footprint> d) const;
+
+    void finalize_for_rendering();
 
 private:
 
@@ -104,6 +104,15 @@ private:
 
     footprint compute_fallback_turn_on_same_block(
         util::value_ref<footprint> d) const;
+
+    bool has_only_non_transparent_neighbors(
+        util::value_ref<point> location) const;
+
+    bool contains_non_transparent_block(util::value_ref<point> p) const;
+
+    void sort_for_rendering_with_alpha_blending();
+
+    void make_occluded_blocks_transparent();
 
 private:
     

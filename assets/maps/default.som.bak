@@ -25,6 +25,7 @@ W: water4.jpg; 255,255,255,128; N
 X: water2.jpg; 255,255,255,128; N
 Y: ice2.jpg; 255,255,255,255; S
 Z: ice3.jpg; 255,255,255,255; S
+Z: ice3.jpg; 255,255,255,255; S
 
 END BLOCK TYPES
 
@@ -1139,8 +1140,8 @@ BEGIN LAYER { NORMAL:+y; DEPTH:12; ORIGIN:-10,10 }
                                               
                                               
                                               
-                    Z Z Z                     
-                    Z Z Z                     
+                    I I I                     
+                    I I I                     
                                               
                                               
                                               
@@ -1164,8 +1165,8 @@ BEGIN LAYER { NORMAL:+y; DEPTH:13; ORIGIN:-10,10 }
                                               
                                               
                                               
-                    Z Z Z                     
-                    Z Z Z                     
+                    I I I                     
+                    I I I                     
                                               
                                               
                                               
@@ -1189,8 +1190,8 @@ BEGIN LAYER { NORMAL:+y; DEPTH:14; ORIGIN:-10,10 }
                                               
                                               
                                               
-                    Z Z Z                     
-                    Z Z Z                     
+                    I I I                     
+                    I I I                     
                                               
                                               
                                               

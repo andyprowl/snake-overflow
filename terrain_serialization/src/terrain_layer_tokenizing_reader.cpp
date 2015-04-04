@@ -63,8 +63,8 @@ static auto const transformers = std::unordered_map<block_face, transformer>{
     {block_face::bottom, [] (point p) { return point{+p.x, -p.y, -p.z}; }},
     {block_face::front, [] (point p) { return point{+p.x, -p.z, p.y}; }},
     {block_face::back, [] (point p) { return point{-p.x, +p.z, +p.y}; }},
-    {block_face::left, [] (point p) { return point{-p.y, +p.z, -p.x}; }},
-    {block_face::right, [] (point p) { return point{+p.y, +p.z, +p.x}; }}};
+    {block_face::left, [] (point p) { return point{-p.z, -p.x, +p.y}; }},
+    {block_face::right, [] (point p) { return point{+p.z, +p.x, +p.y}; }}};
    
 std::unordered_map<point, char> terrain_layer_tokenizing_reader::from_stream(
     std::istream& is)
@@ -97,7 +97,7 @@ void terrain_layer_tokenizing_reader::parse_layer_line(
     {
         if (!std::isspace(line[i]))
         {
-            auto const p = point{info.origin.x + i, 
+            auto const p = point{info.origin.x + i / 2, 
                                  info.origin.y - row, 
                                  info.depth};
 

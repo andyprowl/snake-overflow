@@ -20,7 +20,6 @@ std::unordered_map<point, char>
 {
     auto result = std::unordered_map<point, char>{};
 
-    auto empty_line = std::string{};
     while (is)
     {
         auto partial_result = this->layer_reader.from_stream(is);
@@ -28,11 +27,19 @@ std::unordered_map<point, char>
         result.insert(std::make_move_iterator(std::begin(partial_result)),
                       std::make_move_iterator(std::end(partial_result)));
 
-        std::getline(is, empty_line);
-        assert(empty_line.empty());
+        eat_empty_line(is);
     }
 
     return result;
+}
+
+void terrain_layer_set_delegating_reader::eat_empty_line(std::istream& is) const
+{
+    auto empty_line = std::string{};
+    
+    std::getline(is, empty_line);
+    
+    assert(empty_line.empty());
 }
 
 } }

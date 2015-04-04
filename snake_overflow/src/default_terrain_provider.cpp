@@ -64,7 +64,7 @@ std::unique_ptr<terrain> default_terrain_provider::create_terrain(
                     false,
                     false);
 
-    habitat->sort_for_rendering();
+    habitat->finalize_for_rendering();
 
     return std::move(habitat);
 }
