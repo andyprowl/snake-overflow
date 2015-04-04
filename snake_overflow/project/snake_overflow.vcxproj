@@ -47,7 +47,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\terrain_serialization\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;NOMINMAX;_WIN32_WINNT=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -76,7 +76,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\game_logic\export\include;..\..\terrain_serialization\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost;c:\Program Files\cinder_0.8.6_vc2013\include</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;NOMINMAX;_WIN32_WINNT=0x0502;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -147,12 +147,12 @@
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\game_logic\project\game_logic.vcxproj">
-      <Project>{d50477ee-9571-420e-87d5-81cb854355a8}</Project>
-    </ProjectReference>
+    <ResourceCompile Include="..\resources\resources.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\resources\resources.rc" />
+    <ProjectReference Include="..\..\terrain_serialization\project\terrain_serialization.vcxproj">
+      <Project>{3f69421b-afff-4421-afea-fca77d4ffb8e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
