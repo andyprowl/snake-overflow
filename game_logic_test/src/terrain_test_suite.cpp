@@ -839,4 +839,24 @@ TEST_THAT(Terrain,
                 {{0, 0, 3}, {block_face::top, positive_y_direction}});
 }
 
+TEST_THAT(Terrain,
+     WHAT(Clone),
+     WHEN(Always),
+     THEN(ReturnsACloneOfTheTerrainButWithoutAnyItemsOnIt))
+{
+    create_cube_with_vertex_on_origin(4);
+
+    auto const original_blocks = this->t.get_all_blocks();
+
+    auto i = make_item({{0, 0, 0}, block_face::front});
+    this->t.add_item(std::move(i));
+
+    auto c = this->t.clone();
+
+    auto const clone_blocks = c->get_all_blocks();
+    EXPECT_THAT(clone_blocks, Eq(original_blocks));
+
+    EXPECT_THAT(c->get_num_of_items(), Eq(0));
+}
+
 } }

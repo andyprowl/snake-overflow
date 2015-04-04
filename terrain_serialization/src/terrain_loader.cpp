@@ -11,7 +11,11 @@ std::unique_ptr<terrain> terrain_loader::load_terrain(
 {
     auto fs = std::ifstream{filepath.string()};
 
-    return this->reader.from_stream(fs);
+    auto t = this->reader.from_stream(fs);
+
+    t->sort_for_rendering();
+
+    return t;
 }
 
 } }

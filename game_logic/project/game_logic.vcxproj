@@ -48,7 +48,7 @@
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -68,7 +68,7 @@
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -157,15 +157,12 @@
     <ClInclude Include="..\export\include\snake_overflow\terrain_item_filler.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_layer_reader.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_reader.hpp" />
-    <ClInclude Include="..\export\include\util\contains.hpp" />
-    <ClInclude Include="..\export\include\util\hashing.hpp" />
-    <ClInclude Include="..\export\include\util\noexcept.hpp" />
-    <ClInclude Include="..\export\include\util\repeat.hpp" />
-    <ClInclude Include="..\export\include\util\sequence.hpp" />
-    <ClInclude Include="..\export\include\util\tokenize.hpp" />
-    <ClInclude Include="..\export\include\util\value_ref.hpp" />
-    <ClInclude Include="..\export\include\util\wave.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\utilities\project\utilities.vcxproj">
+      <Project>{2aa461a9-a352-4f63-a52a-d5c5111b0a80}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/value_ref.hpp"
 #include <memory>
 #include <string>
 
@@ -13,7 +14,10 @@ class terrain_provider
 
 public:
 
-    std::unique_ptr<terrain> create_terrain(std::string const& name);
+    virtual ~terrain_provider() = default;
+
+    virtual std::unique_ptr<terrain> create_terrain(
+        util::value_ref<std::string> name) = 0;
 
 };
 

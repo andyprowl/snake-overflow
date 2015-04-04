@@ -4,6 +4,7 @@
 #include "snake_overflow/item.hpp"
 #include "util/noexcept.hpp"
 #include "util/value_ref.hpp"
+#include <boost/optional.hpp>
 #include <memory>
 #include <unordered_map>
 #include <vector>
@@ -39,9 +40,6 @@ class terrain
 
 public:
     
-    // Walks the redundant `blocks` data structure, which allows iterating
-    // through the collection of added blocks in order of addition. This is
-    // fundamental for correct rendering of blocks with transparent color.
     template<typename F>
     void for_each_block(F&& f) const
     {
@@ -50,6 +48,17 @@ public:
             (std::forward<F>(f))(*b);
         }
     }
+
+    template<typename F>
+    void for_each_item(F&& f) const
+    {
+        for (auto const& i : this->items)
+        {
+            (std::forward<F>(f))(*i);
+        }
+    }
+
+    std::unique_ptr<terrain> clone() const;
 
     void add_block(util::value_ref<block> b);
 
@@ -63,18 +72,11 @@ public:
 
     std::vector<block> get_all_blocks() const;
 
+    void sort_for_rendering();
+
     void add_item(std::unique_ptr<item>&& i);
 
     std::unique_ptr<item> remove_item(util::value_ref<item> i);
-
-    template<typename F>
-    void for_each_item(F&& f) const
-    {
-        for (auto const& i : this->items)
-        {
-            (std::forward<F>(f))(*i);
-        }
-    }
 
     int get_num_of_items() const;
 
@@ -104,14 +106,14 @@ private:
         util::value_ref<footprint> d) const;
 
 private:
-
+    
     std::unordered_map<point, block> block_index;
 
     // The redundant `blocks` collection is required in order to keep 
-    // information on the order in which the blocks have been added. This
-    // information is relevant for rendering of blocks with transparent color.
-    // The for_each_block() function uses this collection to allow drawing
-    // blocks in the correct order.
+    // ordering information and allow fast iteration. The ordering is relevant
+    // for rendering when blocks with transparent color are present.
+    // The for_each_block() function uses this collection to perform iteration,
+    // which makes it possible to draw blocks in a sensible order.
     std::vector<block*> blocks;
 
     std::vector<std::unique_ptr<item>> items;

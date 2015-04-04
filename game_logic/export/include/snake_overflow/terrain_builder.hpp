@@ -1,12 +1,11 @@
 #pragma once
 
+#include "snake_overflow/point.hpp"
+#include "snake_overflow/rgba_color.hpp"
 #include "util/value_ref.hpp"
 
 namespace snake_overflow
 {
-
-struct point;
-struct rgba_color;
 
 class terrain;
 

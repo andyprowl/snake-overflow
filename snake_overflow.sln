@@ -18,6 +18,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terrain_serialization", "te
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terrain_serialization_test", "terrain_serialization_test\project\terrain_serialization_test.vcxproj", "{A2715361-758B-47E4-8B43-986C3CFA003C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "utilities", "utilities\project\utilities.vcxproj", "{2AA461A9-A352-4F63-A52A-D5C5111B0A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -48,6 +50,10 @@ Global
 		{A2715361-758B-47E4-8B43-986C3CFA003C}.Debug|x64.Build.0 = Debug|x64
 		{A2715361-758B-47E4-8B43-986C3CFA003C}.Release|x64.ActiveCfg = Release|x64
 		{A2715361-758B-47E4-8B43-986C3CFA003C}.Release|x64.Build.0 = Release|x64
+		{2AA461A9-A352-4F63-A52A-D5C5111B0A80}.Debug|x64.ActiveCfg = Debug|x64
+		{2AA461A9-A352-4F63-A52A-D5C5111B0A80}.Debug|x64.Build.0 = Debug|x64
+		{2AA461A9-A352-4F63-A52A-D5C5111B0A80}.Release|x64.ActiveCfg = Release|x64
+		{2AA461A9-A352-4F63-A52A-D5C5111B0A80}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

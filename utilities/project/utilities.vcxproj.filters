@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="export">
+      <UniqueIdentifier>{1d849fe4-da08-48a2-815f-0c154f920eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include">
+      <UniqueIdentifier>{e0195803-a15b-44a4-be71-976b5c6caea4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="export\include\util">
+      <UniqueIdentifier>{53baa009-4d7c-4463-ab20-ff95001e6a5f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\stdafx.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\stdafx.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\value_ref.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\contains.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\noexcept.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\sequence.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\hashing.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\repeat.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\wave.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\tokenize.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

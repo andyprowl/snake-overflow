@@ -6,6 +6,8 @@
 namespace snake_overflow
 {
 
+struct footprint;
+
 class camera_manipulator;
 class game;
 class hud_renderer;
@@ -39,8 +41,6 @@ private:
 
     virtual void mouseWheel(cinder::app::MouseEvent e) override;
 
-    void create_terrain_provider();
-
     void create_renderers();
 
     void create_world_renderer();
@@ -51,9 +51,14 @@ private:
 
     void setup_depth_buffer();
 
+    void create_terrain_provider();
+
     void start_new_game();
 
     void create_game();
+
+    footprint pick_random_starting_footprint(item_position_picker& picker,
+                                             terrain const& habitat) const;
 
     std::unique_ptr<item_spawner> create_item_spawner(
         terrain& t,
@@ -63,6 +68,8 @@ private:
         std::unique_ptr<item_spawner>&& is) const;
     
     void create_keyboard_input_handler();
+
+    void catch_snake_on_camera() const;
 
     void draw_frame();
 

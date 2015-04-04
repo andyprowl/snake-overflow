@@ -56,7 +56,7 @@ void camera_manipulator::toggle_auto_follow()
     }
 }
 
-void camera_manipulator::begin_arcball_drag(cinder::Vec2i mouse_xy)
+void camera_manipulator::begin_arcball_drag(cinder::Vec2i const mouse_xy)
 {
     auto const bounds = cinder::app::getWindowBounds();
 
@@ -65,7 +65,7 @@ void camera_manipulator::begin_arcball_drag(cinder::Vec2i mouse_xy)
     this->arcball.mouseDown({mouse_xy.x, bottom - mouse_xy.y});
 }
 
-void camera_manipulator::continue_arcball_drag(cinder::Vec2i mouse_xy)
+void camera_manipulator::continue_arcball_drag(cinder::Vec2i const mouse_xy)
 {
     auto const bounds = cinder::app::getWindowBounds();
 

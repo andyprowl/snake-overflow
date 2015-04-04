@@ -13,6 +13,20 @@
 namespace snake_overflow
 {
 
+std::unique_ptr<terrain> terrain::clone() const
+{
+    auto t = std::make_unique<terrain>();
+
+    for_each_block([&t] (block b) // Notice: we make a copy!
+    {
+        b.items.clear();
+
+        t->add_block(b);
+    });
+
+    return t;
+}
+
 void terrain::add_block(util::value_ref<block> b)
 {
     if (contains_block(b.origin))
@@ -33,10 +47,7 @@ void terrain::remove_block(util::value_ref<point> origin)
         return;
     }
 
-    if (!it->second.items.empty())
-    {
-        throw block_not_empty_exception{};
-    }
+    if (!it->second.items.empty()) { throw block_not_empty_exception{}; }
 
     auto const vector_it = std::remove(std::begin(this->blocks), 
                                        std::end(this->blocks), 
@@ -91,6 +102,23 @@ std::vector<block> terrain::get_all_blocks() const
     });
 
     return v;
+}
+
+void terrain::sort_for_rendering()
+{
+    std::stable_sort(std::begin(this->blocks), 
+                     std::end(this->blocks),
+                     [] (block const* const b1, block const* const b2)
+    {
+        if (b1->color.alpha == b2->color.alpha)
+        {
+            return (b1->origin < b2->origin);
+        }
+        else
+        {
+            return (b1->color.alpha > b2->color.alpha);
+        }
+    });
 }
 
 void terrain::add_item(std::unique_ptr<item>&& i)

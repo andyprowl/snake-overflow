@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3F69421B-AFFF-4421-AFEA-FCA77D4FFB8E}</ProjectGuid>
+    <ProjectGuid>{2AA461A9-A352-4F63-A52A-D5C5111B0A80}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>game_logic</RootNamespace>
   </PropertyGroup>
@@ -48,7 +48,7 @@
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -68,7 +68,7 @@
       <PreprocessorDefinitions>WIN32;_SCL_SECURE_NO_WARNINGS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;..\..\game_logic\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
@@ -81,34 +81,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_tokenizing_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_set_delegating_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_set_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_tokenizing_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_delegating_reader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_loader.hpp" />
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp" />
-    <ClInclude Include="..\include\stdafx.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\src\block_type.cpp" />
-    <ClCompile Include="..\src\block_type_list_tokenizing_reader.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_layer_set_delegating_reader.cpp" />
-    <ClCompile Include="..\src\terrain_layer_tokenizing_reader.cpp" />
-    <ClCompile Include="..\src\terrain_delegating_reader.cpp" />
-    <ClCompile Include="..\src\terrain_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\game_logic\project\game_logic.vcxproj">
-      <Project>{d50477ee-9571-420e-87d5-81cb854355a8}</Project>
-    </ProjectReference>
+    <ClInclude Include="..\export\include\util\contains.hpp" />
+    <ClInclude Include="..\export\include\util\hashing.hpp" />
+    <ClInclude Include="..\export\include\util\noexcept.hpp" />
+    <ClInclude Include="..\export\include\util\repeat.hpp" />
+    <ClInclude Include="..\export\include\util\sequence.hpp" />
+    <ClInclude Include="..\export\include\util\tokenize.hpp" />
+    <ClInclude Include="..\export\include\util\value_ref.hpp" />
+    <ClInclude Include="..\export\include\util\wave.hpp" />
+    <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

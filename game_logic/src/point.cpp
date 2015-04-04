@@ -65,6 +65,18 @@ bool operator != (util::value_ref<point> lhs, util::value_ref<point> rhs)
     return !(lhs == rhs);
 }
 
+bool operator < (util::value_ref<point> lhs, util::value_ref<point> rhs)
+{
+    return (std::forward_as_tuple(lhs.x, lhs.y, lhs.z) <
+            std::forward_as_tuple(rhs.x, rhs.y, rhs.z));
+}
+
+bool operator > (util::value_ref<point> lhs, util::value_ref<point> rhs)
+{
+    return (std::forward_as_tuple(lhs.x, lhs.y, lhs.z) >
+            std::forward_as_tuple(rhs.x, rhs.y, rhs.z));
+}
+
 point operator + (util::value_ref<point> lhs, 
                     util::value_ref<point> rhs)
 {

@@ -2,6 +2,7 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/camera_manipulator.hpp"
+#include "snake_overflow/default_terrain_provider.hpp"
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
@@ -14,7 +15,7 @@
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
-#include "snake_overflow/terrain_provider.hpp"
+#include "snake_overflow/terrain_prototype_repository.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "snake_overflow/world_renderer.hpp"
 #include "cinder/ImageIo.h"
@@ -23,15 +24,6 @@
 
 namespace snake_overflow
 {
-
-void application::start_new_game()
-{
-    create_game();
-
-    create_keyboard_input_handler();
-
-    this->camera_handler->reset();
-}
 
 void application::prepareSettings(Settings* const settings)
 {
@@ -71,14 +63,18 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    if (e.getCode() == cinder::app::KeyEvent::KEY_F5)
+    if (this->current_game->is_game_over)
     {
-        start_new_game();
+        if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
+            (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
+        {
+            start_new_game();
+
+            return;
+        }
     }
-    else
-    {
-        this->keyboard_handler->process_keyboard_input(e.getCode());
-    }
+
+    this->keyboard_handler->process_keyboard_input(e.getCode());
 }
 
 void application::mouseDown(cinder::app::MouseEvent const e)
@@ -96,26 +92,66 @@ void application::mouseWheel(cinder::app::MouseEvent const e)
     this->camera_handler->zoom(e.getWheelIncrement());
 }
 
+void application::create_renderers()
+{
+    create_world_renderer();
+
+    create_hud_renderer();
+}
+
+void application::create_world_renderer()
+{
+    this->textures = std::make_unique<texture_repository>();
+
+    this->world_drawer = std::make_unique<world_renderer>(this->block_size,
+                                                          *this->textures);
+}
+
+void application::create_hud_renderer()
+{
+    this->hud_drawer = std::make_unique<hud_renderer>();
+}
+
+void application::create_camera_manipulator()
+{
+    this->camera_handler = std::make_unique<camera_manipulator>();
+}
+
+void application::setup_depth_buffer()
+{
+    cinder::gl::enableDepthRead();
+    
+    cinder::gl::enableDepthWrite();
+}
+
 void application::create_terrain_provider()
 {
-    this->habitat_provider = std::make_unique<terrain_provider>();
+    this->habitat_provider = std::make_unique<default_terrain_provider>();
+    //this->habitat_provider = std::make_unique<terrain_prototype_repository>();
+}
+
+void application::start_new_game()
+{
+    create_game();
+
+    create_keyboard_input_handler();
+
+    catch_snake_on_camera();
 }
 
 void application::create_game()
 {
-    auto t = this->habitat_provider->create_terrain("");
+    auto t = this->habitat_provider->create_terrain("default.som");
+
+    auto p = std::make_unique<random_item_position_picker>(*t);
 
     auto const snake_origin = point{0, -5, 10};
 
-    auto const initial_step = footprint{snake_origin, 
-                                        {block_face::top, 
-                                        canonical_direction::positive_y()}};
+    auto const initial_step = pick_random_starting_footprint(*p, *t);
 
     auto body = std::make_unique<snake_body>(*t, initial_step, 5);
 
     auto s = std::make_unique<snake>(std::move(body));
-
-    auto p = std::make_unique<random_item_position_picker>(*t);
 
     auto is = create_item_spawner(*t, std::move(p));
 
@@ -126,6 +162,30 @@ void application::create_game()
                                                 std::move(f));
 
     this->current_game->terrain_filling_interval = 150;
+}
+
+footprint application::pick_random_starting_footprint(
+    item_position_picker& picker,
+    terrain const& habitat) const
+{
+    while (true)
+    {
+        auto const initial_snake_position = picker.pick_item_position();
+
+        auto const initial_step = footprint{initial_snake_position.location, 
+                                            {initial_snake_position.face, 
+                                            canonical_direction::positive_z()}};
+
+        try
+        {
+            habitat.compute_next_footprint(initial_step);
+
+            return initial_step;
+        }
+        catch (std::exception const&)
+        {
+        }
+    }
 }
 
 std::unique_ptr<item_spawner> application::create_item_spawner(
@@ -167,31 +227,6 @@ std::unique_ptr<terrain_item_filler> application::create_terrain_filler(
     return std::move(f);
 }
 
-void application::create_renderers()
-{
-    create_world_renderer();
-
-    create_hud_renderer();
-}
-
-void application::create_world_renderer()
-{
-    this->textures = std::make_unique<texture_repository>();
-
-    this->world_drawer = std::make_unique<world_renderer>(this->block_size,
-                                                          *this->textures);
-}
-
-void application::create_hud_renderer()
-{
-    this->hud_drawer = std::make_unique<hud_renderer>();
-}
-
-void application::create_camera_manipulator()
-{
-    this->camera_handler = std::make_unique<camera_manipulator>();
-}
-
 void application::create_keyboard_input_handler()
 {
     this->keyboard_handler = std::make_unique<keyboard_input_handler>(
@@ -200,11 +235,13 @@ void application::create_keyboard_input_handler()
         *this->camera_handler);
 }
 
-void application::setup_depth_buffer()
+void application::catch_snake_on_camera() const
 {
-    cinder::gl::enableDepthRead();
-    
-    cinder::gl::enableDepthWrite();
+    this->camera_handler->toggle_auto_follow();
+        
+    this->camera_handler->set_camera_matrices(this->current_game->get_snake());
+
+    this->camera_handler->toggle_auto_follow();
 }
 
 void application::draw_frame()

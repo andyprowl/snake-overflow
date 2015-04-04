@@ -41,7 +41,7 @@ void texture_repository::load_texture(
 {
     auto texture_name = p.filename().string();
 
-    auto asset_name = "textures/" + p.filename().string();
+    auto asset_name = "textures/" + texture_name;
 
     auto const texture_asset = cinder::app::loadAsset(asset_name);
 
