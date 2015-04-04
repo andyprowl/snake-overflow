@@ -85,6 +85,8 @@
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_reader.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_tokenizing_reader.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_reader.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_set_delegating_reader.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_set_reader.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_tokenizing_reader.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp" />
     <ClInclude Include="..\include\stdafx.hpp" />
@@ -96,7 +98,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\src\terrain_layer_set_delegating_reader.cpp" />
     <ClCompile Include="..\src\terrain_layer_tokenizing_reader.cpp" />
+    <ClCompile Include="..\src\terrain_reader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\game_logic\project\game_logic.vcxproj">

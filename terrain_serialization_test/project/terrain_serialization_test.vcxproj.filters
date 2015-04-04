@@ -41,12 +41,21 @@
     <ClCompile Include="..\src\terrain_layer_tokenizing_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\terrain_layer_set_delegating_reader_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\serialization\testing\block_type_list_reader_mock.hpp">
+      <Filter>export\include\snake_overflow\serialization\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\testing\terrain_layer_reader_mock.hpp">
+      <Filter>export\include\snake_overflow\serialization\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\testing\terrain_layer_set_reader_mock.hpp">
       <Filter>export\include\snake_overflow\serialization\testing</Filter>
     </ClInclude>
   </ItemGroup>
