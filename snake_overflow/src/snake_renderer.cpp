@@ -53,7 +53,7 @@ bool snake_renderer::is_trail_winding_around_edge(
     if (i == trail.size() - 1) return false;
 
     return ((trail[i].action ==  maneuvre::straight_move) &&
-            (trail[i].step.profile.face == trail[i + 1].step.profile.face));
+            (trail[i].step.profile.face != trail[i + 1].step.profile.face));
 }
 
 void snake_renderer::render_snake_part(util::value_ref<dynamics> d,
@@ -169,7 +169,7 @@ void snake_renderer::draw_inner_part_on_forward_movement(
 {
     auto const sizes = get_snake_inner_part_sizes(is_edge_winding);
 
-    return cinder::gl::drawCube(cinder::Vec3f::zero(), sizes);
+    cinder::gl::drawCube(cinder::Vec3f::zero(), sizes);
 }
 
 void snake_renderer::draw_inner_part_on_left_turn(
@@ -230,58 +230,11 @@ void snake_renderer::draw_inner_part_on_right_turn(
 
 void snake_renderer::draw_head() const
 {
-    glBegin(GL_TRIANGLES);
+    auto sizes = get_snake_inner_part_sizes(false);
 
-    draw_head_base();
+    cinder::gl::color(cinder::Color{1.f, 0.f, 0.f});
 
-    draw_head_top_triangle();
-
-    draw_head_bottom_triangle();
-
-    draw_head_left_triangle();
-
-    draw_head_right_triangle();
-
-    glEnd();
-}
-
-void snake_renderer::draw_head_base() const
-{
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-}
-
-void snake_renderer::draw_head_top_triangle() const
-{
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
-}
-
-void snake_renderer::draw_head_bottom_triangle() const
-{
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
-}
-
-void snake_renderer::draw_head_left_triangle() const
-{
-    glVertex3f(-this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(-this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
-}
-
-void snake_renderer::draw_head_right_triangle() const
-{
-    glVertex3f(+this->width / 2, -this->block_size / 2, +this->height / 2);
-    glVertex3f(+this->width / 2, -this->block_size / 2, -this->height / 2);
-    glVertex3f(0.f, 0.f, 0.f);
+    cinder::gl::drawCube({0.f, -sizes.y / 4.f, 0.f}, sizes);
 }
 
 cinder::Vec3f snake_renderer::get_snake_inner_part_sizes(

@@ -66,16 +66,6 @@ private:
 
     void draw_head() const;
 
-    void draw_head_base() const;
-
-    void draw_head_top_triangle() const;
-
-    void draw_head_bottom_triangle() const;
-
-    void draw_head_left_triangle() const;
-
-    void draw_head_right_triangle() const;
-
     cinder::Vec3f get_snake_inner_part_sizes(bool is_edge_winding) const;
 
     cinder::Color get_snake_color(util::value_ref<snake> s) const;
