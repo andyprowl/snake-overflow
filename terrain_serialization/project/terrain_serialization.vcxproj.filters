@@ -29,9 +29,6 @@
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp">
-      <Filter>export\include\snake_overflow\serialization</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\serialization\block_type_list_tokenizing_reader.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
@@ -50,6 +47,15 @@
     <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_layer_set_reader.hpp">
       <Filter>export\include\snake_overflow\serialization</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_delegating_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_reader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\serialization\terrain_loader.hpp">
+      <Filter>export\include\snake_overflow\serialization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\block_type.cpp">
@@ -64,10 +70,13 @@
     <ClCompile Include="..\src\terrain_layer_tokenizing_reader.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_reader.cpp">
+    <ClCompile Include="..\src\terrain_layer_set_delegating_reader.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_layer_set_delegating_reader.cpp">
+    <ClCompile Include="..\src\terrain_delegating_reader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_loader.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -29,7 +29,7 @@ TEST_THAT(TerrainLayerTokenizingReader,
                          "\n"
                          "END LAYER\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     EXPECT_THROW(this->reader.from_stream(ss), bad_layer_exception);
 }
@@ -46,7 +46,7 @@ TEST_THAT(TerrainLayerTokenizingReader,
                          "321\n"
                          "\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     EXPECT_THROW(this->reader.from_stream(ss), bad_layer_exception);
 }
@@ -65,7 +65,7 @@ TEST_THAT(TerrainLayerTokenizingReader,
                          "\n"
                          "END LAYER\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     auto result = this->reader.from_stream(ss);
 
@@ -101,7 +101,7 @@ TEST_THAT(TerrainLayerTokenizingReader,
                          "\n"
                          "END LAYER\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     auto result = this->reader.from_stream(ss);
 

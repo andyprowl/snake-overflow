@@ -32,9 +32,6 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_reader_test_suite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\block_type_list_teoknizing_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -42,6 +39,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\terrain_layer_set_delegating_reader_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\terrain_delegating_reader_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

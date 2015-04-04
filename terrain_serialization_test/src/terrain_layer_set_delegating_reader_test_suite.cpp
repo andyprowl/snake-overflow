@@ -44,7 +44,7 @@ TEST_THAT(TerrainLayerSetDelegatingReader,
                          "        8\n"
                          "END LAYER\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     auto result = this->reader.from_stream(ss);
 

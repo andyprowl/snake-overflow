@@ -27,9 +27,9 @@ TEST_THAT(BlockTypeListTokenizingReader,
     auto const content = "1: grass4.jpg;   255, 172,0,255; S\n"
                          "2: water3.jpg;  15, 33,255,128; N\n"
                          "3: ice1.jpg; 0,   0,37, 0; S\n\n"
-                         "END BLOCKS";
+                         "END BLOCK TYPES";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
@@ -44,7 +44,7 @@ TEST_THAT(BlockTypeListTokenizingReader,
                          "2: water3.jpg; 15,33,255,128; N\n"
                          "3: ice1.jpg; 0,0,37,0; S\n\n";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
@@ -60,7 +60,7 @@ TEST_THAT(BlockTypeListTokenizingReader,
                          "3: ice1.jpg; 0, 0,    37,0; S\n\n"
                          "END BLOCK TYPES";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     EXPECT_THROW(this->reader.from_stream(ss), bad_block_type_list_exception);
 }
@@ -76,7 +76,7 @@ TEST_THAT(BlockTypeListTokenizingReader,
                          "3: ice1.jpg; 0, 0,    37,0; S\n\n"
                          "END BLOCK TYPES";
 
-    auto ss = std::stringstream{content};
+    auto ss = std::istringstream{content};
 
     auto blocks = this->reader.from_stream(ss);
 

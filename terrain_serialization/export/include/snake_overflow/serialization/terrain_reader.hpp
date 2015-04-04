@@ -1,20 +1,20 @@
 #pragma once
 
+#include "snake_overflow/terrain.hpp"
+#include <istream>
+#include <memory>
+
 namespace snake_overflow { namespace serialization
 {
-
-class block_type_list_reader;
 
 class terrain_reader
 {
 
 public:
 
-    terrain_reader(block_type_list_reader& block_type_reader);
+    virtual ~terrain_reader() = default;
 
-private:
-
-    block_type_list_reader& block_type_reader;
+    virtual std::unique_ptr<terrain> from_stream(std::istream& is) = 0;
 
 };
 

@@ -107,7 +107,7 @@
     </ClCompile>
     <ClCompile Include="..\src\terrain_layer_set_delegating_reader_test_suite.cpp" />
     <ClCompile Include="..\src\terrain_layer_tokenizing_reader_test_suite.cpp" />
-    <ClCompile Include="..\src\terrain_reader_test_suite.cpp" />
+    <ClCompile Include="..\src\terrain_delegating_reader_test_suite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\gmock_1.7.0\msvc\2013\gmock.vcxproj">
