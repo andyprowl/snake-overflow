@@ -36,15 +36,9 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithIdenticalData),
      THEN(ReturnsTrue))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, 6, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b2 = block{{42, 6, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
     EXPECT_TRUE(b1 == b2);
 }
@@ -54,15 +48,9 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithDifferentOrigin),
      THEN(ReturnsFalse))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, 6, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 0, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b2 = block{{42, 0, 1337}, "texture.jpg", {0, 0, 0, 255}, true};
 
     EXPECT_FALSE(b1 == b2);
 }
@@ -72,15 +60,9 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithDifferentTextures),
      THEN(ReturnsFalse))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture1.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, 6, 1729}, "texture1.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 1337, 1729}, 
-                          "texture2.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b2 = block{{42, 6, 1729}, "texture2.jpg", {0, 0, 0, 255}, true};
 
     EXPECT_FALSE(b1 == b2);
 }
@@ -90,15 +72,9 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithDifferentColors),
      THEN(ReturnsFalse))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, -6, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 255, 255}, 
-                          true};
+    auto const b2 = block{{42, -6, 1729}, "texture.jpg", {0, 0, 1, 255}, true};
 
     EXPECT_FALSE(b1 == b2);
 }
@@ -108,15 +84,9 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithDifferentSolidity),
      THEN(ReturnsFalse))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, -1, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          false};
+    auto const b2 = block{{42, -1, 1729}, "texture.jpg", {0, 0, 0, 255}, false};
 
     EXPECT_FALSE(b1 == b2);
 }
@@ -164,43 +134,71 @@ TEST_THAT(Block,
      WHEN(GivenTwoBlocksWithDifferentOrigin),
      THEN(ReturnsTrue))
 {
-    auto const b1 = block{{42, 1337, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b1 = block{{42, -42, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    auto const b2 = block{{42, 0, 1729}, 
-                          "texture.jpg", 
-                          {0, 0, 0, 255}, 
-                          true};
+    auto const b2 = block{{42, 0, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
     EXPECT_TRUE(b1 != b2);
 }
 
 TEST_THAT(Block,
-     WHAT(IsBlockVisible),
-     WHEN(GivenABlockWithAColorWhoseAlphaComponentIsGreaterThanZero),
+     WHAT(IsBlockOpaque),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentHasMaximumValue),
      THEN(ReturnsTrue))
 {
-    auto const b = block{{42, 1337, 1729}, 
-                         "texture.jpg", 
-                         {0, 0, 0, 255}, 
-                         true};
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
 
-    EXPECT_TRUE(is_block_visible(b));
+    EXPECT_TRUE(is_block_opaque(b));
 }
 
 TEST_THAT(Block,
-     WHAT(IsBlockVisible),
-     WHEN(GivenABlockWithAColorWhoseAlphaComponentIsNotGreaterThanZero),
+     WHAT(IsBlockOpaque),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentDoesNotHaveMaximumValue),
+     THEN(ReturnsFalse))
+{
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 0}, true};
+
+    EXPECT_FALSE(is_block_opaque(b));
+}
+
+TEST_THAT(Block,
+     WHAT(IsBlockTranslucent),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentDoesNotHaveMaximumValue),
      THEN(ReturnsTrue))
 {
-    auto const b = block{{42, 1337, 1729}, 
-                         "texture.jpg", 
-                         {0, 0, 0, 0}, 
-                         true};
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 128}, true};
 
-    EXPECT_FALSE(is_block_visible(b));
+    EXPECT_TRUE(is_block_translucent(b));
+}
+
+TEST_THAT(Block,
+     WHAT(IsBlockTranslucent),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentHasMaximumValue),
+     THEN(ReturnsFalse))
+{
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
+
+    EXPECT_FALSE(is_block_translucent(b));
+}
+
+TEST_THAT(Block,
+     WHAT(IsBlockTransparent),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentIsZero),
+     THEN(ReturnsTrue))
+{
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 0}, true};
+
+    EXPECT_TRUE(is_block_transparent(b));
+}
+
+TEST_THAT(Block,
+     WHAT(IsBlockTransparent),
+     WHEN(GivenABlockWithAColorWhoseAlphaComponentIsGreaterThanZero),
+     THEN(ReturnsFalse))
+{
+    auto const b = block{{42, 1337, 1729}, "texture.jpg", {0, 0, 0, 255}, true};
+
+    EXPECT_FALSE(is_block_transparent(b));
 }
 
 } }

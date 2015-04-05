@@ -41,14 +41,19 @@ bool operator != (util::value_ref<block> lhs, util::value_ref<block> rhs)
     return !(lhs == rhs);
 }
 
-bool is_block_visible(util::value_ref<block> b)
+bool is_block_opaque(util::value_ref<block> b)
 {
-    return (b.color.alpha > 0);
+    return (b.color.alpha == 255);
 }
 
 bool is_block_translucent(util::value_ref<block> b)
 {
     return (b.color.alpha < 255);
+}
+
+bool is_block_transparent(util::value_ref<block> b)
+{
+    return (b.color.alpha == 0);
 }
 
 }

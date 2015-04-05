@@ -16,20 +16,25 @@ class world_renderer
 
 public:
 
-    world_renderer(float block_size, 
+    world_renderer(terrain const& t,
+                   snake const& s,
+                   float block_size, 
                    texture_repository const& textures);
 
-    void render(snake const& s, terrain const& t) const;
+    void render() const;
 
 private:
 
-    void create_snake_renderer(float block_size,
+    void create_snake_renderer(snake const& s,
+                               float block_size,
                                texture_repository const& textures);
 
-    void create_item_renderer(float const block_size,
+    void create_item_renderer(terrain const& t,
+                              float const block_size,
                               texture_repository const& textures);
 
-    void create_terrain_renderer(float const block_size,
+    void create_terrain_renderer(terrain const& t,
+                                 float const block_size,
                                  texture_repository const& textures);
 
 private:

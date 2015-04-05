@@ -35,8 +35,6 @@ void application::prepareSettings(Settings* const settings)
 
 void application::setup()
 {
-    create_renderers();
-
     create_camera_manipulator();
 
     setup_depth_buffer();
@@ -106,9 +104,15 @@ void application::create_renderers()
 
 void application::create_world_renderer()
 {
+    auto& habitat = this->current_game->get_terrain();
+
+    auto& hero = this->current_game->get_snake();
+
     this->textures = std::make_unique<texture_repository>();
 
-    this->world_drawer = std::make_unique<world_renderer>(this->block_size,
+    this->world_drawer = std::make_unique<world_renderer>(habitat,
+                                                          hero,
+                                                          this->block_size,
                                                           *this->textures);
 }
 
@@ -137,6 +141,8 @@ void application::create_terrain_provider()
 void application::start_new_game()
 {
     create_game();
+
+    create_renderers();
 
     create_keyboard_input_handler();
 
@@ -339,17 +345,14 @@ void application::draw_frame()
 
 void application::draw_world()
 {
-    auto& s = this->current_game->get_snake();
-
-    auto& t = this->current_game->get_terrain();
-
-    this->world_drawer->render(s, t);
+    this->world_drawer->render();
 }
 
 void application::calculate_current_fps()
 {
     auto const time = std::chrono::system_clock::now();
 
+     
     auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
         time - this->last_frame_time);
 

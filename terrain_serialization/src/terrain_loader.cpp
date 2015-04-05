@@ -13,8 +13,6 @@ std::unique_ptr<terrain> terrain_loader::load_terrain(
 
     auto t = this->reader.from_stream(fs);
 
-    t->finalize_for_rendering();
-
     return t;
 }
 

@@ -215,11 +215,11 @@ TEST_THAT(Terrain,
 
     add_solid_block_to_terrain(origin);
 
-    EXPECT_TRUE(this->t.contains_solid_block(origin));
+    EXPECT_TRUE(contains_solid_block(this->t, origin));
 }
 
 TEST_THAT(Terrain, 
-     WHAT(ContainsBlock),
+     WHAT(ContainsSolidBlock),
      WHEN(GivenAPointWhichIsTheOriginOfANonSolidBlockThatIsPartOfTheTerrain),
      THEN(ReturnsFalse))
 {
@@ -227,24 +227,7 @@ TEST_THAT(Terrain,
 
     add_non_solid_block_to_terrain(origin);
 
-    EXPECT_FALSE(this->t.contains_solid_block(origin));
-}
-
-TEST_THAT(Terrain,
-     WHAT(ForEachBlock),
-     WHEN(GivenACallableObjectThatAcceptsABlock),
-     THEN(InvokesThatCallableObjectForEachBlockInTheTerrain))
-{
-    create_cube_with_vertex_on_origin(3);
-
-    auto blocks = std::vector<block>{};
-
-    this->t.for_each_block([&blocks] (util::value_ref<block> b)
-    {
-        blocks.push_back(b);
-    });
-
-    EXPECT_THAT(blocks, Eq(this->t.get_all_blocks()));
+    EXPECT_FALSE(contains_solid_block(this->t, origin));
 }
 
 TEST_THAT(Terrain, 
@@ -252,7 +235,7 @@ TEST_THAT(Terrain,
      WHEN(GivenAPointWhichIsNotTheOriginOfAnyBlockThatIsPartOfTheTerrain),
      THEN(ReturnsFalse))
 {
-    EXPECT_FALSE(this->t.contains_solid_block({0, 0, 0}));
+    EXPECT_FALSE(contains_solid_block(this->t, {0, 0, 0}));
 }
 
 TEST_THAT(Terrain,

@@ -109,6 +109,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\alpha_blending_enabler.cpp" />
     <ClCompile Include="..\src\application.cpp" />
     <ClCompile Include="..\src\camera_manipulator.cpp" />
     <ClCompile Include="..\src\camera_view.cpp" />
@@ -130,6 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\resources.hpp" />
+    <ClInclude Include="..\include\snake_overflow\alpha_blending_enabler.hpp" />
     <ClInclude Include="..\include\snake_overflow\application.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_view.hpp" />

@@ -14,16 +14,18 @@
 namespace snake_overflow
 {
 
-item_renderer::item_renderer(float const block_size, 
+item_renderer::item_renderer(terrain const& ground,
+                             float const block_size, 
                              texture_repository const& textures)
-    : block_size{block_size}
+    : ground{ground}
+    , block_size{block_size}
     , textures{textures}
 {
 }
 
-void item_renderer::render(util::value_ref<terrain> t) const
+void item_renderer::render() const
 {
-    t.for_each_item([this] (util::value_ref<item> i)
+    this->ground.for_each_item([this] (util::value_ref<item> i)
     {
         render_item(i);
     });

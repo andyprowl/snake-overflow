@@ -6,26 +6,29 @@
 namespace snake_overflow
 {
 
-world_renderer::world_renderer(float const block_size, 
+world_renderer::world_renderer(terrain const& t,
+                               snake const& s,
+                               float const block_size, 
                                texture_repository const& textures)
 {
-    create_snake_renderer(block_size, textures);
+    create_snake_renderer(s, block_size, textures);
 
-    create_item_renderer(block_size, textures);
+    create_item_renderer(t, block_size, textures);
 
-    create_terrain_renderer(block_size, textures);
+    create_terrain_renderer(t, block_size, textures);
 }
 
-void world_renderer::render(snake const& s, terrain const& t) const
+void world_renderer::render() const
 {
-    this->snake_drawer->render(s);
+    this->snake_drawer->render();
 
-    this->item_drawer->render(t);
+    this->item_drawer->render();
 
-    this->terrain_drawer->render(t);
+    this->terrain_drawer->render();
 }
 
-void world_renderer::create_snake_renderer(float const block_size,
+void world_renderer::create_snake_renderer(snake const& s,
+                                           float const block_size,
                                            texture_repository const& textures)
 {
     float snake_width = block_size / 2;
@@ -34,23 +37,28 @@ void world_renderer::create_snake_renderer(float const block_size,
 
     auto const skin = textures.get_texture("snake6.jpg");
 
-    this->snake_drawer = std::make_unique<snake_renderer>(snake_width, 
+    this->snake_drawer = std::make_unique<snake_renderer>(s,
+                                                          snake_width, 
                                                           snake_height, 
                                                           block_size,
                                                           skin);
 }
 
-void world_renderer::create_item_renderer(float const block_size,
+void world_renderer::create_item_renderer(terrain const& t,
+                                          float const block_size,
                                           texture_repository const& textures)
 {
-    this->item_drawer = std::make_unique<item_renderer>(block_size, 
+    this->item_drawer = std::make_unique<item_renderer>(t,
+                                                        block_size, 
                                                         textures);
 }
 
-void world_renderer::create_terrain_renderer(float const block_size,
+void world_renderer::create_terrain_renderer(terrain const& t,
+                                             float const block_size,
                                              texture_repository const& textures)
 {
-    this->terrain_drawer = std::make_unique<terrain_renderer>(block_size, 
+    this->terrain_drawer = std::make_unique<terrain_renderer>(t,
+                                                              block_size, 
                                                               textures);
 }
 

@@ -39,15 +39,6 @@ class terrain
 {
 
 public:
-    
-    template<typename F>
-    void for_each_block(F&& f) const
-    {
-        for (auto const b : this->blocks)
-        {
-            (std::forward<F>(f))(*b);
-        }
-    }
 
     template<typename F>
     void for_each_item(F&& f) const
@@ -58,19 +49,29 @@ public:
         }
     }
 
+    template<typename P>
+    bool contains_block(util::value_ref<point> p, P&& pred) const
+    {
+        auto const it = this->block_index.find(p);
+        if (it == std::cend(this->block_index))
+        {
+            return false;
+        }
+
+        return (std::forward<P>(pred))(it->second);
+    }
+
     std::unique_ptr<terrain> clone() const;
 
     void add_block(util::value_ref<block> b);
 
     void remove_block(util::value_ref<point> origin);
 
-    bool contains_block(util::value_ref<point> p) const;
-
-    bool contains_solid_block(util::value_ref<point> p) const;
-
     block get_block(util::value_ref<point> origin) const;
 
     std::vector<block> get_all_blocks() const;
+
+    bool contains_block(util::value_ref<point> p) const;
 
     void add_item(std::unique_ptr<item>&& i);
 
@@ -81,8 +82,6 @@ public:
     std::vector<position> get_all_free_item_positions() const;
 
     footprint compute_next_footprint(util::value_ref<footprint> d) const;
-
-    void finalize_for_rendering();
 
 private:
 
@@ -119,15 +118,18 @@ private:
     std::unordered_map<point, block> block_index;
 
     // The redundant `blocks` collection is required in order to keep 
-    // ordering information and allow fast iteration. The ordering is relevant
-    // for rendering when blocks with transparent color are present.
-    // The for_each_block() function uses this collection to perform iteration,
-    // which makes it possible to draw blocks in a sensible order.
+    // ordering information and allow fast iteration.
     std::vector<block*> blocks;
 
     std::vector<std::unique_ptr<item>> items;
 
 };
+
+bool contains_solid_block(terrain const& t, util::value_ref<point> p);
+
+bool is_block_occluded(util::value_ref<point> location, terrain const& t);
+
+bool is_block_visible(util::value_ref<block> b, terrain const& t);
 
 bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t);
 

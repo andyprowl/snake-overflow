@@ -41,7 +41,7 @@ TEST_THAT(TerrainBuilder,
 TEST_THAT(TerrainBuilder,
      WHAT(AddCube),
      WHEN(WhenASolidCubeIsBeingCreated),
-     THEN(CreatesInnerBlocksAsInvisibleSolidAndWithoutATexture))
+     THEN(CreatesInnerBlocksAsTransparentSolidAndWithoutATexture))
 {
     auto const origin = point{-1, 3, 4};
 
@@ -53,7 +53,7 @@ TEST_THAT(TerrainBuilder,
 
     auto const b = this->t.get_block(origin + point{1, 1, 1});
 
-    EXPECT_FALSE(is_block_visible(b));
+    EXPECT_TRUE(is_block_transparent(b));
     EXPECT_TRUE(b.texture.empty());
 }
 

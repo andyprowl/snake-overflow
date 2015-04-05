@@ -15,9 +15,11 @@ class item_renderer
 
 public:
 
-    item_renderer(float block_size, texture_repository const& textures);
+    item_renderer(terrain const& ground,
+                  float block_size, 
+                  texture_repository const& textures);
 
-    void render(util::value_ref<terrain> t) const;
+    void render() const;
 
 private:
 
@@ -37,6 +39,8 @@ private:
     void draw_invulnerability_spell_shape() const;
 
 private:
+
+    terrain const& ground;
 
     float block_size;
 

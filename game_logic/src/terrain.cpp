@@ -19,12 +19,12 @@ std::unique_ptr<terrain> terrain::clone() const
 {
     auto t = std::make_unique<terrain>();
 
-    for_each_block([&t] (block b) // Notice: we make a copy!
-    {
-        b.items.clear();
+    for (auto b : this->blocks) // Notice: we make a copy here!
+    {                           // We want the clone to contain no items, but
+        b->items.clear();       // we do not want to alter the cloned terrain.
 
-        t->add_block(b);
-    });
+        t->add_block(*b);
+    };
 
     return t;
 }
@@ -60,25 +60,6 @@ void terrain::remove_block(util::value_ref<point> origin)
     this->block_index.erase(origin);
 }
 
-bool terrain::contains_block(util::value_ref<point> p) const
-{
-    auto const it = this->block_index.find(p);
-    
-    return (it != std::cend(this->block_index));
-}
-
-bool terrain::contains_solid_block(util::value_ref<point> p) const
-{
-    auto const it = this->block_index.find(p);
-
-    if (it == std::cend(this->block_index))
-    {
-        return false;
-    }
-
-    return it->second.is_solid;
-}
-
 block terrain::get_block(util::value_ref<point> origin) const
 {
     auto const it = this->block_index.find(origin);
@@ -104,6 +85,11 @@ std::vector<block> terrain::get_all_blocks() const
     });
 
     return v;
+}
+
+bool terrain::contains_block(util::value_ref<point> p) const
+{
+    return contains_block(p, [] (util::value_ref<block>) { return true; });
 }
 
 void terrain::add_item(std::unique_ptr<item>&& i)
@@ -151,7 +137,7 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
 {
     auto turn_footprint = compute_hypothetical_turn_to_adjacent_block(f);
 
-    if (contains_solid_block(turn_footprint.location))
+    if (contains_solid_block(*this, turn_footprint.location))
     {
         return turn_footprint;
     }
@@ -160,7 +146,7 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
         f.location + get_direction_vector(f.profile.direction), 
         f.profile.face};
 
-    if (contains_solid_block(inertial_target.location))
+    if (contains_solid_block(*this, inertial_target.location))
     {
         return {inertial_target.location, f.profile};
     }
@@ -168,13 +154,6 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
     {
         return compute_fallback_turn_on_same_block(f);
     }
-}
-
-void terrain::finalize_for_rendering()
-{
-    make_occluded_blocks_transparent();
-
-    sort_for_rendering_with_alpha_blending();
 }
 
 void terrain::throw_if_position_is_not_viable(
@@ -272,62 +251,32 @@ footprint terrain::compute_fallback_turn_on_same_block(
     return {d.location, fallback};
 }
 
-void terrain::sort_for_rendering_with_alpha_blending()
+bool contains_solid_block(terrain const& t, util::value_ref<point> p)
 {
-    std::stable_sort(std::begin(this->blocks), 
-                     std::end(this->blocks),
-                     [] (block const* const b1, block const* const b2)
+    return t.contains_block(p, [] (util::value_ref<block> b)
     {
-        if (b1->color.alpha == b2->color.alpha)
-        {
-            return (b1->origin < b2->origin);
-        }
-        else
-        {
-            return (b1->color.alpha > b2->color.alpha);
-        }
+        return b.is_solid;
     });
 }
 
-void terrain::make_occluded_blocks_transparent()
+bool is_block_occluded(util::value_ref<point> location, terrain const& t)
 {
-    auto occluded_blocks = std::vector<block*>{};
-
-    std::copy_if(std::cbegin(this->blocks),
-                 std::cend(this->blocks),
-                 std::back_inserter(occluded_blocks),
-                 [this] (block const* const b)
+    auto const is_opaque = [] (util::value_ref<block> b)
     {
-        return has_only_non_transparent_neighbors(b->origin);
-    });
+        return is_block_opaque(b);
+    };
 
-    for (auto const b : occluded_blocks)
-    {
-        b->color.alpha = 0;
-    }
+    return (t.contains_block(location + point::x_unit(), is_opaque) &&
+            t.contains_block(location - point::x_unit(), is_opaque) &&
+            t.contains_block(location + point::y_unit(), is_opaque) &&
+            t.contains_block(location - point::y_unit(), is_opaque) &&
+            t.contains_block(location + point::z_unit(), is_opaque) &&
+            t.contains_block(location - point::z_unit(), is_opaque));
 }
 
-bool terrain::has_only_non_transparent_neighbors(
-    util::value_ref<point> location) const
+bool is_block_visible(util::value_ref<block> b, terrain const& t)
 {
-    return (contains_non_transparent_block(location + point::x_unit()) &&
-            contains_non_transparent_block(location - point::x_unit()) &&
-            contains_non_transparent_block(location + point::y_unit()) &&
-            contains_non_transparent_block(location - point::y_unit()) &&
-            contains_non_transparent_block(location + point::z_unit()) &&
-            contains_non_transparent_block(location - point::z_unit()));
-}
-
-bool terrain::contains_non_transparent_block(util::value_ref<point> p) const
-{
-    auto const it = this->block_index.find(p);
-
-    if (it == std::cend(this->block_index))
-    {
-        return false;
-    }
-
-    return (it->second.color.alpha == 255);
+    return !(is_block_transparent(b) || is_block_occluded(b.origin, t));
 }
 
 bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)
@@ -346,7 +295,7 @@ bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)
 
 bool is_position_walkable(util::value_ref<position> pos, terrain const& t)
 {
-    auto const is_solid = t.contains_solid_block(pos.location);
+    auto const is_solid = contains_solid_block(t, pos.location);
     if (!is_solid)
     {
         return false;
@@ -356,7 +305,7 @@ bool is_position_walkable(util::value_ref<position> pos, terrain const& t)
 
     auto const adjacent_origin = pos.location + n;
 
-    auto const has_solid_neighbor = t.contains_solid_block(adjacent_origin);
+    auto const has_solid_neighbor = contains_solid_block(t, adjacent_origin);
 
     return !(has_solid_neighbor);
 }

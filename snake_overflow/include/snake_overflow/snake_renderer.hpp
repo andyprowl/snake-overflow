@@ -18,12 +18,13 @@ class snake_renderer
 
 public:
 
-    snake_renderer(float snake_width, 
+    snake_renderer(snake const& s,
+                   float snake_width, 
                    float snake_height, 
                    float block_size,
                    cinder::gl::Texture skin);
 
-    void render(util::value_ref<snake> s) const;
+    void render() const;
 
     void set_skin(cinder::gl::Texture skin);
 
@@ -71,6 +72,8 @@ private:
     cinder::Color get_snake_color(util::value_ref<snake> s) const;
 
 private:
+
+    snake const& hero;
 
     float width;
 

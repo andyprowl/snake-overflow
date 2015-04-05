@@ -12,26 +12,28 @@
 namespace snake_overflow
 {
 
-snake_renderer::snake_renderer(float const snake_width, 
+snake_renderer::snake_renderer(snake const& s,
+                               float const snake_width, 
                                float const snake_height,
                                float const block_size,
                                cinder::gl::Texture skin)
-    : width{snake_width}
+    : hero{s}
+    , width{snake_width}
     , height{snake_height}
     , block_size{block_size}
     , skin{std::move(skin)}
 {
 }
 
-void snake_renderer::render(util::value_ref<snake> s) const
+void snake_renderer::render() const
 {
     auto binder = texture_binder{this->skin};
     
-    cinder::gl::color(get_snake_color(s));
+    cinder::gl::color(get_snake_color(this->hero));
 
-    auto const trail = s.get_body().get_trail();
+    auto const trail = this->hero.get_body().get_trail();
 
-    auto const length = s.get_length();
+    auto const length = this->hero.get_length();
 
     for (auto const i : util::sequence(0, length))
     {
