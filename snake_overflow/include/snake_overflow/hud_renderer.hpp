@@ -46,6 +46,8 @@ private:
 
     cinder::Font game_over_text_font;
 
+    cinder::Font restart_text_font;
+
     cinder::Font auto_follow_text_font;
 
     bool show_fps;

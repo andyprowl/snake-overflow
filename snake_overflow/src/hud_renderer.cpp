@@ -43,6 +43,8 @@ void hud_renderer::create_fonts()
 
     this->game_over_text_font = cinder::Font{"Arial", 150.0};
 
+    this->restart_text_font = cinder::Font{"Arial", 50.0};
+
     this->auto_follow_text_font = cinder::Font{"Arial", 25.0};
 }
 
@@ -112,6 +114,14 @@ void hud_renderer::draw_game_over_text() const
                                    center, 
                                    cinder::ColorA{1.f, 0.f, 0.f, 1.f}, 
                                    this->game_over_text_font);
+
+    if ((int)cinder::app::getElapsedSeconds() % 2 == 0)
+    {
+        cinder::gl::drawStringCentered("Press ENTER or F5 to restart", 
+                                       center + cinder::Vec2f{0.f, 140.f}, 
+                                       cinder::ColorA{1.f, 1.f, 0.f, 1.f}, 
+                                       this->restart_text_font);
+    }
 
     cinder::gl::disableAlphaBlending();
 }
