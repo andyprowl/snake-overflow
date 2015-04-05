@@ -16,6 +16,8 @@ If you lose eye contact with the snake, you can *press the spacebar to toggle au
 
 ![Auto-follow indicator](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot05.jpg)
 
+As the screenshot above shows, not all blocks of a terrain are solid and walkable. The snake won't float on water, for instance. When a non-solid block is reached, the snake will wind around the edge of the solid block it is currently on. 
+
 ## Goal of the game
 
 The goal of the game is to score as many points as possible. The game ends when the snake bites its tail, unless an *invulnerability bonus* applies - as explained in the following. In particular, none of the obstacles, including walls, are deadly: the snake will always wind on them. Once the game ends, it is possible to start a new game by pressing 'Enter' or 'F5'.
@@ -27,6 +29,10 @@ Several items are spawned at random intervals on the terrain's surface, and pick
  - **Invulnerability bonus**: Picking an invulnerability bonus will allow you to survive an otherwise lethal self-bite, but its effect will cease after the next bite! Also, invulnerability bonuses are not cumulative: picking two or three of them will only make you invulnerable to the next bite. When the snake is invulnerable, the color of its skin assumes a pulsing tone of red. Invulnerability bonuses are spawned relatively rarely.
  
 All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
+
+## Other features
+
+It is possible to toggle full screen mode at any time by hitting 'Ctrl+Enter'. Hitting the 'F' key, on the other hand, toggles the frame rate display on the upper left corner of the application window.
 
 ## Installation instructions
 
