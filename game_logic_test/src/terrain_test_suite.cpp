@@ -30,7 +30,8 @@ protected:
                          side_length, 
                          "texture.jpg", 
                          {0, 0, 0, 255}, 
-                         true);
+                         true,
+                         false);
     }
 
     void verify_step(util::value_ref<footprint> d,
@@ -858,6 +859,62 @@ TEST_THAT(Terrain,
     EXPECT_THAT(clone_blocks, Eq(original_blocks));
 
     EXPECT_THAT(c->get_num_of_items(), Eq(0));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsBlockOccluded),
+     WHEN(GivenTheLocationOfABlockWhichIsOccludedByOtherBlocksInTerrain),
+     THEN(ReturnsTrue))
+{
+    create_cube_with_vertex_on_origin(3);
+
+    EXPECT_TRUE(is_block_occluded({1, 1, 1}, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsBlockOccluded),
+     WHEN(GivenTheLocationOfABlockWhichIsNotOccludedByOtherBlocksInTerrain),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(3);
+
+    EXPECT_FALSE(is_block_occluded({0, 1, 1}, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsBlockVisible),
+     WHEN(GivenABlockWhichIsOccludedByOtherBlocksInTerrain),
+     THEN(ReturnsFalse))
+{
+    create_cube_with_vertex_on_origin(3);
+
+    auto b = this->t.get_block({1, 1, 1});
+
+    EXPECT_FALSE(is_block_visible(b, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsBlockVisible),
+     WHEN(GivenABlockWhichIsNotOccludedByOtherBlocksInTerrainButIsTransparent),
+     THEN(ReturnsFalse))
+{
+    auto const b = block{{0, 0, 0}, "texture.jpg", {0, 255, 0, 0}, true};
+
+    this->t.add_block(b);
+
+    EXPECT_FALSE(is_block_visible(b, this->t));
+}
+
+TEST_THAT(Terrain,
+     WHAT(IsBlockVisible),
+     WHEN(GivenABlockWhichIsNeitherOccludedByOtherBlocksNorTransparent),
+     THEN(ReturnsTrue))
+{
+    auto const b = block{{0, 0, 0}, "texture.jpg", {0, 255, 0, 128}, true};
+
+    this->t.add_block(b);
+
+    EXPECT_TRUE(is_block_visible(b, this->t));
 }
 
 } }
