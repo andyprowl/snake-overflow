@@ -44,6 +44,8 @@ private:
 
     virtual void mouseWheel(cinder::app::MouseEvent e) override;
 
+    virtual void resize() override;
+
     void create_renderers();
 
     void create_world_renderer();
@@ -80,6 +82,12 @@ private:
     void create_keyboard_input_handler();
 
     void catch_snake_on_camera() const;
+
+    bool try_handle_game_restart_command(cinder::app::KeyEvent e);
+
+    bool try_handle_full_screen_toggling_command(cinder::app::KeyEvent e);
+
+    void toggle_full_screen();
 
     void draw_frame();
 

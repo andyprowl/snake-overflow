@@ -65,15 +65,14 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    if (this->current_game->is_game_over)
+    if (try_handle_game_restart_command(e))
     {
-        if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
-            (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
-        {
-            start_new_game();
+        return;
+    }
 
-            return;
-        }
+    if (try_handle_full_screen_toggling_command(e))
+    {
+        return;
     }
 
     this->keyboard_handler->process_keyboard_input(e.getCode());
@@ -92,6 +91,11 @@ void application::mouseDrag(cinder::app::MouseEvent const e)
 void application::mouseWheel(cinder::app::MouseEvent const e)
 {
     this->camera_handler->zoom(e.getWheelIncrement());
+}
+
+void application::resize()
+{
+    this->camera_handler->setup_arcball_manipulator();
 }
 
 void application::create_renderers()
@@ -278,6 +282,46 @@ void application::catch_snake_on_camera() const
     this->camera_handler->set_camera_matrices(this->current_game->get_snake());
 
     this->camera_handler->toggle_auto_follow();
+}
+
+bool application::try_handle_game_restart_command(cinder::app::KeyEvent const e)
+{
+    if (!(this->current_game->is_game_over))
+    {
+        return false;
+    }
+    
+    if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
+        (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
+    {
+        start_new_game();
+
+        return true;
+    }
+
+    return false;
+}
+
+bool application::try_handle_full_screen_toggling_command(
+    cinder::app::KeyEvent const e)
+{
+    if ((e.getCode() == cinder::app::KeyEvent::KEY_RETURN) && e.CTRL_DOWN)
+    {
+        toggle_full_screen();
+
+        return true;
+    }
+
+    return false;
+}
+
+void application::toggle_full_screen()
+{
+    auto const full_screen = isFullScreen();
+        
+    setFullScreen(!full_screen);
+
+    setup_depth_buffer();
 }
 
 void application::draw_frame()

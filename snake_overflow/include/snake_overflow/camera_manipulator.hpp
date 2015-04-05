@@ -31,9 +31,9 @@ public:
 
     void reset();
 
-private:
-
     void setup_arcball_manipulator();
+
+private:
 
     camera_view get_camera_view() const;
 
