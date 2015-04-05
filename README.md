@@ -36,4 +36,4 @@ The quickest way to play Snake Overflow is to:
  2. Unzip it to some local folder. 
  3. Start the `snake_overflow.exe` executable from the unzipped `/snake_overflow` folder.
 
-Alternatively, you can build the program from the sources. To build the projects you will need Visual Studio 2013 and [Cinder 0.8.6](http://libcinder.org/blog/posts/9_cinder-086-released/).
+Alternatively, you can build the program from the sources. To build the projects you will need Microsoft Visual Studio 2013 and [Cinder 0.8.6](http://libcinder.org/blog/posts/9_cinder-086-released/).
