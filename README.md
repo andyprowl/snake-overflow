@@ -4,6 +4,12 @@ Snake Overflow is a 3D snake game. Unlike classical snake games, Snake Overflow 
 
 In order to follow the snake as it moves up and down the terrain, you can use the mouse to *rotate the camera* around the center of the terrain. To do so, hold the left mouse button and drag the cursor around; the camera will rotate correspondingly. You can use the mouse wheel to *zoom in and out* or, alternatively, the keys 'W' and 'S'.
 
+You can *pause and unpause* the game at any time by pressing the 'P' key:
+
+![alt tag](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot03.jpg)
+
+If you lose eye contact with the snake, you can *press the spacebar to toggle auto-follow on and off*: when auto-follow is on, the system will control the camera automatically and try to keep the snake constantly visible as it moves on the terrain. The camera cannot be manipulated by using the mouse while auto-follow is active. When auto-follow is active, a message is displayed on the bottom-right corner of the window.
+
 ## Goal of the game
 
 The goal of the game is to score as many points as possible. The game ends when the snake bites its tail, unless an *invulnerability bonus* applies - as explained in the following. Once the game ends, it is possible to start a new game by pressing 'Enter' or 'F5'.
