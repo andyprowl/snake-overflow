@@ -1,8 +1,10 @@
-## Snake Overflow
+# Snake Overflow
 
 Snake Overflow is a 3D snake game. Unlike classical snake games, Snake Overflow lets you control the snake by using *only two keys*: the left arrow and the right arrow (or the 'A' and 'D' keys, alternatively). These respectively turn the snake left or right *relative to its current direction of movement*, and not relative to the observer's viewpoint.
 
 In order to follow the snake as it moves up and down the terrain, you can use the mouse to *rotate the camera* around the center of the terrain. To do so, hold the left mouse button and drag the cursor around; the camera will rotate correspondingly. You can use the mouse wheel to *zoom in and out* or, alternatively, the keys 'W' and 'S'.
+
+## Goal of the game
 
 The goal of the game is to score as many points as possible. The game ends when the snake bites its tail, unless an *invulnerability bonus* applies - as explained in the following. Once the game ends, it is possible to start a new game by pressing 'Enter' or 'F5'.
 
@@ -14,7 +16,7 @@ Several items are spawned at random intervals on the terrain's surface, and pick
  
 All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
 
-# Installation instructions
+## Installation instructions
 
 The quickest way to play Snake Overflow is to:
 
