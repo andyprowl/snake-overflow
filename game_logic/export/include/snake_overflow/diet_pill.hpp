@@ -10,7 +10,10 @@ class diet_pill : public consumable_item
 
 public:
 
-    diet_pill(position placement, game& parent_game, int slim_power);
+    diet_pill(position placement, 
+              game& parent_game, 
+              int lifetime,
+              int slim_power);
 
     int get_slim_power() const;
 

@@ -9,8 +9,9 @@ namespace snake_overflow
 
 fruit::fruit(position const placement, 
              game& parent_game, 
+             int const lifetime,
              int const nutrition_value)
-    : consumable_item{placement, parent_game}
+    : consumable_item{placement, parent_game, lifetime}
     , nutrition_value{nutrition_value}
 {
 }

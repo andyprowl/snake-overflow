@@ -19,6 +19,8 @@ public:
 
     virtual void pick(snake& s) = 0;
 
+    virtual void age() = 0;
+
 };
 
 }

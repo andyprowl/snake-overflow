@@ -29,9 +29,16 @@ public:
         throw item_picked_exception{};
     }
 
-private:
+    virtual void age() override
+    {
+        ++(this->item_age);
+    }
+
+public:
 
     position placement;
+
+    int item_age = 0;
 
 };
 

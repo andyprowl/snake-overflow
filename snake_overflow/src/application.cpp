@@ -196,23 +196,57 @@ std::unique_ptr<item_spawner> application::create_item_spawner(
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        random_integer_generator generator{};
-        auto value = generator.generate(1, 5);
-        return std::make_unique<fruit>(pos, *this->current_game, value);
+        return create_fruit(pos);
     }, 90);
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        return std::make_unique<diet_pill>(pos, *this->current_game, 5);
+        return create_diet_pill(pos);
     }, 8);
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        return std::make_unique<invulnerability_spell>(pos, 
-                                                       *this->current_game);
+        return create_invulnerability_spell(pos);
     }, 2);
 
     return std::move(is);
+}
+
+std::unique_ptr<item> application::create_fruit(
+    util::value_ref<position> pos) const
+{
+    random_integer_generator generator{};
+
+    auto const nutrition_value = generator.generate(1, 5);
+
+    auto const lifetime = generator.generate(200, 800);
+
+    return std::make_unique<fruit>(pos, 
+                                   *this->current_game, 
+                                   lifetime, 
+                                   nutrition_value);
+}
+
+std::unique_ptr<item> application::create_diet_pill(
+    util::value_ref<position> pos) const
+{
+    random_integer_generator generator{};
+
+    auto const lifetime = generator.generate(100, 500);
+
+    return std::make_unique<diet_pill>(pos, *this->current_game, lifetime, 5);
+}
+
+std::unique_ptr<item> application::create_invulnerability_spell(
+    util::value_ref<position> pos) const
+{
+    random_integer_generator generator{};
+
+    auto const lifetime = generator.generate(100, 300);
+
+    return std::make_unique<invulnerability_spell>(pos, 
+                                                   *this->current_game, 
+                                                   lifetime);
 }
 
 std::unique_ptr<terrain_item_filler> application::create_terrain_filler(

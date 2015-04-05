@@ -7,9 +7,12 @@
 namespace snake_overflow
 {
 
-consumable_item::consumable_item(position const placement, game& parent_game)
+consumable_item::consumable_item(position const placement, 
+                                 game& parent_game,
+                                 int const lifetime)
     : placement{placement}
     , parent_game{parent_game}
+    , lifetime{*this, lifetime}
 {
 }
 
@@ -25,12 +28,16 @@ void consumable_item::pick(snake& s)
     remove_from_terrain_and_cause_self_destruction();
 }
 
+void consumable_item::age()
+{
+    this->lifetime.shorten();
+}
+
 void consumable_item::remove_from_terrain_and_cause_self_destruction()
 {
     auto& t = this->parent_game.get_terrain();
 
     t.remove_item(*this);
 }
-
 
 }

@@ -22,6 +22,7 @@ protected:
 
         auto i = std::make_unique<diet_pill>(this->placement, 
                                              g,
+                                             this->lifetime,
                                              this->slim_power);
 
         this->pill = i.get();
@@ -36,6 +37,8 @@ protected:
     int slim_power = 1;
 
     position placement = {{1, 0, 2}, block_face::front};
+
+    int lifetime = 50;
 
     diet_pill* pill;
 
@@ -88,6 +91,38 @@ TEST_THAT(DietPill,
     auto const b = t.get_block(placement.location);
     
     EXPECT_THAT(b.items.size(), Eq(0u));
+}
+
+TEST_THAT(DietPill,
+     WHAT(Lifetime),
+     WHEN(AfterShorteningIt),
+     THEN(EvaluatesToAValueLowerThanThePreviousOneUnit))
+{
+    this->pill->lifetime.shorten();
+
+    EXPECT_THAT(this->pill->lifetime, Eq(this->lifetime - 1)); 
+}
+
+TEST_THAT(DietPill,
+     WHAT(Lifetime),
+     WHEN(WhenShorteningDownToZero),
+     THEN(RemovesTheDietPillFromTheTerrain))
+{
+    util::repeat(this->lifetime, [this] { this->pill->lifetime.shorten(); });
+
+    auto& ground = get_terrain();
+
+    EXPECT_THAT(ground.get_num_of_items(), Eq(0));
+}
+
+TEST_THAT(DietPill,
+     WHAT(Age),
+     WHEN(Always),
+     THEN(ShortensTheLifetime))
+{
+    this->pill->age();
+
+    EXPECT_THAT(this->pill->lifetime, Eq(this->lifetime - 1)); 
 }
 
 } }

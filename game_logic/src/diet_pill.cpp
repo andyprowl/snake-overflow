@@ -8,8 +8,9 @@ namespace snake_overflow
 
 diet_pill::diet_pill(position const placement, 
                      game& parent_game, 
+                     int const lifetime,
                      int const slim_power)
-    : consumable_item{placement, parent_game}
+    : consumable_item{placement, parent_game, lifetime}
     , slim_power{slim_power}
 {
 }

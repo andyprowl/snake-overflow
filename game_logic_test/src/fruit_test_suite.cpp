@@ -25,6 +25,7 @@ protected:
 
         auto i = std::make_unique<fruit>(this->placement, 
                                          g,
+                                         this->lifetime,
                                          this->nutrition_value);
 
         this->f = i.get();
@@ -39,6 +40,8 @@ protected:
     int nutrition_value = 5;
 
     position placement = {{1, 0, 2}, block_face::front};
+
+    int lifetime = 50;
 
     fruit* f;
 
@@ -105,6 +108,46 @@ TEST_THAT(Fruit,
     auto& g = get_game();
 
     EXPECT_THAT(g.score, Eq(this->nutrition_value));
+}
+
+TEST_THAT(Fruit,
+     WHAT(Lifetime),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(EvaluatesToTheValuePassedAtConstruction))
+{
+    EXPECT_THAT(this->f->lifetime, Eq(this->lifetime)); 
+}
+
+TEST_THAT(Fruit,
+     WHAT(Lifetime),
+     WHEN(AfterShorteningIt),
+     THEN(EvaluatesToAValueLowerThanThePreviousOneUnit))
+{
+    this->f->lifetime.shorten();
+
+    EXPECT_THAT(this->f->lifetime, Eq(this->lifetime - 1)); 
+}
+
+TEST_THAT(Fruit,
+     WHAT(Lifetime),
+     WHEN(WhenShorteningDownToZero),
+     THEN(RemovesTheFruitFromTheTerrain))
+{
+    util::repeat(this->lifetime, [this] { this->f->lifetime.shorten(); });
+
+    auto& ground = get_terrain();
+
+    EXPECT_THAT(ground.get_num_of_items(), Eq(0));
+}
+
+TEST_THAT(Fruit,
+     WHAT(Age),
+     WHEN(Always),
+     THEN(ShortensTheLifetime))
+{
+    this->f->age();
+
+    EXPECT_THAT(this->f->lifetime, Eq(this->lifetime - 1)); 
 }
 
 } }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "util/value_ref.hpp"
 #include <chrono>
 #include <memory>
 
@@ -7,9 +8,11 @@ namespace snake_overflow
 {
 
 struct footprint;
+struct position;
 
 class camera_manipulator;
 class game;
+class item;
 class hud_renderer;
 class item_position_picker;
 class item_spawner;
@@ -63,6 +66,13 @@ private:
     std::unique_ptr<item_spawner> create_item_spawner(
         terrain& t,
         std::unique_ptr<item_position_picker>&& p) const;
+
+    std::unique_ptr<item> create_fruit(util::value_ref<position> pos) const;
+
+    std::unique_ptr<item> create_diet_pill(util::value_ref<position> pos) const;
+
+    std::unique_ptr<item> create_invulnerability_spell(
+        util::value_ref<position> pos) const;
 
     std::unique_ptr<terrain_item_filler> create_terrain_filler(
         std::unique_ptr<item_spawner>&& is) const;

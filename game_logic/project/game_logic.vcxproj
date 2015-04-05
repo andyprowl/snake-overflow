@@ -95,6 +95,7 @@
     <ClCompile Include="..\src\game_boolean_parameter.cpp" />
     <ClCompile Include="..\src\game_integer_parameter.cpp" />
     <ClCompile Include="..\src\invulnerability_spell.cpp" />
+    <ClCompile Include="..\src\item_lifetime.cpp" />
     <ClCompile Include="..\src\item_spawner.cpp" />
     <ClCompile Include="..\src\probabilistic_item_spawner.cpp" />
     <ClCompile Include="..\src\random_integer_generator.cpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="..\export\include\snake_overflow\game_integer_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\invulnerability_spell.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\item_lifetime.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item_position_picker.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item_spawner.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\probabilistic_item_spawner.hpp" />

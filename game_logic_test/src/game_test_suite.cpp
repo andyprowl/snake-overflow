@@ -1,6 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
+#include "snake_overflow/testing/fake_item.hpp"
 #include "util/repeat.hpp"
 
 namespace snake_overflow { namespace testing
@@ -13,6 +14,25 @@ using ::testing::Ref;
 
 class Game : public CubeTerrainGameFixture
 {
+
+protected:
+
+    fake_item& add_new_item_to_terrain(util::value_ref<position> pos)
+    {
+        auto i = make_item(pos);
+
+        auto& new_item = *i;
+
+        get_terrain().add_item(std::move(i));
+
+        return new_item;
+    }
+
+    std::unique_ptr<fake_item> make_item(util::value_ref<position> pos)
+    {
+        return std::make_unique<fake_item>(pos);
+    }
+
 };
 
 TEST_THAT(Game,
@@ -304,6 +324,22 @@ TEST_THAT(Game,
     this->g->update();
 
     EXPECT_TRUE(this->terrain_filler->invoked);
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(Always),
+     THEN(ShortensTheLifetimeOfAllItemsOnTheTerrain))
+{
+    auto& i1 = add_new_item_to_terrain({{0, 0, 0}, block_face::front});
+    auto& i2 = add_new_item_to_terrain({{0, 0, 1}, block_face::front});
+    auto& i3 = add_new_item_to_terrain({{0, 0, 2}, block_face::front});
+
+    this->g->update();
+
+    EXPECT_THAT(i1.item_age, Eq(1));
+    EXPECT_THAT(i2.item_age, Eq(1));
+    EXPECT_THAT(i3.item_age, Eq(1));
 }
 
 TEST_THAT(Game,

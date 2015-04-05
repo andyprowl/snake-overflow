@@ -41,6 +41,10 @@ private:
 
     void throw_if_game_is_over() const;
 
+    void fill_terrain_if_due_time() const;
+    
+    void make_all_items_age() const;
+
 private:
 
     std::unique_ptr<terrain> habitat;

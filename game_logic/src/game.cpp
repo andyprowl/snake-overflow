@@ -42,10 +42,9 @@ void game::update()
         this->hero->advance();
     }
 
-    if (this->age % this->terrain_filling_interval == 0)
-    {
-        this->habitat_filler->fill_terrain();
-    }
+    fill_terrain_if_due_time();
+
+    make_all_items_age();
 
     ++(this->age);
 }
@@ -56,6 +55,28 @@ void game::throw_if_game_is_over() const
     {
         throw game_over_exception{};
     }
+}
+
+void game::fill_terrain_if_due_time() const
+{
+    if (this->age % this->terrain_filling_interval == 0)
+    {
+        this->habitat_filler->fill_terrain();
+    }
+}
+
+void game::make_all_items_age() const
+{
+    auto items = std::vector<item*>{};
+
+    items.reserve(this->habitat->get_num_of_items());
+
+    this->habitat->for_each_item([&items] (item& i)
+    {
+        items.push_back(&i);
+    });
+
+    for (auto const i : items) { i->age(); }
 }
 
 void toggle_game_pause(game& g)

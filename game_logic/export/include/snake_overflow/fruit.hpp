@@ -10,7 +10,10 @@ class fruit : public consumable_item
 
 public:
 
-    fruit(position placement, game& parent_game, int nutrition_value);
+    fruit(position placement, 
+          game& parent_game, 
+          int lifetime,
+          int nutrition_value);
 
     int get_nutrition_value() const;
 
