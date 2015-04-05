@@ -35,8 +35,6 @@ public:
 
     game_integer_parameter score;
 
-    game_integer_parameter snake_advancement_interval;
-
     game_integer_parameter terrain_filling_interval;
 
 private:

@@ -187,36 +187,6 @@ TEST_THAT(Game,
 }
 
 TEST_THAT(Game,
-     WHAT(SnakeAdvancementInterval),
-     WHEN(ImmediatelyAfterConstruction),
-     THEN(EvaluatesToANonNegativeValue))
-{
-    EXPECT_THAT(this->g->snake_advancement_interval, Gt(0));
-}
-
-TEST_THAT(Game,
-     WHAT(SnakeAdvancementInterval),
-     WHEN(AfterSettingAValueGreaterThanOne),
-     THEN(ReturnsTheNewlySetValue))
-{
-    auto const new_interval = 1337;
-    
-    this->g->snake_advancement_interval = new_interval;
-
-    EXPECT_THAT(this->g->snake_advancement_interval, Eq(new_interval));
-}
-
-TEST_THAT(Game,
-     WHAT(SnakeAdvancementInterval),
-     WHEN(WhenTryingToSetAValueLowerThanOne),
-     THEN(SetsTheValueToOne))
-{    
-    this->g->snake_advancement_interval = 0;
-
-    EXPECT_THAT(this->g->snake_advancement_interval, Eq(1));
-}
-
-TEST_THAT(Game,
      WHAT(Update),
      WHEN(WhenTheGameIsPaused),
      THEN(DoesNotAdvanceTheSnake))
@@ -246,32 +216,6 @@ TEST_THAT(Game,
     this->g->update();
 
     EXPECT_THAT(body.get_trail_head().step, Eq(initial_footprint));
-}
-
-TEST_THAT(Game,
-     WHAT(Update),
-     WHEN(WhenCalledForTheNthTimeWithNEqualToTheSnakeAdvancementInterval),
-     THEN(AdvancesTheSnake))
-{
-    auto& body = get_snake_body();
-
-    auto const initial_footprint = body.get_trail_head().step;
-
-    auto const interval = this->g->snake_advancement_interval;
-
-    this->g->update();
-
-    auto const next_footprint = body.get_trail_head().step;
-
-    EXPECT_THAT(next_footprint, Ne(initial_footprint));
-
-    util::repeat(interval - 1, [this] { this->g->update(); });
-
-    EXPECT_THAT(body.get_trail_head().step, Eq(next_footprint));
-
-    this->g->update();
-
-    EXPECT_THAT(body.get_trail_head().step, Ne(next_footprint));
 }
 
 TEST_THAT(Game,

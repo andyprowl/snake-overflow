@@ -2,11 +2,14 @@
 
 #include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
 #include "snake_overflow/testing/fake_item.hpp"
+#include "util/repeat.hpp"
 
 namespace snake_overflow { namespace testing
 {
     
 using ::testing::Eq;
+using ::testing::Gt;
+using ::testing::Ne;
 
 class Snake : public CubeTerrainGameFixture
 {
@@ -33,7 +36,7 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
-     WHAT(Advance),
+     WHAT(Update),
      WHEN(WhenTheHeadOfTheSnakeCollidesWithAnItem),
      THEN(LetsTheItemBePickedByTheSnake))
 {
@@ -45,13 +48,13 @@ TEST_THAT(Snake,
 
     auto& s = get_snake();
 
-    s.advance();
+    s.get_body().advance();
 
-    EXPECT_THROW(s.advance(), item_picked_exception);
+    EXPECT_THROW(s.get_body().advance(), item_picked_exception);
 }
 
 TEST_THAT(Snake,
-     WHAT(Advance),
+     WHAT(Update),
      WHEN(WhenTheHeadOfTheSnakeCollidesWithAPartOfItsBody),
      THEN(KillsTheSnake))
 {
@@ -61,29 +64,38 @@ TEST_THAT(Snake,
 
     s.turn_right();
 
-    s.advance();
+    util::repeat(s.advancement_interval, [&s] { s.update(); });
 
     s.turn_right();
 
-    s.advance();
+    util::repeat(s.advancement_interval, [&s] { s.update(); });
 
     s.turn_right();
 
-    s.advance();
+    s.update();
 
     EXPECT_TRUE(s.is_dead);
 }
 
 TEST_THAT(Snake,
-     WHAT(Advance),
+     WHAT(Update),
      WHEN(WhenTheSnakeIsDead),
-     THEN(Throws))
+     THEN(DoesNothing))
 {
     auto& s = get_snake();
 
+    auto& b = s.get_body();
+
+    auto old_head = b.get_trail_head().step;
+
     s.is_dead.set();
 
-    EXPECT_THROW(s.advance(), dead_snake_exception);
+    EXPECT_NO_THROW([&s]
+    {
+        util::repeat(s.advancement_interval, [&s] { s.update(); });
+    });
+
+    EXPECT_THAT(b.get_trail_head().step, Eq(old_head));
 }
 
 TEST_THAT(Snake,
@@ -169,7 +181,35 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
-     WHAT(Advance),
+     WHAT(Update),
+     WHEN(WhenCalledForTheNthTimeWithNEqualToTheUpdatementInterval),
+     THEN(UpdatesTheBody))
+{
+    auto& s = get_snake();
+
+    auto& body = get_snake_body();
+
+    auto const initial_footprint = body.get_trail_head().step;
+
+    auto const interval = s.advancement_interval;
+
+    s.update();
+
+    auto const next_footprint = body.get_trail_head().step;
+
+    EXPECT_THAT(next_footprint, Ne(initial_footprint));
+
+    util::repeat(interval - 1, [&s] { s.update(); });
+
+    EXPECT_THAT(body.get_trail_head().step, Eq(next_footprint));
+
+    s.update();
+
+    EXPECT_THAT(body.get_trail_head().step, Ne(next_footprint));
+}
+
+TEST_THAT(Snake,
+     WHAT(Update),
      WHEN(WhenTheSnakeBitesItselfButHasAPositiveInvulnerabilityBonus),
      THEN(DoesNotKillTheSnake))
 {
@@ -179,19 +219,55 @@ TEST_THAT(Snake,
 
     s.turn_right();
 
-    s.advance();
+    s.update();
 
     s.turn_right();
 
-    s.advance();
+    s.update();
 
     s.turn_right();
 
     s.invulnerability_bonus = true;
 
-    s.advance();
+    s.update();
 
     EXPECT_FALSE(s.is_dead);
+}
+
+TEST_THAT(Snake,
+     WHAT(UpdatementInterval),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(EvaluatesToANonNegativeValue))
+{
+    auto& s = get_snake();
+
+    EXPECT_THAT(s.advancement_interval, Gt(0));
+}
+
+TEST_THAT(Snake,
+     WHAT(UpdatementInterval),
+     WHEN(AfterSettingAValueGreaterThanOneButLessThanTheMaximum),
+     THEN(ReturnsTheNewlySetValue))
+{
+    auto& s = get_snake();
+
+    auto const new_interval = 3;
+    
+    s.advancement_interval = new_interval;
+
+    EXPECT_THAT(s.advancement_interval, Eq(new_interval));
+}
+
+TEST_THAT(Snake,
+     WHAT(UpdatementInterval),
+     WHEN(WhenTryingToSetAValueLowerThanOne),
+     THEN(SetsTheValueToOne))
+{    
+    auto& s = get_snake();
+
+    s.advancement_interval = 0;
+
+    EXPECT_THAT(s.advancement_interval, Eq(1));
 }
 
 } }

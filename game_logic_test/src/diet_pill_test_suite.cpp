@@ -69,7 +69,7 @@ TEST_THAT(DietPill,
 
     this->pill->pick(s);
 
-    util::repeat(10, [&s] { s.advance(); });
+    util::repeat(10, [&s] { s.update(); });
 
     auto const expected_length = this->initial_snake_length - 
                                  this->slim_power;

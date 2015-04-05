@@ -72,7 +72,7 @@ TEST_THAT(Fruit,
 
     this->f->pick(s);
 
-    util::repeat(10, [&s] { s.advance(); });
+    util::repeat(10, [&s] { s.get_body().advance(); });
 
     auto const expected_length = this->initial_snake_length + 
                                  this->nutrition_value;

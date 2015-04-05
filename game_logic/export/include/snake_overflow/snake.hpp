@@ -3,6 +3,7 @@
 #include "snake_overflow/collision_handler.hpp"
 #include "snake_overflow/dead_snake_flag.hpp"
 #include "snake_overflow/snake_boolean_parameter.hpp"
+#include "snake_overflow/snake_integer_parameter.hpp"
 #include "snake_overflow/snake_body.hpp"
 #include <memory>
 
@@ -24,7 +25,7 @@ public:
 
     int get_length() const;
 
-    void advance();
+    void update();
 
     void turn_left();
 
@@ -40,6 +41,8 @@ public:
 
     snake_boolean_parameter invulnerability_bonus;
 
+    snake_integer_parameter advancement_interval;
+
     std::string skin;
 
 private:
@@ -51,6 +54,8 @@ private:
     std::unique_ptr<snake_body> body;
 
     std::unique_ptr<collision_handler> collider;
+
+    int age;
 
 };
 

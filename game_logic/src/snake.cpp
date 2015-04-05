@@ -10,6 +10,8 @@ snake::snake(std::unique_ptr<snake_body>&& body, std::string skin)
     , skin(std::move(skin))
     , is_dead{false}
     , invulnerability_bonus{false, is_dead}
+    , advancement_interval{4, is_dead, 1, 5}
+    , age{0}
 {
     this->collider = std::make_unique<collision_handler>(*this, this->is_dead);
 }
@@ -29,11 +31,19 @@ int snake::get_length() const
     return this->body->get_length();
 }
 
-void snake::advance()
+void snake::update()
 {
-    throw_if_dead();
+    if (this->is_dead)
+    {
+        return;
+    }
 
-    this->body->advance();
+    if (this->age % this->advancement_interval == 0)
+    {
+        this->body->advance();
+    }
+
+    ++(this->age);
 }
 
 void snake::turn_left()

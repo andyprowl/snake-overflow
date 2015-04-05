@@ -104,6 +104,7 @@
     <ClCompile Include="..\src\rgba_color.cpp" />
     <ClCompile Include="..\src\snake.cpp" />
     <ClCompile Include="..\src\snake_boolean_parameter.cpp" />
+    <ClCompile Include="..\src\snake_integer_parameter.cpp" />
     <ClCompile Include="..\src\terrain_builder.cpp" />
     <ClCompile Include="..\src\canonical_direction.cpp" />
     <ClCompile Include="..\src\footprint.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="..\export\include\snake_overflow\rgba_color.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake_boolean_parameter.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\snake_integer_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\footprint.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
