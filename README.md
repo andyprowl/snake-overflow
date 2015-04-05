@@ -32,7 +32,7 @@ All items have a random lifetime, with invulnerability bonuses . When the lifeti
 
 The quickest way to play Snake Overflow is to:
 
- 1. Download the `snake_overflow.zip` file from the `/deploy` subfolder in this repository.
+ 1. Download the [`snake_overflow.zip`](https://github.com/andyprowl/snake-overflow/raw/master/deploy/snake_overflow.zip) file from the `/deploy` subfolder in this repository.
  2. Unzip it to some local folder. 
  3. Start the `snake_overflow.exe` executable from the unzipped `/snake_overflow` folder.
 
