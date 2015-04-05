@@ -2,9 +2,9 @@
 
 #include "snake_overflow/game_boolean_parameter.hpp"
 #include "snake_overflow/game_integer_parameter.hpp"
+#include "snake_overflow/game_map.hpp"
 #include "snake_overflow/game_over_flag.hpp"
 #include "snake_overflow/snake.hpp"
-#include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_item_filler.hpp"
 
 namespace snake_overflow
@@ -15,9 +15,11 @@ class game
 
 public:
 
-    game(std::unique_ptr<terrain>&& habitat, 
+    game(std::unique_ptr<game_map>&& m, 
          std::unique_ptr<snake>&& hero,
          std::unique_ptr<terrain_item_filler>&& habitat_filler);
+
+    game_map& get_map() const;
 
     terrain& get_terrain() const;
 
@@ -47,7 +49,7 @@ private:
 
 private:
 
-    std::unique_ptr<terrain> habitat;
+    std::unique_ptr<game_map> habitat;
     
     std::unique_ptr<snake> hero;
 

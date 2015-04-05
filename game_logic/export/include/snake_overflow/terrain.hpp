@@ -77,6 +77,8 @@ public:
 
     std::unique_ptr<item> remove_item(util::value_ref<item> i);
 
+    void remove_all_items();
+
     int get_num_of_items() const;
 
     std::vector<position> get_all_free_item_positions() const;
@@ -130,6 +132,8 @@ bool contains_solid_block(terrain const& t, util::value_ref<point> p);
 bool is_block_occluded(util::value_ref<point> location, terrain const& t);
 
 bool is_block_visible(util::value_ref<block> b, terrain const& t);
+
+std::vector<block> get_all_visible_blocks(terrain const& t);
 
 bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t);
 

@@ -1,26 +1,24 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/terrain_prototype_repository.hpp"
+#include "snake_overflow/game_map_repository.hpp"
 #include "snake_overflow/serialization/terrain_loader.hpp"
 
 namespace snake_overflow
 {
 
-terrain_prototype_repository::terrain_prototype_repository()
+game_map_repository::game_map_repository()
 {
     auto const p = get_asset_directory();
     
-    load_all_terrains_in_directory(p);
+    load_all_maps_in_directory(p);
 }
 
-std::unique_ptr<terrain> terrain_prototype_repository::create_terrain(
-    util::value_ref<std::string> name)
+game_map& game_map_repository::get_map(util::value_ref<std::string> name) const
 {
-    return this->terrain_prototypes.at(name)->clone();
+    return *(this->maps.at(name));
 }
 
-boost::filesystem::path 
-    terrain_prototype_repository::get_asset_directory() const
+boost::filesystem::path game_map_repository::get_asset_directory() const
 {
     if (boost::filesystem::is_directory("../../assets/maps"))
     {
@@ -32,7 +30,7 @@ boost::filesystem::path
     }
 }
 
-void terrain_prototype_repository::load_all_terrains_in_directory(
+void game_map_repository::load_all_maps_in_directory(
     util::value_ref<boost::filesystem::path> p)
 {
     using boost::filesystem::directory_iterator;
@@ -44,19 +42,21 @@ void terrain_prototype_repository::load_all_terrains_in_directory(
 
         if (p.extension() == ".som")
         {
-            load_terrain(p);
+            load_map(p);
         }
     }
 }
 
-void terrain_prototype_repository::load_terrain(
+void game_map_repository::load_map(
     util::value_ref<boost::filesystem::path> p)
 {
-    auto terrain_name = p.filename().string();
+    auto map_name = p.filename().string();
     
     auto t = this->loader.load_terrain(p.string());
 
-    this->terrain_prototypes.emplace(std::move(terrain_name), std::move(t));
+    auto m = std::make_unique<game_map>(map_name, std::move(t));
+
+    this->maps.emplace(std::move(map_name), std::move(m));
 }
 
 }

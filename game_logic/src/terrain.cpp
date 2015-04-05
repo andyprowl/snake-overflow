@@ -116,6 +116,25 @@ std::unique_ptr<item> terrain::remove_item(util::value_ref<item> i)
     return release_item_ownership(i);
 }
 
+void terrain::remove_all_items()
+{
+    auto all_items = std::vector<item*>{};
+    all_items.reserve(this->items.size());
+
+    std::transform(std::cbegin(this->items),
+                   std::cend(this->items),
+                   std::back_inserter(all_items),
+                   [] (std::unique_ptr<item> const& i)
+    {
+        return i.get();
+    });
+
+    for (auto const i : all_items)
+    {
+        remove_item(*i);
+    }
+}
+
 int terrain::get_num_of_items() const
 {
     return static_cast<int>(this->items.size());
@@ -277,6 +296,22 @@ bool is_block_occluded(util::value_ref<point> location, terrain const& t)
 bool is_block_visible(util::value_ref<block> b, terrain const& t)
 {
     return !(is_block_transparent(b) || is_block_occluded(b.origin, t));
+}
+
+std::vector<block> get_all_visible_blocks(terrain const& t)
+{
+    auto blocks = t.get_all_blocks();
+
+    auto it = std::remove_if(std::begin(blocks),
+                             std::end(blocks),
+                             [&t] (util::value_ref<block> b)
+    {
+        return !(is_block_visible(b, t));
+    });
+
+    blocks.erase(it, std::cend(blocks));
+
+    return blocks;
 }
 
 bool is_position_free_of_items(util::value_ref<position> pos, terrain const& t)

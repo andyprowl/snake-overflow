@@ -91,6 +91,7 @@
     <ClCompile Include="..\src\dynamics.cpp" />
     <ClCompile Include="..\src\fruit.cpp" />
     <ClCompile Include="..\src\game.cpp" />
+    <ClCompile Include="..\src\game_map.cpp" />
     <ClCompile Include="..\src\game_over_flag.cpp" />
     <ClCompile Include="..\src\game_boolean_parameter.cpp" />
     <ClCompile Include="..\src\game_integer_parameter.cpp" />
@@ -133,6 +134,7 @@
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\fruit.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\game_map.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_over_flag.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_boolean_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_integer_parameter.hpp" />

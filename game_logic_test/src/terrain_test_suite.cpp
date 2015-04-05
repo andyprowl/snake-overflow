@@ -336,12 +336,31 @@ TEST_THAT(Terrain,
      THEN(Throws))
 {
     create_cube_with_vertex_on_origin(4);
-
-    auto const pos = position{{1, 0, 1}, block_face::front};
-
-    auto i = make_item(pos);
+    
+    auto i = make_item({{1, 0, 1}, block_face::front});
 
     EXPECT_THROW(this->t.remove_item(*i), item_not_found_exception);
+}
+
+TEST_THAT(Terrain,
+     WHAT(RemoveAllItems),
+     WHEN(Always),
+     THEN(RemovesAllTheItemsFromTheTerrain))
+{
+    create_cube_with_vertex_on_origin(4);
+    
+    auto i1 = make_item({{0, 0, 0}, block_face::front});
+    this->t.add_item(std::move(i1));
+    
+    auto i2 = make_item({{0, 0, 1}, block_face::front});
+    this->t.add_item(std::move(i2));
+
+    auto i3 = make_item({{0, 0, 2}, block_face::front});
+    this->t.add_item(std::move(i3));
+
+    this->t.remove_all_items();
+
+    EXPECT_THAT(this->t.get_num_of_items(), Eq(0));
 }
 
 TEST_THAT(Terrain,
@@ -369,7 +388,6 @@ TEST_THAT(Terrain,
 
     EXPECT_THAT(this->t.get_num_of_items(), Eq(1));
 }
-
 
 TEST_THAT(Terrain,
      WHAT(ForEachItem),

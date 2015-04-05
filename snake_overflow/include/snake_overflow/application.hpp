@@ -19,7 +19,7 @@ class item_spawner;
 class keyboard_input_handler;
 class terrain;
 class terrain_item_filler;
-class terrain_provider;
+class game_map_repository;
 class texture_repository;
 class world_renderer;
 
@@ -56,7 +56,7 @@ private:
 
     void setup_depth_buffer();
 
-    void create_terrain_provider();
+    void create_game_map_repository();
 
     void start_new_game();
 
@@ -99,7 +99,7 @@ private:
 
     std::unique_ptr<game> current_game;
         
-    std::unique_ptr<terrain_provider> habitat_provider;
+    std::unique_ptr<game_map_repository> game_maps;
 
     std::unique_ptr<texture_repository> textures;
 
@@ -110,9 +110,7 @@ private:
     std::unique_ptr<camera_manipulator> camera_handler;
 
     std::unique_ptr<keyboard_input_handler> keyboard_handler;
-
-    float block_size = 20.f;
-
+    
     std::chrono::time_point<std::chrono::system_clock> last_frame_time;
 
     float current_fps = 60.0;

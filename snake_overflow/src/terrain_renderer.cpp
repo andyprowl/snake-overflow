@@ -14,15 +14,16 @@
 namespace snake_overflow
 {
 
-terrain_renderer::terrain_renderer(terrain const& t,
-                                   float const block_size,
+terrain_renderer::terrain_renderer(float const block_size,
                                    texture_repository const& textures)
     : block_size{block_size}
     , textures{textures}
 {
-    this->blocks_to_render = get_visible_blocks(t);
+}
 
-    sort_blocks_for_rendering(this->blocks_to_render);
+void terrain_renderer::set_current_map(game_map const& m)
+{
+    this->blocks_to_render = this->block_cache.get_map_blocks(m);
 }
 
 void terrain_renderer::render() const
@@ -37,46 +38,11 @@ void terrain_renderer::render() const
     }
 }
 
-std::vector<block> terrain_renderer::get_visible_blocks(terrain const& t) const
-{
-    auto blocks = t.get_all_blocks();
-
-    auto it = std::remove_if(std::begin(blocks),
-                             std::end(blocks),
-                             [this, &t] (util::value_ref<block> b)
-    {
-        return !is_block_visible(b, t);
-    });
-
-    blocks.erase(it, std::cend(blocks));
-
-    return blocks;
-}
-
-void terrain_renderer::sort_blocks_for_rendering(
-    std::vector<block>& blocks) const
-{
-    std::stable_sort(std::begin(blocks), 
-                     std::end(blocks),
-                     [] (util::value_ref<block> lhs, 
-                         util::value_ref<block> rhs)
-    {
-        if (lhs.color.alpha == rhs.color.alpha)
-        {
-            return (lhs.origin < rhs.origin);
-        }
-        else
-        {
-            return (lhs.color.alpha > rhs.color.alpha);
-        }
-    });
-}
-
 void terrain_renderer::render_block(util::value_ref<block> b) const
 {
-    auto const block_cube = cinder::Vec3f{this->block_size, 
-                                          this->block_size, 
-                                          this->block_size};
+    auto const block_size = this->block_size;
+
+    auto const block_cube = cinder::Vec3f{block_size, block_size, block_size};
 
     auto const block_origin = vec3f_from_point(b.origin) * block_size;
 

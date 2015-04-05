@@ -5,6 +5,7 @@
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
+#include "snake_overflow/game_map_repository.hpp"
 #include "snake_overflow/hud_renderer.hpp"
 #include "snake_overflow/keyboard_input_handler.hpp"
 #include "snake_overflow/invulnerability_spell.hpp"
@@ -14,7 +15,6 @@
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
-#include "snake_overflow/terrain_prototype_repository.hpp"
 #include "snake_overflow/texture_repository.hpp"
 #include "snake_overflow/world_renderer.hpp"
 #include "cinder/ImageIo.h"
@@ -39,7 +39,9 @@ void application::setup()
 
     setup_depth_buffer();
 
-    create_terrain_provider();
+    create_game_map_repository();
+
+    create_renderers();
 
     start_new_game();
 
@@ -104,15 +106,11 @@ void application::create_renderers()
 
 void application::create_world_renderer()
 {
-    auto& habitat = this->current_game->get_terrain();
-
-    auto& hero = this->current_game->get_snake();
-
     this->textures = std::make_unique<texture_repository>();
 
-    this->world_drawer = std::make_unique<world_renderer>(habitat,
-                                                          hero,
-                                                          this->block_size,
+    auto const block_size = 20.f;
+
+    this->world_drawer = std::make_unique<world_renderer>(block_size, 
                                                           *this->textures);
 }
 
@@ -133,16 +131,16 @@ void application::setup_depth_buffer()
     cinder::gl::enableDepthWrite();
 }
 
-void application::create_terrain_provider()
+void application::create_game_map_repository()
 {
-    this->habitat_provider = std::make_unique<terrain_prototype_repository>();
+    this->game_maps = std::make_unique<game_map_repository>();
 }
 
 void application::start_new_game()
 {
     create_game();
 
-    create_renderers();
+    this->world_drawer->set_current_game(*this->current_game);
 
     create_keyboard_input_handler();
 
@@ -151,23 +149,25 @@ void application::start_new_game()
 
 void application::create_game()
 {
-    auto t = this->habitat_provider->create_terrain("default.som");
+    auto m = this->game_maps->get_map("default.som").clone();
 
-    auto p = std::make_unique<random_item_position_picker>(*t);
+    auto& t = m->get_terrain();
+
+    auto p = std::make_unique<random_item_position_picker>(t);
 
     auto const snake_origin = point{0, -5, 10};
 
-    auto const initial_step = pick_random_starting_footprint(*p, *t);
+    auto const initial_step = pick_random_starting_footprint(*p, t);
 
-    auto body = std::make_unique<snake_body>(*t, initial_step, 3);
+    auto body = std::make_unique<snake_body>(t, initial_step, 3);
 
     auto s = std::make_unique<snake>(std::move(body));
 
-    auto is = create_item_spawner(*t, std::move(p));
+    auto is = create_item_spawner(t, std::move(p));
 
     auto f = create_terrain_filler(std::move(is));
 
-    this->current_game = std::make_unique<game>(std::move(t), 
+    this->current_game = std::make_unique<game>(std::move(m), 
                                                 std::move(s),
                                                 std::move(f));
 

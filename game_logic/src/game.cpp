@@ -5,7 +5,7 @@
 namespace snake_overflow
 {
 
-game::game(std::unique_ptr<terrain>&& habitat, 
+game::game(std::unique_ptr<game_map>&& habitat, 
            std::unique_ptr<snake>&& hero,
            std::unique_ptr<terrain_item_filler>&& habitat_filler)
     : is_game_over{false, hero->is_dead}
@@ -20,9 +20,14 @@ game::game(std::unique_ptr<terrain>&& habitat,
 {
 }
 
-terrain& game::get_terrain() const
+game_map& game::get_map() const
 {
     return *(this->habitat);
+}
+
+terrain& game::get_terrain() const
+{
+    return this->habitat->get_terrain();
 }
 
 snake& game::get_snake() const
@@ -69,9 +74,11 @@ void game::make_all_items_age() const
 {
     auto items = std::vector<item*>{};
 
-    items.reserve(this->habitat->get_num_of_items());
+    auto& t = get_terrain();
 
-    this->habitat->for_each_item([&items] (item& i)
+    items.reserve(t.get_num_of_items());
+
+    t.for_each_item([&items] (item& i)
     {
         items.push_back(&i);
     });

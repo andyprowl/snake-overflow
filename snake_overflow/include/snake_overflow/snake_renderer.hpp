@@ -18,11 +18,12 @@ class snake_renderer
 
 public:
 
-    snake_renderer(snake const& s,
-                   float snake_width, 
+    snake_renderer(float snake_width, 
                    float snake_height, 
                    float block_size,
                    cinder::gl::Texture skin);
+
+    void set_current_snake(snake const& s);
 
     void render() const;
 
@@ -73,7 +74,7 @@ private:
 
 private:
 
-    snake const& hero;
+    snake const* hero = nullptr;
 
     float width;
 

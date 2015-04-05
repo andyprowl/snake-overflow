@@ -60,10 +60,13 @@
     <ClCompile Include="..\src\keyboard_input_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\terrain_prototype_repository.cpp">
+    <ClCompile Include="..\src\alpha_blending_enabler.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\alpha_blending_enabler.cpp">
+    <ClCompile Include="..\src\game_map_block_cache.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game_map_repository.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,16 +113,16 @@
     <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\terrain_provider.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\terrain_prototype_repository.hpp">
+    <ClInclude Include="..\include\snake_overflow\alpha_blending_enabler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\alpha_blending_enabler.hpp">
+    <ClInclude Include="..\include\snake_overflow\game_map_block_cache.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_map_repository.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

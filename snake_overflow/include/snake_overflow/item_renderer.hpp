@@ -15,9 +15,10 @@ class item_renderer
 
 public:
 
-    item_renderer(terrain const& ground,
-                  float block_size, 
+    item_renderer(float block_size, 
                   texture_repository const& textures);
+
+    void set_current_terrain(terrain const& ground);
 
     void render() const;
 
@@ -40,7 +41,7 @@ private:
 
 private:
 
-    terrain const& ground;
+    terrain const* ground = nullptr;
 
     float block_size;
 

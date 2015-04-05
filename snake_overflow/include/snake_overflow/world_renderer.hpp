@@ -7,8 +7,8 @@
 namespace snake_overflow
 {
 
-class snake;
-class terrain;
+class game;
+class game_map;
 class texture_repository;
 
 class world_renderer
@@ -16,28 +16,26 @@ class world_renderer
 
 public:
 
-    world_renderer(terrain const& t,
-                   snake const& s,
-                   float block_size, 
-                   texture_repository const& textures);
+    world_renderer(float block_size, texture_repository const& textures);
+
+    void set_current_game(game const& g);
 
     void render() const;
 
 private:
 
-    void create_snake_renderer(snake const& s,
-                               float block_size,
+    void create_snake_renderer(float block_size,
                                texture_repository const& textures);
 
-    void create_item_renderer(terrain const& t,
-                              float const block_size,
+    void create_item_renderer(float const block_size,
                               texture_repository const& textures);
 
-    void create_terrain_renderer(terrain const& t,
-                                 float const block_size,
+    void create_terrain_renderer(float const block_size,
                                  texture_repository const& textures);
 
 private:
+
+    game const* current_game = nullptr;
 
     std::unique_ptr<snake_renderer> snake_drawer;
 
