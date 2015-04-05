@@ -12,6 +12,7 @@ struct canonical_direction;
 struct dynamics;
 
 class snake;
+class texture_repository;
 
 class snake_renderer
 {
@@ -21,7 +22,7 @@ public:
     snake_renderer(float snake_width, 
                    float snake_height, 
                    float block_size,
-                   cinder::gl::Texture skin);
+                   texture_repository const& textures);
 
     void set_current_snake(snake const& s);
 
@@ -83,6 +84,8 @@ private:
     float block_size;
 
     cinder::gl::Texture skin;
+
+    texture_repository const& textures;
 
 };
 

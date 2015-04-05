@@ -53,7 +53,7 @@ std::unique_ptr<snake> CubeTerrainGameFixture::create_snake(terrain& habitat)
 
     this->hero_body = body.get();
 
-    auto s = std::make_unique<snake>(std::move(body));
+    auto s = std::make_unique<snake>(std::move(body), this->snake_skin);
 
     this->hero = s.get();
 

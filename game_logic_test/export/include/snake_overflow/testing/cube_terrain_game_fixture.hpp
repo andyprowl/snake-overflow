@@ -41,6 +41,8 @@ protected:
 
     int terrain_side_length = 7;
 
+    std::string snake_skin = "SKIN";
+
     std::unique_ptr<item_spawner_spy> spawner;
 
     terrain_item_filler_spy* terrain_filler = nullptr;

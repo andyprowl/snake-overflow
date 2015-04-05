@@ -16,7 +16,7 @@ class snake
 
 public:
 
-    snake(std::unique_ptr<snake_body>&& body);
+    snake(std::unique_ptr<snake_body>&& body, std::string skin);
 
     snake_body& get_body() const;
 
@@ -39,6 +39,8 @@ public:
     dead_snake_flag is_dead;
 
     snake_boolean_parameter invulnerability_bonus;
+
+    std::string skin;
 
 private:
 

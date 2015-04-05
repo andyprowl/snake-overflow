@@ -161,7 +161,7 @@ void application::create_game()
 
     auto body = std::make_unique<snake_body>(t, initial_step, 3);
 
-    auto s = std::make_unique<snake>(std::move(body));
+    auto s = std::make_unique<snake>(std::move(body), "snake6.jpg");
 
     auto is = create_item_spawner(t, std::move(p));
 

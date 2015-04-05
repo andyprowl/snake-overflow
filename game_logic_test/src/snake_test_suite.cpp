@@ -23,6 +23,16 @@ protected:
 };
 
 TEST_THAT(Snake,
+     WHAT(Skin),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(HoldsTheNameOfTheSkinPassedAtConstruction))
+{
+    auto& s = get_snake();
+
+    EXPECT_THAT(s.skin, Eq(this->snake_skin));
+}
+
+TEST_THAT(Snake,
      WHAT(Advance),
      WHEN(WhenTheHeadOfTheSnakeCollidesWithAnItem),
      THEN(LetsTheItemBePickedByTheSnake))

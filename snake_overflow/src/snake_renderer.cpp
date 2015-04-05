@@ -5,6 +5,7 @@
 #include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/texture_binder.hpp"
+#include "snake_overflow/texture_repository.hpp"
 #include "util/sequence.hpp"
 #include "util/wave.hpp"
 #include <cassert>
@@ -15,17 +16,19 @@ namespace snake_overflow
 snake_renderer::snake_renderer(float const snake_width, 
                                float const snake_height,
                                float const block_size,
-                               cinder::gl::Texture skin)
+                               texture_repository const& textures)
     : width{snake_width}
     , height{snake_height}
     , block_size{block_size}
-    , skin{std::move(skin)}
+    , textures{textures}
 {
 }
 
 void snake_renderer::set_current_snake(snake const& s)
 {
     this->hero = &s;
+
+    this->skin = this->textures.get_texture(s.skin);
 }
 
 void snake_renderer::render() const

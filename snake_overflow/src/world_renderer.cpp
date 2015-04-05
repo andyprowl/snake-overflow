@@ -42,12 +42,10 @@ void world_renderer::create_snake_renderer(float const block_size,
 
     float snake_height = snake_width;
 
-    auto const skin = textures.get_texture("snake6.jpg");
-
     this->snake_drawer = std::make_unique<snake_renderer>(snake_width, 
                                                           snake_height, 
                                                           block_size,
-                                                          skin);
+                                                          textures);
 }
 
 void world_renderer::create_item_renderer(float const block_size,
