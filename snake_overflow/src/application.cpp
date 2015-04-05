@@ -28,7 +28,7 @@ void application::prepareSettings(Settings* const settings)
 {
     settings->setWindowSize(1024, 768);
 
-    settings->setFrameRate(30);
+    settings->setFrameRate(45);
 
     settings->setTitle("Snake Overflow");
 }
@@ -64,12 +64,12 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    if (try_handle_game_restart_command(e))
+    if (try_handle_full_screen_toggling_command(e))
     {
         return;
     }
 
-    if (try_handle_full_screen_toggling_command(e))
+    if (try_handle_game_restart_command(e))
     {
         return;
     }
@@ -303,7 +303,7 @@ bool application::try_handle_game_restart_command(cinder::app::KeyEvent const e)
 bool application::try_handle_full_screen_toggling_command(
     cinder::app::KeyEvent const e)
 {
-    if ((e.getCode() == cinder::app::KeyEvent::KEY_RETURN) && e.CTRL_DOWN)
+    if ((e.getCode() == cinder::app::KeyEvent::KEY_RETURN) && e.isControlDown())
     {
         toggle_full_screen();
 
