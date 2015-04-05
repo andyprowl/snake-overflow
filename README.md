@@ -1,6 +1,6 @@
 # Snake Overflow
 
-Snake Overflow is a 3D snake game developed in C++ using [Cinder](http://libcinder.org/). 
+Snake Overflow is a 3D snake game for Microsoft Windows developed in C++ using [Cinder](http://libcinder.org/). 
 
 ## Controlling the snake
 
@@ -32,8 +32,8 @@ All items have a random lifetime, with invulnerability bonuses . When the lifeti
 
 The quickest way to play Snake Overflow is to:
 
- 1. Download the `snake_overflow.zip` file from the `/deploy` subfolder in this repository.
+ 1. Download the [`snake_overflow.zip`](https://github.com/andyprowl/snake-overflow/raw/master/deploy/snake_overflow.zip) file from the `/deploy` subfolder in this repository.
  2. Unzip it to some local folder. 
  3. Start the `snake_overflow.exe` executable from the unzipped `/snake_overflow` folder.
 
-Alternatively, you can build the program from the sources. To build the projects you will need Visual Studio 2013 and [Cinder 0.8.6](http://libcinder.org/blog/posts/9_cinder-086-released/).
+Alternatively, you can build the program from the sources. To build the projects you will need Microsoft Visual Studio 2013 and [Cinder 0.8.6](http://libcinder.org/blog/posts/9_cinder-086-released/).
