@@ -60,15 +60,17 @@ TEST_THAT(Snake,
 {
     auto& s = get_snake();
 
+    auto const update_interval = get_snake_update_interval(s);
+
     s.grow(5);
 
     s.turn_right();
 
-    util::repeat(s.advancement_interval, [&s] { s.update(); });
+    util::repeat(update_interval, [&s] { s.update(); });
 
     s.turn_right();
 
-    util::repeat(s.advancement_interval, [&s] { s.update(); });
+    util::repeat(update_interval, [&s] { s.update(); });
 
     s.turn_right();
 
@@ -92,7 +94,9 @@ TEST_THAT(Snake,
 
     EXPECT_NO_THROW([&s]
     {
-        util::repeat(s.advancement_interval, [&s] { s.update(); });
+        auto const update_interval = get_snake_update_interval(s);
+
+        util::repeat(update_interval, [&s] { s.update(); });
     });
 
     EXPECT_THAT(b.get_trail_head().step, Eq(old_head));
@@ -182,7 +186,7 @@ TEST_THAT(Snake,
 
 TEST_THAT(Snake,
      WHAT(Update),
-     WHEN(WhenCalledForTheNthTimeWithNEqualToTheUpdatementInterval),
+     WHEN(WhenCalledForTheNthTimeWithNEqualToTheUpdateInterval),
      THEN(UpdatesTheBody))
 {
     auto& s = get_snake();
@@ -191,7 +195,7 @@ TEST_THAT(Snake,
 
     auto const initial_footprint = body.get_trail_head().step;
 
-    auto const interval = s.advancement_interval;
+    auto const interval = get_snake_update_interval(s);
 
     s.update();
 
@@ -235,17 +239,17 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
-     WHAT(UpdatementInterval),
+     WHAT(Speed),
      WHEN(ImmediatelyAfterConstruction),
      THEN(EvaluatesToANonNegativeValue))
 {
     auto& s = get_snake();
 
-    EXPECT_THAT(s.advancement_interval, Gt(0));
+    EXPECT_THAT(s.speed, Gt(0));
 }
 
 TEST_THAT(Snake,
-     WHAT(UpdatementInterval),
+     WHAT(Speed),
      WHEN(AfterSettingAValueGreaterThanOneButLessThanTheMaximum),
      THEN(ReturnsTheNewlySetValue))
 {
@@ -253,21 +257,21 @@ TEST_THAT(Snake,
 
     auto const new_interval = 3;
     
-    s.advancement_interval = new_interval;
+    s.speed = new_interval;
 
-    EXPECT_THAT(s.advancement_interval, Eq(new_interval));
+    EXPECT_THAT(s.speed, Eq(new_interval));
 }
 
 TEST_THAT(Snake,
-     WHAT(UpdatementInterval),
+     WHAT(Speed),
      WHEN(WhenTryingToSetAValueLowerThanOne),
      THEN(SetsTheValueToOne))
 {    
     auto& s = get_snake();
 
-    s.advancement_interval = 0;
+    s.speed = 0;
 
-    EXPECT_THAT(s.advancement_interval, Eq(1));
+    EXPECT_THAT(s.speed, Eq(1));
 }
 
 } }

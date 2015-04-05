@@ -41,13 +41,15 @@ public:
 
     snake_boolean_parameter invulnerability_bonus;
 
-    snake_integer_parameter advancement_interval;
+    snake_integer_parameter speed;
 
     std::string skin;
 
 private:
 
     void throw_if_dead();
+
+    bool is_time_to_advance_body() const;
 
 private:
 
@@ -58,5 +60,7 @@ private:
     int age;
 
 };
+
+int get_snake_update_interval(snake const& s);
 
 }

@@ -32,6 +32,12 @@ public:
 
     ~snake_integer_parameter() = default;
 
+public:
+
+    boost::optional<int> minimum_value;
+
+    boost::optional<int> maximum_value;
+
 private:
 
     void throw_if_snake_is_dead() const;
@@ -47,10 +53,6 @@ private:
     int value;
 
     dead_snake_flag& death_flag;
-
-    boost::optional<int> minimum_value;
-
-    boost::optional<int> maximum_value;
 
 };
 
