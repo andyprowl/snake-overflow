@@ -60,9 +60,6 @@
     <ClCompile Include="..\src\keyboard_input_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\default_terrain_provider.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\terrain_prototype_repository.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -114,9 +111,6 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\default_terrain_provider.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\terrain_prototype_repository.hpp">

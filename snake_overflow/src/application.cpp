@@ -2,7 +2,6 @@
 
 #include "snake_overflow/application.hpp"
 #include "snake_overflow/camera_manipulator.hpp"
-#include "snake_overflow/default_terrain_provider.hpp"
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
@@ -132,7 +131,6 @@ void application::setup_depth_buffer()
 
 void application::create_terrain_provider()
 {
-    //this->habitat_provider = std::make_unique<default_terrain_provider>();
     this->habitat_provider = std::make_unique<terrain_prototype_repository>();
 }
 
