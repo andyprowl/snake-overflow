@@ -1,6 +1,6 @@
 # Snake Overflow
 
-Snake Overflow is a 3D snake game developed in C++ using [Cinder](http://libcinder.org/). 
+Snake Overflow is a 3D snake game for Microsoft Windows developed in C++ using [Cinder](http://libcinder.org/). 
 
 ## Controlling the snake
 
