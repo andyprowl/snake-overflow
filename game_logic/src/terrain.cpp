@@ -172,9 +172,9 @@ footprint terrain::compute_next_footprint(util::value_ref<footprint> f) const
 
 void terrain::finalize_for_rendering()
 {
-    sort_for_rendering_with_alpha_blending();
-
     make_occluded_blocks_transparent();
+
+    sort_for_rendering_with_alpha_blending();
 }
 
 void terrain::throw_if_position_is_not_viable(

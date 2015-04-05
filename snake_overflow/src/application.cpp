@@ -28,7 +28,7 @@ void application::prepareSettings(Settings* const settings)
 {
     settings->setWindowSize(1024, 768);
 
-    settings->setFrameRate(45);
+    settings->setFrameRate(30);
 
     settings->setTitle("Snake Overflow");
 }
