@@ -173,7 +173,7 @@ N N N N N B                 B N N N N G
 N N N N N B                 B N N N N G
 N N N N N B                 B N N N N G
 N N N N N B B B B B B B B B B N N N N G
-G N N N N N N N N N N N N N N N N N N G
+N N N N N N N N N N N N N N N N N N N G
 G G G G G G G G G G G G G G G G G G G G
 
 END LAYER
@@ -1003,7 +1003,7 @@ BEGIN LAYER { NORMAL:+x; DEPTH:13; ORIGIN:-10,10 }
 
 END LAYER
 
-BEGIN LAYER { NORMAL:-x; DEPTH:11; ORIGIN:-9,10 }
+BEGIN LAYER { NORMAL:-x; DEPTH:11; ORIGIN:-10,10 }
 
 G G G G G G G G G G G G G G G G G G G G 
 G U U U U U U U U U U U U U U U U U U G 
@@ -1028,7 +1028,7 @@ G G G G G G G G G G G G G G G G G G G G
 
 END LAYER
 
-BEGIN LAYER { NORMAL:-x; DEPTH:12; ORIGIN:-9,10 }
+BEGIN LAYER { NORMAL:-x; DEPTH:12; ORIGIN:-10,10 }
 
 G G G G G G G G G G G G G G G G G G G G 
 G U U U U U U U U U U U U U U U U U U G 
@@ -1053,7 +1053,7 @@ G G G G G G G G G G G G G G G G G G G G
 
 END LAYER
 
-BEGIN LAYER { NORMAL:-x; DEPTH:13; ORIGIN:-9,10 }
+BEGIN LAYER { NORMAL:-x; DEPTH:13; ORIGIN:-10,10 }
 
                                         
   U U U U U U U U U U U U U U U U U U   
@@ -1078,7 +1078,7 @@ BEGIN LAYER { NORMAL:-x; DEPTH:13; ORIGIN:-9,10 }
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:10; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:10; ORIGIN:-11,10 }
 
 G G G G G G G G G G G G G G G G G G G G G G G 
 G L L L L L L L L L L L L L L L L L L L L L G 
@@ -1103,7 +1103,7 @@ G G G G G G G G G G G G G G G G G G G G G G G
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:11; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:11; ORIGIN:-11,10 }
 
 J J J J J J J J J J J J J J J J J J J J J J J 
 J                                           J 
@@ -1128,7 +1128,7 @@ J J J J J J J J J J J J J J J J J J J J J J J
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:12; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:12; ORIGIN:-11,10 }
 
                                               
                                               
@@ -1153,7 +1153,7 @@ BEGIN LAYER { NORMAL:+y; DEPTH:12; ORIGIN:-10,10 }
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:13; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:13; ORIGIN:-11,10 }
 
                                               
                                               
@@ -1178,7 +1178,7 @@ BEGIN LAYER { NORMAL:+y; DEPTH:13; ORIGIN:-10,10 }
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:14; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:14; ORIGIN:-11,10 }
 
                                               
                                               
@@ -1203,7 +1203,7 @@ BEGIN LAYER { NORMAL:+y; DEPTH:14; ORIGIN:-10,10 }
 
 END LAYER
 
-BEGIN LAYER { NORMAL:+y; DEPTH:15; ORIGIN:-10,10 }
+BEGIN LAYER { NORMAL:+y; DEPTH:15; ORIGIN:-11,10 }
 
                                               
                                               

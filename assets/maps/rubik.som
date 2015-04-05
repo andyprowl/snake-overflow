@@ -1,0 +1,563 @@
+BEGIN BLOCK TYPES
+
+A: marble4.jpg; 255,255,255,255; S
+T: marble4.jpg; 255,0,0,255; S
+B: marble4.jpg; 255,128,0,255; S
+L: marble4.jpg; 0,255,0,255; S
+R: marble4.jpg; 0,0,255,255; S
+F: marble4.jpg; 255,255,0,255; S
+K: marble4.jpg; 255,255,255,255; S
+
+END BLOCK TYPES
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-9; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-8; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-7; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-6; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-5; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-4; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-3; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-2; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-1; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:0; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:1; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:2; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:3; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:4; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:5; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:6; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:7; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:8; ORIGIN:-9,9 }
+
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+A A A A A A A A A A A A A A A A A A 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:9; ORIGIN:-9,9 }
+
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+T T T T T T T T T T T T T T T T T T 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-z; DEPTH:10; ORIGIN:-9,9 }
+
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+B B B B B B B B B B B B B B B B B B 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+x; DEPTH:9; ORIGIN:-9,9 }
+
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+R R R R R R R R R R R R R R R R R R 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-x; DEPTH:10; ORIGIN:-9,9 }
+
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+L L L L L L L L L L L L L L L L L L 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:10; ORIGIN:-9,9 }
+
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+F F F F F F F F F F F F F F F F F F 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:9; ORIGIN:-9,9 }
+
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+K K K K K K K K K K K K K K K K K K 
+
+END LAYER

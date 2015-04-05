@@ -60,10 +60,10 @@ static auto const formatted_directions =
 
 static auto const transformers = std::unordered_map<block_face, transformer>{
     {block_face::top, [] (point p) { return point{+p.x, +p.y, +p.z}; }},
-    {block_face::bottom, [] (point p) { return point{+p.x, -p.y, -p.z}; }},
+    {block_face::bottom, [] (point p) { return point{+p.x, -p.y - 1, -p.z}; }},
     {block_face::front, [] (point p) { return point{+p.x, -p.z, p.y}; }},
-    {block_face::back, [] (point p) { return point{-p.x, +p.z, +p.y}; }},
-    {block_face::left, [] (point p) { return point{-p.z, -p.x, +p.y}; }},
+    {block_face::back, [] (point p) { return point{-p.x - 1, +p.z, +p.y}; }},
+    {block_face::left, [] (point p) { return point{-p.z, -p.x - 1, +p.y}; }},
     {block_face::right, [] (point p) { return point{+p.z, +p.x, +p.y}; }}};
    
 std::unordered_map<point, char> terrain_layer_tokenizing_reader::from_stream(
