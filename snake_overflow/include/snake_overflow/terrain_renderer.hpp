@@ -21,6 +21,8 @@ public:
 
 private:
 
+    void render_block_if_visible(util::value_ref<block> b) const;
+
     void render_block(util::value_ref<block> b) const;
 
 private:

@@ -46,4 +46,9 @@ bool is_block_visible(util::value_ref<block> b)
     return (b.color.alpha > 0);
 }
 
+bool is_block_translucent(util::value_ref<block> b)
+{
+    return (b.color.alpha < 255);
+}
+
 }

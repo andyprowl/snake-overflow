@@ -256,9 +256,9 @@ std::unique_ptr<terrain_item_filler> application::create_terrain_filler(
 {
     auto f = std::make_unique<load_driven_terrain_item_filler>(std::move(is));
 
-    f->set_minimum_load_factor(0.005);
+    f->set_minimum_load_factor(0.001);
 
-    f->set_maximum_load_factor(0.01);
+    f->set_maximum_load_factor(0.005);
 
     return std::move(f);
 }

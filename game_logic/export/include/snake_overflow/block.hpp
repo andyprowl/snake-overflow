@@ -41,4 +41,6 @@ bool operator != (util::value_ref<block> lhs, util::value_ref<block> rhs);
 
 bool is_block_visible(util::value_ref<block> b);
 
+bool is_block_translucent(util::value_ref<block> b);
+
 }

@@ -20,17 +20,27 @@ terrain_renderer::terrain_renderer(float const block_size,
 
 void terrain_renderer::render(util::value_ref<terrain> t) const
 {
-    cinder::gl::enableAlphaBlending();
-
     t.for_each_block([this] (util::value_ref<block> b)
     {
-        if (is_block_visible(b))
-        {
-            render_block(b);
-        }
+        render_block_if_visible(b);
     });
+}
 
-    cinder::gl::disableAlphaBlending();
+void terrain_renderer::render_block_if_visible(util::value_ref<block> b) const
+{
+    if (!is_block_visible(b)) { return; }
+    
+    if (b.color.alpha < 255)
+    {
+        cinder::gl::enableAlphaBlending();
+    }
+
+    render_block(b);
+
+    if (b.color.alpha < 255)
+    {
+        cinder::gl::disableAlphaBlending();
+    }
 }
 
 void terrain_renderer::render_block(util::value_ref<block> b) const
