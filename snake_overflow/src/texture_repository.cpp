@@ -8,6 +8,8 @@ namespace snake_overflow
 
 texture_repository::texture_repository()
 {
+    cinder::app::addAssetDirectory(boost::filesystem::current_path());
+
     auto const p = get_asset_directory();
     
     load_all_textures_in_directory(p);
@@ -21,7 +23,14 @@ cinder::gl::Texture texture_repository::get_texture(
 
 boost::filesystem::path texture_repository::get_asset_directory() const
 {
-    return {"../../assets/textures"};
+    if (boost::filesystem::is_directory("../../assets/textures"))
+    {
+        return {"../../assets/textures"};
+    }
+    else
+    {
+        return boost::filesystem::current_path() / "textures";
+    }
 }
 
 void texture_repository::load_all_textures_in_directory(

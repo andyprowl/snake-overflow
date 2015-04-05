@@ -22,7 +22,14 @@ std::unique_ptr<terrain> terrain_prototype_repository::create_terrain(
 boost::filesystem::path 
     terrain_prototype_repository::get_asset_directory() const
 {
-    return {"../../assets/maps"};
+    if (boost::filesystem::is_directory("../../assets/maps"))
+    {
+        return {"../../assets/maps"};
+    }
+    else
+    {
+        return boost::filesystem::current_path() / "maps";
+    }
 }
 
 void terrain_prototype_repository::load_all_terrains_in_directory(
