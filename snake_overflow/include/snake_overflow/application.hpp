@@ -1,5 +1,7 @@
 #pragma once
 
+#include "snake_overflow/application_hud_renderer.hpp"
+#include "snake_overflow/fps_calculator.hpp"
 #include "snake_overflow/game_map_block_cache.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
@@ -36,11 +38,17 @@ private:
 
     virtual void resize() override;
 
-    void setup_depth_buffer();
-
     void create_game_map_repository();
 
     void create_texture_repository();
+
+    void create_hud_renderer();
+
+    void create_interaction_phases();
+
+    void setup_depth_buffer();
+
+    void switch_to_playing_phase_if_user_just_chose_map();
 
     bool try_handle_full_screen_toggling_command(cinder::app::KeyEvent e);
 
@@ -61,6 +69,10 @@ private:
     std::unique_ptr<game_playing_phase> playing_phase;
 
     std::unique_ptr<map_selection_phase> selection_phase;
+
+    std::unique_ptr<application_hud_renderer> hud_renderer;
+
+    fps_calculator current_fps;
 
     interaction_phase* current_phase = nullptr;
 

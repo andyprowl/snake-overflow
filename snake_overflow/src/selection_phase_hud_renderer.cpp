@@ -37,8 +37,8 @@ void selection_phase_hud_renderer::draw_title() const
 
     auto const origin = cinder::Vec2f{x_center, 10.f};
 
-    auto const text = "Please choose a map (use left/right arrows to change). "
-                      "Press 'Enter' to confirm";
+    auto const text = "Choose a map (left/right arrows to change, "
+                      "'Enter' to confirm)";
 
     cinder::gl::drawStringCentered(text, origin, color, this->title_font);
 

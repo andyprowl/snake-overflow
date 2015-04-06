@@ -27,7 +27,6 @@ game_playing_phase::game_playing_phase(
     , terrain_block_cache{terrain_block_cache}
     , current_camera_handler{nullptr}
 {
-    this->last_frame_time = std::chrono::system_clock::now();
 }
 
 bool game_playing_phase::is_done() const
@@ -37,6 +36,8 @@ bool game_playing_phase::is_done() const
 
 void game_playing_phase::update()
 {
+    this->current_fps.update();
+
     this->current_game->update();
 }
 
@@ -313,11 +314,8 @@ void game_playing_phase::draw_frame()
     cinder::gl::clear({0.f, 0.f, 0.0f}, true);
 
     draw_world();
-
-    calculate_current_fps();
     
-    this->hud_drawer->render(this->current_fps,
-                             this->current_game->score,
+    this->hud_drawer->render(this->current_game->score,
                              this->current_game->is_game_paused,
                              this->current_game->is_game_over,
                              is_auto_follow_on());
@@ -326,18 +324,6 @@ void game_playing_phase::draw_frame()
 void game_playing_phase::draw_world()
 {
     this->world_drawer->render();
-}
-
-void game_playing_phase::calculate_current_fps()
-{
-    auto const time = std::chrono::system_clock::now();
-     
-    auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-        time - this->last_frame_time);
-
-    this->current_fps = 1000.f / elapsed.count();
-
-    this->last_frame_time = time;
 }
 
 bool game_playing_phase::is_auto_follow_on() const

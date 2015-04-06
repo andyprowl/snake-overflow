@@ -3,6 +3,7 @@
 #include "snake_overflow/arcball_camera_manipulator.hpp"
 #include "snake_overflow/auto_follow_camera_manipulator.hpp"
 #include "snake_overflow/camera_manipulator_toggler.hpp"
+#include "snake_overflow/fps_calculator.hpp"
 #include "snake_overflow/interaction_phase.hpp"
 #include <chrono>
 #include <memory>
@@ -96,8 +97,6 @@ private:
 
     void draw_world();
 
-    void calculate_current_fps();
-
     bool is_auto_follow_on() const;
 
 private:
@@ -118,11 +117,9 @@ private:
     
     std::unique_ptr<game> current_game;
 
+    fps_calculator current_fps;
+
     camera_manipulator* current_camera_handler = nullptr;
-
-    std::chrono::time_point<std::chrono::system_clock> last_frame_time;
-
-    float current_fps = 60.0;
 
 };
 

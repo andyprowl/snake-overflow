@@ -93,11 +93,6 @@ void keyboard_input_handler::setup_option_commands()
     { 
         toggle_game_pause(this->controlled_game);
     };
-
-    this->keyboard_commands[KeyEvent::KEY_f] = [this] 
-    { 
-        this->hud_drawer.toogle_show_fps(); 
-    };
 }
 
 void keyboard_input_handler::turn_snake_left() const

@@ -12,8 +12,7 @@ public:
 
     playing_phase_hud_renderer();
 
-    void render(float fps,
-                int score,
+    void render(int score,
                 bool is_game_paused, 
                 bool is_game_over,
                 bool is_auto_follow_on) const;
@@ -26,21 +25,15 @@ private:
 
     void draw_pause_text() const;
 
-    void draw_fps_text(float fps) const;
-
     void draw_score_text(int score) const;
 
     void draw_game_over_text() const;
 
     void draw_auto_follow_text() const;
 
-    std::string get_fps_text(float fps) const;
-
     std::string get_score_text(int const score) const;
 
 private:
-
-    cinder::Font fps_text_font;
 
     cinder::Font pause_text_font;
 
@@ -51,8 +44,6 @@ private:
     cinder::Font restart_text_font;
 
     cinder::Font auto_follow_text_font;
-
-    bool show_fps;
 
 };
 

@@ -111,10 +111,12 @@
   <ItemGroup>
     <ClCompile Include="..\src\alpha_blending_enabler.cpp" />
     <ClCompile Include="..\src\application.cpp" />
+    <ClCompile Include="..\src\application_hud_renderer.cpp" />
     <ClCompile Include="..\src\arcball_camera_manipulator.cpp" />
     <ClCompile Include="..\src\auto_follow_camera_manipulator.cpp" />
     <ClCompile Include="..\src\camera_view.cpp" />
     <ClCompile Include="..\src\color_conversion.cpp" />
+    <ClCompile Include="..\src\fps_calculator.cpp" />
     <ClCompile Include="..\src\game_map_block_cache.cpp" />
     <ClCompile Include="..\src\game_playing_phase.cpp" />
     <ClCompile Include="..\src\playing_phase_hud_renderer.cpp" />
@@ -139,12 +141,14 @@
     <ClInclude Include="..\include\resources.hpp" />
     <ClInclude Include="..\include\snake_overflow\alpha_blending_enabler.hpp" />
     <ClInclude Include="..\include\snake_overflow\application.hpp" />
+    <ClInclude Include="..\include\snake_overflow\application_hud_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\auto_follow_camera_manipulator.hpp" />
     <ClInclude Include="..\include\snake_overflow\arcball_camera_manipulator.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_manipulator_toggler.hpp" />
     <ClInclude Include="..\include\snake_overflow\camera_view.hpp" />
     <ClInclude Include="..\include\snake_overflow\color_conversion.hpp" />
+    <ClInclude Include="..\include\snake_overflow\fps_calculator.hpp" />
     <ClInclude Include="..\include\snake_overflow\game_playing_phase.hpp" />
     <ClInclude Include="..\include\snake_overflow\interaction_phase.hpp" />
     <ClInclude Include="..\include\snake_overflow\playing_phase_hud_renderer.hpp" />
