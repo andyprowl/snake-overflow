@@ -6,7 +6,9 @@
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
 #include "util/value_ref.hpp"
+#include <functional>
 #include <memory>
+#include <unordered_map>
 
 namespace snake_overflow
 {
@@ -48,17 +50,25 @@ private:
 
     void setup_depth_buffer();
 
-    void switch_to_playing_phase_if_user_just_chose_map();
+    void setup_keyboard_commands();
 
-    bool try_handle_full_screen_toggling_command(cinder::app::KeyEvent e);
+    bool switch_to_playing_phase_if_user_just_chose_map();
 
-    bool try_handle_game_restart_command(cinder::app::KeyEvent e);
+    bool restart_or_change_map_if_playing_game_is_over();
 
-    bool try_handle_map_change_command(cinder::app::KeyEvent e);
+    bool process_keyboard_input(cinder::app::KeyEvent e);
 
     void toggle_full_screen();
 
     game_map& get_currently_selected_map() const;
+
+    bool is_playing_phase_active() const;
+
+    bool is_map_selection_phase_active() const;
+
+private:
+
+    using keyboard_event_handler = std::function<bool(cinder::app::KeyEvent)>;
 
 private:
         
@@ -77,6 +87,8 @@ private:
     interaction_phase* current_phase = nullptr;
 
     game_map_block_cache terrain_block_cache;
+
+    std::unordered_map<int, keyboard_event_handler> keyboard_commands;
 
 };
 

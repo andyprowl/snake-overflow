@@ -27,15 +27,19 @@ void application::setup()
     create_interaction_phases();
 
     setup_depth_buffer();
+
+    setup_keyboard_commands();
 }
 
 void application::update()
 {
-    switch_to_playing_phase_if_user_just_chose_map();
-
     this->current_fps.update();
 
     this->current_phase->update();
+
+    if (switch_to_playing_phase_if_user_just_chose_map()) { return; }
+
+    if (restart_or_change_map_if_playing_game_is_over()) { return; }
 }
 
 void application::draw()
@@ -47,16 +51,11 @@ void application::draw()
 
 void application::keyDown(cinder::app::KeyEvent const e)
 {
-    if (try_handle_full_screen_toggling_command(e)) { return; }
+    if (process_keyboard_input(e)) { return; }
 
-    if (try_handle_game_restart_command(e)) { return; }
+    if (switch_to_playing_phase_if_user_just_chose_map()) { return; }
 
-    if (try_handle_map_change_command(e)) { return; }
-
-    if (e.getCode() == cinder::app::KeyEvent::KEY_f)
-    {
-        this->hud_renderer->toogle_show_fps();
-    }
+    if (restart_or_change_map_if_playing_game_is_over()) { return; }
 
     this->current_phase->on_keyboard_input(e);
 }
@@ -117,11 +116,36 @@ void application::setup_depth_buffer()
     cinder::gl::enableDepthWrite();
 }
 
-void application::switch_to_playing_phase_if_user_just_chose_map()
+void application::setup_keyboard_commands()
 {
-    if (this->current_phase != this->selection_phase.get())
+    using cinder::app::KeyEvent;
+    
+    this->keyboard_commands[KeyEvent::KEY_f] = [this] (KeyEvent const)
+    { 
+        this->hud_renderer->toogle_show_fps(); 
+
+        return true;
+    };
+
+    this->keyboard_commands[KeyEvent::KEY_RETURN] = [this] (KeyEvent const e)
+    { 
+        if (e.isControlDown())
+        { 
+            toggle_full_screen(); 
+            return true; 
+        }
+        else
+        {
+            return false;
+        }
+    };
+}
+
+bool application::switch_to_playing_phase_if_user_just_chose_map()
+{
+    if (is_playing_phase_active())
     {
-        return;
+        return false;
     }
 
     if (this->selection_phase->is_done())
@@ -131,15 +155,48 @@ void application::switch_to_playing_phase_if_user_just_chose_map()
         this->playing_phase->start_new_game(selected_map);
 
         this->current_phase = this->playing_phase.get();
+
+        return true;
     }
+
+    return false;
 }
 
-bool application::try_handle_full_screen_toggling_command(
-    cinder::app::KeyEvent const e)
+bool application::restart_or_change_map_if_playing_game_is_over()
 {
-    if ((e.getCode() == cinder::app::KeyEvent::KEY_RETURN) && e.isControlDown())
+    if (is_map_selection_phase_active() || !(this->playing_phase->is_done()))
     {
-        toggle_full_screen();
+        return false;
+    }
+
+    if (this->playing_phase->get_continuation_option() == 
+        game_over_continuation_option::change_map)
+    {
+        this->selection_phase->invalidate_selection();
+
+        this->current_phase = this->selection_phase.get();
+    }
+    else
+    {
+        this->playing_phase->start_new_game(get_currently_selected_map());
+    }
+
+    return true;
+}
+
+bool application::process_keyboard_input(cinder::app::KeyEvent const e)
+{
+    auto it = this->keyboard_commands.find(e.getCode());
+    
+    if (it != std::cend(this->keyboard_commands))
+    {
+        try
+        {
+            return (it->second)(e);
+        }
+        catch (std::exception const&)
+        {
+        }
 
         return true;
     }
@@ -161,44 +218,14 @@ game_map& application::get_currently_selected_map() const
     return this->selection_phase->get_selected_map();
 }
 
-bool application::try_handle_game_restart_command(
-    cinder::app::KeyEvent const e)
+bool application::is_playing_phase_active() const
 {
-    if ((this->current_phase != this->playing_phase.get()) ||
-        !(this->playing_phase->is_done()))
-    {
-        return false;
-    }
-    
-    if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
-        (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
-    {
-        this->playing_phase->start_new_game(get_currently_selected_map());
-
-        return true;
-    }
-
-    return false;
+    return (this->current_phase == this->playing_phase.get());
 }
 
-bool application::try_handle_map_change_command(cinder::app::KeyEvent const e)
+bool application::is_map_selection_phase_active() const
 {
-    if ((this->current_phase != this->playing_phase.get()) ||
-        !(this->playing_phase->is_done()))
-    {
-        return false;
-    }
-
-    if (e.getCode() == cinder::app::KeyEvent::KEY_F4)
-    {
-        this->selection_phase->invalidate_selection();
-
-        this->current_phase = this->selection_phase.get();
-
-        return true;
-    }
-
-    return false;
+    return (this->current_phase == this->selection_phase.get());
 }
 
 }

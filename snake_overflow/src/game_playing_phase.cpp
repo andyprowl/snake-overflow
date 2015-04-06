@@ -7,7 +7,7 @@
 #include "snake_overflow/game_map.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
-#include "snake_overflow/keyboard_input_handler.hpp"
+#include "snake_overflow/playing_phase_keyboard_handler.hpp"
 #include "snake_overflow/invulnerability_spell.hpp"
 #include "snake_overflow/load_driven_terrain_item_filler.hpp"
 #include "snake_overflow/probabilistic_item_spawner.hpp"
@@ -26,18 +26,17 @@ game_playing_phase::game_playing_phase(
     : textures{textures}
     , terrain_block_cache{terrain_block_cache}
     , current_camera_handler{nullptr}
+    , continuation_option{boost::none}
 {
 }
 
 bool game_playing_phase::is_done() const
 {
-    return this->current_game->is_game_over;
+    return (this->current_game->is_game_over && this->continuation_option);
 }
 
 void game_playing_phase::update()
 {
-    this->current_fps.update();
-
     this->current_game->update();
 }
 
@@ -102,6 +101,15 @@ void game_playing_phase::activate_next_camera_manipulator()
     }
 }
 
+void game_playing_phase::set_continuation_option(
+    game_over_continuation_option const option)
+{
+    if (this->current_game->is_game_over)
+    {
+        this->continuation_option = option;
+    }
+}
+
 void game_playing_phase::start_new_game(game_map& map_prototype)
 {
     create_game(map_prototype);
@@ -113,6 +121,14 @@ void game_playing_phase::start_new_game(game_map& map_prototype)
     create_keyboard_input_handler();
 
     catch_snake_on_camera();
+
+    this->continuation_option = boost::none;
+}
+
+boost::optional<game_over_continuation_option> 
+    game_playing_phase::get_continuation_option() const
+{
+    return this->continuation_option;
 }
 
 void game_playing_phase::create_renderers()
@@ -282,9 +298,10 @@ std::unique_ptr<terrain_item_filler> game_playing_phase::create_terrain_filler(
 
 void game_playing_phase::create_keyboard_input_handler()
 {
-    this->keyboard_handler = std::make_unique<keyboard_input_handler>(
+    this->keyboard_handler = std::make_unique<playing_phase_keyboard_handler>(
         *this->current_game,
         *this->hud_drawer,
+        *this,
         *this);
 }
 

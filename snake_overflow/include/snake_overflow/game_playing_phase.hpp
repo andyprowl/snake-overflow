@@ -3,8 +3,9 @@
 #include "snake_overflow/arcball_camera_manipulator.hpp"
 #include "snake_overflow/auto_follow_camera_manipulator.hpp"
 #include "snake_overflow/camera_manipulator_toggler.hpp"
-#include "snake_overflow/fps_calculator.hpp"
 #include "snake_overflow/interaction_phase.hpp"
+#include "snake_overflow/game_over_continuation_option.hpp"
+#include <boost/optional.hpp>
 #include <chrono>
 #include <memory>
 
@@ -21,7 +22,7 @@ class item;
 class playing_phase_hud_renderer;
 class item_position_picker;
 class item_spawner;
-class keyboard_input_handler;
+class playing_phase_keyboard_handler;
 class terrain;
 class terrain_item_filler;
 class texture_repository;
@@ -29,6 +30,7 @@ class world_renderer;
 
 class game_playing_phase : public interaction_phase
                          , public camera_manipulator_toggler
+                         , public continuation_option_setter
 {
 
 public:
@@ -56,7 +58,13 @@ public:
 
     virtual void activate_next_camera_manipulator() override;
 
+    virtual void set_continuation_option(
+        game_over_continuation_option option) override;
+
     void start_new_game(game_map& map_prototype);
+
+    boost::optional<game_over_continuation_option> 
+        get_continuation_option() const;
 
 private:
 
@@ -113,11 +121,11 @@ private:
 
     std::unique_ptr<auto_follow_camera_manipulator> auto_follow_camera_handler;
 
-    std::unique_ptr<keyboard_input_handler> keyboard_handler;
+    std::unique_ptr<playing_phase_keyboard_handler> keyboard_handler;
     
     std::unique_ptr<game> current_game;
 
-    fps_calculator current_fps;
+    boost::optional<game_over_continuation_option> continuation_option;
 
     camera_manipulator* current_camera_handler = nullptr;
 

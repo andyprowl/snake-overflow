@@ -51,9 +51,6 @@
     <ClCompile Include="..\src\world_renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\keyboard_input_handler.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\alpha_blending_enabler.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\application_hud_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\playing_phase_keyboard_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -126,9 +126,6 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\world_renderer.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\alpha_blending_enabler.hpp">
@@ -174,6 +171,12 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\fps_calculator.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\playing_phase_keyboard_handler.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_over_continuation_option.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
