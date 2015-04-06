@@ -12,7 +12,7 @@ When inspecting a map, it is possible to *rotate the camera* around the center o
 
 ## Controlling the snake
 
-Unlike classical snake games, Snake Overflow lets you control the snake by using *only two keys*: the left arrow and the right arrow (or the 'A' and 'D' keys, alternatively). These respectively turn the snake left or right *relative to its current direction of movement*, and not relative to the observer's viewpoint.
+Unlike classical snake games, **Snake Overflow lets you control the snake by using only two keys**: the left arrow and the right arrow (or the 'A' and 'D' keys, alternatively). These respectively turn the snake left or right *relative to its current direction of movement*, and not relative to the observer's viewpoint.
 
 In order to follow the snake as it moves up and down the terrain, you can use the mouse to manipulate the camera as described in the previous section.
 
