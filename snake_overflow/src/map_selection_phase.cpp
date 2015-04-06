@@ -13,6 +13,8 @@ map_selection_phase::map_selection_phase(
     : game_maps{game_maps}
     , textures{textures}
     , terrain_block_cache{terrain_block_cache}
+    , selected_map_index{0}
+    , is_selection_confirmed{false}
 {
     this->available_maps = this->game_maps.get_all_maps();
 
@@ -26,7 +28,7 @@ map_selection_phase::map_selection_phase(
 
 bool map_selection_phase::is_done() const
 {
-    return this->selection_confirmed;
+    return this->is_selection_confirmed;
 }
 
 void map_selection_phase::update()
@@ -62,7 +64,7 @@ void map_selection_phase::on_keyboard_input(cinder::app::KeyEvent const e)
 
         case cinder::app::KeyEvent::KEY_RETURN:
         {
-            this->selection_confirmed = true;
+            this->is_selection_confirmed = true;
 
             break;
         }
@@ -97,6 +99,11 @@ void map_selection_phase::on_resize()
 game_map& map_selection_phase::get_selected_map() const
 {
     return *(this->available_maps[this->selected_map_index]);
+}
+
+void map_selection_phase::invalidate_selection()
+{
+    this->is_selection_confirmed = false;
 }
 
 void map_selection_phase::select_next_map()

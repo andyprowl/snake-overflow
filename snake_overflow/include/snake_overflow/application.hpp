@@ -46,6 +46,8 @@ private:
 
     bool try_handle_game_restart_command(cinder::app::KeyEvent e);
 
+    bool try_handle_map_change_command(cinder::app::KeyEvent e);
+
     void toggle_full_screen();
 
     game_map& get_currently_selected_map() const;

@@ -40,6 +40,8 @@ public:
 
     game_map& get_selected_map() const;
 
+    void invalidate_selection();
+
 private:
 
     void select_next_map();
@@ -64,11 +66,11 @@ private:
 
     std::vector<game_map*> available_maps;
 
-    int selected_map_index = 0;
+    int selected_map_index;
+
+    bool is_selection_confirmed;
 
     std::unique_ptr<terrain_renderer> map_renderer;
-
-    bool selection_confirmed = false;
 
     arcball_camera_manipulator camera_handler;
 
