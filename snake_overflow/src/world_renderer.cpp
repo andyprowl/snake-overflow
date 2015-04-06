@@ -8,13 +8,14 @@ namespace snake_overflow
 {
 
 world_renderer::world_renderer(float const block_size, 
-                               texture_repository const& textures)
+                               texture_repository const& textures,
+                               game_map_block_cache const& terrain_block_cache)
 {
     create_snake_renderer(block_size, textures);
 
     create_item_renderer(block_size, textures);
 
-    create_terrain_renderer(block_size, textures);
+    create_terrain_renderer(block_size, textures, terrain_block_cache);
 }
 
 void world_renderer::set_current_game(game const& g)
@@ -54,11 +55,15 @@ void world_renderer::create_item_renderer(float const block_size,
     this->item_drawer = std::make_unique<item_renderer>(block_size, textures);
 }
 
-void world_renderer::create_terrain_renderer(float const block_size,
-                                             texture_repository const& textures)
+void world_renderer::create_terrain_renderer(
+    float const block_size,
+    texture_repository const& textures,
+    game_map_block_cache const& terrain_block_cache)
 {
-    this->terrain_drawer = std::make_unique<terrain_renderer>(block_size, 
-                                                              textures);
+    this->terrain_drawer = std::make_unique<terrain_renderer>(
+        block_size, 
+        textures,
+        terrain_block_cache);
 }
 
 }

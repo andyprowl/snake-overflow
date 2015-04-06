@@ -1,21 +1,21 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/hud_renderer.hpp"
+#include "snake_overflow/playing_phase_hud_renderer.hpp"
 
 namespace snake_overflow
 {
 
-hud_renderer::hud_renderer()
+playing_phase_hud_renderer::playing_phase_hud_renderer()
     : show_fps{false}
 {
     create_fonts();
 }
 
-void hud_renderer::render(float const fps,
-                          int const score,
-                          bool const is_game_paused, 
-                          bool const is_game_over,
-                          bool const is_auto_follow_on) const
+void playing_phase_hud_renderer::render(float const fps,
+                                        int const score,
+                                        bool const is_game_paused, 
+                                        bool const is_game_over,
+                                        bool const is_auto_follow_on) const
 {
     if (is_game_paused) { draw_pause_text(); }
 
@@ -28,12 +28,12 @@ void hud_renderer::render(float const fps,
     if (is_auto_follow_on) { draw_auto_follow_text(); }
 }
 
-void hud_renderer::toogle_show_fps()
+void playing_phase_hud_renderer::toogle_show_fps()
 {
     this->show_fps = !(this->show_fps);
 }
     
-void hud_renderer::create_fonts()
+void playing_phase_hud_renderer::create_fonts()
 {
     this->fps_text_font = cinder::Font{"Arial", 25.0};
 
@@ -48,7 +48,7 @@ void hud_renderer::create_fonts()
     this->auto_follow_text_font = cinder::Font{"Arial", 25.0};
 }
 
-void hud_renderer::draw_pause_text() const
+void playing_phase_hud_renderer::draw_pause_text() const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -67,7 +67,7 @@ void hud_renderer::draw_pause_text() const
     cinder::gl::disableAlphaBlending();
 }
 
-void hud_renderer::draw_fps_text(float const fps) const
+void playing_phase_hud_renderer::draw_fps_text(float const fps) const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -82,7 +82,7 @@ void hud_renderer::draw_fps_text(float const fps) const
     cinder::gl::disableAlphaBlending();
 }
 
-void hud_renderer::draw_score_text(int const score) const
+void playing_phase_hud_renderer::draw_score_text(int const score) const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -101,7 +101,7 @@ void hud_renderer::draw_score_text(int const score) const
     cinder::gl::disableAlphaBlending();
 }
 
-void hud_renderer::draw_game_over_text() const
+void playing_phase_hud_renderer::draw_game_over_text() const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -126,7 +126,7 @@ void hud_renderer::draw_game_over_text() const
     cinder::gl::disableAlphaBlending();
 }
 
-void hud_renderer::draw_auto_follow_text() const
+void playing_phase_hud_renderer::draw_auto_follow_text() const
 {
     cinder::gl::enableAlphaBlending();
 
@@ -148,12 +148,12 @@ void hud_renderer::draw_auto_follow_text() const
     cinder::gl::disableAlphaBlending();
 }
 
-std::string hud_renderer::get_fps_text(float const fps) const
+std::string playing_phase_hud_renderer::get_fps_text(float const fps) const
 {
     return "FPS: " + std::to_string(fps);
 }
 
-std::string hud_renderer::get_score_text(int const score) const
+std::string playing_phase_hud_renderer::get_score_text(int const score) const
 {
     return "Score: " + std::to_string(score);
 }

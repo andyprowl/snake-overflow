@@ -1,7 +1,7 @@
 #pragma once
 
 #include "util/value_ref.hpp"
-#include "cinder/gl/Texture.h"
+#include <cinder/gl/Texture.h>
 
 namespace snake_overflow
 {

@@ -4,6 +4,7 @@
 #include "snake_overflow/serialization/terrain_loader.hpp"
 #include <memory>
 #include <unordered_map>
+#include <vector>
 
 namespace snake_overflow
 {
@@ -16,6 +17,8 @@ public:
     game_map_repository();
 
     game_map& get_map(util::value_ref<std::string> name) const;
+
+    std::vector<game_map*> get_all_maps() const;
 
     boost::filesystem::path get_asset_directory() const;
 

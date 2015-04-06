@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/texture_repository.hpp"
-#include "cinder/ImageIo.h"
+#include <cinder/ImageIo.h>
 
 namespace snake_overflow
 {
@@ -48,9 +48,9 @@ void texture_repository::load_all_textures_in_directory(
 void texture_repository::load_texture(
     util::value_ref<boost::filesystem::path> p)
 {
-    auto texture_name = p.filename().string();
+    auto texture_name = p.stem().filename().string();
 
-    auto asset_name = "textures/" + texture_name;
+    auto asset_name = "textures/" + p.filename().string();
 
     auto const texture_asset = cinder::app::loadAsset(asset_name);
 

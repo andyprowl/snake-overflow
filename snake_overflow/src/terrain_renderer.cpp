@@ -3,6 +3,7 @@
 #include "snake_overflow/alpha_blending_enabler.hpp"
 #include "snake_overflow/block.hpp"
 #include "snake_overflow/color_conversion.hpp"
+#include "snake_overflow/game_map_block_cache.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_renderer.hpp"
@@ -15,9 +16,11 @@ namespace snake_overflow
 {
 
 terrain_renderer::terrain_renderer(float const block_size,
-                                   texture_repository const& textures)
+                                   texture_repository const& textures,
+                                   game_map_block_cache const& block_cache)
     : block_size{block_size}
     , textures{textures}
+    , block_cache{block_cache}
 {
 }
 

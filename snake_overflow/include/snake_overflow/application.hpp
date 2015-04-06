@@ -1,27 +1,17 @@
 #pragma once
 
+#include "snake_overflow/game_map_block_cache.hpp"
+#include "snake_overflow/game_playing_phase.hpp"
+#include "snake_overflow/map_selection_phase.hpp"
 #include "util/value_ref.hpp"
-#include <chrono>
 #include <memory>
 
 namespace snake_overflow
 {
 
-struct footprint;
-struct position;
-
-class camera_manipulator;
-class game;
-class item;
-class hud_renderer;
-class item_position_picker;
-class item_spawner;
-class keyboard_input_handler;
-class terrain;
-class terrain_item_filler;
+class game_map;
 class game_map_repository;
 class texture_repository;
-class world_renderer;
 
 class application : public cinder::app::AppNative 
 {
@@ -46,74 +36,33 @@ private:
 
     virtual void resize() override;
 
-    void create_renderers();
-
-    void create_world_renderer();
-
-    void create_hud_renderer();
-
-    void create_camera_manipulator();
-
     void setup_depth_buffer();
 
     void create_game_map_repository();
 
-    void start_new_game();
-
-    void create_game();
-
-    footprint pick_random_starting_footprint(item_position_picker& picker,
-                                             terrain const& habitat) const;
-
-    std::unique_ptr<item_spawner> create_item_spawner(
-        terrain& t,
-        std::unique_ptr<item_position_picker>&& p) const;
-
-    std::unique_ptr<item> create_fruit(util::value_ref<position> pos) const;
-
-    std::unique_ptr<item> create_diet_pill(util::value_ref<position> pos) const;
-
-    std::unique_ptr<item> create_invulnerability_spell(
-        util::value_ref<position> pos) const;
-
-    std::unique_ptr<terrain_item_filler> create_terrain_filler(
-        std::unique_ptr<item_spawner>&& is) const;
-    
-    void create_keyboard_input_handler();
-
-    void catch_snake_on_camera() const;
-
-    bool try_handle_game_restart_command(cinder::app::KeyEvent e);
+    void create_texture_repository();
 
     bool try_handle_full_screen_toggling_command(cinder::app::KeyEvent e);
 
+    bool try_handle_game_restart_command(cinder::app::KeyEvent e);
+
     void toggle_full_screen();
 
-    void draw_frame();
-
-    void draw_world();
-
-    void calculate_current_fps();
+    game_map& get_currently_selected_map() const;
 
 private:
-
-    std::unique_ptr<game> current_game;
         
     std::unique_ptr<game_map_repository> game_maps;
 
     std::unique_ptr<texture_repository> textures;
 
-    std::unique_ptr<world_renderer> world_drawer;
+    std::unique_ptr<game_playing_phase> playing_phase;
 
-    std::unique_ptr<hud_renderer> hud_drawer;
+    std::unique_ptr<map_selection_phase> selection_phase;
 
-    std::unique_ptr<camera_manipulator> camera_handler;
+    interaction_phase* current_phase = nullptr;
 
-    std::unique_ptr<keyboard_input_handler> keyboard_handler;
-    
-    std::chrono::time_point<std::chrono::system_clock> last_frame_time;
-
-    float current_fps = 60.0;
+    game_map_block_cache terrain_block_cache;
 
 };
 

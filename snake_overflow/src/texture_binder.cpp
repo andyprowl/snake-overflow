@@ -64,5 +64,4 @@ texture_binder::~texture_binder()
     }
 }
 
-
 }

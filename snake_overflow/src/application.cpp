@@ -1,25 +1,8 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/application.hpp"
-#include "snake_overflow/camera_manipulator.hpp"
-#include "snake_overflow/diet_pill.hpp"
-#include "snake_overflow/fruit.hpp"
-#include "snake_overflow/game.hpp"
 #include "snake_overflow/game_map_repository.hpp"
-#include "snake_overflow/hud_renderer.hpp"
-#include "snake_overflow/keyboard_input_handler.hpp"
-#include "snake_overflow/invulnerability_spell.hpp"
-#include "snake_overflow/load_driven_terrain_item_filler.hpp"
-#include "snake_overflow/probabilistic_item_spawner.hpp"
-#include "snake_overflow/random_item_position_picker.hpp"
-#include "snake_overflow/snake.hpp"
-#include "snake_overflow/snake_renderer.hpp"
-#include "snake_overflow/terrain.hpp"
 #include "snake_overflow/texture_repository.hpp"
-#include "snake_overflow/world_renderer.hpp"
-#include "cinder/ImageIo.h"
-#include "util/repeat.hpp"
-#include <unordered_set>
 
 namespace snake_overflow
 {
@@ -35,31 +18,42 @@ void application::prepareSettings(Settings* const settings)
 
 void application::setup()
 {
-    create_camera_manipulator();
+    create_game_map_repository();
+
+    create_texture_repository();
 
     setup_depth_buffer();
 
-    create_game_map_repository();
+    this->selection_phase = std::make_unique<map_selection_phase>(
+        *(this->game_maps),
+        *(this->textures),
+        this->terrain_block_cache);
 
-    create_renderers();
+    this->playing_phase = std::make_unique<game_playing_phase>(
+        *(this->textures),
+        this->terrain_block_cache);
 
-    start_new_game();
-
-    this->last_frame_time = std::chrono::system_clock::now();
+    this->current_phase = this->selection_phase.get();
 }
 
 void application::update()
 {
-    this->current_game->update();
+    if ((this->current_phase == this->selection_phase.get() &&
+            this->selection_phase->is_done()))
+    {
+        this->playing_phase->start_new_game(get_currently_selected_map());
+
+        this->current_phase = this->playing_phase.get();
+
+        return;
+    }
+
+    this->current_phase->update();
 }
 
 void application::draw()
 {
-    auto const& s = this->current_game->get_snake();
-
-    this->camera_handler->set_camera_matrices(s);
-    
-    draw_frame();
+    this->current_phase->draw();
 }
 
 void application::keyDown(cinder::app::KeyEvent const e)
@@ -74,61 +68,27 @@ void application::keyDown(cinder::app::KeyEvent const e)
         return;
     }
 
-    this->keyboard_handler->process_keyboard_input(e.getCode());
+    this->current_phase->on_keyboard_input(e);
 }
 
 void application::mouseDown(cinder::app::MouseEvent const e)
 {
-    this->camera_handler->begin_arcball_drag(e.getPos());
+    this->current_phase->on_mouse_down(e);
 }
 
 void application::mouseDrag(cinder::app::MouseEvent const e)
 {
-    this->camera_handler->continue_arcball_drag(e.getPos());
+    this->current_phase->on_mouse_drag(e);
 }
 
 void application::mouseWheel(cinder::app::MouseEvent const e)
 {
-    this->camera_handler->zoom(e.getWheelIncrement());
+    this->current_phase->on_mouse_wheel(e);
 }
 
 void application::resize()
 {
-    this->camera_handler->setup_arcball_manipulator();
-}
-
-void application::create_renderers()
-{
-    create_world_renderer();
-
-    create_hud_renderer();
-}
-
-void application::create_world_renderer()
-{
-    this->textures = std::make_unique<texture_repository>();
-
-    auto const block_size = 20.f;
-
-    this->world_drawer = std::make_unique<world_renderer>(block_size, 
-                                                          *this->textures);
-}
-
-void application::create_hud_renderer()
-{
-    this->hud_drawer = std::make_unique<hud_renderer>();
-}
-
-void application::create_camera_manipulator()
-{
-    this->camera_handler = std::make_unique<camera_manipulator>();
-}
-
-void application::setup_depth_buffer()
-{
-    cinder::gl::enableDepthRead();
-    
-    cinder::gl::enableDepthWrite();
+    this->current_phase->on_resize();
 }
 
 void application::create_game_map_repository()
@@ -136,174 +96,16 @@ void application::create_game_map_repository()
     this->game_maps = std::make_unique<game_map_repository>();
 }
 
-void application::start_new_game()
+void application::create_texture_repository()
 {
-    create_game();
-
-    this->world_drawer->set_current_game(*this->current_game);
-
-    create_keyboard_input_handler();
-
-    catch_snake_on_camera();
+    this->textures = std::make_unique<texture_repository>();
 }
 
-void application::create_game()
+void application::setup_depth_buffer()
 {
-    auto m = this->game_maps->get_map("default.som").clone();
-
-    auto& t = m->get_terrain();
-
-    auto p = std::make_unique<random_item_position_picker>(t);
-
-    auto const snake_origin = point{0, -5, 10};
-
-    auto const initial_step = pick_random_starting_footprint(*p, t);
-
-    auto body = std::make_unique<snake_body>(t, initial_step, 3);
-
-    auto s = std::make_unique<snake>(std::move(body), "snake6.jpg");
-
-    auto is = create_item_spawner(t, std::move(p));
-
-    auto f = create_terrain_filler(std::move(is));
-
-    this->current_game = std::make_unique<game>(std::move(m), 
-                                                std::move(s),
-                                                std::move(f));
-
-    this->current_game->terrain_filling_interval = 150;
-}
-
-footprint application::pick_random_starting_footprint(
-    item_position_picker& picker,
-    terrain const& habitat) const
-{
-    while (true)
-    {
-        auto const initial_snake_position = picker.pick_item_position();
-
-        auto const initial_step = footprint{initial_snake_position.location, 
-                                            {initial_snake_position.face, 
-                                            canonical_direction::positive_z()}};
-
-        try
-        {
-            habitat.compute_next_footprint(initial_step);
-
-            return initial_step;
-        }
-        catch (std::exception const&)
-        {
-        }
-    }
-}
-
-std::unique_ptr<item_spawner> application::create_item_spawner(
-    terrain& t,
-    std::unique_ptr<item_position_picker>&& p) const
-{
-    auto is = std::make_unique<probabilistic_item_spawner>(t, std::move(p));
-
-    is->register_item_factory([this] (util::value_ref<position> pos)
-    {
-        return create_fruit(pos);
-    }, 90);
-
-    is->register_item_factory([this] (util::value_ref<position> pos)
-    {
-        return create_diet_pill(pos);
-    }, 8);
-
-    is->register_item_factory([this] (util::value_ref<position> pos)
-    {
-        return create_invulnerability_spell(pos);
-    }, 2);
-
-    return std::move(is);
-}
-
-std::unique_ptr<item> application::create_fruit(
-    util::value_ref<position> pos) const
-{
-    random_integer_generator generator{};
-
-    auto const nutrition_value = generator.generate(1, 5);
-
-    auto const lifetime = generator.generate(200, 800);
-
-    return std::make_unique<fruit>(pos, 
-                                   *this->current_game, 
-                                   lifetime, 
-                                   nutrition_value);
-}
-
-std::unique_ptr<item> application::create_diet_pill(
-    util::value_ref<position> pos) const
-{
-    random_integer_generator generator{};
-
-    auto const lifetime = generator.generate(100, 500);
-
-    return std::make_unique<diet_pill>(pos, *this->current_game, lifetime, 5);
-}
-
-std::unique_ptr<item> application::create_invulnerability_spell(
-    util::value_ref<position> pos) const
-{
-    random_integer_generator generator{};
-
-    auto const lifetime = generator.generate(100, 300);
-
-    return std::make_unique<invulnerability_spell>(pos, 
-                                                   *this->current_game, 
-                                                   lifetime);
-}
-
-std::unique_ptr<terrain_item_filler> application::create_terrain_filler(
-    std::unique_ptr<item_spawner>&& is) const
-{
-    auto f = std::make_unique<load_driven_terrain_item_filler>(std::move(is));
-
-    f->set_minimum_load_factor(0.001);
-
-    f->set_maximum_load_factor(0.005);
-
-    return std::move(f);
-}
-
-void application::create_keyboard_input_handler()
-{
-    this->keyboard_handler = std::make_unique<keyboard_input_handler>(
-        *this->current_game,
-        *this->hud_drawer,
-        *this->camera_handler);
-}
-
-void application::catch_snake_on_camera() const
-{
-    this->camera_handler->toggle_auto_follow();
-        
-    this->camera_handler->set_camera_matrices(this->current_game->get_snake());
-
-    this->camera_handler->toggle_auto_follow();
-}
-
-bool application::try_handle_game_restart_command(cinder::app::KeyEvent const e)
-{
-    if (!(this->current_game->is_game_over))
-    {
-        return false;
-    }
+    cinder::gl::enableDepthRead();
     
-    if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
-        (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
-    {
-        start_new_game();
-
-        return true;
-    }
-
-    return false;
+    cinder::gl::enableDepthWrite();
 }
 
 bool application::try_handle_full_screen_toggling_command(
@@ -328,37 +130,33 @@ void application::toggle_full_screen()
     setup_depth_buffer();
 }
 
-void application::draw_frame()
+game_map& application::get_currently_selected_map() const
 {
-    cinder::gl::clear({0.f, 0.f, 0.0f}, true);
-
-    draw_world();
-
-    calculate_current_fps();
-
-    this->hud_drawer->render(this->current_fps,
-                             this->current_game->score,
-                             this->current_game->is_game_paused,
-                             this->current_game->is_game_over,
-                             this->camera_handler->is_auto_follow_on());
+    return this->selection_phase->get_selected_map();
 }
 
-void application::draw_world()
+bool application::try_handle_game_restart_command(
+    cinder::app::KeyEvent const e)
 {
-    this->world_drawer->render();
-}
+    if (this->current_phase != this->playing_phase.get())
+    {
+        return false;
+    }
 
-void application::calculate_current_fps()
-{
-    auto const time = std::chrono::system_clock::now();
+    if (!(this->playing_phase->is_done()))
+    {
+        return false;
+    }
+    
+    if ((e.getCode() == cinder::app::KeyEvent::KEY_F5) ||
+        (e.getCode() == cinder::app::KeyEvent::KEY_RETURN))
+    {
+        this->playing_phase->start_new_game(get_currently_selected_map());
 
-     
-    auto const elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
-        time - this->last_frame_time);
+        return true;
+    }
 
-    this->current_fps = 1000.f / elapsed.count();
-
-    this->last_frame_time = time;
+    return false;
 }
 
 }

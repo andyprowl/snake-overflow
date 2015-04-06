@@ -9,6 +9,7 @@ namespace snake_overflow
 
 class game;
 class game_map;
+class game_map_block_cache;
 class texture_repository;
 
 class world_renderer
@@ -16,7 +17,9 @@ class world_renderer
 
 public:
 
-    world_renderer(float block_size, texture_repository const& textures);
+    world_renderer(float block_size, 
+                   texture_repository const& textures,
+                   game_map_block_cache const& terrain_block_cache);
 
     void set_current_game(game const& g);
 
@@ -30,8 +33,10 @@ private:
     void create_item_renderer(float const block_size,
                               texture_repository const& textures);
 
-    void create_terrain_renderer(float const block_size,
-                                 texture_repository const& textures);
+    void create_terrain_renderer(
+        float const block_size,
+        texture_repository const& textures,
+        game_map_block_cache const& terrain_block_cache);
 
 private:
 

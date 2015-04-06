@@ -118,7 +118,7 @@ void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
 
     auto const radius = f.get_nutrition_value() * this->block_size / 15.f + 1.f;
 
-    auto const binder = texture_binder{this->textures, "apple.jpg"};
+    auto const binder = texture_binder{this->textures, "apple"};
 
     cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
 }
@@ -131,7 +131,7 @@ void item_renderer::draw_diet_pill_shape() const
 
     auto const radius = this->block_size / 2;
 
-    auto const binder = texture_binder{this->textures, "pill2.jpg"};
+    auto const binder = texture_binder{this->textures, "pill2"};
 
     cinder::gl::drawCube(cinder::Vec3f::zero(), {radius * 2, radius, radius});
 }
@@ -144,7 +144,7 @@ void item_renderer::draw_invulnerability_spell_shape() const
 
     auto const radius = this->block_size / 3.f + 1.f;
 
-    auto const binder = texture_binder{this->textures, "invulnerability.jpg"};
+    auto const binder = texture_binder{this->textures, "invulnerability"};
 
     cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
 }

@@ -1,30 +1,30 @@
 BEGIN BLOCK TYPES
 
-A: grass2.jpg; 255,255,255,255; S
-B: brick1.jpg; 255,255,255,255; S
-C: sand3.jpg; 255,255,255,255; S
-D: flowers2.jpg; 255,255,255,255; S
-E: flowers3.jpg; 255,255,255,255; S
-F: flowers4.jpg; 255,255,255,255; S
-G: grass4.jpg; 255,255,255,255; S
-H: lava5.jpg; 255,255,255,255; S
-I: leaves3.jpg; 255,255,255,255; S
-J: lava2.jpg; 255,255,255,255; S
-K: lava3.jpg; 255,255,255,255; S
-L: lava4.jpg; 255,255,255,255; S
-M: marble3.jpg; 255,255,255,255; S
-N: marble4.jpg; 255,255,255,255; S
-O: lava7.jpg; 255,255,255,255; S
-P: lava6.jpg; 255,255,255,255; S
-Q: marble2.jpg; 255,255,255,255; S
-R: brick6.jpg; 255,255,255,255; S
-S: stone3.jpg; 255,255,255,255; S
-T: stone2.jpg; 255,255,255,255; S
-U: ice1.jpg; 255,255,255,255; S
-W: water4.jpg; 255,255,255,128; N
-X: water2.jpg; 255,255,255,128; N
-Y: ice2.jpg; 255,255,255,255; S
-Z: ice3.jpg; 255,255,255,255; S
+A: grass2; 255,255,255,255; S
+B: brick1; 255,255,255,255; S
+C: sand3; 255,255,255,255; S
+D: flowers2; 255,255,255,255; S
+E: flowers3; 255,255,255,255; S
+F: flowers4; 255,255,255,255; S
+G: grass4; 255,255,255,255; S
+H: lava5; 255,255,255,255; S
+I: leaves3; 255,255,255,255; S
+J: lava2; 255,255,255,255; S
+K: lava3; 255,255,255,255; S
+L: lava4; 255,255,255,255; S
+M: marble3; 255,255,255,255; S
+N: marble4; 255,255,255,255; S
+O: lava7; 255,255,255,255; S
+P: lava6; 255,255,255,255; S
+Q: marble2; 255,255,255,255; S
+R: brick6; 255,255,255,255; S
+S: stone3; 255,255,255,255; S
+T: stone2; 255,255,255,255; S
+U: ice1; 255,255,255,255; S
+W: water4; 255,255,255,128; N
+X: water2; 255,255,255,128; N
+Y: ice2; 255,255,255,255; S
+Z: ice3; 255,255,255,255; S
 
 END BLOCK TYPES
 

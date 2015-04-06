@@ -51,12 +51,6 @@
     <ClCompile Include="..\src\world_renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\hud_renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\camera_manipulator.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\keyboard_input_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -67,6 +61,27 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\game_map_repository.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game_playing_phase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map_selection_phase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\arcball_camera_manipulator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\auto_follow_camera_manipulator.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\playing_phase_hud_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\selection_phase_hud_renderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\zooming_camera_manipulator.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,12 +122,6 @@
     <ClInclude Include="..\include\snake_overflow\world_renderer.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\hud_renderer.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
-      <Filter>include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\snake_overflow\keyboard_input_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
@@ -123,6 +132,36 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\game_map_repository.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\interaction_phase.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\game_playing_phase.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\map_selection_phase.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\auto_follow_camera_manipulator.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\arcball_camera_manipulator.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\camera_manipulator.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\camera_manipulator_toggler.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\playing_phase_hud_renderer.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\selection_phase_hud_renderer.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\zooming_camera_manipulator.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

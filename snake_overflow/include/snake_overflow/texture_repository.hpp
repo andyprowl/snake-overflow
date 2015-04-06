@@ -1,8 +1,8 @@
 #pragma once
 
 #include "util/value_ref.hpp"
-#include "cinder/gl/Texture.h"
-#include "boost/filesystem.hpp"
+#include <cinder/gl/Texture.h>
+#include <boost/filesystem.hpp>
 #include <string>
 #include <unordered_map>
 

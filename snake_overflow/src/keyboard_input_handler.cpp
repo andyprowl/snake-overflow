@@ -1,8 +1,9 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/camera_manipulator.hpp"
+#include "snake_overflow/camera_manipulator_toggler.hpp"
 #include "snake_overflow/game.hpp"
-#include "snake_overflow/hud_renderer.hpp"
+#include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/keyboard_input_handler.hpp"
 
 namespace snake_overflow
@@ -10,11 +11,11 @@ namespace snake_overflow
 
 keyboard_input_handler::keyboard_input_handler(
     game& controlled_game, 
-    hud_renderer& hud_drawer,
-    camera_manipulator& camera_handler)
+    playing_phase_hud_renderer& hud_drawer,
+    camera_manipulator_toggler& camera_toggler)
     : controlled_game{controlled_game}
     , hud_drawer{hud_drawer}
-    , camera_handler{camera_handler}
+    , camera_toggler{camera_toggler}
 {
     setup_keyboard_commands();
 }
@@ -70,17 +71,17 @@ void keyboard_input_handler::setup_camera_commands()
     
     this->keyboard_commands[KeyEvent::KEY_w] = [this] 
     { 
-        this->camera_handler.zoom(1.f);
+        this->camera_toggler.get_current_manipulator().zoom(1.f);
     };
     
     this->keyboard_commands[KeyEvent::KEY_s] = [this] 
     { 
-        this->camera_handler.zoom(-1.f);
+        this->camera_toggler.get_current_manipulator().zoom(-1.f);
     };
 
     this->keyboard_commands[KeyEvent::KEY_SPACE] = [this] 
     { 
-        this->camera_handler.toggle_auto_follow(); 
+        this->camera_toggler.activate_next_camera_manipulator(); 
     };
 }
 

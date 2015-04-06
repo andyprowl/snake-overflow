@@ -1,0 +1,1229 @@
+BEGIN BLOCK TYPES
+
+A: grass2; 255,255,255,255; S
+B: brick1; 255,255,255,255; S
+C: sand3; 255,255,255,255; S
+D: flowers2; 255,255,255,255; S
+E: flowers3; 255,255,255,255; S
+F: flowers4; 255,255,255,255; S
+G: grass4; 255,255,255,255; S
+H: lava5; 255,255,255,255; S
+I: leaves3; 255,255,255,255; S
+J: lava2; 255,255,255,255; S
+K: lava3; 255,255,255,255; S
+L: lava4; 255,255,255,255; S
+M: marble3; 255,255,255,255; S
+N: marble4; 255,255,255,255; S
+O: lava7; 255,255,255,255; S
+P: lava6; 255,255,255,255; S
+Q: marble2; 255,255,255,255; S
+R: brick6; 255,255,255,255; S
+S: stone3; 255,255,255,255; S
+T: stone2; 255,255,255,255; S
+U: ice1; 255,255,255,255; S
+W: water4; 255,255,255,128; N
+X: water2; 255,255,255,128; N
+Y: ice2; 255,255,255,255; S
+Z: ice3; 255,255,255,255; S
+
+END BLOCK TYPES
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-14; ORIGIN:-10,10 }
+
+                                       
+                                       
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+T                                      
+                                       
+                                       
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-13; ORIGIN:-10,10 }
+
+                                       
+                                       
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+T T                                    
+                                       
+                                       
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-12; ORIGIN:-10,10 }
+
+                                       
+                                       
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+S S S                                  
+                                       
+                                       
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-11; ORIGIN:-10,10 }
+
+                                       
+                                       
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+S S S S                                
+                                       
+                                       
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-11; ORIGIN:-10,10 }
+
+                                       
+                                       
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+S S S S S                              
+                                       
+                                       
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-10; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G
+N N N N N N N N N N N N N N N N N N N G
+N N N N N B B B B B B B B B B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B                 B N N N N G
+N N N N N B B B B B B B B B B N N N N G
+N N N N N N N N N N N N N N N N N N N G
+G G G G G G G G G G G G G G G G G G G G
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-9; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G B B B B B B B B B B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B W W W W W W W W B G G G G G 
+G G G G G B B B B B B B B B B G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-8; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G B B B B B B B B B G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-7; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-6; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-5; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-4; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-3; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-2; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:-1; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:0; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:1; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:2; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:3; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:4; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:5; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:6; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:7; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:8; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G G G G G G G G G W W G G G G G G G G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G F F F F F F G W W G C C C C C C G G 
+G G G G G G G G G W W G G G G G G G G G 
+G W W W W W W W W W W W W W W W W W W G 
+G W W W W W W W W W W W W W W W W W W G 
+G G G G G G G G G W W G G G G G G G G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G E E E E E E G W W G I I I I I I G G 
+G G G G G G G G G W W G G G G G G G G G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:9; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G B B B B B B B B     B B B B B B B B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B B B B B B B B     B B B B B B B B G 
+G                                     G 
+G                                     G 
+G B B B B B B B B     B B B B B B B B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B             B     B             B G 
+G B B B B B B B B     B B B B B B B B G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:10; ORIGIN:-10,10 }
+
+M                                     M 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+M                                     M 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:11; ORIGIN:-10,10 }
+
+N                                     N 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+N                                     N 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:12; ORIGIN:-10,10 }
+
+N                                     N 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+N                                     N 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:13; ORIGIN:-10,10 }
+
+N                                     N 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+N                                     N 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+z; DEPTH:14; ORIGIN:-10,10 }
+
+N N N N N N N N N N N N N N N N N N N N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N                                     N 
+N N N N N N N N N N N N N N N N N N N N 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:11; ORIGIN:-10,10 }
+
+                                        
+  J J J J J J J J J J J J J J J J J J   
+  J J J J J J J J J J J J J J J J J J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J A A A A J   
+  J J J J J J J J J J J J J J J J J J   
+  J J J J J J J J J J J J J J J J J J   
+  J J X X X X X X X X X J J J J J J J   
+  J J X X X X X X X X X J J J J J J J   
+  J J X X X X X X X X X J J J J J J J   
+  J J X X X X X X X X X J J J J J J J   
+  J J J J J J J J J J J J J J J J J J   
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:12; ORIGIN:-10,10 }
+
+                                        
+                                        
+    O O O O O O O O O O O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O G G G G G G G G G O               
+    O O O O O O O O O O O               
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:13; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+      H H H H H H H H H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H G G G G G G G H                 
+      H H H H H H H H H                 
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:14; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+                                        
+        P P P P P P P                   
+        P G G G G G P                   
+        P G L L L G P                   
+        P G L L L G P                   
+        P G L L L G P                   
+        P G G G G G P                   
+        P P P P P P P                   
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-y; DEPTH:15; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+                                        
+                                        
+          K K K K K                     
+          K       K                     
+          K       K                     
+          K       K                     
+          K K K K K                     
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+x; DEPTH:10; ORIGIN:-10,10 }
+
+G G G G B B B B G G G G G G G G G G G G 
+G A A A B X X B A A A A A A A A E E E G 
+G A A A B X X B B A A A A A A A A E E G 
+G A A A B B X X X B F F F F F A A A A G 
+G A A A A B B X X B F F F F F F A A A G 
+G A A A B B X X B B F F F F F F A A A G 
+G A A A B X X B B B B F F F F F F A A G 
+G A T T B X X X X X B B F F F F T T A G 
+G A T T B B B X X X X B F F F F T T A G 
+G A Q Q D D B B X X X B B F F F Q Q A G 
+G A Q Q D D D B B X X X B B B F Q Q A G 
+G A T T D D D D B X X X X X B F T T A G 
+G A T T D D D D B B X X X X B F T T A G 
+G A A A A D D D B B X X B B B F A A A G 
+G A A A A D D B X X X X B F F F A A A G 
+G A A A A A B X X X B B B F F F A E E G 
+G A A A B B B X X B B F F F F E E E E G 
+G A A B X X X X B B E E E E E E E E E G 
+G A A B X X B B B E E E E E E E E E E G 
+G G G B B B B G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+x; DEPTH:11; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+      T T                     T T       
+      Q Q                     Q Q       
+      Q Q                     Q Q       
+      T T                     T T       
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+x; DEPTH:12; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+        T T T T T T T T T T T T         
+        Q Q Q Q Q Q Q Q Q Q Q Q         
+        Q Q Q Q Q Q Q Q Q Q Q Q         
+        T T T T T T T T T T T T         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+x; DEPTH:13; ORIGIN:-10,10 }
+
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+        R R R R R R R R R R R R         
+                                        
+                                        
+        R R R R R R R R R R R R         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-x; DEPTH:11; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-x; DEPTH:12; ORIGIN:-10,10 }
+
+G G G G G G G G G G G G G G G G G G G G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U W W W W W W U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G U U U U U U U U U U U U U U U U U U G 
+G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:-x; DEPTH:13; ORIGIN:-10,10 }
+
+                                        
+  U U U U U U U U U U U U U U U U U U   
+  U F F F F F F F F F F F F F F F F U   
+  U F U U U U U U U U U U U U U U F U   
+  U F U U U U U U U U U U U U U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U W W W W W W W W W W U U F U   
+  U F U U U U U U U U U U U U U U F U   
+  U F U U U U U U U U U U U U U U F U   
+  U F F F F F F F F F F F F F F F F U   
+  U U U U U U U U U U U U U U U U U U   
+                                        
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:10; ORIGIN:-11,10 }
+
+G G G G G G G G G G G G G G G G G G G G G G G 
+G L L L L L L L L L L L L L L L L L L L L L G 
+G L L L L L L L L L L L L L L L L L L L L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L U U U U U U U U U U U U U U U U U L L G 
+G L L L L L L L L L L L L L L L L L L L L L G 
+G L L L L L L L L L L L L L L L L L L L L L G 
+G G G G G G G G G G G G G G G G G G G G G G G 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:11; ORIGIN:-11,10 }
+
+J J J J J J J J J J J J J J J J J J J J J J J 
+J                                           J 
+J                                           J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J     U U U U U U U U U U U U U U U U U     J 
+J                                           J 
+J                                           J 
+J J J J J J J J J J J J J J J J J J J J J J J 
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:12; ORIGIN:-11,10 }
+
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                    Z Z Z                     
+                    Z Z Z                     
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:13; ORIGIN:-11,10 }
+
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                    Z Z Z                     
+                    Z Z Z                     
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:14; ORIGIN:-11,10 }
+
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                    Z Z Z                     
+                    Z Z Z                     
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+
+END LAYER
+
+BEGIN LAYER { NORMAL:+y; DEPTH:15; ORIGIN:-11,10 }
+
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                    Z Z Z                     
+                    Z Z Z                     
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+                                              
+
+END LAYER

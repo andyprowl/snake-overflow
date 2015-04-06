@@ -1,12 +1,12 @@
 BEGIN BLOCK TYPES
 
-A: marble4.jpg; 255,255,255,255; S
-T: marble4.jpg; 255,0,0,255; S
-B: marble4.jpg; 255,128,0,255; S
-L: marble4.jpg; 0,255,0,255; S
-R: marble4.jpg; 0,0,255,255; S
-F: marble4.jpg; 255,255,0,255; S
-K: marble4.jpg; 255,255,255,255; S
+A: marble4; 255,255,255,255; S
+T: marble4; 255,0,0,255; S
+B: marble4; 255,128,0,255; S
+L: marble4; 0,255,0,255; S
+R: marble4; 0,0,255,255; S
+F: marble4; 255,255,0,255; S
+K: marble4; 255,255,255,255; S
 
 END BLOCK TYPES
 

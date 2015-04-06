@@ -1,14 +1,16 @@
 #pragma once
 
+#include <cinder/Font.h>
+
 namespace snake_overflow
 {
 
-class hud_renderer
+class playing_phase_hud_renderer
 {
 
 public:
 
-    hud_renderer();
+    playing_phase_hud_renderer();
 
     void render(float fps,
                 int score,

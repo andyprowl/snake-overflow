@@ -6,8 +6,9 @@
 namespace snake_overflow
 {
 
+class camera_manipulator_toggler;
 class game;
-class hud_renderer;
+class playing_phase_hud_renderer;
 
 class keyboard_input_handler
 {
@@ -15,8 +16,8 @@ class keyboard_input_handler
 public:
 
     keyboard_input_handler(game& controlled_game, 
-                           hud_renderer& hud_drawer, 
-                           camera_manipulator& camera_handler);
+                           playing_phase_hud_renderer& hud_drawer,
+                           camera_manipulator_toggler& camera_toggler);
 
     void process_keyboard_input(int const code);
 
@@ -38,9 +39,9 @@ private:
 
     game& controlled_game;
 
-    hud_renderer& hud_drawer;
+    playing_phase_hud_renderer& hud_drawer;
 
-    camera_manipulator& camera_handler;
+    camera_manipulator_toggler& camera_toggler;
 
     std::unordered_map<int, std::function<void()>> keyboard_commands;
 
