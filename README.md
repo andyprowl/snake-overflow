@@ -2,11 +2,19 @@
 
 Snake Overflow is a 3D snake game for Microsoft Windows developed in C++ using [Cinder](http://libcinder.org/). 
 
+## Choosing a map
+
+Before the actual game starts, the user is asked to select a map to play on. Maps can be browsed by pressing the left arrow and the right arrow keys. The name of the currently selected map will be displayed at the top of the window:
+
+![Choosing a map](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot06.jpg)
+
+When inspecting a map, it is possible to *rotate the camera* around the center of the terrain. To do so, hold the left mouse button and drag the cursor around; the camera will rotate correspondingly. You can use the mouse wheel to *zoom in and out* or, alternatively, the keys 'W' and 'S'.
+
 ## Controlling the snake
 
 Unlike classical snake games, Snake Overflow lets you control the snake by using *only two keys*: the left arrow and the right arrow (or the 'A' and 'D' keys, alternatively). These respectively turn the snake left or right *relative to its current direction of movement*, and not relative to the observer's viewpoint.
 
-In order to follow the snake as it moves up and down the terrain, you can use the mouse to *rotate the camera* around the center of the terrain. To do so, hold the left mouse button and drag the cursor around; the camera will rotate correspondingly. You can use the mouse wheel to *zoom in and out* or, alternatively, the keys 'W' and 'S'.
+In order to follow the snake as it moves up and down the terrain, you can use the mouse to manipulate the camera as described in the previous section.
 
 You can *pause and unpause* the game at any time by pressing the 'P' key:
 
