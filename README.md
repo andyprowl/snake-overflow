@@ -30,9 +30,7 @@ As the screenshot above shows, not all blocks of a terrain are solid and walkabl
 
 ## Goal of the game
 
-The goal of the game is to score as many points as possible. The game ends when the snake bites its tail, unless an *invulnerability bonus* applies - as explained in the following. In particular, **none of the obstacles, including walls, are deadly**: the snake will always wind on them. Once the game ends, it is possible to start a new game on the same map by pressing 'Enter' or 'F5'; pressing 'F4' allows going back to the map selection screen:
-
-![Game over](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot07.jpg)
+The goal of the game is to score as many points as possible. The game ends when the snake bites its tail, unless an *invulnerability bonus* applies - as explained in the following. In particular, **none of the obstacles, including walls, are deadly**: the snake will always wind on them.
 
 Several items are spawned at random intervals on the terrain's surface, and picking them up will bring you particular benefits depending on the kind of item:
 
@@ -41,6 +39,10 @@ Several items are spawned at random intervals on the terrain's surface, and pick
  - **Invulnerability bonus**: Picking an invulnerability bonus will allow you to survive an otherwise lethal self-bite, but its effect will cease after the next bite! Also, invulnerability bonuses are not cumulative: picking two or three of them will only make you invulnerable to the next bite. When the snake is invulnerable, the color of its skin assumes a pulsing tone of red. Invulnerability bonuses are spawned relatively rarely.
  
 All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
+
+Once the game ends, it is possible to start a new game on the same map by pressing 'Enter' or 'F5'; pressing 'F4' allows going back to the map selection screen:
+
+![Game over](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot07.jpg)
 
 ## Other features
 
