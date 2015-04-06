@@ -140,6 +140,8 @@ void game_playing_phase::create_hud_renderer()
 
 void game_playing_phase::create_camera_manipulators()
 {
+    bool const auto_follow_was_on = is_auto_follow_on();
+
     this->arcball_camera_handler = 
         std::make_unique<arcball_camera_manipulator>();
 
@@ -149,6 +151,8 @@ void game_playing_phase::create_camera_manipulators()
         std::make_unique<auto_follow_camera_manipulator>(s);
 
     this->current_camera_handler = this->arcball_camera_handler.get();
+
+    if (auto_follow_was_on) { activate_next_camera_manipulator(); }
 }
 
 void game_playing_phase::create_game(game_map& map_prototype)
@@ -338,6 +342,11 @@ void game_playing_phase::calculate_current_fps()
 
 bool game_playing_phase::is_auto_follow_on() const
 {
+    if (this->auto_follow_camera_handler == nullptr)
+    {
+        return false;
+    }
+
     return (this->current_camera_handler == 
             this->auto_follow_camera_handler.get());
 }
