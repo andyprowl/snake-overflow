@@ -16,6 +16,8 @@ Unlike classical snake games, Snake Overflow lets you control the snake by using
 
 In order to follow the snake as it moves up and down the terrain, you can use the mouse to manipulate the camera as described in the previous section.
 
+Since the control system is quite unusual, it is possible to pick a map named "rubik" for practicing movement upon a plain cube - without mountains, water, bridges, and obstacles of any kind getting on your way.
+
 You can *pause and unpause* the game at any time by pressing the 'P' key:
 
 ![Game paused indicator](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot03.jpg)
