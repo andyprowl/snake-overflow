@@ -20,9 +20,9 @@ void auto_follow_camera_manipulator::on_resize()
 
 camera_view auto_follow_camera_manipulator::get_camera_view() const
 {
-    auto head = this->hero.get_body().get_trail_head();
+    auto const head = this->hero.get_body().get_trail_head();
 
-    auto pos = get_footprint_position(head.step);
+    auto const pos = get_footprint_position(head.step);
 
     auto const normalized_eye = vec3f_from_point(pos.location).normalized();
 

@@ -89,7 +89,7 @@ void playing_phase_hud_renderer::draw_game_over_text() const
 
     if ((int)cinder::app::getElapsedSeconds() % 2 == 0)
     {
-        cinder::gl::drawStringCentered("Press ENTER or F5 to restart, "
+        cinder::gl::drawStringCentered("Press 'Enter' or F5 to restart, "
                                        "F4 to change map", 
                                        center + cinder::Vec2f{0.f, 140.f}, 
                                        cinder::ColorA{1.f, 1.f, 0.f, 1.f}, 
