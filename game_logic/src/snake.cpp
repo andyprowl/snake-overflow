@@ -12,6 +12,7 @@ snake::snake(std::unique_ptr<snake_body>&& body, std::string skin)
     , invulnerability_bonus{false, is_dead}
     , speed{2, is_dead, 1, 5}
     , age{0}
+    , next_action{maneuvre::straight_move}
 {
     this->collider = std::make_unique<collision_handler>(*this, this->is_dead);
 }
@@ -38,9 +39,9 @@ void snake::update()
         return;
     }
 
-    if (is_time_to_advance_body())
+    if (is_time_to_move_body())
     {
-        this->body->advance();
+        move_body();
     }
 
     ++(this->age);
@@ -50,14 +51,14 @@ void snake::turn_left()
 {
     throw_if_dead();
 
-    this->body->turn_left();
+    next_action = maneuvre::left_turn;
 }
 
 void snake::turn_right()
 {
     throw_if_dead();
 
-    this->body->turn_right();
+    next_action = maneuvre::right_turn;
 }
 
 void snake::grow(int const size)
@@ -82,11 +83,27 @@ void snake::throw_if_dead()
     }
 }
 
-bool snake::is_time_to_advance_body() const
+bool snake::is_time_to_move_body() const
 {
     auto const update_interval = get_snake_update_interval(*this);
 
     return (this->age % update_interval == 0);
+}
+
+void snake::move_body()
+{
+    if (this->next_action == maneuvre::left_turn)
+    {
+        this->body->turn_left();
+    }
+    else if (this->next_action == maneuvre::right_turn)
+    {
+        this->body->turn_right();
+    }
+
+    this->body->advance();
+
+    this->next_action = maneuvre::straight_move;
 }
 
 int get_snake_update_interval(snake const& s)

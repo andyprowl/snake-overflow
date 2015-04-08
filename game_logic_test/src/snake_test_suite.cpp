@@ -115,6 +115,26 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(TurnLeft),
+     WHEN(WhenInvokedMoreThanOnceBeforeAnUpdate),
+     THEN(WillOnlyCauseOneTurnLeftDuringTheNextUpdate))
+{
+    auto& s = get_snake();
+
+    s.turn_left();
+
+    s.turn_left();
+
+    s.turn_left();
+
+    s.update();
+
+    auto& b = s.get_body();
+
+    EXPECT_THAT(b.get_direction(), Eq(canonical_direction::positive_y()));
+}
+
+TEST_THAT(Snake,
      WHAT(TurnRight),
      WHEN(WhenTheSnakeIsDead),
      THEN(Throws))
@@ -124,6 +144,26 @@ TEST_THAT(Snake,
     s.is_dead.set();
 
     EXPECT_THROW(s.turn_right(), dead_snake_exception);
+}
+
+TEST_THAT(Snake,
+     WHAT(TurnRight),
+     WHEN(WhenInvokedMoreThanOnceBeforeAnUpdate),
+     THEN(WillOnlyCauseOneTurnRightDuringTheNextUpdate))
+{
+    auto& s = get_snake();
+
+    s.turn_right();
+
+    s.turn_right();
+
+    s.turn_right();
+
+    s.update();
+
+    auto& b = s.get_body();
+
+    EXPECT_THAT(b.get_direction(), Eq(canonical_direction::positive_x()));
 }
 
 TEST_THAT(Snake,

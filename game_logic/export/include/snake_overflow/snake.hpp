@@ -49,7 +49,9 @@ private:
 
     void throw_if_dead();
 
-    bool is_time_to_advance_body() const;
+    bool is_time_to_move_body() const;
+
+    void move_body();
 
 private:
 
@@ -58,6 +60,8 @@ private:
     std::unique_ptr<collision_handler> collider;
 
     int age;
+
+    maneuvre next_action;
 
 };
 
