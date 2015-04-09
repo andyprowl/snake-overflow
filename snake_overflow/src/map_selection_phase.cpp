@@ -119,7 +119,8 @@ void map_selection_phase::select_previous_map()
 {
     auto const num_of_maps = get_num_of_available_maps();
             
-    this->selected_map_index = (this->selected_map_index + 1) % num_of_maps;
+    this->selected_map_index = 
+        (this->selected_map_index + num_of_maps - 1) % num_of_maps;
 
     show_selected_map();
 }
