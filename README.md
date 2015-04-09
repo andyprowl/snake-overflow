@@ -36,7 +36,7 @@ Several items are spawned at random intervals on the terrain's surface, and pick
 
  - **Fruit**: Picking a fruit will increase both your score *and* the length of the snake by its nutrition value. Each fruit has a random nutrition value ranging from 1 to 5. The size of the fruit's shape is proportional to its nutrition value. Fruit are the most frequent kind of item that will be spawned.
  - **Diet pill**: Picking a diet pill will reduce the size of the snake by 5 units, but never to a length lower than two units. Diet pills are quite common, but definitely not as common as fruit. 
- - **Invulnerability bonus**: Picking an invulnerability bonus will allow you to survive an otherwise lethal self-bite, but its effect will cease after the next bite! Also, invulnerability bonuses are not cumulative: picking two or three of them will only make you invulnerable to the next bite. When the snake is invulnerable, the color of its skin assumes a pulsing tone of red. Invulnerability bonuses are spawned relatively rarely.
+ - **Invulnerability bonus**: Picking an invulnerability bonus will allow you to survive otherwise lethal self-bites for a fixed amount of time since the last invulnerability item was picked. When the snake is invulnerable, the color of its skin assumes a pulsing tone of red. Invulnerability bonuses are spawned relatively rarely.
  
 All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
 
