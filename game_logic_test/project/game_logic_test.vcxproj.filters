@@ -74,6 +74,12 @@
     <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\export\include\snake_overflow\testing\high_scores_rankings_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\score_record_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">

@@ -108,9 +108,11 @@
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\export\include\snake_overflow\testing\high_scores_rankings_test_suite.cpp" />
     <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp" />
     <ClCompile Include="..\src\block_test_suite.cpp" />
     <ClCompile Include="..\src\invulnerability_potion_test_suite.cpp" />
+    <ClCompile Include="..\src\score_record_test_suite.cpp" />
     <ClCompile Include="..\src\snake_test_suite.cpp" />
     <ClCompile Include="..\src\diet_pill_test_suite.cpp" />
     <ClCompile Include="..\src\fruit_test_suite.cpp" />
