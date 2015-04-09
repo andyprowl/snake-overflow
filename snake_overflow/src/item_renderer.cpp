@@ -2,7 +2,7 @@
 
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
-#include "snake_overflow/invulnerability_spell.hpp"
+#include "snake_overflow/invulnerability_potion.hpp"
 #include "snake_overflow/item.hpp"
 #include "snake_overflow/item_renderer.hpp"
 #include "snake_overflow/point_conversion.hpp"
@@ -103,10 +103,10 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
         return draw_diet_pill_shape();
     } 
 
-    auto is = dynamic_cast<invulnerability_spell const*>(&i);
+    auto is = dynamic_cast<invulnerability_potion const*>(&i);
     if (is != nullptr)
     {
-        return draw_invulnerability_spell_shape();
+        return draw_invulnerability_potion_shape();
     }
 }
 
@@ -136,7 +136,7 @@ void item_renderer::draw_diet_pill_shape() const
     cinder::gl::drawCube(cinder::Vec3f::zero(), {radius * 2, radius, radius});
 }
 
-void item_renderer::draw_invulnerability_spell_shape() const
+void item_renderer::draw_invulnerability_potion_shape() const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 

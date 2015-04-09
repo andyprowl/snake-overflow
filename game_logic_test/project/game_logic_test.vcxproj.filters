@@ -68,7 +68,10 @@
     <ClCompile Include="..\src\snake_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\invulnerability_spell_test_suite.cpp">
+    <ClCompile Include="..\src\invulnerability_potion_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -108,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="..\export\include\testing\test_naming.hpp">
       <Filter>export\include\testing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\testing\fake_spell.hpp">
+      <Filter>export\include\snake_overflow\testing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

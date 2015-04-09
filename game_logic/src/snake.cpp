@@ -44,6 +44,8 @@ void snake::update()
         move_body();
     }
 
+    affect_by_pending_spells();
+
     ++(this->age);
 }
 
@@ -75,6 +77,41 @@ void snake::shrink(int const size)
     this->body->shrink(size);
 }
 
+void snake::add_spell(std::unique_ptr<spell>&& s)
+{
+    this->spells.push_back(std::move(s));
+}
+
+void snake::remove_spell(spell const& s)
+{
+    auto const it = std::find_if(
+        std::begin(this->spells),
+        std::end(this->spells),
+        [&s] (std::unique_ptr<spell> const& existing_spell)
+    {
+        return (existing_spell.get() == &s);
+    });
+
+    this->spells.erase(it);
+}
+
+std::vector<spell*> snake::get_all_spells() const
+{
+    auto v = std::vector<spell*>{};
+
+    v.reserve(this->spells.size());
+
+    std::transform(std::cbegin(this->spells),
+                   std::cend(this->spells),
+                   std::back_inserter(v),
+                   [] (std::unique_ptr<spell> const& s)
+    {
+        return s.get();
+    });
+
+    return v;
+}
+
 void snake::throw_if_dead()
 {
     if (this->is_dead)
@@ -104,6 +141,19 @@ void snake::move_body()
     this->body->advance();
 
     this->next_action = maneuvre::straight_move;
+}
+
+void snake::affect_by_pending_spells()
+{
+    // Affecting spells will remove themselves when expiring, so we cannot
+    // directly iterate through the owning container...
+
+    auto all_spells = get_all_spells();
+
+    for (auto const s : all_spells)
+    {
+        s->affect(*this);
+    }
 }
 
 int get_snake_update_interval(snake const& s)

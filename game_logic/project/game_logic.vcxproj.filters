@@ -113,9 +113,6 @@
     <ClCompile Include="..\src\snake_boolean_parameter.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\invulnerability_spell.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\block_type.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -129,6 +126,12 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\src\snake_integer_parameter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\invulnerability_potion.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\invulnerability_spell.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -232,9 +235,6 @@
     <ClInclude Include="..\export\include\snake_overflow\snake_boolean_parameter.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\export\include\snake_overflow\invulnerability_spell.hpp">
-      <Filter>export\include\snake_overflow</Filter>
-    </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\terrain_reader.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
@@ -254,6 +254,15 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\snake_integer_parameter.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\invulnerability_potion.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\spell.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\invulnerability_spell.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

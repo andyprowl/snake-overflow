@@ -2,11 +2,13 @@
 
 #include "snake_overflow/testing/cube_terrain_game_fixture.hpp"
 #include "snake_overflow/testing/fake_item.hpp"
+#include "snake_overflow/testing/fake_spell.hpp"
 #include "util/repeat.hpp"
 
 namespace snake_overflow { namespace testing
 {
     
+using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Gt;
 using ::testing::Ne;
@@ -19,6 +21,12 @@ protected:
     std::unique_ptr<item> make_item(util::value_ref<position> pos)
     {
         return std::make_unique<fake_item>(pos);
+    }
+
+    std::unique_ptr<spell> make_spell(
+        std::vector<spell*>* last_affecting_spells = nullptr)
+    {
+        return std::make_unique<fake_spell>(last_affecting_spells);
     }
 
     // The collision handler is implicitly created as part of the game object.
@@ -312,6 +320,108 @@ TEST_THAT(Snake,
     s.speed = 0;
 
     EXPECT_THAT(s.speed, Eq(1));
+}
+
+TEST_THAT(Snake,
+     WHAT(AddSpell),
+     WHEN(GivenASpellThatDoesNotAffectTheSnakeYet),
+     THEN(MakesTheSnakeAffectedByThatSpell))
+{
+    auto& s = get_snake();
+
+    auto sp = make_spell();
+
+    auto& added_spell = *sp;
+
+    s.add_spell(std::move(sp));
+
+    auto const spells = s.get_all_spells();
+
+    EXPECT_THAT(spells.size(), Eq(1u));
+    EXPECT_THAT(spells, Contains(&added_spell));
+}
+
+TEST_THAT(Snake,
+     WHAT(RemoveSpell),
+     WHEN(GivenASpellThatIsAffectingTheSnake),
+     THEN(RemovesThatSpellFromTheSetOfPendingSpells))
+{
+    auto& s = get_snake();
+
+    auto sp = make_spell();
+
+    auto& added_spell = *sp;
+
+    s.add_spell(std::move(sp));
+
+    s.remove_spell(added_spell);
+
+    auto const spells = s.get_all_spells();
+    EXPECT_TRUE(spells.empty());
+}
+
+TEST_THAT(Snake,
+     WHAT(GetAllSpells),
+     WHEN(ImmediatelyAfterConstruction),
+     THEN(ReturnsAnEmptyCollection))
+{
+    auto& s = get_snake();
+    
+    auto const spells = s.get_all_spells();
+
+    EXPECT_TRUE(spells.empty());
+}
+
+TEST_THAT(Snake,
+     WHAT(GetAllSpells),
+     WHEN(AfterAddingAFewSpellS),
+     THEN(ReturnsAContainerContainingAllThoseSpellsInOrderOfAddition))
+{
+    auto& s = get_snake();
+    
+    auto s1 = make_spell();
+    auto s1_ptr = s1.get();
+    s.add_spell(std::move(s1));
+
+    auto s2 = make_spell();
+    auto s2_ptr = s2.get();
+    s.add_spell(std::move(s2));
+
+    auto s3 = make_spell();
+    auto s3_ptr = s3.get();
+    s.add_spell(std::move(s3));
+
+    auto const spells = s.get_all_spells();
+
+    ASSERT_THAT(spells.size(), Eq(3u));
+
+    EXPECT_THAT(spells[0], Eq(s1_ptr));
+    EXPECT_THAT(spells[1], Eq(s2_ptr));
+    EXPECT_THAT(spells[2], Eq(s3_ptr));
+}
+
+TEST_THAT(Snake,
+     WHAT(Update),
+     WHEN(Always),
+     THEN(LetsAllThePendingSpellsAffectTheSnake))
+{
+    auto& s = get_snake();
+ 
+    auto affecting_spells = std::vector<spell*>{};
+
+    auto s1 = make_spell(&affecting_spells);
+    auto const s1_ptr = s1.get();
+    s.add_spell(std::move(s1));
+
+    auto s2 = make_spell(&affecting_spells);
+    auto const s2_ptr = s2.get();
+    s.add_spell(std::move(s2));
+
+    s.update();
+
+    EXPECT_THAT(affecting_spells.size(), Eq(2u));
+    EXPECT_THAT(affecting_spells, Contains(s1_ptr));
+    EXPECT_THAT(affecting_spells, Contains(s2_ptr));
 }
 
 } }

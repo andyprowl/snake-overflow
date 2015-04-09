@@ -8,7 +8,7 @@
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
-#include "snake_overflow/invulnerability_spell.hpp"
+#include "snake_overflow/invulnerability_potion.hpp"
 #include "snake_overflow/load_driven_terrain_item_filler.hpp"
 #include "snake_overflow/probabilistic_item_spawner.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
@@ -241,7 +241,7 @@ std::unique_ptr<item_spawner> game_playing_phase::create_item_spawner(
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
-        return create_invulnerability_spell(pos);
+        return create_invulnerability_potion(pos);
     }, 2);
 
     return std::move(is);
@@ -272,16 +272,17 @@ std::unique_ptr<item> game_playing_phase::create_diet_pill(
     return std::make_unique<diet_pill>(pos, *this->current_game, lifetime, 5);
 }
 
-std::unique_ptr<item> game_playing_phase::create_invulnerability_spell(
+std::unique_ptr<item> game_playing_phase::create_invulnerability_potion(
     util::value_ref<position> pos) const
 {
     random_integer_generator generator{};
 
     auto const lifetime = generator.generate(100, 300);
 
-    return std::make_unique<invulnerability_spell>(pos, 
-                                                   *this->current_game, 
-                                                   lifetime);
+    return std::make_unique<invulnerability_potion>(pos, 
+                                                    *this->current_game, 
+                                                    lifetime,
+                                                    200);
 }
 
 std::unique_ptr<terrain_item_filler> game_playing_phase::create_terrain_filler(

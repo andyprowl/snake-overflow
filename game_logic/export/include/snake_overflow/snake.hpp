@@ -5,6 +5,7 @@
 #include "snake_overflow/snake_boolean_parameter.hpp"
 #include "snake_overflow/snake_integer_parameter.hpp"
 #include "snake_overflow/snake_body.hpp"
+#include "snake_overflow/spell.hpp"
 #include <memory>
 
 namespace snake_overflow
@@ -35,6 +36,12 @@ public:
 
     void shrink(int size);
 
+    void add_spell(std::unique_ptr<spell>&& s);
+
+    void remove_spell(spell const& s);
+
+    std::vector<spell*> get_all_spells() const;
+
 public:
 
     dead_snake_flag is_dead;
@@ -53,6 +60,8 @@ private:
 
     void move_body();
 
+    void affect_by_pending_spells();
+
 private:
 
     std::unique_ptr<snake_body> body;
@@ -62,6 +71,8 @@ private:
     int age;
 
     maneuvre next_action;
+
+    std::vector<std::unique_ptr<spell>> spells;
 
 };
 

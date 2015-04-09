@@ -37,7 +37,7 @@ private:
 
     void draw_diet_pill_shape() const;
 
-    void draw_invulnerability_spell_shape() const;
+    void draw_invulnerability_potion_shape() const;
 
 private:
 

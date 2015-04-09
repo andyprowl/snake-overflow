@@ -100,6 +100,7 @@
     <ClInclude Include="..\export\include\snake_overflow\position_format.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\testing\cube_terrain_game_fixture.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\testing\fake_item.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\testing\fake_spell.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\testing\item_position_picker_mock.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\testing\item_spawner_spy.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\testing\terrain_item_filler_spy.hpp" />
@@ -107,8 +108,9 @@
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp" />
     <ClCompile Include="..\src\block_test_suite.cpp" />
-    <ClCompile Include="..\src\invulnerability_spell_test_suite.cpp" />
+    <ClCompile Include="..\src\invulnerability_potion_test_suite.cpp" />
     <ClCompile Include="..\src\snake_test_suite.cpp" />
     <ClCompile Include="..\src\diet_pill_test_suite.cpp" />
     <ClCompile Include="..\src\fruit_test_suite.cpp" />

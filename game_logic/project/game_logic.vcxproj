@@ -95,6 +95,7 @@
     <ClCompile Include="..\src\game_over_flag.cpp" />
     <ClCompile Include="..\src\game_boolean_parameter.cpp" />
     <ClCompile Include="..\src\game_integer_parameter.cpp" />
+    <ClCompile Include="..\src\invulnerability_potion.cpp" />
     <ClCompile Include="..\src\invulnerability_spell.cpp" />
     <ClCompile Include="..\src\item_lifetime.cpp" />
     <ClCompile Include="..\src\item_spawner.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="..\export\include\snake_overflow\game_over_flag.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_boolean_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_integer_parameter.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\invulnerability_potion.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\invulnerability_spell.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\item_lifetime.hpp" />
@@ -151,6 +153,7 @@
     <ClInclude Include="..\export\include\snake_overflow\snake.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake_boolean_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\snake_integer_parameter.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\spell.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\terrain_builder.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\footprint.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\maneuvre.hpp" />
