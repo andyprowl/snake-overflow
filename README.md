@@ -35,9 +35,23 @@ The goal of the game is to score as many points as possible. The game ends when 
 Several items are spawned at random intervals on the terrain's surface, and picking them up will bring you particular benefits depending on the kind of item:
 
  - **Fruit**: Picking a fruit will increase both your score *and* the length of the snake by its nutrition value. Each fruit has a random nutrition value ranging from 1 to 5. The size of the fruit's shape is proportional to its nutrition value. Fruit are the most frequent kind of item that will be spawned.
- - **Diet pill**: Picking a diet pill will reduce the size of the snake by 5 units, but never to a length lower than two units. Diet pills are quite common, but definitely not as common as fruit. 
+
+<p align="center">
+<img width="128px" height="128px" src="https://github.com/andyprowl/snake-overflow/blob/master/readme_resources/fruit.jpg"/>
+</p>
+
+ - **Diet pills**: Picking diet pills will reduce the size of the snake by 5 units, but never to a length lower than two units. Diet pills are quite common, but definitely not as common as fruit. 
+
+<p align="center">
+<img width="128px" height="128px" src="https://github.com/andyprowl/snake-overflow/blob/master/readme_resources/diet pills.jpg"/>
+</p>
+
  - **Invulnerability bonus**: Picking an invulnerability bonus will allow you to survive otherwise lethal self-bites for a fixed amount of time since the last invulnerability item was picked. When the snake is invulnerable, the color of its skin assumes a pulsing tone of red. Invulnerability bonuses are spawned relatively rarely.
  
+<p align="center">
+<img width="128px" height="128px" src="https://github.com/andyprowl/snake-overflow/blob/master/readme_resources/invulnerability.jpg"/>
+</p>
+
 All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
 
 Once the game ends, it is possible to start a new game on the same map by pressing 'Enter' or 'F5'; pressing 'F4' allows going back to the map selection screen:
