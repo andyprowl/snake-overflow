@@ -1,6 +1,7 @@
 #pragma once
 
 #include "snake_overflow/application_hud_renderer.hpp"
+#include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/fps_calculator.hpp"
 #include "snake_overflow/game_map_block_cache.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
@@ -18,6 +19,7 @@ class game_map_repository;
 class texture_repository;
 
 class application : public cinder::app::AppNative 
+                  , public application_state_machine
 {
  
 private:
@@ -40,6 +42,15 @@ private:
 
     virtual void resize() override;
 
+    virtual interaction_phase& get_current_phase() const override;
+
+    virtual game_playing_phase& get_game_playing_phase() const override;
+
+    virtual map_selection_phase& get_map_selection_phase() const override;
+
+    virtual void set_current_phase(
+        boost::optional<interaction_phase&> phase) override;
+
     void create_game_map_repository();
 
     void create_texture_repository();
@@ -52,19 +63,9 @@ private:
 
     void setup_keyboard_commands();
 
-    bool switch_to_playing_phase_if_user_just_chose_map();
-
-    bool restart_or_change_map_if_playing_game_is_over();
-
     bool process_keyboard_input(cinder::app::KeyEvent e);
 
     void toggle_full_screen();
-
-    game_map& get_currently_selected_map() const;
-
-    bool is_playing_phase_active() const;
-
-    bool is_map_selection_phase_active() const;
 
 private:
 

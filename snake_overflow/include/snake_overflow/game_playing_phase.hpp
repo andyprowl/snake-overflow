@@ -4,7 +4,6 @@
 #include "snake_overflow/auto_follow_camera_manipulator.hpp"
 #include "snake_overflow/camera_manipulator_toggler.hpp"
 #include "snake_overflow/interaction_phase.hpp"
-#include "snake_overflow/game_over_continuation_option.hpp"
 #include <boost/optional.hpp>
 #include <chrono>
 #include <memory>
@@ -15,6 +14,7 @@ namespace snake_overflow
 struct footprint;
 struct position;
 
+class application_state_machine;
 class game;
 class game_map;
 class game_map_block_cache;
@@ -30,16 +30,14 @@ class world_renderer;
 
 class game_playing_phase : public interaction_phase
                          , public camera_manipulator_toggler
-                         , public continuation_option_setter
 {
 
 public:
 
-    game_playing_phase(texture_repository const& textures,
+    game_playing_phase(application_state_machine& state_machine,
+                       texture_repository const& textures,
                        game_map_block_cache const& terrain_block_cache);
-
-    virtual bool is_done() const override;
-
+    
     virtual void update() override;
 
     virtual void draw() override;
@@ -58,13 +56,9 @@ public:
 
     virtual void activate_next_camera_manipulator() override;
 
-    virtual void set_continuation_option(
-        game_over_continuation_option option) override;
-
     void start_new_game(game_map& map_prototype);
 
-    boost::optional<game_over_continuation_option> 
-        get_continuation_option() const;
+    void restart_game();
 
 private:
 
@@ -109,6 +103,8 @@ private:
 
 private:
 
+    application_state_machine& state_machine;
+
     texture_repository const& textures;
 
     game_map_block_cache const& terrain_block_cache;
@@ -124,8 +120,6 @@ private:
     std::unique_ptr<playing_phase_keyboard_handler> keyboard_handler;
     
     std::unique_ptr<game> current_game;
-
-    boost::optional<game_over_continuation_option> continuation_option;
 
     camera_manipulator* current_camera_handler = nullptr;
 

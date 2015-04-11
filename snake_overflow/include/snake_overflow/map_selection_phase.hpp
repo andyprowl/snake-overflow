@@ -9,6 +9,7 @@
 namespace snake_overflow
 {
 
+class application_state_machine;
 class game_map_block_cache;
 class game_map_repository;
 class texture_repository;
@@ -18,12 +19,11 @@ class map_selection_phase : public interaction_phase
 
 public:
 
-    map_selection_phase(game_map_repository const& game_maps,
+    map_selection_phase(application_state_machine& state_machine,
+                        game_map_repository const& game_maps,
                         texture_repository const& textures,
                         game_map_block_cache const& terrain_block_cache);
-
-    virtual bool is_done() const override;
-
+    
     virtual void update() override;
 
     virtual void draw() override;
@@ -40,10 +40,8 @@ public:
 
     game_map& get_selected_map() const;
 
-    void invalidate_selection();
-
 private:
-
+    
     void select_next_map();
 
     void select_previous_map();
@@ -56,7 +54,11 @@ private:
 
     void skew_camera();
 
+    void switch_to_playing_phase() const;
+
 private:
+
+    application_state_machine& state_machine;
 
     game_map_repository const& game_maps;
 
@@ -67,8 +69,6 @@ private:
     std::vector<game_map*> available_maps;
 
     int selected_map_index;
-
-    bool is_selection_confirmed;
 
     std::unique_ptr<terrain_renderer> map_renderer;
 

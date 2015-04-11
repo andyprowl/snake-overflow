@@ -36,10 +36,6 @@ void application::update()
     this->current_fps.update();
 
     this->current_phase->update();
-
-    if (switch_to_playing_phase_if_user_just_chose_map()) { return; }
-
-    if (restart_or_change_map_if_playing_game_is_over()) { return; }
 }
 
 void application::draw()
@@ -52,10 +48,6 @@ void application::draw()
 void application::keyDown(cinder::app::KeyEvent const e)
 {
     if (process_keyboard_input(e)) { return; }
-
-    if (switch_to_playing_phase_if_user_just_chose_map()) { return; }
-
-    if (restart_or_change_map_if_playing_game_is_over()) { return; }
 
     this->current_phase->on_keyboard_input(e);
 }
@@ -80,6 +72,33 @@ void application::resize()
     this->current_phase->on_resize();
 }
 
+interaction_phase& application::get_current_phase() const
+{
+    assert(this->current_phase != nullptr);
+
+    return *(this->current_phase);
+}
+
+game_playing_phase& application::get_game_playing_phase() const
+{
+    return *(this->playing_phase);
+}
+
+map_selection_phase& application::get_map_selection_phase() const
+{
+    return *(this->selection_phase);
+}
+
+void application::set_current_phase(boost::optional<interaction_phase&> phase)
+{
+    if (!phase)
+    {
+        quit();
+    }
+
+    this->current_phase = &(*phase);
+}
+
 void application::create_game_map_repository()
 {
     this->game_maps = std::make_unique<game_map_repository>();
@@ -98,11 +117,13 @@ void application::create_hud_renderer()
 void application::create_interaction_phases()
 {
     this->selection_phase = std::make_unique<map_selection_phase>(
+        *this,
         *(this->game_maps),
         *(this->textures),
         this->terrain_block_cache);
 
     this->playing_phase = std::make_unique<game_playing_phase>(
+        *this,
         *(this->textures),
         this->terrain_block_cache);
 
@@ -141,49 +162,6 @@ void application::setup_keyboard_commands()
     };
 }
 
-bool application::switch_to_playing_phase_if_user_just_chose_map()
-{
-    if (is_playing_phase_active())
-    {
-        return false;
-    }
-
-    if (this->selection_phase->is_done())
-    {
-        auto& selected_map = get_currently_selected_map();
-
-        this->playing_phase->start_new_game(selected_map);
-
-        this->current_phase = this->playing_phase.get();
-
-        return true;
-    }
-
-    return false;
-}
-
-bool application::restart_or_change_map_if_playing_game_is_over()
-{
-    if (is_map_selection_phase_active() || !(this->playing_phase->is_done()))
-    {
-        return false;
-    }
-
-    if (this->playing_phase->get_continuation_option() == 
-        game_over_continuation_option::change_map)
-    {
-        this->selection_phase->invalidate_selection();
-
-        this->current_phase = this->selection_phase.get();
-    }
-    else
-    {
-        this->playing_phase->start_new_game(get_currently_selected_map());
-    }
-
-    return true;
-}
-
 bool application::process_keyboard_input(cinder::app::KeyEvent const e)
 {
     auto it = this->keyboard_commands.find(e.getCode());
@@ -211,21 +189,6 @@ void application::toggle_full_screen()
     setFullScreen(!full_screen);
 
     setup_depth_buffer();
-}
-
-game_map& application::get_currently_selected_map() const
-{
-    return this->selection_phase->get_selected_map();
-}
-
-bool application::is_playing_phase_active() const
-{
-    return (this->current_phase == this->playing_phase.get());
-}
-
-bool application::is_map_selection_phase_active() const
-{
-    return (this->current_phase == this->selection_phase.get());
 }
 
 }

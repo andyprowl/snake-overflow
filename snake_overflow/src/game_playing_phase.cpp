@@ -21,18 +21,14 @@ namespace snake_overflow
 {
 
 game_playing_phase::game_playing_phase(
+    application_state_machine& state_machine,
     texture_repository const& textures,
     game_map_block_cache const& terrain_block_cache)
-    : textures{textures}
+    : state_machine{state_machine}
+    , textures{textures}
     , terrain_block_cache{terrain_block_cache}
     , current_camera_handler{nullptr}
-    , continuation_option{boost::none}
 {
-}
-
-bool game_playing_phase::is_done() const
-{
-    return (this->current_game->is_game_over && this->continuation_option);
 }
 
 void game_playing_phase::update()
@@ -101,15 +97,6 @@ void game_playing_phase::activate_next_camera_manipulator()
     }
 }
 
-void game_playing_phase::set_continuation_option(
-    game_over_continuation_option const option)
-{
-    if (this->current_game->is_game_over)
-    {
-        this->continuation_option = option;
-    }
-}
-
 void game_playing_phase::start_new_game(game_map& map_prototype)
 {
     create_game(map_prototype);
@@ -121,14 +108,13 @@ void game_playing_phase::start_new_game(game_map& map_prototype)
     create_keyboard_input_handler();
 
     catch_snake_on_camera();
-
-    this->continuation_option = boost::none;
 }
 
-boost::optional<game_over_continuation_option> 
-    game_playing_phase::get_continuation_option() const
+void game_playing_phase::restart_game()
 {
-    return this->continuation_option;
+    auto& selected_map = this->current_game->get_map();
+
+    start_new_game(selected_map);
 }
 
 void game_playing_phase::create_renderers()
@@ -300,9 +286,9 @@ std::unique_ptr<terrain_item_filler> game_playing_phase::create_terrain_filler(
 void game_playing_phase::create_keyboard_input_handler()
 {
     this->keyboard_handler = std::make_unique<playing_phase_keyboard_handler>(
+        this->state_machine,
         *this->current_game,
         *this->hud_drawer,
-        *this,
         *this);
 }
 

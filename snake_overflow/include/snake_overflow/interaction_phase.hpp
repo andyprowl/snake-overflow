@@ -10,8 +10,6 @@ public:
 
     virtual ~interaction_phase() = default;
 
-    virtual bool is_done() const = 0;
-
     virtual void update() = 0;
 
     virtual void draw() = 0;

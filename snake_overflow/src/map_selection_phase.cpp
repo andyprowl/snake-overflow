@@ -1,20 +1,23 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/game_map_repository.hpp"
+#include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
 
 namespace snake_overflow
 {
 
 map_selection_phase::map_selection_phase(
+    application_state_machine& state_machine,
     game_map_repository const& game_maps,
     texture_repository const& textures,
     game_map_block_cache const& terrain_block_cache)
-    : game_maps{game_maps}
+    : state_machine{state_machine}
+    , game_maps{game_maps}
     , textures{textures}
     , terrain_block_cache{terrain_block_cache}
     , selected_map_index{0}
-    , is_selection_confirmed{false}
 {
     this->available_maps = this->game_maps.get_all_maps();
 
@@ -24,11 +27,6 @@ map_selection_phase::map_selection_phase(
         this->terrain_block_cache); 
 
     show_selected_map();
-}
-
-bool map_selection_phase::is_done() const
-{
-    return this->is_selection_confirmed;
 }
 
 void map_selection_phase::update()
@@ -64,9 +62,7 @@ void map_selection_phase::on_keyboard_input(cinder::app::KeyEvent const e)
 
         case cinder::app::KeyEvent::KEY_RETURN:
         {
-            this->is_selection_confirmed = true;
-
-            break;
+            return switch_to_playing_phase();
         }
 
         default:
@@ -99,11 +95,6 @@ void map_selection_phase::on_resize()
 game_map& map_selection_phase::get_selected_map() const
 {
     return *(this->available_maps[this->selected_map_index]);
-}
-
-void map_selection_phase::invalidate_selection()
-{
-    this->is_selection_confirmed = false;
 }
 
 void map_selection_phase::select_next_map()
@@ -154,6 +145,15 @@ void map_selection_phase::skew_camera()
                      cinder::Quatf{0.45f, -0.45f, 0.0f};
 
     this->camera_handler.set_camera_orientation(rot);
+}
+
+void map_selection_phase::switch_to_playing_phase() const
+{
+    auto& playing_phase = this->state_machine.get_game_playing_phase();
+
+    playing_phase.start_new_game(get_selected_map());
+
+    this->state_machine.set_current_phase(playing_phase);
 }
 
 }

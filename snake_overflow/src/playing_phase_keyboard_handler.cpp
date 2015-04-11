@@ -1,9 +1,11 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/camera_manipulator.hpp"
 #include "snake_overflow/camera_manipulator_toggler.hpp"
 #include "snake_overflow/game.hpp"
-#include "snake_overflow/game_over_continuation_option.hpp"
+#include "snake_overflow/game_playing_phase.hpp"
+#include "snake_overflow/map_selection_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
 
@@ -11,14 +13,14 @@ namespace snake_overflow
 {
 
 playing_phase_keyboard_handler::playing_phase_keyboard_handler(
+    application_state_machine& state_machine,
     game& controlled_game, 
     playing_phase_hud_renderer& hud_drawer,
-    camera_manipulator_toggler& camera_toggler,
-    continuation_option_setter& option_setter)
-    : controlled_game{controlled_game}
+    camera_manipulator_toggler& camera_toggler)
+    : state_machine{state_machine}
+    , controlled_game{controlled_game}
     , hud_drawer{hud_drawer}
     , camera_toggler{camera_toggler}
-    , option_setter{option_setter}
 {
     setup_keyboard_commands();
 }
@@ -99,8 +101,7 @@ void playing_phase_keyboard_handler::setup_option_commands()
 
     auto const restart_cmd = [this]
     {
-        this->option_setter.set_continuation_option(
-            game_over_continuation_option::restart_game);
+        start_new_game_on_same_map();
     };
 
     this->keyboard_commands[KeyEvent::KEY_F5] = restart_cmd;
@@ -108,8 +109,7 @@ void playing_phase_keyboard_handler::setup_option_commands()
 
     this->keyboard_commands[KeyEvent::KEY_F4] = [this]
     {
-        this->option_setter.set_continuation_option(
-            game_over_continuation_option::change_map);
+        switch_to_map_selection_phase();
     };
 }
 
@@ -125,6 +125,30 @@ void playing_phase_keyboard_handler::turn_snake_right() const
     auto& s = this->controlled_game.get_snake();
 
     return s.turn_right();
+}
+
+void playing_phase_keyboard_handler::start_new_game_on_same_map() const
+{
+    auto& playing_phase = this->state_machine.get_game_playing_phase();
+
+    this->state_machine.set_current_phase(playing_phase);
+
+    restart_game_and_destroy_self();
+}
+
+void playing_phase_keyboard_handler::switch_to_map_selection_phase() const
+{
+    auto& selection_phase =this->state_machine.get_map_selection_phase();
+
+    this->state_machine.set_current_phase(selection_phase);
+}
+
+void playing_phase_keyboard_handler::restart_game_and_destroy_self() const
+{
+    auto& playing_phase = this->state_machine.get_game_playing_phase();
+
+    // This indirectly causes self-destruction!
+    playing_phase.restart_game();
 }
 
 }

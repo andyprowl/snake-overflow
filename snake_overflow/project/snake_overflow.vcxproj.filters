@@ -176,7 +176,7 @@
     <ClInclude Include="..\include\snake_overflow\playing_phase_keyboard_handler.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\snake_overflow\game_over_continuation_option.hpp">
+    <ClInclude Include="..\include\snake_overflow\application_state_machine.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
