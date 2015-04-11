@@ -123,4 +123,28 @@ TEST_THAT(HighScoresRankings,
     EXPECT_THAT(all_scores[2], Eq(s3)); 
 }
 
+TEST_THAT(HighScoresRankings, 
+     WHAT(Clear),
+     WHEN(Always),
+     THEN(DeletesAllTheRecordedScores))
+{
+    auto const now = std::chrono::system_clock::now();
+
+    auto s1 = score_record{"p1", 1, now + std::chrono::hours(2)};    
+    auto s2 = score_record{"p2", 5, now + std::chrono::hours(1)};
+    auto s3 = score_record{"p3", 3, now + std::chrono::hours(3)};
+    auto s4 = score_record{"p1", 3, now + std::chrono::hours(2)};
+
+    this->rankings.add_score(s1);
+    this->rankings.add_score(s2);
+    this->rankings.add_score(s3);
+    this->rankings.add_score(s4);
+
+    this->rankings.clear();
+
+    auto const all_scores = this->rankings.get_top_scores(3);
+
+    EXPECT_TRUE(all_scores.empty());
+}
+
 } }

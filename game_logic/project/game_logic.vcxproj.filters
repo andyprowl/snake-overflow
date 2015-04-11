@@ -134,10 +134,13 @@
     <ClCompile Include="..\src\invulnerability_spell.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\high_score_rankings.cpp">
+    <ClCompile Include="..\src\score_record.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\score_record.cpp">
+    <ClCompile Include="..\src\high_scores_rankings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\high_scores_stream_persister.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -275,6 +278,9 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\score_record.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\high_scores_stream_persister.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

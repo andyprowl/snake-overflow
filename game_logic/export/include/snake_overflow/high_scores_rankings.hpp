@@ -18,6 +18,8 @@ public:
 
     std::vector<score_record> get_top_scores(int num_of_scores) const;
 
+    void clear();
+
 private:
     
     std::set<score_record, std::greater<>> rankings;

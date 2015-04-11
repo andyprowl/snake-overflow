@@ -80,6 +80,9 @@
     <ClCompile Include="..\src\score_record_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\high_score_stream_persiter_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
