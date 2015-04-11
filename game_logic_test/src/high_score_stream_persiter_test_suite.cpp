@@ -1,7 +1,7 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/high_scores_stream_persister.hpp"
-#include "snake_overflow/high_scores_rankings.hpp"
+#include "snake_overflow/volatile_high_scores_rankings.hpp"
 #include "util/tokenize.hpp"
 #include <sstream>
 
@@ -31,7 +31,7 @@ protected:
 
 protected:
 
-    high_scores_rankings rankings;
+    volatile_high_scores_rankings rankings;
 
     high_scores_stream_persister persister{rankings};
 

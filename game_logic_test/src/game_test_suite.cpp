@@ -33,6 +33,25 @@ protected:
         return std::make_unique<fake_item>(pos);
     }
 
+    void let_snake_bit_its_tail() const
+    {
+        auto& s = get_snake();
+
+        s.grow(4);
+
+        util::repeat(3, [this, &s] 
+        {
+            util::repeat(get_snake_update_interval(s), [this] 
+            { 
+                this->g->update(); 
+            });
+
+            s.turn_right();
+        });
+
+        this->g->update();
+    }
+
 };
 
 TEST_THAT(Game,
@@ -308,6 +327,24 @@ TEST_THAT(Game,
     this->g->update();
 
     EXPECT_FALSE(this->terrain_filler->invoked);
+}
+
+TEST_THAT(Game,
+     WHAT(Update),
+     WHEN(WhenTheGameEnds),
+     THEN(AddsTheGameScoreToTheRankings))
+{
+    auto const points = 42;
+
+    this->g->score = points;
+
+    let_snake_bit_its_tail();
+
+    auto const scores = this->rankings.get_rankings();
+
+    ASSERT_THAT(scores.size(), Eq(1u));
+
+    EXPECT_THAT(scores.back().points, Eq(points));
 }
 
 } }

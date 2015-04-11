@@ -1,6 +1,6 @@
 #include "stdafx.hpp"
 
-#include "snake_overflow/high_scores_rankings.hpp"
+#include "snake_overflow/volatile_high_scores_rankings.hpp"
 
 namespace snake_overflow { namespace testing
 {
@@ -8,16 +8,16 @@ namespace snake_overflow { namespace testing
 using ::testing::Eq;
 using ::testing::Test;
 
-class HighScoresRankings : public Test
+class VolatileHighScoresRankings : public Test
 {
 
 protected:
 
-    high_scores_rankings rankings;
+    volatile_high_scores_rankings rankings;
 
 };
 
-TEST_THAT(HighScoresRankings,
+TEST_THAT(VolatileHighScoresRankings,
      WHAT(GetAllScores),
      WHEN(ImmediatelyAfterConstruction),
      THEN(ReturnsAnEmptyRanking))
@@ -27,7 +27,7 @@ TEST_THAT(HighScoresRankings,
     EXPECT_TRUE(all_scores.empty());
 }
 
-TEST_THAT(HighScoresRankings,
+TEST_THAT(VolatileHighScoresRankings,
      WHAT(AddScore),
      WHEN(GivenAScore),
      THEN(AddsItToTheRankings))
@@ -43,7 +43,7 @@ TEST_THAT(HighScoresRankings,
     EXPECT_THAT(all_scores[0], Eq(s));
 }
 
-TEST_THAT(HighScoresRankings,
+TEST_THAT(VolatileHighScoresRankings,
      WHAT(GetAllScores),
      WHEN(AfterAFewScoresHaveBeenAdded),
      THEN(ReturnsTheScoresInDescendingRankingOrder))
@@ -70,7 +70,7 @@ TEST_THAT(HighScoresRankings,
     EXPECT_THAT(all_scores[3], Eq(s1));
 }
 
-TEST_THAT(HighScoresRankings,
+TEST_THAT(VolatileHighScoresRankings,
      WHAT(GetTopScores),
      WHEN(GivenANumberOfScoresGreaterThanTheTotalNumberOfScores),
      THEN(ReturnsAllTheScores))
@@ -97,7 +97,7 @@ TEST_THAT(HighScoresRankings,
     EXPECT_THAT(all_scores[3], Eq(s1));
 }
 
-TEST_THAT(HighScoresRankings,
+TEST_THAT(VolatileHighScoresRankings,
      WHAT(GetTopScores),
      WHEN(GivenANumberNLessThanTheTotalNumberOfScores),
      THEN(ReturnsTheTopNScoresOnly))
@@ -123,7 +123,7 @@ TEST_THAT(HighScoresRankings,
     EXPECT_THAT(all_scores[2], Eq(s3)); 
 }
 
-TEST_THAT(HighScoresRankings, 
+TEST_THAT(VolatileHighScoresRankings, 
      WHAT(Clear),
      WHEN(Always),
      THEN(DeletesAllTheRecordedScores))

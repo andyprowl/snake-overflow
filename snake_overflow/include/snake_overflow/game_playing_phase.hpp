@@ -18,11 +18,13 @@ class application_state_machine;
 class game;
 class game_map;
 class game_map_block_cache;
+class high_scores_database;
 class item;
 class playing_phase_hud_renderer;
 class item_position_picker;
 class item_spawner;
 class playing_phase_keyboard_handler;
+class snake;
 class terrain;
 class terrain_item_filler;
 class texture_repository;
@@ -36,7 +38,8 @@ public:
 
     game_playing_phase(application_state_machine& state_machine,
                        texture_repository const& textures,
-                       game_map_block_cache const& terrain_block_cache);
+                       game_map_block_cache const& terrain_block_cache,
+                       high_scores_database& scores);
     
     virtual void update() override;
 
@@ -71,6 +74,9 @@ private:
     void create_camera_manipulators();
 
     void create_game(game_map& map_prototype);
+
+    std::unique_ptr<snake> create_snake(item_position_picker& picker,
+                                        terrain& t) const;
 
     footprint pick_random_starting_footprint(item_position_picker& picker,
                                              terrain const& habitat) const;
@@ -108,6 +114,8 @@ private:
     texture_repository const& textures;
 
     game_map_block_cache const& terrain_block_cache;
+
+    high_scores_database& high_scores;
 
     std::unique_ptr<world_renderer> world_drawer;
 

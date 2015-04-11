@@ -1,20 +1,23 @@
 #include "stdafx.hpp"
 
 #include "snake_overflow/game.hpp"
+#include "snake_overflow/high_scores_rankings.hpp"
 
 namespace snake_overflow
 {
 
 game::game(std::unique_ptr<game_map>&& habitat, 
            std::unique_ptr<snake>&& hero,
-           std::unique_ptr<terrain_item_filler>&& habitat_filler)
+           std::unique_ptr<terrain_item_filler>&& habitat_filler,
+           high_scores_rankings& rankings)
     : is_game_over{false, hero->is_dead}
     , is_game_paused{false, is_game_over}
     , score{0, is_game_over, 0, boost::none}
-    , terrain_filling_interval{100, is_game_over, 1, boost::none}
+    , terrain_filling_interval{150, is_game_over, 1, boost::none}
     , habitat{std::move(habitat)}
     , hero{std::move(hero)}
     , habitat_filler{std::move(habitat_filler)}
+    , rankings{rankings}
     , age{0}
 {
 }
@@ -46,6 +49,8 @@ void game::update()
     fill_terrain_if_due_time();
 
     make_all_items_age();
+
+    add_score_to_rankings_if_game_is_over();
 
     ++(this->age);
 }
@@ -80,6 +85,16 @@ void game::make_all_items_age() const
     });
 
     for (auto const i : items) { i->age(); }
+}
+
+void game::add_score_to_rankings_if_game_is_over() const
+{
+    if (this->is_game_over)
+    {
+        auto const now = std::chrono::system_clock::now();
+
+        this->rankings.add_score({"PLAYER", this->score, std::move(now)});
+    }
 }
 
 void toggle_game_pause(game& g)

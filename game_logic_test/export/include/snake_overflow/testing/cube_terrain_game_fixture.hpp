@@ -4,6 +4,7 @@
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/terrain_builder.hpp"
+#include "snake_overflow/volatile_high_scores_rankings.hpp"
 #include "snake_overflow/testing/item_spawner_spy.hpp"
 #include "snake_overflow/testing/terrain_item_filler_spy.hpp"
 
@@ -46,6 +47,8 @@ protected:
     std::unique_ptr<item_spawner_spy> spawner;
 
     terrain_item_filler_spy* terrain_filler = nullptr;
+
+    volatile_high_scores_rankings rankings;
 
     std::unique_ptr<game> g;
 

@@ -6,6 +6,7 @@
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/game_map.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
+#include "snake_overflow/high_scores_database.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
 #include "snake_overflow/invulnerability_potion.hpp"
@@ -13,7 +14,6 @@
 #include "snake_overflow/probabilistic_item_spawner.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
-#include "snake_overflow/snake_renderer.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/world_renderer.hpp"
 
@@ -23,10 +23,12 @@ namespace snake_overflow
 game_playing_phase::game_playing_phase(
     application_state_machine& state_machine,
     texture_repository const& textures,
-    game_map_block_cache const& terrain_block_cache)
+    game_map_block_cache const& terrain_block_cache,
+    high_scores_database& high_scores)
     : state_machine{state_machine}
     , textures{textures}
     , terrain_block_cache{terrain_block_cache}
+    , high_scores{high_scores}
     , current_camera_handler{nullptr}
 {
 }
@@ -165,24 +167,30 @@ void game_playing_phase::create_game(game_map& map_prototype)
     auto& t = m->get_terrain();
 
     auto p = std::make_unique<random_item_position_picker>(t);
-
-    auto const snake_origin = point{0, -5, 10};
-
-    auto const initial_step = pick_random_starting_footprint(*p, t);
-
-    auto body = std::make_unique<snake_body>(t, initial_step, 3);
-
-    auto s = std::make_unique<snake>(std::move(body), "snake6");
+    
+    auto s = create_snake(*p, t);
 
     auto is = create_item_spawner(t, std::move(p));
 
     auto f = create_terrain_filler(std::move(is));
 
+    auto& scores = this->high_scores.get_rankings_for_map(m->get_name());
+
     this->current_game = std::make_unique<game>(std::move(m), 
                                                 std::move(s),
-                                                std::move(f));
+                                                std::move(f),
+                                                scores);
+}
 
-    this->current_game->terrain_filling_interval = 150;
+std::unique_ptr<snake> game_playing_phase::create_snake(
+    item_position_picker& picker,
+    terrain& t) const
+{
+    auto const initial_step = pick_random_starting_footprint(picker, t);
+
+    auto body = std::make_unique<snake_body>(t, initial_step, 3);
+
+    return std::make_unique<snake>(std::move(body), "snake6");  
 }
 
 footprint game_playing_phase::pick_random_starting_footprint(

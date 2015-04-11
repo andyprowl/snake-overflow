@@ -19,7 +19,10 @@ void CubeTerrainGameFixture::SetUp()
 
     auto m = std::make_unique<game_map>("MAP NAME", std::move(t));
 
-    this->g = std::make_unique<game>(std::move(m), std::move(s), std::move(tf));
+    this->g = std::make_unique<game>(std::move(m), 
+                                     std::move(s), 
+                                     std::move(tf),
+                                     this->rankings);
 }
 
 std::unique_ptr<terrain> CubeTerrainGameFixture::create_terrain()

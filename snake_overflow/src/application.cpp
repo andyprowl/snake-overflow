@@ -125,7 +125,8 @@ void application::create_interaction_phases()
     this->playing_phase = std::make_unique<game_playing_phase>(
         *this,
         *(this->textures),
-        this->terrain_block_cache);
+        this->terrain_block_cache,
+        this->scores_database);
 
     this->current_phase = this->selection_phase.get();
 }

@@ -6,6 +6,7 @@
 #include "snake_overflow/game_map_block_cache.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
+#include "snake_overflow/high_scores_database.hpp"
 #include "util/value_ref.hpp"
 #include <functional>
 #include <memory>
@@ -82,6 +83,8 @@ private:
     std::unique_ptr<map_selection_phase> selection_phase;
 
     std::unique_ptr<application_hud_renderer> hud_renderer;
+
+    high_scores_database scores_database;
 
     fps_calculator current_fps;
 

@@ -108,7 +108,7 @@
     <ClInclude Include="..\include\stdafx.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\export\include\snake_overflow\testing\high_scores_rankings_test_suite.cpp" />
+    <ClCompile Include="..\export\include\snake_overflow\testing\volatile_high_scores_rankings_test_suite.cpp" />
     <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp" />
     <ClCompile Include="..\src\block_test_suite.cpp" />
     <ClCompile Include="..\src\high_score_stream_persiter_test_suite.cpp" />

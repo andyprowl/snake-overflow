@@ -90,6 +90,12 @@
     <ClCompile Include="..\src\playing_phase_keyboard_handler.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\persisted_high_scores_rankings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\high_scores_database.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -177,6 +183,12 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\application_state_machine.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\persisted_high_scores_rankings.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\high_scores_database.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>
