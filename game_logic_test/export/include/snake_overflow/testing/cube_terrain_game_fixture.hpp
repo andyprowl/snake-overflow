@@ -44,6 +44,8 @@ protected:
 
     std::string snake_skin = "SKIN";
 
+    std::string snake_name = "PLAYER NAME";
+
     std::unique_ptr<item_spawner_spy> spawner;
 
     terrain_item_filler_spy* terrain_filler = nullptr;

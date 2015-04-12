@@ -15,6 +15,10 @@ void playing_phase_hud_renderer::render(int const score,
                                         bool const is_game_over,
                                         bool const is_auto_follow_on) const
 {
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
+
     if (is_game_paused) { draw_pause_text(); }
 
     draw_score_text(score);
@@ -22,6 +26,8 @@ void playing_phase_hud_renderer::render(int const score,
     if (is_game_over) { draw_game_over_text(); }
 
     if (is_auto_follow_on) { draw_auto_follow_text(); }
+
+    cinder::gl::disableAlphaBlending();
 }
     
 void playing_phase_hud_renderer::create_fonts()
@@ -39,10 +45,6 @@ void playing_phase_hud_renderer::create_fonts()
 
 void playing_phase_hud_renderer::draw_pause_text() const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
 
     auto const text = "PAUSED";
@@ -52,16 +54,10 @@ void playing_phase_hud_renderer::draw_pause_text() const
     auto const origin = cinder::Vec2f{right_border - 345.f, 10.f};
 
     cinder::gl::drawString(text, origin, color, this->pause_text_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 void playing_phase_hud_renderer::draw_score_text(int const score) const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const color = cinder::ColorA{0.f, 1.f, 0.f, 1.f};
 
     auto const text = get_score_text(score);
@@ -69,16 +65,10 @@ void playing_phase_hud_renderer::draw_score_text(int const score) const
     auto const origin = cinder::Vec2f{10.f, 15.f};
 
     cinder::gl::drawString(text, origin, color, this->score_text_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 void playing_phase_hud_renderer::draw_game_over_text() const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const center = cinder::app::getWindowBounds().getCenter() - 
                         cinder::Vec2f{0.f, 50.f};
 
@@ -87,7 +77,8 @@ void playing_phase_hud_renderer::draw_game_over_text() const
                                    cinder::ColorA{1.f, 0.f, 0.f, 1.f}, 
                                    this->game_over_text_font);
 
-    if ((int)cinder::app::getElapsedSeconds() % 2 == 0)
+    auto const seconds = static_cast<int>(cinder::app::getElapsedSeconds());
+    if (seconds % 2 == 0)
     {
         cinder::gl::drawStringCentered("Press 'Enter' or F5 to restart, "
                                        "F4 to change map", 
@@ -95,16 +86,10 @@ void playing_phase_hud_renderer::draw_game_over_text() const
                                        cinder::ColorA{1.f, 1.f, 0.f, 1.f}, 
                                        this->restart_text_font);
     }
-
-    cinder::gl::disableAlphaBlending();
 }
 
 void playing_phase_hud_renderer::draw_auto_follow_text() const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 
     auto const text = "Auto-follow ON";
@@ -117,8 +102,6 @@ void playing_phase_hud_renderer::draw_auto_follow_text() const
                                       bottom_border - 30.f};
 
     cinder::gl::drawString(text, origin, color, this->auto_follow_text_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 std::string playing_phase_hud_renderer::get_score_text(int const score) const

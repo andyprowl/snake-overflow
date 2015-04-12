@@ -336,6 +336,8 @@ TEST_THAT(Game,
 {
     auto const points = 42;
 
+    auto const snake_name = get_snake().get_name();
+
     this->g->score = points;
 
     let_snake_bit_its_tail();
@@ -345,6 +347,7 @@ TEST_THAT(Game,
     ASSERT_THAT(scores.size(), Eq(1u));
 
     EXPECT_THAT(scores.back().points, Eq(points));
+    EXPECT_THAT(scores.back().player_name, Eq(snake_name));
 }
 
 } }

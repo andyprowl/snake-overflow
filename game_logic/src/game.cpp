@@ -89,12 +89,16 @@ void game::make_all_items_age() const
 
 void game::add_score_to_rankings_if_game_is_over() const
 {
-    if (this->is_game_over)
+    if (!this->is_game_over)
     {
-        auto const now = std::chrono::system_clock::now();
-
-        this->rankings.add_score({"PLAYER", this->score, std::move(now)});
+        return;
     }
+    
+    auto const now = std::chrono::system_clock::now();
+
+    auto name = this->hero->get_name();
+
+    this->rankings.add_score({std::move(name), this->score, std::move(now)});
 }
 
 void toggle_game_pause(game& g)

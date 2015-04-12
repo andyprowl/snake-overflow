@@ -3,10 +3,11 @@
 #include "snake_overflow/application_hud_renderer.hpp"
 #include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/fps_calculator.hpp"
+#include "snake_overflow/high_scores_database.hpp"
 #include "snake_overflow/game_map_block_cache.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
-#include "snake_overflow/high_scores_database.hpp"
+#include "snake_overflow/player_data_entering_phase.hpp"
 #include "util/value_ref.hpp"
 #include <functional>
 #include <memory>
@@ -45,6 +46,9 @@ private:
 
     virtual interaction_phase& get_current_phase() const override;
 
+    virtual player_data_entering_phase& 
+        get_player_data_entering_phase() const override;
+
     virtual game_playing_phase& get_game_playing_phase() const override;
 
     virtual map_selection_phase& get_map_selection_phase() const override;
@@ -81,6 +85,8 @@ private:
     std::unique_ptr<game_playing_phase> playing_phase;
 
     std::unique_ptr<map_selection_phase> selection_phase;
+
+    std::unique_ptr<player_data_entering_phase> data_entering_phase;
 
     std::unique_ptr<application_hud_renderer> hud_renderer;
 

@@ -96,6 +96,9 @@
     <ClCompile Include="..\src\high_scores_database.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\player_data_entering_phase.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -189,6 +192,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\high_scores_database.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\player_data_entering_phase.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

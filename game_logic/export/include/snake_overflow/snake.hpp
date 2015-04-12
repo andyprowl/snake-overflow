@@ -7,6 +7,7 @@
 #include "snake_overflow/snake_body.hpp"
 #include "snake_overflow/spell.hpp"
 #include <memory>
+#include <string>
 
 namespace snake_overflow
 {
@@ -18,9 +19,13 @@ class snake
 
 public:
 
-    snake(std::unique_ptr<snake_body>&& body, std::string skin);
+    snake(std::unique_ptr<snake_body>&& body, 
+          std::string name,
+          std::string skin);
 
     snake_body& get_body() const;
+
+    std::string get_name() const;
 
     terrain& get_terrain() const;
 
@@ -65,6 +70,8 @@ private:
 private:
 
     std::unique_ptr<snake_body> body;
+
+    std::string name;
 
     std::unique_ptr<collision_handler> collider;
 

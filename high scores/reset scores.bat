@@ -1,3 +1,3 @@
 @echo off
 
-del *.txt /s /q
+del *.shs /s /q

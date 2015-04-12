@@ -5,8 +5,11 @@
 namespace snake_overflow
 {
 
-snake::snake(std::unique_ptr<snake_body>&& body, std::string skin)
+snake::snake(std::unique_ptr<snake_body>&& body, 
+             std::string name, 
+             std::string skin)
     : body{std::move(body)}
+    , name(std::move(name))
     , skin(std::move(skin))
     , is_dead{false}
     , invulnerability_bonus{false, is_dead}
@@ -20,6 +23,11 @@ snake::snake(std::unique_ptr<snake_body>&& body, std::string skin)
 snake_body& snake::get_body() const
 {
     return *(this->body);
+}
+
+std::string snake::get_name() const
+{
+    return this->name;
 }
 
 terrain& snake::get_terrain() const

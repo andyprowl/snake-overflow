@@ -8,6 +8,7 @@ namespace snake_overflow
 class game_playing_phase;
 class interaction_phase;
 class map_selection_phase;
+class player_data_entering_phase;
 
 class application_state_machine
 {
@@ -15,6 +16,9 @@ class application_state_machine
 public:
 
     virtual ~application_state_machine() = default;
+
+    virtual player_data_entering_phase& 
+        get_player_data_entering_phase() const = 0;
 
     virtual game_playing_phase& get_game_playing_phase() const = 0;
 

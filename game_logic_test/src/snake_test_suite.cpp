@@ -44,6 +44,16 @@ TEST_THAT(Snake,
 }
 
 TEST_THAT(Snake,
+     WHAT(GetName),
+     WHEN(Always),
+     THEN(ReturnsTheNamePassedAtConstruction))
+{
+    auto& s = get_snake();
+
+    EXPECT_THAT(s.get_name(), Eq(this->snake_name));
+}
+
+TEST_THAT(Snake,
      WHAT(Update),
      WHEN(WhenTheHeadOfTheSnakeCollidesWithAnItem),
      THEN(LetsTheItemBePickedByTheSnake))

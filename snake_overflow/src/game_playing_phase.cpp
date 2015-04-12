@@ -1,5 +1,6 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/arcball_camera_manipulator.hpp"
 #include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
@@ -7,6 +8,7 @@
 #include "snake_overflow/game_map.hpp"
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/high_scores_database.hpp"
+#include "snake_overflow/player_data_entering_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
 #include "snake_overflow/invulnerability_potion.hpp"
@@ -190,7 +192,11 @@ std::unique_ptr<snake> game_playing_phase::create_snake(
 
     auto body = std::make_unique<snake_body>(t, initial_step, 3);
 
-    return std::make_unique<snake>(std::move(body), "snake6");  
+    auto& data_phase = this->state_machine.get_player_data_entering_phase();
+
+    auto name = data_phase.get_player_name();
+
+    return std::make_unique<snake>(std::move(body), std::move(name), "snake6");  
 }
 
 footprint game_playing_phase::pick_random_starting_footprint(

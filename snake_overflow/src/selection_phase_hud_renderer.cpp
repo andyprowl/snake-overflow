@@ -13,9 +13,15 @@ selection_phase_hud_renderer::selection_phase_hud_renderer()
 void selection_phase_hud_renderer::render(
     util::value_ref<std::string> map_name) const
 {
+    cinder::gl::enableAlphaBlending();
+
+    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
+
     draw_title();
 
     draw_map_name(map_name);
+
+    cinder::gl::disableAlphaBlending();
 }
 
 void selection_phase_hud_renderer::create_fonts()
@@ -27,10 +33,6 @@ void selection_phase_hud_renderer::create_fonts()
 
 void selection_phase_hud_renderer::draw_title() const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
     
     auto const x_center = cinder::app::getWindowBounds().getCenter().x;
@@ -41,17 +43,11 @@ void selection_phase_hud_renderer::draw_title() const
                       "'Enter' to confirm)";
 
     cinder::gl::drawStringCentered(text, origin, color, this->title_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 void selection_phase_hud_renderer::draw_map_name(
     util::value_ref<std::string> map_name) const
 {
-    cinder::gl::enableAlphaBlending();
-
-    cinder::gl::setMatricesWindow(cinder::app::getWindowSize());
-
     auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
     
     auto const x_center = cinder::app::getWindowBounds().getCenter().x;
@@ -62,8 +58,6 @@ void selection_phase_hud_renderer::draw_map_name(
                                    origin, 
                                    color, 
                                    this->map_name_font);
-
-    cinder::gl::disableAlphaBlending();
 }
 
 }

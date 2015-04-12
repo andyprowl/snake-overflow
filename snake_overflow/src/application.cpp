@@ -11,6 +11,8 @@ void application::prepareSettings(Settings* const settings)
 {
     settings->setWindowSize(1024, 768);
 
+    settings->setResizable(false);
+
     settings->setFrameRate(30);
 
     settings->setTitle("Snake Overflow");
@@ -79,6 +81,11 @@ interaction_phase& application::get_current_phase() const
     return *(this->current_phase);
 }
 
+player_data_entering_phase& application::get_player_data_entering_phase() const
+{
+    return *(this->data_entering_phase);
+}
+
 game_playing_phase& application::get_game_playing_phase() const
 {
     return *(this->playing_phase);
@@ -116,6 +123,9 @@ void application::create_hud_renderer()
 
 void application::create_interaction_phases()
 {
+    this->data_entering_phase = std::make_unique<player_data_entering_phase>(
+        *this);
+
     this->selection_phase = std::make_unique<map_selection_phase>(
         *this,
         *(this->game_maps),
@@ -128,7 +138,7 @@ void application::create_interaction_phases()
         this->terrain_block_cache,
         this->scores_database);
 
-    this->current_phase = this->selection_phase.get();
+    this->current_phase = this->data_entering_phase.get();
 }
 
 void application::setup_depth_buffer()
@@ -142,11 +152,15 @@ void application::setup_keyboard_commands()
 {
     using cinder::app::KeyEvent;
     
-    this->keyboard_commands[KeyEvent::KEY_f] = [this] (KeyEvent const)
+    this->keyboard_commands[KeyEvent::KEY_f] = [this] (KeyEvent const e)
     { 
-        this->hud_renderer->toogle_show_fps(); 
+        if (e.isControlDown())
+        {
+            this->hud_renderer->toogle_show_fps(); 
+            return true;
+        }
 
-        return true;
+        return false;
     };
 
     this->keyboard_commands[KeyEvent::KEY_RETURN] = [this] (KeyEvent const e)
@@ -156,10 +170,8 @@ void application::setup_keyboard_commands()
             toggle_full_screen(); 
             return true; 
         }
-        else
-        {
-            return false;
-        }
+
+        return false;
     };
 }
 

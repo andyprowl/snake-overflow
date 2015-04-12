@@ -15,7 +15,7 @@ high_scores_rankings& high_scores_database::get_rankings_for_map(
     auto const it = this->scores_map.find(map_name);
     if (it == std::cend(this->scores_map))
     {
-        auto const path = get_high_scores_folder() / map_name;
+        auto const path = get_high_scores_folder() / (map_name + ".shs");
 
         this->scores_map.emplace(std::piecewise_construct,
                                  std::forward_as_tuple(map_name), 

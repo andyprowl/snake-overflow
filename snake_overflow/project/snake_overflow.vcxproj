@@ -121,6 +121,7 @@
     <ClCompile Include="..\src\game_playing_phase.cpp" />
     <ClCompile Include="..\src\high_scores_database.cpp" />
     <ClCompile Include="..\src\persisted_high_scores_rankings.cpp" />
+    <ClCompile Include="..\src\player_data_entering_phase.cpp" />
     <ClCompile Include="..\src\playing_phase_hud_renderer.cpp" />
     <ClCompile Include="..\src\playing_phase_keyboard_handler.cpp" />
     <ClCompile Include="..\src\game_map_repository.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="..\include\snake_overflow\high_scores_database.hpp" />
     <ClInclude Include="..\include\snake_overflow\interaction_phase.hpp" />
     <ClInclude Include="..\include\snake_overflow\persisted_high_scores_rankings.hpp" />
+    <ClInclude Include="..\include\snake_overflow\player_data_entering_phase.hpp" />
     <ClInclude Include="..\include\snake_overflow\playing_phase_hud_renderer.hpp" />
     <ClInclude Include="..\include\snake_overflow\playing_phase_keyboard_handler.hpp" />
     <ClInclude Include="..\include\snake_overflow\game_map_block_cache.hpp" />
