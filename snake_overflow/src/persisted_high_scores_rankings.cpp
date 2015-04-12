@@ -35,9 +35,10 @@ std::vector<score_record> persisted_high_scores_rankings::get_rankings() const
 }
 
 std::vector<score_record> persisted_high_scores_rankings::get_top_scores(
-    int const num_of_scores) const
+    int const num_of_scores,
+    int const starting_ranking) const
 {
-    return this->rankings.get_top_scores(num_of_scores);
+    return this->rankings.get_top_scores(num_of_scores, starting_ranking);
 }
 
 void persisted_high_scores_rankings::clear()
@@ -47,6 +48,11 @@ void persisted_high_scores_rankings::clear()
     auto fs = std::fstream{this->scores_file.c_str()};
 
     this->persister->store(fs);
+}
+
+int persisted_high_scores_rankings::get_length() const
+{
+    return this->rankings.get_length();
 }
 
 }

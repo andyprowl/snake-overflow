@@ -17,8 +17,6 @@ public:
                 bool is_game_over,
                 bool is_auto_follow_on) const;
 
-    void toogle_show_fps();
-
 private:
 
     void create_fonts();

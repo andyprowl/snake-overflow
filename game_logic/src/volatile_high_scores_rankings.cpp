@@ -18,19 +18,32 @@ std::vector<score_record> volatile_high_scores_rankings::get_rankings() const
 }
 
 std::vector<score_record> volatile_high_scores_rankings::get_top_scores(
-    int const num_of_scores) const
+    int const num_of_scores,
+    int const starting_rank) const
 {
+    if (starting_rank >= get_length())
+    {
+        return {};
+    }
+
     auto const total_scores = static_cast<int>(this->rankings.size());
 
-    auto const top_scores = std::min(num_of_scores, total_scores);
+    auto const top_scores = std::min(starting_rank + num_of_scores, 
+                                     total_scores);
 
-    return {std::cbegin(this->rankings), 
-            std::next(std::cbegin(this->rankings), top_scores)};
+    auto const start = std::next(std::cbegin(this->rankings), starting_rank);
+
+    return {start, std::next(start, top_scores)};
 }
 
 void volatile_high_scores_rankings::clear()
 {
     this->rankings.clear();
+}
+
+int volatile_high_scores_rankings::get_length() const
+{
+    return static_cast<int>(this->rankings.size());
 }
 
 }

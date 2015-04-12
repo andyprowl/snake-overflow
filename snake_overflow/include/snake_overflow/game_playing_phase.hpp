@@ -4,6 +4,7 @@
 #include "snake_overflow/auto_follow_camera_manipulator.hpp"
 #include "snake_overflow/camera_manipulator_toggler.hpp"
 #include "snake_overflow/interaction_phase.hpp"
+#include "util/value_ref.hpp"
 #include <boost/optional.hpp>
 #include <chrono>
 #include <memory>
@@ -19,6 +20,7 @@ class game;
 class game_map;
 class game_map_block_cache;
 class high_scores_database;
+class high_scores_rankings;
 class item;
 class playing_phase_hud_renderer;
 class item_position_picker;
@@ -75,6 +77,8 @@ private:
 
     void create_game(game_map& map_prototype);
 
+    high_scores_rankings& get_rankings_for_map(game_map const& m) const;
+
     std::unique_ptr<snake> create_snake(item_position_picker& picker,
                                         terrain& t) const;
 
@@ -102,8 +106,6 @@ private:
     void align_arcball_manipulator_to_auto_follow_manipulator();
 
     void draw_frame();
-
-    void draw_world();
 
     bool is_auto_follow_on() const;
 

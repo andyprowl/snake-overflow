@@ -176,12 +176,20 @@ void game_playing_phase::create_game(game_map& map_prototype)
 
     auto f = create_terrain_filler(std::move(is));
 
-    auto& scores = this->high_scores.get_rankings_for_map(m->get_name());
+    auto& scores = get_rankings_for_map(*m);
 
     this->current_game = std::make_unique<game>(std::move(m), 
                                                 std::move(s),
                                                 std::move(f),
                                                 scores);
+}
+
+high_scores_rankings& game_playing_phase::get_rankings_for_map(
+    game_map const& m) const
+{
+    auto const current_map_name = m.get_name();
+
+    return this->high_scores.get_rankings_for_map(current_map_name);    
 }
 
 std::unique_ptr<snake> game_playing_phase::create_snake(
@@ -331,17 +339,12 @@ void game_playing_phase::draw_frame()
 {
     cinder::gl::clear({0.f, 0.f, 0.0f}, true);
 
-    draw_world();
+    this->world_drawer->render();
     
     this->hud_drawer->render(this->current_game->score,
                              this->current_game->is_game_paused,
                              this->current_game->is_game_over,
                              is_auto_follow_on());
-}
-
-void game_playing_phase::draw_world()
-{
-    this->world_drawer->render();
 }
 
 bool game_playing_phase::is_auto_follow_on() const

@@ -19,9 +19,12 @@ public:
     virtual std::vector<score_record> get_rankings() const override;
 
     virtual std::vector<score_record> get_top_scores(
-        int num_of_scores) const override;
+        int num_of_scores,
+        int starting_rank = 0) const override;
 
     virtual void clear() override;
+
+    virtual int get_length() const override;
 
 private:
 

@@ -8,6 +8,7 @@
 #include "snake_overflow/game_playing_phase.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
 #include "snake_overflow/player_data_entering_phase.hpp"
+#include "snake_overflow/show_rankings_phase.hpp"
 #include "util/value_ref.hpp"
 #include <functional>
 #include <memory>
@@ -53,6 +54,8 @@ private:
 
     virtual map_selection_phase& get_map_selection_phase() const override;
 
+    virtual show_rankings_phase& get_show_rankings_phase() const override;
+
     virtual void set_current_phase(
         boost::optional<interaction_phase&> phase) override;
 
@@ -87,6 +90,8 @@ private:
     std::unique_ptr<map_selection_phase> selection_phase;
 
     std::unique_ptr<player_data_entering_phase> data_entering_phase;
+
+    std::unique_ptr<show_rankings_phase> rankings_phase;
 
     std::unique_ptr<application_hud_renderer> hud_renderer;
 

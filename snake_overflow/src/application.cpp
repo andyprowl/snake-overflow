@@ -96,6 +96,11 @@ map_selection_phase& application::get_map_selection_phase() const
     return *(this->selection_phase);
 }
 
+show_rankings_phase& application::get_show_rankings_phase() const
+{
+    return *(this->rankings_phase);
+}
+
 void application::set_current_phase(boost::optional<interaction_phase&> phase)
 {
     if (!phase)
@@ -136,6 +141,10 @@ void application::create_interaction_phases()
         *this,
         *(this->textures),
         this->terrain_block_cache,
+        this->scores_database);
+
+    this->rankings_phase = std::make_unique<show_rankings_phase>(
+        *this,
         this->scores_database);
 
     this->current_phase = this->data_entering_phase.get();

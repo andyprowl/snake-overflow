@@ -17,9 +17,12 @@ public:
     virtual std::vector<score_record> get_rankings() const = 0;
 
     virtual std::vector<score_record> get_top_scores(
-        int num_of_scores) const = 0;
+        int num_of_scores,
+        int starting_rank = 0) const = 0;
 
     virtual void clear() = 0;
+
+    virtual int get_length() const = 0;
 
 };
 

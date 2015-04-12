@@ -41,6 +41,8 @@ private:
 
     void switch_to_map_selection_phase() const;
 
+    void switch_to_show_rankings_phase() const;
+
     void restart_game_and_destroy_self() const;
 
 private:

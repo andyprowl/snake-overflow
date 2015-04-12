@@ -8,6 +8,7 @@
 #include "snake_overflow/map_selection_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
+#include "snake_overflow/show_rankings_phase.hpp"
 
 namespace snake_overflow
 {
@@ -111,6 +112,11 @@ void playing_phase_keyboard_handler::setup_option_commands()
     {
         switch_to_map_selection_phase();
     };
+
+    this->keyboard_commands[KeyEvent::KEY_r] = [this]
+    {
+        switch_to_show_rankings_phase();
+    };
 }
 
 void playing_phase_keyboard_handler::turn_snake_left() const
@@ -141,6 +147,13 @@ void playing_phase_keyboard_handler::switch_to_map_selection_phase() const
     auto& selection_phase =this->state_machine.get_map_selection_phase();
 
     this->state_machine.set_current_phase(selection_phase);
+}
+
+void playing_phase_keyboard_handler::switch_to_show_rankings_phase() const
+{ 
+    auto& rankings_phase = this->state_machine.get_show_rankings_phase();
+
+    this->state_machine.set_current_phase(rankings_phase);
 }
 
 void playing_phase_keyboard_handler::restart_game_and_destroy_self() const
