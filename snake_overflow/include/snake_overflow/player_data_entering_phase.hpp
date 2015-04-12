@@ -41,15 +41,17 @@ private:
 
     void load_main_picture();
 
-    void draw_title_picture();
+    void draw_title_picture() const;
 
-    void draw_main_picture();
+    void draw_main_picture() const;
 
-    void draw_hint();
+    void draw_hint() const;
 
-    void draw_label();
+    void draw_max_length() const;
 
-    void draw_player_name();
+    void draw_label() const;
+
+    void draw_player_name() const;
 
     cinder::Vec2f get_scaled_title_size() const;
 
@@ -76,6 +78,8 @@ private:
     cinder::Font title_font;
 
     cinder::Font hint_font;
+
+    cinder::Font max_length_font;
 
     cinder::Font label_font;
 

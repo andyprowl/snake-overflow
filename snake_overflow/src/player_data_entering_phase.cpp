@@ -9,6 +9,8 @@
 namespace snake_overflow
 {
 
+static auto const MAX_PLAYER_NAME_LENGTH = 24;
+
 player_data_entering_phase::player_data_entering_phase(
     application_state_machine& state_machine)
     : state_machine{state_machine}
@@ -92,9 +94,11 @@ void player_data_entering_phase::create_fonts()
 
     this->hint_font = cinder::Font{"Arial", 50.0};
 
-    this->label_font = cinder::Font{"Arial", 50.0};
+    this->max_length_font = cinder::Font{"Arial", 30.0};
 
-    this->name_font = cinder::Font{"Arial", 50.0};    
+    this->label_font = cinder::Font{"Arial", 40.0};
+
+    this->name_font = cinder::Font{"Arial", 40.0};    
 }
 
 void player_data_entering_phase::load_title_picture()
@@ -111,7 +115,7 @@ void player_data_entering_phase::load_main_picture()
     this->main_picture = cinder::loadImage(asset);
 }
 
-void player_data_entering_phase::draw_title_picture()
+void player_data_entering_phase::draw_title_picture() const
 {
     auto const scaled_title_size = get_scaled_title_size();
 
@@ -126,7 +130,7 @@ void player_data_entering_phase::draw_title_picture()
     cinder::gl::draw(this->title_picture, {top_left, bottom_right});
 }
 
-void player_data_entering_phase::draw_main_picture()
+void player_data_entering_phase::draw_main_picture() const
 {
     auto const scaled_title_size = get_scaled_title_size();
 
@@ -148,7 +152,7 @@ void player_data_entering_phase::draw_main_picture()
     cinder::gl::draw(this->main_picture, {top_left, bottom_right});
 }
 
-void player_data_entering_phase::draw_hint()
+void player_data_entering_phase::draw_hint() const
 {
     auto const color = cinder::ColorA{0.3f, 1.0f, 0.3f, 1.f};
     
@@ -158,30 +162,47 @@ void player_data_entering_phase::draw_hint()
 
     auto const text = "Please choose a name and press 'Enter' to confirm...";
 
-    cinder::gl::drawStringCentered(text, origin, color, this->name_font);       
+    cinder::gl::drawStringCentered(text, origin, color, this->hint_font);       
+
+    draw_max_length();
 }
 
-void player_data_entering_phase::draw_label()
+void player_data_entering_phase::draw_max_length() const
+{
+    auto const color = cinder::ColorA{0.7f, 0.7f, 0.7f, 1.f};
+    
+    auto const center = cinder::app::getWindowBounds().getCenter();
+    
+    auto const origin = cinder::Vec2f{center.x, get_hint_textbox_y() + 50.f};
+
+    auto const formatted_limit = std::to_string(MAX_PLAYER_NAME_LENGTH);
+
+    auto const text = "(maximum length is " + formatted_limit + " characters)";
+
+    cinder::gl::drawStringCentered(text, origin, color, this->max_length_font);       
+}
+
+void player_data_entering_phase::draw_label() const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 0.f, 1.f};
     
     auto const center = cinder::app::getWindowBounds().getCenter();
 
-    auto const origin = cinder::Vec2f{center.x - 200, 
+    auto const origin = cinder::Vec2f{center.x - 450, 
                                       get_player_name_textbox_y()};
 
     auto const text = "Player name:";
 
-    cinder::gl::drawString(text, origin, color, this->name_font);    
+    cinder::gl::drawString(text, origin, color, this->label_font);    
 }
 
-void player_data_entering_phase::draw_player_name()
+void player_data_entering_phase::draw_player_name() const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
     
     auto const center = cinder::app::getWindowBounds().getCenter();
 
-    auto const origin = cinder::Vec2f{center.x + 50, 
+    auto const origin = cinder::Vec2f{center.x - 250.f, 
                                       get_player_name_textbox_y()};
 
     auto const seconds = static_cast<int>(cinder::app::getElapsedSeconds());
@@ -223,6 +244,11 @@ float player_data_entering_phase::get_player_name_textbox_y() const
 
 void player_data_entering_phase::add_character_to_name_if_valid(char const c)
 {
+    if (this->player_name.length() >= MAX_PLAYER_NAME_LENGTH)
+    {
+        return;
+    }
+
     if (is_valid_name_character(c))
     {
         this->player_name += c;
