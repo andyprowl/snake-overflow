@@ -52,5 +52,11 @@
     <ClInclude Include="..\export\include\util\tokenize.hpp">
       <Filter>export\include\util</Filter>
     </ClInclude>
+    <ClInclude Include="..\export\include\util\string_conversion.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\util\username.hpp">
+      <Filter>export\include\util</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

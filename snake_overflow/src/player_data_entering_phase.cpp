@@ -3,6 +3,7 @@
 #include "snake_overflow/application_state_machine.hpp"
 #include "snake_overflow/map_selection_phase.hpp"
 #include "snake_overflow/player_data_entering_phase.hpp"
+#include "util/username.hpp"
 #include <cinder/ImageIo.h>
 #include <cctype>
 
@@ -14,7 +15,7 @@ static auto const MAX_PLAYER_NAME_LENGTH = 24;
 player_data_entering_phase::player_data_entering_phase(
     application_state_machine& state_machine)
     : state_machine{state_machine}
-    , player_name("Snake")
+    , player_name(util::get_current_username())
 {
     create_fonts();
 
