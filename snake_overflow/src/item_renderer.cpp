@@ -101,19 +101,19 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     auto dp = dynamic_cast<diet_pill const*>(&i);
     if (dp != nullptr)
     {
-        return draw_diet_pill_shape();
+        return draw_diet_pill_shape(*dp);
     } 
 
-    auto is = dynamic_cast<invulnerability_potion const*>(&i);
-    if (is != nullptr)
+    auto ip = dynamic_cast<invulnerability_potion const*>(&i);
+    if (ip != nullptr)
     {
-        return draw_invulnerability_potion_shape();
+        return draw_invulnerability_potion_shape(*ip);
     }
 
     auto sb = dynamic_cast<speed_booster const*>(&i);
     if (sb != nullptr)
     {
-        return draw_speed_booster_shape();
+        return draw_speed_booster_shape(*sb);
     }
 }
 
@@ -125,12 +125,14 @@ void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
 
     auto const radius = f.get_nutrition_value() * this->block_size / 15.f + 1.f;
 
+    auto const capped_radius = std::min(radius, static_cast<float>(f.lifetime));
+
     auto const binder = texture_binder{this->textures, "apple"};
 
-    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), capped_radius, 24);
 }
 
-void item_renderer::draw_diet_pill_shape() const
+void item_renderer::draw_diet_pill_shape(util::value_ref<diet_pill> p) const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 
@@ -138,25 +140,32 @@ void item_renderer::draw_diet_pill_shape() const
 
     auto const radius = this->block_size / 2;
 
+    auto const capped_radius = std::min(radius, static_cast<float>(p.lifetime));
+
     auto const binder = texture_binder{this->textures, "pill2"};
 
-    cinder::gl::drawCube(cinder::Vec3f::zero(), {radius * 2, radius, radius});
+    cinder::gl::drawCube(cinder::Vec3f::zero(), 
+                         {capped_radius * 2, capped_radius, capped_radius});
 }
 
-void item_renderer::draw_invulnerability_potion_shape() const
+void item_renderer::draw_invulnerability_potion_shape(
+    util::value_ref<invulnerability_potion> p) const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 
     cinder::gl::color(color);
 
     auto const radius = this->block_size / 3.f + 1.f;
+
+    auto const capped_radius = std::min(radius, static_cast<float>(p.lifetime));
 
     auto const binder = texture_binder{this->textures, "invulnerability"};
 
-    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), capped_radius, 24);
 }
 
-void item_renderer::draw_speed_booster_shape() const
+void item_renderer::draw_speed_booster_shape(
+    util::value_ref<speed_booster> b) const
 {
     auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
 
@@ -164,9 +173,11 @@ void item_renderer::draw_speed_booster_shape() const
 
     auto const radius = this->block_size / 3.f + 1.f;
 
+    auto const capped_radius = std::min(radius, static_cast<float>(b.lifetime));
+
     auto const binder = texture_binder{this->textures, "bolt"};
 
-    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);    
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), capped_radius, 24);    
 }
 
 }

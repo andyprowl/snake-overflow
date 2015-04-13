@@ -5,8 +5,11 @@
 namespace snake_overflow
 {
 
+class diet_pill;
 class fruit;
+class invulnerability_potion;
 class item;
+class speed_booster;
 class terrain;
 class texture_repository;
 
@@ -35,11 +38,12 @@ private:
 
     void draw_fruit_shape(util::value_ref<fruit> f) const;
 
-    void draw_diet_pill_shape() const;
+    void draw_diet_pill_shape(util::value_ref<diet_pill> p) const;
 
-    void draw_invulnerability_potion_shape() const;
+    void draw_invulnerability_potion_shape(
+        util::value_ref<invulnerability_potion> p) const;
 
-    void draw_speed_booster_shape() const;
+    void draw_speed_booster_shape(util::value_ref<speed_booster> b) const;
 
 private:
 
