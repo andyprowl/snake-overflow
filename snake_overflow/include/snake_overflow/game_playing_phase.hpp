@@ -96,6 +96,9 @@ private:
     std::unique_ptr<item> create_invulnerability_potion(
         util::value_ref<position> pos) const;
 
+    std::unique_ptr<item> create_speed_booster(
+        util::value_ref<position> pos) const;
+
     std::unique_ptr<terrain_item_filler> create_terrain_filler(
         std::unique_ptr<item_spawner>&& is) const;
     

@@ -89,12 +89,14 @@
     <ClCompile Include="..\src\dead_snake_flag.cpp" />
     <ClCompile Include="..\src\diet_pill.cpp" />
     <ClCompile Include="..\src\dynamics.cpp" />
+    <ClCompile Include="..\src\frenzy_spell.cpp" />
     <ClCompile Include="..\src\fruit.cpp" />
     <ClCompile Include="..\src\game.cpp" />
     <ClCompile Include="..\src\game_map.cpp" />
     <ClCompile Include="..\src\game_over_flag.cpp" />
     <ClCompile Include="..\src\game_boolean_parameter.cpp" />
     <ClCompile Include="..\src\game_integer_parameter.cpp" />
+    <ClCompile Include="..\src\speed_booster.cpp" />
     <ClCompile Include="..\src\volatile_high_scores_rankings.cpp" />
     <ClCompile Include="..\src\high_scores_stream_persister.cpp" />
     <ClCompile Include="..\src\invulnerability_potion.cpp" />
@@ -137,6 +139,7 @@
     <ClInclude Include="..\export\include\snake_overflow\dead_snake_flag.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\diet_pill.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\dynamics.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\frenzy_spell.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\fruit.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_map.hpp" />
@@ -144,6 +147,7 @@
     <ClInclude Include="..\export\include\snake_overflow\game_boolean_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\game_integer_parameter.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\high_scores_rankings.hpp" />
+    <ClInclude Include="..\export\include\snake_overflow\speed_booster.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\volatile_high_scores_rankings.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\high_scores_stream_persister.hpp" />
     <ClInclude Include="..\export\include\snake_overflow\invulnerability_potion.hpp" />

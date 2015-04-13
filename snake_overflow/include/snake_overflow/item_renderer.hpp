@@ -39,6 +39,8 @@ private:
 
     void draw_invulnerability_potion_shape() const;
 
+    void draw_speed_booster_shape() const;
+
 private:
 
     terrain const* ground = nullptr;

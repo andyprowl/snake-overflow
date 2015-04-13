@@ -16,6 +16,7 @@
 #include "snake_overflow/probabilistic_item_spawner.hpp"
 #include "snake_overflow/random_item_position_picker.hpp"
 #include "snake_overflow/snake.hpp"
+#include "snake_overflow/speed_booster.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/world_renderer.hpp"
 
@@ -240,7 +241,7 @@ std::unique_ptr<item_spawner> game_playing_phase::create_item_spawner(
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
         return create_fruit(pos);
-    }, 90);
+    }, 85);
 
     is->register_item_factory([this] (util::value_ref<position> pos)
     {
@@ -251,6 +252,11 @@ std::unique_ptr<item_spawner> game_playing_phase::create_item_spawner(
     {
         return create_invulnerability_potion(pos);
     }, 2);
+
+    is->register_item_factory([this] (util::value_ref<position> pos)
+    {
+        return create_speed_booster(pos);
+    }, 5);
 
     return std::move(is);
 }
@@ -291,6 +297,19 @@ std::unique_ptr<item> game_playing_phase::create_invulnerability_potion(
                                                     *this->current_game, 
                                                     lifetime,
                                                     200);
+}
+
+std::unique_ptr<item> game_playing_phase::create_speed_booster(
+    util::value_ref<position> pos) const
+{
+    random_integer_generator generator{};
+
+    auto const lifetime = generator.generate(100, 300);
+
+    return std::make_unique<speed_booster>(pos, 
+                                           *this->current_game, 
+                                           lifetime,
+                                           500);
 }
 
 std::unique_ptr<terrain_item_filler> game_playing_phase::create_terrain_filler(

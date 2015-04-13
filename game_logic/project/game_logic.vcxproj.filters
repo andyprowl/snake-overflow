@@ -143,6 +143,12 @@
     <ClCompile Include="..\src\volatile_high_scores_rankings.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\speed_booster.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\frenzy_spell.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -284,6 +290,12 @@
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\export\include\snake_overflow\high_scores_rankings.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\speed_booster.hpp">
+      <Filter>export\include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\export\include\snake_overflow\frenzy_spell.hpp">
       <Filter>export\include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

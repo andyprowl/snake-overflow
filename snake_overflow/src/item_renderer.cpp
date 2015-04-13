@@ -7,6 +7,7 @@
 #include "snake_overflow/item_renderer.hpp"
 #include "snake_overflow/point_conversion.hpp"
 #include "snake_overflow/position.hpp"
+#include "snake_overflow/speed_booster.hpp"
 #include "snake_overflow/terrain.hpp"
 #include "snake_overflow/texture_binder.hpp"
 #include "util/wave.hpp"
@@ -108,6 +109,12 @@ void item_renderer::draw_item_shape(util::value_ref<item> i) const
     {
         return draw_invulnerability_potion_shape();
     }
+
+    auto sb = dynamic_cast<speed_booster const*>(&i);
+    if (sb != nullptr)
+    {
+        return draw_speed_booster_shape();
+    }
 }
 
 void item_renderer::draw_fruit_shape(util::value_ref<fruit> f) const
@@ -147,6 +154,19 @@ void item_renderer::draw_invulnerability_potion_shape() const
     auto const binder = texture_binder{this->textures, "invulnerability"};
 
     cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);
+}
+
+void item_renderer::draw_speed_booster_shape() const
+{
+    auto const color = cinder::ColorA{1.f, 1.f, 1.f, 1.f};
+
+    cinder::gl::color(color);
+
+    auto const radius = this->block_size / 3.f + 1.f;
+
+    auto const binder = texture_binder{this->textures, "bolt"};
+
+    cinder::gl::drawSphere(cinder::Vec3f::zero(), radius, 24);    
 }
 
 }
