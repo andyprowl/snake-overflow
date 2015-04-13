@@ -52,7 +52,13 @@ Several items are spawned at random intervals on the terrain's surface, and pick
 <img width="128px" height="128px" src="https://github.com/andyprowl/snake-overflow/blob/master/readme_resources/invulnerability.jpg"/>
 </p>
 
-All items have a random lifetime, with invulnerability bonuses . When the lifetime of an item expires, the item will disappear from the terrain.
+ - **Speed booster**: Picking a speed booster will increment the snake's speed by one unit for a fixed amount of time. Speed boosters can be cumulated, but the snake's speed won't ever be increased by more than three units.
+ 
+<p align="center">
+<img width="128px" height="128px" src="https://github.com/andyprowl/snake-overflow/blob/master/readme_resources/speed booster.jpg"/>
+</p>
+
+All items have a random lifetime; when the lifetime of an item expires, the item will disappear from the terrain.
 
 Once the game ends, it is possible to start a new game on the same map by pressing 'Enter' or 'F5'; pressing 'F4' allows going back to the map selection screen:
 
