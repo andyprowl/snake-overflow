@@ -31,8 +31,8 @@ protected:
 
 TEST_THAT(FrenzySpell,
      WHAT(Affect),
-     WHEN(GivenASnakeToWhichTheSpellWasAdded),
-     THEN(IncrementsItSpeedForANumberOfUpdatesEqualToTheLifetimeOfTheSpell))
+     WHEN(GivenASnakeToWhichTheSpellWasAddedWithLowerThanMaximumSpeed),
+     THEN(IncrementsItsSpeedForANumberOfUpdatesEqualToTheLifetimeOfTheSpell))
 {
     auto& s = get_snake();
 
@@ -50,6 +50,46 @@ TEST_THAT(FrenzySpell,
 
     added_spell->affect(s);
     EXPECT_THAT(s.speed, Eq(initial_speed));
+}
+
+TEST_THAT(FrenzySpell,
+     WHAT(Affect),
+     WHEN(GivenASnakeToWhichTheSpellWasAddedWithMaximumSpeed),
+     THEN(DoesNotIncrementItsSpeed))
+{
+    auto& s = get_snake();
+    
+    auto const maximum_speed = *(s.speed.maximum_value);
+
+    s.speed = maximum_speed;
+
+    auto added_spell = this->the_spell.get();
+
+    s.add_spell(std::move(this->the_spell));
+
+    added_spell->affect(s);
+
+    EXPECT_THAT(s.speed, Eq(maximum_speed));
+}
+
+TEST_THAT(FrenzySpell,
+     WHAT(Affect),
+     WHEN(WhenTheSpellLifetimeExpiresAndSpeedOfGivenSnakeWasNeverIncremented),
+     THEN(DoesNotDecrementTheSpeedOfThatSnake))
+{
+    auto& s = get_snake();
+    
+    auto const maximum_speed = *(s.speed.maximum_value);
+
+    s.speed = maximum_speed;
+
+    auto added_spell = this->the_spell.get();
+
+    s.add_spell(std::move(this->the_spell));
+
+    util::repeat(this->lifetime, [added_spell, &s] { added_spell->affect(s); });
+    
+    EXPECT_THAT(s.speed, Eq(maximum_speed));
 }
 
 TEST_THAT(FrenzySpell, 

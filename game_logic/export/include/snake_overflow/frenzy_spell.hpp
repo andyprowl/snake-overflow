@@ -18,9 +18,11 @@ public:
 
 private:
 
-    void stop_affecting_snake_and_cause_self_destruction(snake& s) const;
-
     void increment_speed_if_starting_to_affect(snake& s);
+
+    bool snake_has_maximum_speed(snake const& s) const;
+
+    void stop_affecting_snake_and_cause_self_destruction(snake& s) const;
 
 private:
 

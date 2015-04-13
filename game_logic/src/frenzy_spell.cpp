@@ -31,7 +31,7 @@ int frenzy_spell::get_duration() const
 
 void frenzy_spell::increment_speed_if_starting_to_affect(snake& s)
 {
-    if (this->already_applied)
+    if (this->already_applied || snake_has_maximum_speed(s))
     {
         return;
     }
@@ -41,10 +41,20 @@ void frenzy_spell::increment_speed_if_starting_to_affect(snake& s)
     this->already_applied = true;
 }
 
+bool frenzy_spell::snake_has_maximum_speed(snake const& s) const
+{
+    auto const maximum_speed = *(s.speed.maximum_value);
+
+    return (s.speed == maximum_speed);
+}
+
 void frenzy_spell::stop_affecting_snake_and_cause_self_destruction(
     snake& s) const
 {
-    s.speed -= 1;
+    if (this->already_applied)
+    {
+        s.speed -= 1;
+    }
 
     s.remove_spell(*this);
 }
