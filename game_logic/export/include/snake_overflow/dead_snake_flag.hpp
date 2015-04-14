@@ -1,5 +1,9 @@
 #pragma once
 
+#include <functional>
+#include <boost/signals2/connection.hpp>
+#include <boost/signals2/signal.hpp>
+
 namespace snake_overflow
 {
 
@@ -9,6 +13,10 @@ class dead_snake_exception : public virtual std::exception
     
 class dead_snake_flag
 {
+
+public:
+
+    using death_event_handler = std::function<void()>;
 
 public:
 
@@ -24,9 +32,14 @@ public:
 
     ~dead_snake_flag() = default;
 
+    boost::signals2::connection register_death_event_handler(
+        death_event_handler h);
+
 private:
 
     bool is_dead;
+
+    boost::signals2::signal<void()> on_death;
 
 };
 

@@ -18,11 +18,9 @@ public:
 
     virtual position get_position() const override final;
 
-    virtual void pick(snake& s) override final;
+    virtual std::unique_ptr<item> pick(snake& s) override final;
 
     virtual void age() override final;
-
-    void remove_from_terrain_and_cause_self_destruction();
 
 public:
 
@@ -30,7 +28,13 @@ public:
 
 private:
 
+    friend class item_lifetime;
+
+private:
+
     virtual void handle_picking(snake& s) = 0;
+
+    std::unique_ptr<item> remove_from_terrain();
 
 protected:
 

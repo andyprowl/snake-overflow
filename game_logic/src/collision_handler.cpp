@@ -17,6 +17,13 @@ collision_handler::collision_handler(snake& hero,
     register_snake_movement_handler();
 }
 
+boost::signals2::connection 
+    collision_handler::register_item_picked_event_handler(
+        item_picked_event_handler h)
+{
+    return this->on_item_picked.connect(std::move(h));
+}
+
 void collision_handler::register_snake_movement_handler()
 {
     auto& body = this->hero.get_body();
@@ -50,7 +57,13 @@ void collision_handler::handle_item_collision(
         return;
     }
 
-    i->pick(hero);
+    // We need to store the returned unique pointer, because if the item removes
+    // itself from the terrain upon picking, its owning pointer will be returned
+    // and not storing it would mean letting the item die before we dispatch the
+    // event notifications about it being picked.
+    auto picked_item = i->pick(hero);
+
+    this->on_item_picked(*i);
 }
 
 void collision_handler::handle_self_collision(

@@ -12,13 +12,14 @@ using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Gt;
 using ::testing::Ne;
+using ::testing::Ref;
 
 class Snake : public CubeTerrainGameFixture
 {
 
 protected:
 
-    std::unique_ptr<item> make_item(util::value_ref<position> pos)
+    std::unique_ptr<fake_item> make_item(util::value_ref<position> pos)
     {
         return std::make_unique<fake_item>(pos);
     }
@@ -60,6 +61,8 @@ TEST_THAT(Snake,
 {
     auto i = make_item({{0, 0, 4}, block_face::front});
 
+    auto& added_item = *i;
+
     auto& t = get_terrain();
 
     t.add_item(std::move(i));
@@ -68,7 +71,9 @@ TEST_THAT(Snake,
 
     s.get_body().advance();
 
-    EXPECT_THROW(s.get_body().advance(), item_picked_exception);
+    s.get_body().advance();
+
+    EXPECT_TRUE(added_item.picked);
 }
 
 TEST_THAT(Snake,
@@ -432,6 +437,32 @@ TEST_THAT(Snake,
     EXPECT_THAT(affecting_spells.size(), Eq(2u));
     EXPECT_THAT(affecting_spells, Contains(s1_ptr));
     EXPECT_THAT(affecting_spells, Contains(s2_ptr));
+}
+
+TEST_THAT(Snake,
+     WHAT(Update),
+     WHEN(WhenTheSnakeIsMovedAndPicksAnItem),
+     THEN(InvokesAllRegisteredEventHandlers))
+{
+    auto& s = get_snake();
+
+    auto i = make_item({{0, 0, 3}, block_face::front});
+    auto i_ptr = i.get();
+
+    auto& t = get_terrain();
+
+    t.add_item(std::move(i));
+
+    auto invoked = false;
+    s.register_item_picked_event_handler([&invoked, i_ptr] (item& i)
+    {
+        EXPECT_THAT(i, Ref(*i_ptr));
+        invoked = true;
+    });
+
+    s.update();
+
+    EXPECT_TRUE(invoked);
 }
 
 } }

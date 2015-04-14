@@ -21,11 +21,11 @@ position consumable_item::get_position() const
     return this->placement;
 }
 
-void consumable_item::pick(snake& s)
+std::unique_ptr<item> consumable_item::pick(snake& s)
 {
     handle_picking(s);
 
-    remove_from_terrain_and_cause_self_destruction();
+    return remove_from_terrain();
 }
 
 void consumable_item::age()
@@ -33,11 +33,11 @@ void consumable_item::age()
     this->lifetime.shorten();
 }
 
-void consumable_item::remove_from_terrain_and_cause_self_destruction()
+std::unique_ptr<item> consumable_item::remove_from_terrain()
 {
     auto& t = this->parent_game.get_terrain();
 
-    t.remove_item(*this);
+    return t.remove_item(*this);
 }
 
 }

@@ -50,7 +50,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
@@ -70,7 +70,7 @@
       <PrecompiledHeaderFile>stdafx.hpp</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>..\include;..\export\include;..\..\utilities\export\include;c:\Program Files\cinder_0.8.6_vc2013\boost</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <DisableSpecificWarnings>4512;4702</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4512;4702</DisableSpecificWarnings>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>

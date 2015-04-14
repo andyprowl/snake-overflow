@@ -24,9 +24,11 @@ public:
         return placement;
     }
 
-    virtual void pick(snake&) override
+    virtual std::unique_ptr<item> pick(snake&) override
     {
-        throw item_picked_exception{};
+        picked = true;
+        
+        return nullptr;
     }
 
     virtual void age() override
@@ -39,6 +41,8 @@ public:
     position placement;
 
     int item_age = 0;
+
+    bool picked = false;
 
 };
 

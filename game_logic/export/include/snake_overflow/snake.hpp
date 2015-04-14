@@ -12,10 +12,13 @@
 namespace snake_overflow
 {
 
-class terrain;
-
 class snake
 {
+
+public:
+
+    using item_picked_event_handler = 
+          collision_handler::item_picked_event_handler;
 
 public:
 
@@ -46,6 +49,9 @@ public:
     void remove_spell(spell const& s);
 
     std::vector<spell*> get_all_spells() const;
+
+    boost::signals2::connection register_item_picked_event_handler(
+        item_picked_event_handler h);
 
 public:
 

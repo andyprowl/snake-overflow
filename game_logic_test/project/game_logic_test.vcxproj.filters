@@ -89,6 +89,12 @@
     <ClCompile Include="..\src\frenzy_spell_test_suite.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game_over_flag_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\dead_snake_flag_test_suite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">

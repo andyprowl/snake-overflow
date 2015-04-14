@@ -23,7 +23,7 @@ void item_lifetime::shorten()
 
     if (this->value == 0)
     {
-        this->parent_item.remove_from_terrain_and_cause_self_destruction();
+        this->parent_item.remove_from_terrain();
     }
 }
 

@@ -11,6 +11,7 @@
 #include "snake_overflow/player_data_entering_phase.hpp"
 #include "snake_overflow/playing_phase_hud_renderer.hpp"
 #include "snake_overflow/playing_phase_keyboard_handler.hpp"
+#include "snake_overflow/playing_phase_sound_player.hpp"
 #include "snake_overflow/invulnerability_potion.hpp"
 #include "snake_overflow/load_driven_terrain_item_filler.hpp"
 #include "snake_overflow/probabilistic_item_spawner.hpp"
@@ -111,6 +112,8 @@ void game_playing_phase::start_new_game(game_map& map_prototype)
     create_camera_manipulators();
 
     create_keyboard_input_handler();
+
+    create_sounds_player();
 
     catch_snake_on_camera();
 }
@@ -328,9 +331,15 @@ void game_playing_phase::create_keyboard_input_handler()
 {
     this->keyboard_handler = std::make_unique<playing_phase_keyboard_handler>(
         this->state_machine,
-        *this->current_game,
-        *this->hud_drawer,
+        *(this->current_game),
+        *(this->hud_drawer),
         *this);
+}
+
+void game_playing_phase::create_sounds_player()
+{
+    this->sound_player = std::make_unique<playing_phase_sound_player>(
+        *(this->current_game));
 }
 
 void game_playing_phase::catch_snake_on_camera()

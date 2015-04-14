@@ -102,6 +102,9 @@
     <ClCompile Include="..\src\show_rankings_phase.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\playing_phase_sound_player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\stdafx.hpp">
@@ -204,6 +207,9 @@
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
     <ClInclude Include="..\include\snake_overflow\screen_resolution.hpp">
+      <Filter>include\snake_overflow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\snake_overflow\playing_phase_sound_player.hpp">
       <Filter>include\snake_overflow</Filter>
     </ClInclude>
   </ItemGroup>

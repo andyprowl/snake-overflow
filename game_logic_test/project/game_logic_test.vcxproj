@@ -111,7 +111,9 @@
     <ClCompile Include="..\export\include\snake_overflow\testing\volatile_high_scores_rankings_test_suite.cpp" />
     <ClCompile Include="..\export\include\snake_overflow\testing\invulnerability_spell_test_suite.cpp" />
     <ClCompile Include="..\src\block_test_suite.cpp" />
+    <ClCompile Include="..\src\dead_snake_flag_test_suite.cpp" />
     <ClCompile Include="..\src\frenzy_spell_test_suite.cpp" />
+    <ClCompile Include="..\src\game_over_flag_test_suite.cpp" />
     <ClCompile Include="..\src\high_score_stream_persiter_test_suite.cpp" />
     <ClCompile Include="..\src\invulnerability_potion_test_suite.cpp" />
     <ClCompile Include="..\src\score_record_test_suite.cpp" />

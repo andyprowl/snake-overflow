@@ -26,6 +26,7 @@ class playing_phase_hud_renderer;
 class item_position_picker;
 class item_spawner;
 class playing_phase_keyboard_handler;
+class playing_phase_sound_player;
 class snake;
 class terrain;
 class terrain_item_filler;
@@ -104,6 +105,8 @@ private:
     
     void create_keyboard_input_handler();
 
+    void create_sounds_player();
+
     void catch_snake_on_camera();
 
     void align_arcball_manipulator_to_auto_follow_manipulator();
@@ -132,6 +135,8 @@ private:
 
     std::unique_ptr<playing_phase_keyboard_handler> keyboard_handler;
     
+    std::unique_ptr<playing_phase_sound_player> sound_player;
+
     std::unique_ptr<game> current_game;
 
     camera_manipulator* current_camera_handler = nullptr;

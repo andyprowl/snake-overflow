@@ -120,6 +120,12 @@ std::vector<spell*> snake::get_all_spells() const
     return v;
 }
 
+boost::signals2::connection snake::register_item_picked_event_handler(
+    item_picked_event_handler h)
+{
+    return this->collider->register_item_picked_event_handler(std::move(h));
+}
+
 void snake::throw_if_dead()
 {
     if (this->is_dead)
