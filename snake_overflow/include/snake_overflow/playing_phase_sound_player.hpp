@@ -23,6 +23,8 @@ private:
 
     void create_electronic_sound();
 
+    void create_invulnerability_sound();
+
     void create_game_over_sound();
 
     void register_item_picking_sound_emitter(game& g);
@@ -35,6 +37,8 @@ private:
 
     void play_electronic_sound() const;
 
+    void play_invulnerability_sound() const;
+
     void play_game_over_sound() const;
 
 private:
@@ -44,6 +48,8 @@ private:
     cinder::audio::VoiceSamplePlayerNodeRef electronic_sound; 
 
     cinder::audio::VoiceSamplePlayerNodeRef game_over_sound; 
+
+    cinder::audio::VoiceSamplePlayerNodeRef invulnerability_sound; 
 
 };
 

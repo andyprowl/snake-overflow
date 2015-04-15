@@ -2,6 +2,7 @@
 
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
+#include "snake_overflow/invulnerability_potion.hpp"
 #include "snake_overflow/playing_phase_sound_player.hpp"
 #include "snake_overflow/snake.hpp"
 #include "snake_overflow/speed_booster.hpp"
@@ -24,6 +25,8 @@ void playing_phase_sound_player::create_sounds()
 
     create_electronic_sound();
 
+    create_invulnerability_sound();
+
     create_game_over_sound();
 }
 
@@ -39,6 +42,13 @@ void playing_phase_sound_player::create_electronic_sound()
     auto const asset = cinder::app::loadAsset("sounds/electronic.wav");
     auto const source = cinder::audio::load(asset);
     this->electronic_sound = cinder::audio::Voice::create(source);    
+}
+
+void playing_phase_sound_player::create_invulnerability_sound()
+{
+    auto const asset = cinder::app::loadAsset("sounds/godlike.wav");
+    auto const source = cinder::audio::load(asset);
+    this->invulnerability_sound = cinder::audio::Voice::create(source);    
 }
 
 void playing_phase_sound_player::create_game_over_sound()
@@ -76,6 +86,10 @@ void playing_phase_sound_player::on_item_picked(item const& i) const
     {
         play_electronic_sound();
     }
+    else if (dynamic_cast<invulnerability_potion const*>(&i) != nullptr)
+    {
+        play_invulnerability_sound();
+    }
 }
 
 void playing_phase_sound_player::play_bite_sound() const
@@ -86,6 +100,11 @@ void playing_phase_sound_player::play_bite_sound() const
 void playing_phase_sound_player::play_electronic_sound() const
 {
     this->electronic_sound->start();
+}
+
+void playing_phase_sound_player::play_invulnerability_sound() const
+{
+    this->invulnerability_sound->start();
 }
 
 void playing_phase_sound_player::play_game_over_sound() const
