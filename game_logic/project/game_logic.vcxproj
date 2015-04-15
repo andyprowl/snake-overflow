@@ -117,7 +117,6 @@
     <ClCompile Include="..\src\movement_profile.cpp" />
     <ClCompile Include="..\src\point.cpp" />
     <ClCompile Include="..\src\position.cpp" />
-    <ClCompile Include="..\src\sequence.cpp" />
     <ClCompile Include="..\src\snake_body.cpp" />
     <ClCompile Include="..\src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -29,9 +29,6 @@
     <ClCompile Include="..\src\position.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\sequence.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\movement_profile.cpp">
       <Filter>src</Filter>
     </ClCompile>
