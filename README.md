@@ -66,7 +66,13 @@ Once the game ends, it is possible to start a new game on the same map by pressi
 
 ## Other features
 
-It is possible to toggle full screen mode at any time by hitting 'Ctrl+Enter'. Hitting the 'F' key, on the other hand, toggles the frame rate display on the upper left corner of the application window.
+It is possible to toggle full screen mode at any time by hitting 'Ctrl+Enter'. Hitting the 'F' key, on the other hand, toggles the frame rate display on the lower left corner of the application window.
+
+At any time while playing a game it is possible to show the top ten high scores for the currently chosen map by pressing the 'R' key:
+
+![Rankings](https://github.com/andyprowl/snake-overflow/blob/master/screenshots/screenshot08.jpg)
+
+When rankings are shown the game is automatically paused; the game is automatically resumed when the rankings are hidden. To hide the rankings, press the 'R' key once more.
 
 ## Installation instructions
 
