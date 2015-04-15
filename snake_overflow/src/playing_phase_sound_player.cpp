@@ -1,5 +1,6 @@
 #include "stdafx.hpp"
 
+#include "snake_overflow/diet_pill.hpp"
 #include "snake_overflow/fruit.hpp"
 #include "snake_overflow/game.hpp"
 #include "snake_overflow/invulnerability_potion.hpp"
@@ -26,6 +27,8 @@ void playing_phase_sound_player::create_sounds()
     create_electronic_sound();
 
     create_invulnerability_sound();
+
+    create_diet_pill_sound();
 
     create_game_over_sound();
 }
@@ -56,6 +59,13 @@ void playing_phase_sound_player::create_game_over_sound()
     auto const asset = cinder::app::loadAsset("sounds/game over.wav");
     auto const source = cinder::audio::load(asset);
     this->game_over_sound = cinder::audio::Voice::create(source);    
+}
+
+void playing_phase_sound_player::create_diet_pill_sound()
+{
+    auto const asset = cinder::app::loadAsset("sounds/squish.wav");
+    auto const source = cinder::audio::load(asset);
+    this->diet_pill_sound = cinder::audio::Voice::create(source);    
 }
 
 void playing_phase_sound_player::register_item_picking_sound_emitter(game& g)
@@ -90,6 +100,10 @@ void playing_phase_sound_player::on_item_picked(item const& i) const
     {
         play_invulnerability_sound();
     }
+    else if (dynamic_cast<diet_pill const*>(&i) != nullptr)
+    {
+        play_diet_pill_sound();
+    }
 }
 
 void playing_phase_sound_player::play_bite_sound() const
@@ -105,6 +119,11 @@ void playing_phase_sound_player::play_electronic_sound() const
 void playing_phase_sound_player::play_invulnerability_sound() const
 {
     this->invulnerability_sound->start();
+}
+
+void playing_phase_sound_player::play_diet_pill_sound() const
+{
+    this->diet_pill_sound->start();
 }
 
 void playing_phase_sound_player::play_game_over_sound() const

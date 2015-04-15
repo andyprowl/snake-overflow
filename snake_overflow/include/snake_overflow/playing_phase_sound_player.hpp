@@ -25,6 +25,8 @@ private:
 
     void create_invulnerability_sound();
 
+    void create_diet_pill_sound();
+
     void create_game_over_sound();
 
     void register_item_picking_sound_emitter(game& g);
@@ -39,6 +41,8 @@ private:
 
     void play_invulnerability_sound() const;
 
+    void play_diet_pill_sound() const;
+
     void play_game_over_sound() const;
 
 private:
@@ -50,6 +54,8 @@ private:
     cinder::audio::VoiceSamplePlayerNodeRef game_over_sound; 
 
     cinder::audio::VoiceSamplePlayerNodeRef invulnerability_sound; 
+
+    cinder::audio::VoiceSamplePlayerNodeRef diet_pill_sound; 
 
 };
 
